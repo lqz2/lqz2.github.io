@@ -16,15 +16,15 @@
   <meta name="author" content="zql">
   <meta name="keywords" content="">
   
-    <meta name="description" content="线段树 递归建树   类型一：单点修改，区间查询 单点修改 区间查询 例题   类型二：区间修改，单点查询 区间修改 单点查询 例题   类型三： 区间修改，区间查询 区间修改 区间查询 例题    线段树 能把对区间的修改、查询的时间复杂度由 O(n) 变为 O(logn)  线段树实际上也是一种二叉树，每个节点用一个结构体node保存 struct node &amp;#123; 	int l,r,">
+    <meta name="description" content="线段树 能把对区间的修改、查询的时间复杂度由 O(n) 变为 O(logn)  线段树实际上也是一种二叉树，每个节点用一个结构体node保存 struct node &amp;#123; 	int l,r,sum; &amp;#125; 其中，l和r表示线段的左右端点，sum表示线段的和 如果用数组存储，一棵二叉树，左孩子下标为2*i，右孩子下标为2*i+1因此，每一个节点的sum值为：tree[i].sum&#x3D;t">
 <meta property="og:type" content="article">
 <meta property="og:title" content="线段树">
 <meta property="og:url" content="http://lqz2.github.io/2022/08/27/%E7%BA%BF%E6%AE%B5%E6%A0%91/index.html">
 <meta property="og:site_name" content="my blogs">
-<meta property="og:description" content="线段树 递归建树   类型一：单点修改，区间查询 单点修改 区间查询 例题   类型二：区间修改，单点查询 区间修改 单点查询 例题   类型三： 区间修改，区间查询 区间修改 区间查询 例题    线段树 能把对区间的修改、查询的时间复杂度由 O(n) 变为 O(logn)  线段树实际上也是一种二叉树，每个节点用一个结构体node保存 struct node &amp;#123; 	int l,r,">
+<meta property="og:description" content="线段树 能把对区间的修改、查询的时间复杂度由 O(n) 变为 O(logn)  线段树实际上也是一种二叉树，每个节点用一个结构体node保存 struct node &amp;#123; 	int l,r,sum; &amp;#125; 其中，l和r表示线段的左右端点，sum表示线段的和 如果用数组存储，一棵二叉树，左孩子下标为2*i，右孩子下标为2*i+1因此，每一个节点的sum值为：tree[i].sum&#x3D;t">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2022-08-27T08:13:35.000Z">
-<meta property="article:modified_time" content="2022-08-30T08:36:57.293Z">
+<meta property="article:modified_time" content="2022-08-30T09:03:33.293Z">
 <meta property="article:author" content="zql">
 <meta name="twitter:card" content="summary_large_image">
   
@@ -272,31 +272,7 @@
             
               <div class="markdown-body">
                 
-                <ul>
-<li><a href="#%E7%BA%BF%E6%AE%B5%E6%A0%91">线段树</a><ul>
-<li><a href="#%E9%80%92%E5%BD%92%E5%BB%BA%E6%A0%91">递归建树</a></li>
-</ul>
-</li>
-<li><a href="#%E7%B1%BB%E5%9E%8B%E4%B8%80%E5%8D%95%E7%82%B9%E4%BF%AE%E6%94%B9%E5%8C%BA%E9%97%B4%E6%9F%A5%E8%AF%A2">类型一：单点修改，区间查询</a><ul>
-<li><a href="#%E5%8D%95%E7%82%B9%E4%BF%AE%E6%94%B9">单点修改</a></li>
-<li><a href="#%E5%8C%BA%E9%97%B4%E6%9F%A5%E8%AF%A2">区间查询</a></li>
-<li><a href="#%E4%BE%8B%E9%A2%98">例题</a></li>
-</ul>
-</li>
-<li><a href="#%E7%B1%BB%E5%9E%8B%E4%BA%8C%E5%8C%BA%E9%97%B4%E4%BF%AE%E6%94%B9%E5%8D%95%E7%82%B9%E6%9F%A5%E8%AF%A2">类型二：区间修改，单点查询</a><ul>
-<li><a href="#%E5%8C%BA%E9%97%B4%E4%BF%AE%E6%94%B9">区间修改</a></li>
-<li><a href="#%E5%8D%95%E7%82%B9%E6%9F%A5%E8%AF%A2">单点查询</a></li>
-<li><a href="#%E4%BE%8B%E9%A2%98-1">例题</a></li>
-</ul>
-</li>
-<li><a href="#%E7%B1%BB%E5%9E%8B%E4%B8%89-%E5%8C%BA%E9%97%B4%E4%BF%AE%E6%94%B9%E5%8C%BA%E9%97%B4%E6%9F%A5%E8%AF%A2">类型三： 区间修改，区间查询</a><ul>
-<li><a href="#%E5%8C%BA%E9%97%B4%E4%BF%AE%E6%94%B9-1">区间修改</a></li>
-<li><a href="#%E5%8C%BA%E9%97%B4%E6%9F%A5%E8%AF%A2-1">区间查询</a></li>
-<li><a href="#%E4%BE%8B%E9%A2%98-2">例题</a></li>
-</ul>
-</li>
-</ul>
-<h3 id="线段树"><a href="#线段树" class="headerlink" title="线段树"></a>线段树</h3><blockquote>
+                <h3 id="线段树"><a href="#线段树" class="headerlink" title="线段树"></a>线段树</h3><blockquote>
 <p>能把对区间的修改、查询的时间复杂度由 O(n) 变为 O(logn)</p>
 </blockquote>
 <p>线段树实际上也是一种二叉树，每个节点用一个结构体<code>node</code>保存</p>

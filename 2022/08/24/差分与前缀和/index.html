@@ -16,16 +16,16 @@
   <meta name="author" content="zql">
   <meta name="keywords" content="">
   
-    <meta name="description" content="前缀和 一维前缀和 二维前缀和 例题 差分 一维差分 例题 二维差分 例题  前缀和 前缀和指的是序列的前n项和  一维前缀和先看一个例题：输入一个长度为n的整数序列。接下来再输入m个询问，每个询问输入一对l, r。对于每个询问，输出原序列中从第l个数到第r个数的和。如果使用暴力枚举，时间复杂度为 O(n*m),但是使用前缀和的话，时间复杂度可降为 O(n)input: 5 3 2 1 3 6">
+    <meta name="description" content="前缀和 前缀和指的是序列的前n项和  一维前缀和先看一个例题：输入一个长度为n的整数序列。接下来再输入m个询问，每个询问输入一对l, r。对于每个询问，输出原序列中从第l个数到第r个数的和。如果使用暴力枚举，时间复杂度为 O(n*m),但是使用前缀和的话，时间复杂度可降为 O(n)input: 5 3 2 1 3 6 4 1 2 1 3 2 4  output: 3 6 10   代码： #inc">
 <meta property="og:type" content="article">
 <meta property="og:title" content="差分与前缀和">
 <meta property="og:url" content="http://lqz2.github.io/2022/08/24/%E5%B7%AE%E5%88%86%E4%B8%8E%E5%89%8D%E7%BC%80%E5%92%8C/index.html">
 <meta property="og:site_name" content="my blogs">
-<meta property="og:description" content="前缀和 一维前缀和 二维前缀和 例题 差分 一维差分 例题 二维差分 例题  前缀和 前缀和指的是序列的前n项和  一维前缀和先看一个例题：输入一个长度为n的整数序列。接下来再输入m个询问，每个询问输入一对l, r。对于每个询问，输出原序列中从第l个数到第r个数的和。如果使用暴力枚举，时间复杂度为 O(n*m),但是使用前缀和的话，时间复杂度可降为 O(n)input: 5 3 2 1 3 6">
+<meta property="og:description" content="前缀和 前缀和指的是序列的前n项和  一维前缀和先看一个例题：输入一个长度为n的整数序列。接下来再输入m个询问，每个询问输入一对l, r。对于每个询问，输出原序列中从第l个数到第r个数的和。如果使用暴力枚举，时间复杂度为 O(n*m),但是使用前缀和的话，时间复杂度可降为 O(n)input: 5 3 2 1 3 6 4 1 2 1 3 2 4  output: 3 6 10   代码： #inc">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://img-blog.csdnimg.cn/20201214201734653.png">
 <meta property="article:published_time" content="2022-08-24T02:54:34.000Z">
-<meta property="article:modified_time" content="2022-08-30T08:35:58.633Z">
+<meta property="article:modified_time" content="2022-08-30T09:02:29.677Z">
 <meta property="article:author" content="zql">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://img-blog.csdnimg.cn/20201214201734653.png">
@@ -220,7 +220,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          2.8k 字
+          2.7k 字
         
       </span>
     
@@ -231,7 +231,7 @@
         
         
         
-          24 分钟
+          23 分钟
         
       </span>
     
@@ -274,18 +274,7 @@
             
               <div class="markdown-body">
                 
-                <ul>
-<li><a href="#%E5%89%8D%E7%BC%80%E5%92%8C">前缀和</a></li>
-<li><a href="#%E4%B8%80%E7%BB%B4%E5%89%8D%E7%BC%80%E5%92%8C">一维前缀和</a></li>
-<li><a href="#%E4%BA%8C%E7%BB%B4%E5%89%8D%E7%BC%80%E5%92%8C">二维前缀和</a></li>
-<li><a href="#%E4%BE%8B%E9%A2%98">例题</a></li>
-<li><a href="#%E5%B7%AE%E5%88%86">差分</a></li>
-<li><a href="#%E4%B8%80%E7%BB%B4%E5%B7%AE%E5%88%86">一维差分</a></li>
-<li><a href="#%E4%BE%8B%E9%A2%98-1">例题</a></li>
-<li><a href="#%E4%BA%8C%E7%BB%B4%E5%B7%AE%E5%88%86">二维差分</a></li>
-<li><a href="#%E4%BE%8B%E9%A2%98-2">例题</a></li>
-</ul>
-<h3 id="前缀和"><a href="#前缀和" class="headerlink" title="前缀和"></a>前缀和</h3><blockquote>
+                <h3 id="前缀和"><a href="#前缀和" class="headerlink" title="前缀和"></a>前缀和</h3><blockquote>
 <p>前缀和指的是序列的前n项和</p>
 </blockquote>
 <h3 id="一维前缀和"><a href="#一维前缀和" class="headerlink" title="一维前缀和"></a>一维前缀和</h3><p>先看一个例题：<br>输入一个长度为n的整数序列。接下来再输入m个询问，每个询问输入一对l, r。对于每个询问，输出原序列中从第l个数到第r个数的和。<br>如果使用暴力枚举，时间复杂度为 <code>O(n*m)</code>,但是使用前缀和的话，时间复杂度可降为 <code>O(n)</code><br>input:</p>
