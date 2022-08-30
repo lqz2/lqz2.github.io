@@ -7,8 +7,8 @@
 
 <head>
   <meta charset="UTF-8">
-  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
-  <link rel="icon" href="/img/fluid.png">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/avatar.jpg">
+  <link rel="icon" href="/img/avatar.jpg">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
   <meta http-equiv="x-ua-compatible" content="ie=edge">
   
@@ -16,12 +16,12 @@
   <meta name="author" content="zql">
   <meta name="keywords" content="">
   
-    <meta name="description" content="并查集 通过一个数组来保存各个节点的祖先，所有连通的节点的祖先相同，常用于解决最小生成树，图的连通性等问题  递归的查找节点的祖先首先假设有N个节点，定义一个数组vset[N]记录所有节点的祖先，vset[N]初始化为-1 定义一个find函数来查找祖先 int find(int a) &amp;#123;     if(vset[a]&#x3D;&#x3D;-1)         return a;     else">
+    <meta name="description" content="并查集 通过一个数组来保存各个节点的祖先，所有连通的节点的祖先相同，常用于解决最小生成树，图的连通性等问题  递归的查找节点的祖先首先假设有N个节点，定义一个数组vset[N]记录所有节点的祖先，vset[N]初始化为-1 定义一个find函数来查找祖先 12345678910int find(int a)&amp;#123;    if(vset[a]&#x3D;&#x3D;-1)        return a;">
 <meta property="og:type" content="article">
 <meta property="og:title" content="并查集">
 <meta property="og:url" content="http://lqz2.github.io/2022/08/26/%E5%B9%B6%E6%9F%A5%E9%9B%86/index.html">
 <meta property="og:site_name" content="my blogs">
-<meta property="og:description" content="并查集 通过一个数组来保存各个节点的祖先，所有连通的节点的祖先相同，常用于解决最小生成树，图的连通性等问题  递归的查找节点的祖先首先假设有N个节点，定义一个数组vset[N]记录所有节点的祖先，vset[N]初始化为-1 定义一个find函数来查找祖先 int find(int a) &amp;#123;     if(vset[a]&#x3D;&#x3D;-1)         return a;     else">
+<meta property="og:description" content="并查集 通过一个数组来保存各个节点的祖先，所有连通的节点的祖先相同，常用于解决最小生成树，图的连通性等问题  递归的查找节点的祖先首先假设有N个节点，定义一个数组vset[N]记录所有节点的祖先，vset[N]初始化为-1 定义一个find函数来查找祖先 12345678910int find(int a)&amp;#123;    if(vset[a]&#x3D;&#x3D;-1)        return a;">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2022-08-26T01:48:40.000Z">
 <meta property="article:modified_time" content="2022-08-30T09:02:20.629Z">
@@ -218,7 +218,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          967 字
+          1.1k 字
         
       </span>
     
@@ -277,76 +277,19 @@
 </blockquote>
 <h3 id="递归的查找节点的祖先"><a href="#递归的查找节点的祖先" class="headerlink" title="递归的查找节点的祖先"></a>递归的查找节点的祖先</h3><p>首先假设有<code>N</code>个节点，定义一个数组<code>vset[N]</code>记录所有节点的祖先，<code>vset[N]初始化为-1</code></p>
 <p>定义一个<code>find</code>函数来查找祖先</p>
-<div class="code-wrapper"><pre><code class="hljs gradle"><span class="hljs-keyword">int</span> <span class="hljs-keyword">find</span>(<span class="hljs-keyword">int</span> a)
-&#123;
-    <span class="hljs-keyword">if</span>(vset[a]==-<span class="hljs-number">1</span>)
-        <span class="hljs-keyword">return</span> a;
-    <span class="hljs-keyword">else</span>
-    &#123;
-        vset[a]=<span class="hljs-keyword">find</span>(vset[a]);
-        <span class="hljs-keyword">return</span> vset[a];
-    &#125;
-&#125;</code></pre></div>
+<figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs gradle"><span class="hljs-keyword">int</span> <span class="hljs-keyword">find</span>(<span class="hljs-keyword">int</span> a)<br>&#123;<br>    <span class="hljs-keyword">if</span>(vset[a]==-<span class="hljs-number">1</span>)<br>        <span class="hljs-keyword">return</span> a;<br>    <span class="hljs-keyword">else</span><br>    &#123;<br>        vset[a]=<span class="hljs-keyword">find</span>(vset[a]);<br>        <span class="hljs-keyword">return</span> vset[a];<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
 
 <h3 id="例题"><a href="#例题" class="headerlink" title="例题"></a>例题</h3><p>有<code>n</code>条道路，<code>m</code>个村庄,计算出使所有村庄连通的最低成本</p>
 <p>输入n,m，然后输入n行，每一行输入u,v,w表示两个村庄的编号和道路成本</p>
 <p>输出使所有村庄连通的最低成本</p>
 <p>input:</p>
-<div class="code-wrapper"><pre><code class="hljs basic"><span class="hljs-symbol">3 </span><span class="hljs-number">3</span>
-<span class="hljs-symbol">1 </span><span class="hljs-number">2</span> <span class="hljs-number">1</span>
-<span class="hljs-symbol">1 </span><span class="hljs-number">3</span> <span class="hljs-number">2</span>
-<span class="hljs-symbol">2 </span><span class="hljs-number">3</span> <span class="hljs-number">4</span></code></pre></div>
+<figure class="highlight basic"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs basic"><span class="hljs-symbol">3 </span><span class="hljs-number">3</span><br><span class="hljs-symbol">1 </span><span class="hljs-number">2</span> <span class="hljs-number">1</span><br><span class="hljs-symbol">1 </span><span class="hljs-number">3</span> <span class="hljs-number">2</span><br><span class="hljs-symbol">2 </span><span class="hljs-number">3</span> <span class="hljs-number">4</span><br></code></pre></td></tr></table></figure>
 
 <p>output:</p>
-<div class="code-wrapper"><pre><code class="hljs">3</code></pre></div>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs">3<br></code></pre></td></tr></table></figure>
 
 <p>代码：</p>
-<div class="code-wrapper"><pre><code class="hljs cpp"><span class="hljs-meta">#<span class="hljs-keyword">include</span><span class="hljs-string">&lt;bits/stdc++.h&gt;</span></span>
-<span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;
-<span class="hljs-type">const</span> <span class="hljs-type">int</span> N=<span class="hljs-number">1000</span>;
-<span class="hljs-keyword">typedef</span> vector&lt;<span class="hljs-type">int</span>&gt; vi;
-<span class="hljs-type">int</span> vset[<span class="hljs-number">1000</span>];
-<span class="hljs-function">vector&lt;vi&gt; <span class="hljs-title">e</span><span class="hljs-params">(<span class="hljs-number">1000</span>,vi(<span class="hljs-number">3</span>))</span></span>;
-<span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">find</span><span class="hljs-params">(<span class="hljs-type">int</span> a)</span></span>
-<span class="hljs-function"></span>&#123;
-    <span class="hljs-keyword">if</span>(vset[a]==<span class="hljs-number">-1</span>)
-        <span class="hljs-keyword">return</span> a;
-    <span class="hljs-keyword">else</span>
-    &#123;
-        vset[a]=<span class="hljs-built_in">find</span>(vset[a]);
-        <span class="hljs-keyword">return</span> vset[a];
-    &#125;
-&#125;
-
-<span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span>
-<span class="hljs-function"></span>&#123;
-    <span class="hljs-type">int</span> n,m;
-    cin&gt;&gt;n&gt;&gt;m;
-    <span class="hljs-built_in">memset</span>(vset,<span class="hljs-number">-1</span>,<span class="hljs-built_in">sizeof</span>(vset));
-    <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i=<span class="hljs-number">1</span>;i&lt;=n;++i)
-    &#123;
-        cin&gt;&gt;e[i][<span class="hljs-number">0</span>]&gt;&gt;e[i][<span class="hljs-number">1</span>]&gt;&gt;e[i][<span class="hljs-number">2</span>];
-    &#125;
-    <span class="hljs-built_in">sort</span>(e.<span class="hljs-built_in">begin</span>(),e.<span class="hljs-built_in">end</span>(),[](vi a,vi b)&#123;
-        <span class="hljs-keyword">return</span> a[<span class="hljs-number">2</span>]&lt;b[<span class="hljs-number">2</span>];
-    &#125;);
-    <span class="hljs-type">int</span> ans=<span class="hljs-number">0</span>,cnt=<span class="hljs-number">0</span>;
-    <span class="hljs-keyword">for</span>(vi&amp; t: e)
-    &#123;
-        <span class="hljs-type">int</span> x=<span class="hljs-built_in">find</span>(t[<span class="hljs-number">0</span>]);
-        <span class="hljs-type">int</span> y=<span class="hljs-built_in">find</span>(t[<span class="hljs-number">1</span>]);
-        <span class="hljs-keyword">if</span>(x!=y)
-        &#123;
-            ++cnt;
-            ans+=t[<span class="hljs-number">2</span>];
-            vset[x]=y;
-            <span class="hljs-keyword">if</span>(cnt==n<span class="hljs-number">-1</span>)
-                <span class="hljs-keyword">break</span>;
-        &#125;
-    &#125;
-    cout&lt;&lt;ans&lt;&lt;endl;
-    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
-&#125;</code></pre></div>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-meta">#<span class="hljs-keyword">include</span><span class="hljs-string">&lt;bits/stdc++.h&gt;</span></span><br><span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;<br><span class="hljs-type">const</span> <span class="hljs-type">int</span> N=<span class="hljs-number">1000</span>;<br><span class="hljs-keyword">typedef</span> vector&lt;<span class="hljs-type">int</span>&gt; vi;<br><span class="hljs-type">int</span> vset[<span class="hljs-number">1000</span>];<br><span class="hljs-function">vector&lt;vi&gt; <span class="hljs-title">e</span><span class="hljs-params">(<span class="hljs-number">1000</span>,vi(<span class="hljs-number">3</span>))</span></span>;<br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">find</span><span class="hljs-params">(<span class="hljs-type">int</span> a)</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-keyword">if</span>(vset[a]==<span class="hljs-number">-1</span>)<br>        <span class="hljs-keyword">return</span> a;<br>    <span class="hljs-keyword">else</span><br>    &#123;<br>        vset[a]=<span class="hljs-built_in">find</span>(vset[a]);<br>        <span class="hljs-keyword">return</span> vset[a];<br>    &#125;<br>&#125;<br><br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-type">int</span> n,m;<br>    cin&gt;&gt;n&gt;&gt;m;<br>    <span class="hljs-built_in">memset</span>(vset,<span class="hljs-number">-1</span>,<span class="hljs-built_in">sizeof</span>(vset));<br>    <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i=<span class="hljs-number">1</span>;i&lt;=n;++i)<br>    &#123;<br>        cin&gt;&gt;e[i][<span class="hljs-number">0</span>]&gt;&gt;e[i][<span class="hljs-number">1</span>]&gt;&gt;e[i][<span class="hljs-number">2</span>];<br>    &#125;<br>    <span class="hljs-built_in">sort</span>(e.<span class="hljs-built_in">begin</span>(),e.<span class="hljs-built_in">end</span>(),[](vi a,vi b)&#123;<br>        <span class="hljs-keyword">return</span> a[<span class="hljs-number">2</span>]&lt;b[<span class="hljs-number">2</span>];<br>    &#125;);<br>    <span class="hljs-type">int</span> ans=<span class="hljs-number">0</span>,cnt=<span class="hljs-number">0</span>;<br>    <span class="hljs-keyword">for</span>(vi&amp; t: e)<br>    &#123;<br>        <span class="hljs-type">int</span> x=<span class="hljs-built_in">find</span>(t[<span class="hljs-number">0</span>]);<br>        <span class="hljs-type">int</span> y=<span class="hljs-built_in">find</span>(t[<span class="hljs-number">1</span>]);<br>        <span class="hljs-keyword">if</span>(x!=y)<br>        &#123;<br>            ++cnt;<br>            ans+=t[<span class="hljs-number">2</span>];<br>            vset[x]=y;<br>            <span class="hljs-keyword">if</span>(cnt==n<span class="hljs-number">-1</span>)<br>                <span class="hljs-keyword">break</span>;<br>        &#125;<br>    &#125;<br>    cout&lt;&lt;ans&lt;&lt;endl;<br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
 
                 
               </div>
@@ -493,12 +436,6 @@
 
 
   
-
-
-  
-  
-
-
 
 
 
@@ -665,40 +602,6 @@
 
 
   <script>Fluid.plugins.imageCaption();</script>
-
-  
-      <script>
-        if (!window.MathJax) {
-          window.MathJax = {
-            tex    : {
-              inlineMath: { '[+]': [['$', '$']] }
-            },
-            loader : {
-              load: ['ui/lazy']
-            },
-            options: {
-              renderActions: {
-                insertedScript: [200, () => {
-                  document.querySelectorAll('mjx-container').forEach(node => {
-                    let target = node.parentNode;
-                    if (target.nodeName.toLowerCase() === 'li') {
-                      target.parentNode.classList.add('has-jax');
-                    }
-                  });
-                }, '', false]
-              }
-            }
-          };
-        } else {
-          MathJax.startup.document.state(0);
-          MathJax.texReset();
-          MathJax.typeset();
-          MathJax.typesetPromise();
-        }
-      </script>
-    
-
-  <script  src="https://lib.baomitu.com/mathjax/3.2.1/es5/tex-mml-chtml.js" ></script>
 
   <script  src="/js/local-search.js" ></script>
 

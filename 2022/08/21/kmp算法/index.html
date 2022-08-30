@@ -7,8 +7,8 @@
 
 <head>
   <meta charset="UTF-8">
-  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
-  <link rel="icon" href="/img/fluid.png">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/avatar.jpg">
+  <link rel="icon" href="/img/avatar.jpg">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
   <meta http-equiv="x-ua-compatible" content="ie=edge">
   
@@ -218,7 +218,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          716 字
+          798 字
         
       </span>
     
@@ -229,7 +229,7 @@
         
         
         
-          6 分钟
+          7 分钟
         
       </span>
     
@@ -278,64 +278,20 @@
 <blockquote>
 <p><em><strong>next</strong></em> 数组每个位置的值表示前缀集合和后缀集合交集中,最长元素的长度</p>
 </blockquote>
-<div class="code-wrapper"><pre><code class="hljs">        p:    a b a b a b c a
+<pre><code class="hljs">        p:    a b a b a b c a
 
     next[i]:  0 0 1 2 3 4 0 1
-</code></pre></div>
+</code></pre>
 <p>例题:</p>
 <p>给你两个字符串 s 和 p ，请你在 s 字符串中找出 p 字符串出现的第一个位置（下标从 0 开始）。如果不存在，则返回 -1 。</p>
 <p>input:</p>
-<div class="code-wrapper"><pre><code class="hljs ebnf"><span class="hljs-attribute">abacdf</span>
-<span class="hljs-attribute">acd</span></code></pre></div>
+<figure class="highlight ebnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs ebnf"><span class="hljs-attribute">abacdf</span><br><span class="hljs-attribute">acd</span><br></code></pre></td></tr></table></figure>
 
 <p>output:</p>
-<div class="code-wrapper"><pre><code class="hljs">2</code></pre></div>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs">2<br></code></pre></td></tr></table></figure>
 
 <p>题解</p>
-<div class="code-wrapper"><pre><code class="hljs routeros"><span class="hljs-comment">#include&lt;bits/stdc++.h&gt;</span>
-using namespace std;
-const int <span class="hljs-attribute">N</span>=1e5;
-int nxt[N];
-void get_next(string p)
-&#123;
-	int <span class="hljs-attribute">len</span>=p.size();
-	int <span class="hljs-attribute">i</span>=1,j=0;
-	<span class="hljs-keyword">while</span>(i&lt;len)
-	&#123;
-		<span class="hljs-keyword">if</span>(p[i]==p[j])
-		&#123;
-			nxt[i]=j+1;
-			++i;
-			++j;
-		&#125;
-		<span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span>(<span class="hljs-attribute">j</span>==0)
-		&#123;
-			nxt[i]=0;
-			++i;
-		&#125;
-		<span class="hljs-keyword">else</span>
-			<span class="hljs-attribute">j</span>=nxt[j-1];
-	&#125;
-&#125; 
-int main()
-&#123;
-	string s,p;
-	cin&gt;&gt;s&gt;&gt;p;
-	int <span class="hljs-attribute">m</span>=s.size(),n=p.size();
-	int <span class="hljs-attribute">ans</span>=-1;
-	
-	<span class="hljs-keyword">for</span>(int <span class="hljs-attribute">i</span>=0,j=0;i&lt;m;++i)
-	&#123;
-		<span class="hljs-keyword">while</span>(j&gt;0&amp;&amp;s[i]!=p[j])
-			<span class="hljs-attribute">j</span>=nxt[j-1];
-		<span class="hljs-keyword">if</span>(s[i]==p[j])
-			++j;
-		<span class="hljs-keyword">if</span>(<span class="hljs-attribute">j</span>==n)
-			<span class="hljs-attribute">ans</span>=i-j+1;
-	&#125;
-	cout&lt;&lt;ans&lt;&lt;endl;
-	return 0;
-&#125;</code></pre></div>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><code class="hljs routeros"><span class="hljs-comment">#include&lt;bits/stdc++.h&gt;</span><br>using namespace std;<br>const int <span class="hljs-attribute">N</span>=1e5;<br>int nxt[N];<br>void get_next(string p)<br>&#123;<br>	int <span class="hljs-attribute">len</span>=p.size();<br>	int <span class="hljs-attribute">i</span>=1,j=0;<br>	<span class="hljs-keyword">while</span>(i&lt;len)<br>	&#123;<br>		<span class="hljs-keyword">if</span>(p[i]==p[j])<br>		&#123;<br>			nxt[i]=j+1;<br>			++i;<br>			++j;<br>		&#125;<br>		<span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span>(<span class="hljs-attribute">j</span>==0)<br>		&#123;<br>			nxt[i]=0;<br>			++i;<br>		&#125;<br>		<span class="hljs-keyword">else</span><br>			<span class="hljs-attribute">j</span>=nxt[j-1];<br>	&#125;<br>&#125; <br>int main()<br>&#123;<br>	string s,p;<br>	cin&gt;&gt;s&gt;&gt;p;<br>	int <span class="hljs-attribute">m</span>=s.size(),n=p.size();<br>	int <span class="hljs-attribute">ans</span>=-1;<br>	<br>	<span class="hljs-keyword">for</span>(int <span class="hljs-attribute">i</span>=0,j=0;i&lt;m;++i)<br>	&#123;<br>		<span class="hljs-keyword">while</span>(j&gt;0&amp;&amp;s[i]!=p[j])<br>			<span class="hljs-attribute">j</span>=nxt[j-1];<br>		<span class="hljs-keyword">if</span>(s[i]==p[j])<br>			++j;<br>		<span class="hljs-keyword">if</span>(<span class="hljs-attribute">j</span>==n)<br>			<span class="hljs-attribute">ans</span>=i-j+1;<br>	&#125;<br>	cout&lt;&lt;ans&lt;&lt;endl;<br>	return 0;<br>&#125;<br></code></pre></td></tr></table></figure>
 
 
                 
@@ -483,12 +439,6 @@ int main()
 
 
   
-
-
-  
-  
-
-
 
 
 
@@ -655,40 +605,6 @@ int main()
 
 
   <script>Fluid.plugins.imageCaption();</script>
-
-  
-      <script>
-        if (!window.MathJax) {
-          window.MathJax = {
-            tex    : {
-              inlineMath: { '[+]': [['$', '$']] }
-            },
-            loader : {
-              load: ['ui/lazy']
-            },
-            options: {
-              renderActions: {
-                insertedScript: [200, () => {
-                  document.querySelectorAll('mjx-container').forEach(node => {
-                    let target = node.parentNode;
-                    if (target.nodeName.toLowerCase() === 'li') {
-                      target.parentNode.classList.add('has-jax');
-                    }
-                  });
-                }, '', false]
-              }
-            }
-          };
-        } else {
-          MathJax.startup.document.state(0);
-          MathJax.texReset();
-          MathJax.typeset();
-          MathJax.typesetPromise();
-        }
-      </script>
-    
-
-  <script  src="https://lib.baomitu.com/mathjax/3.2.1/es5/tex-mml-chtml.js" ></script>
 
   <script  src="/js/local-search.js" ></script>
 

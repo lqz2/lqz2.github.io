@@ -7,8 +7,8 @@
 
 <head>
   <meta charset="UTF-8">
-  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
-  <link rel="icon" href="/img/fluid.png">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/avatar.jpg">
+  <link rel="icon" href="/img/avatar.jpg">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
   <meta http-equiv="x-ua-compatible" content="ie=edge">
   
@@ -218,7 +218,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          1.7k 字
+          1.8k 字
         
       </span>
     
@@ -229,7 +229,7 @@
         
         
         
-          15 分钟
+          16 分钟
         
       </span>
     
@@ -292,99 +292,18 @@
 </ol>
 <p>输入第一行n,V<br>后面n行，输入第i件物品的体积vi和价值wi<br>输出：两个问题的答案，各占一行，如果无解输出0</p>
 <p>input:</p>
-<div class="code-wrapper"><pre><code class="hljs basic"><span class="hljs-symbol">3 </span><span class="hljs-number">5</span>
-<span class="hljs-symbol">2 </span><span class="hljs-number">10</span>
-<span class="hljs-symbol">4 </span><span class="hljs-number">5</span>
-<span class="hljs-symbol">1 </span><span class="hljs-number">4</span></code></pre></div>
+<figure class="highlight basic"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs basic"><span class="hljs-symbol">3 </span><span class="hljs-number">5</span><br><span class="hljs-symbol">2 </span><span class="hljs-number">10</span><br><span class="hljs-symbol">4 </span><span class="hljs-number">5</span><br><span class="hljs-symbol">1 </span><span class="hljs-number">4</span><br></code></pre></td></tr></table></figure>
 <p>output:</p>
-<div class="code-wrapper"><pre><code class="hljs">14
-9</code></pre></div>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs">14<br>9<br></code></pre></td></tr></table></figure>
 <p>题解：</p>
-<div class="code-wrapper"><pre><code class="hljs inform7">#include&lt;bits/stdc++.h&gt;
-using namespace std;
-int n,V;
-const int N=1005;
-int v<span class="hljs-comment">[N]</span>,w<span class="hljs-comment">[N]</span>;
-int dp<span class="hljs-comment">[N]</span>;
-int main()
-&#123;
-    cin&gt;&gt;n&gt;&gt;V;
-    for(int i=1;i&lt;=n;++i)
-    &#123;
-        cin&gt;&gt;v<span class="hljs-comment">[i]</span>;
-        cin&gt;&gt;w<span class="hljs-comment">[i]</span>;
-    &#125;
-    //不要求装满
-    for(int i=1;i&lt;=n;++i)
-    &#123;
-        for(int j=V;j&gt;=v<span class="hljs-comment">[i]</span>;--j)
-            dp<span class="hljs-comment">[j]</span>=max(dp<span class="hljs-comment">[j]</span>,dp<span class="hljs-comment">[j-v<span class="hljs-comment">[i]</span>]</span>+w<span class="hljs-comment">[i]</span>);
-    &#125;
-    cout&lt;&lt;dp<span class="hljs-comment">[V]</span>&lt;&lt;endl;
-    
-    //要求装满
-    memset(dp,-0x3f,sizeof(dp));
-    dp<span class="hljs-comment">[0]</span>=0;
-    for(int i=1;i&lt;=n;++i)
-    &#123;
-        for(int j=V;j&gt;=v<span class="hljs-comment">[i]</span>;--j)
-            dp<span class="hljs-comment">[j]</span>=max(dp<span class="hljs-comment">[j]</span>,dp<span class="hljs-comment">[j-v<span class="hljs-comment">[i]</span>]</span>+w<span class="hljs-comment">[i]</span>);
-    &#125;
-    if(dp<span class="hljs-comment">[V]</span>&gt;0)
-        cout&lt;&lt;dp<span class="hljs-comment">[V]</span>&lt;&lt;endl;
-    else
-        cout&lt;&lt;0&lt;&lt;endl;
-    return 0;
-&#125;</code></pre></div>
+<figure class="highlight inform7"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><code class="hljs inform7">#include&lt;bits/stdc++.h&gt;<br>using namespace std;<br>int n,V;<br>const int N=1005;<br>int v<span class="hljs-comment">[N]</span>,w<span class="hljs-comment">[N]</span>;<br>int dp<span class="hljs-comment">[N]</span>;<br>int main()<br>&#123;<br>    cin&gt;&gt;n&gt;&gt;V;<br>    for(int i=1;i&lt;=n;++i)<br>    &#123;<br>        cin&gt;&gt;v<span class="hljs-comment">[i]</span>;<br>        cin&gt;&gt;w<span class="hljs-comment">[i]</span>;<br>    &#125;<br>    //不要求装满<br>    for(int i=1;i&lt;=n;++i)<br>    &#123;<br>        for(int j=V;j&gt;=v<span class="hljs-comment">[i]</span>;--j)<br>            dp<span class="hljs-comment">[j]</span>=max(dp<span class="hljs-comment">[j]</span>,dp<span class="hljs-comment">[j-v<span class="hljs-comment">[i]</span>]</span>+w<span class="hljs-comment">[i]</span>);<br>    &#125;<br>    cout&lt;&lt;dp<span class="hljs-comment">[V]</span>&lt;&lt;endl;<br>    <br>    //要求装满<br>    memset(dp,-0x3f,sizeof(dp));<br>    dp<span class="hljs-comment">[0]</span>=0;<br>    for(int i=1;i&lt;=n;++i)<br>    &#123;<br>        for(int j=V;j&gt;=v<span class="hljs-comment">[i]</span>;--j)<br>            dp<span class="hljs-comment">[j]</span>=max(dp<span class="hljs-comment">[j]</span>,dp<span class="hljs-comment">[j-v<span class="hljs-comment">[i]</span>]</span>+w<span class="hljs-comment">[i]</span>);<br>    &#125;<br>    if(dp<span class="hljs-comment">[V]</span>&gt;0)<br>        cout&lt;&lt;dp<span class="hljs-comment">[V]</span>&lt;&lt;endl;<br>    else<br>        cout&lt;&lt;0&lt;&lt;endl;<br>    return 0;<br>&#125;<br></code></pre></td></tr></table></figure>
 <h4 id="例题2：完全背包"><a href="#例题2：完全背包" class="headerlink" title="例题2：完全背包"></a>例题2：完全背包</h4><p>描述与例题1相同，不过每种物品有<strong>任意</strong>个</p>
 <p>input:</p>
-<div class="code-wrapper"><pre><code class="hljs basic"><span class="hljs-symbol">6 </span><span class="hljs-number">13</span>
-<span class="hljs-symbol">13 </span><span class="hljs-number">189</span>
-<span class="hljs-symbol">17 </span><span class="hljs-number">360</span>
-<span class="hljs-symbol">19 </span><span class="hljs-number">870</span>
-<span class="hljs-symbol">14 </span><span class="hljs-number">184</span>
-<span class="hljs-symbol">6 </span><span class="hljs-number">298</span>
-<span class="hljs-symbol">16 </span><span class="hljs-number">242</span></code></pre></div>
+<figure class="highlight basic"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs basic"><span class="hljs-symbol">6 </span><span class="hljs-number">13</span><br><span class="hljs-symbol">13 </span><span class="hljs-number">189</span><br><span class="hljs-symbol">17 </span><span class="hljs-number">360</span><br><span class="hljs-symbol">19 </span><span class="hljs-number">870</span><br><span class="hljs-symbol">14 </span><span class="hljs-number">184</span><br><span class="hljs-symbol">6 </span><span class="hljs-number">298</span><br><span class="hljs-symbol">16 </span><span class="hljs-number">242</span><br></code></pre></td></tr></table></figure>
 <p>output:</p>
-<div class="code-wrapper"><pre><code class="hljs">596
-189</code></pre></div>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs">596<br>189<br></code></pre></td></tr></table></figure>
 <p>题解：</p>
-<div class="code-wrapper"><pre><code class="hljs inform7">#include&lt;bits/stdc++.h&gt;
-using namespace std;
-int n,V;
-const int N=1005;
-int v<span class="hljs-comment">[N]</span>,w<span class="hljs-comment">[N]</span>;
-int dp<span class="hljs-comment">[N]</span>;
-int main()
-&#123;
-    cin&gt;&gt;n&gt;&gt;V;
-    for(int i=1;i&lt;=n;++i)
-    &#123;
-        cin&gt;&gt;v<span class="hljs-comment">[i]</span>;
-        cin&gt;&gt;w<span class="hljs-comment">[i]</span>;
-    &#125;
-    //不要求装满
-    for(int i=1;i&lt;=n;++i)
-    &#123;
-        for(int j=v<span class="hljs-comment">[i]</span>;j&lt;=V;++j)
-            dp<span class="hljs-comment">[j]</span>=max(dp<span class="hljs-comment">[j]</span>,dp<span class="hljs-comment">[j-v<span class="hljs-comment">[i]</span>]</span>+w<span class="hljs-comment">[i]</span>);
-    &#125;
-    cout&lt;&lt;dp<span class="hljs-comment">[V]</span>&lt;&lt;endl;
-    
-    //要求装满
-    memset(dp,-0x3f,sizeof(dp));
-    dp<span class="hljs-comment">[0]</span>=0;
-    for(int i=1;i&lt;=n;++i)
-    &#123;
-        for(int j=v<span class="hljs-comment">[i]</span>;j&lt;=V;++j)
-            dp<span class="hljs-comment">[j]</span>=max(dp<span class="hljs-comment">[j]</span>,dp<span class="hljs-comment">[j-v<span class="hljs-comment">[i]</span>]</span>+w<span class="hljs-comment">[i]</span>);
-    &#125;
-    if(dp<span class="hljs-comment">[V]</span>&gt;0)
-        cout&lt;&lt;dp<span class="hljs-comment">[V]</span>&lt;&lt;endl;
-    else
-        cout&lt;&lt;0&lt;&lt;endl;
-    return 0;
-&#125;</code></pre></div>
+<figure class="highlight inform7"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><code class="hljs inform7">#include&lt;bits/stdc++.h&gt;<br>using namespace std;<br>int n,V;<br>const int N=1005;<br>int v<span class="hljs-comment">[N]</span>,w<span class="hljs-comment">[N]</span>;<br>int dp<span class="hljs-comment">[N]</span>;<br>int main()<br>&#123;<br>    cin&gt;&gt;n&gt;&gt;V;<br>    for(int i=1;i&lt;=n;++i)<br>    &#123;<br>        cin&gt;&gt;v<span class="hljs-comment">[i]</span>;<br>        cin&gt;&gt;w<span class="hljs-comment">[i]</span>;<br>    &#125;<br>    //不要求装满<br>    for(int i=1;i&lt;=n;++i)<br>    &#123;<br>        for(int j=v<span class="hljs-comment">[i]</span>;j&lt;=V;++j)<br>            dp<span class="hljs-comment">[j]</span>=max(dp<span class="hljs-comment">[j]</span>,dp<span class="hljs-comment">[j-v<span class="hljs-comment">[i]</span>]</span>+w<span class="hljs-comment">[i]</span>);<br>    &#125;<br>    cout&lt;&lt;dp<span class="hljs-comment">[V]</span>&lt;&lt;endl;<br>    <br>    //要求装满<br>    memset(dp,-0x3f,sizeof(dp));<br>    dp<span class="hljs-comment">[0]</span>=0;<br>    for(int i=1;i&lt;=n;++i)<br>    &#123;<br>        for(int j=v<span class="hljs-comment">[i]</span>;j&lt;=V;++j)<br>            dp<span class="hljs-comment">[j]</span>=max(dp<span class="hljs-comment">[j]</span>,dp<span class="hljs-comment">[j-v<span class="hljs-comment">[i]</span>]</span>+w<span class="hljs-comment">[i]</span>);<br>    &#125;<br>    if(dp<span class="hljs-comment">[V]</span>&gt;0)<br>        cout&lt;&lt;dp<span class="hljs-comment">[V]</span>&lt;&lt;endl;<br>    else<br>        cout&lt;&lt;0&lt;&lt;endl;<br>    return 0;<br>&#125;<br></code></pre></td></tr></table></figure>
 
 
                 
@@ -532,12 +451,6 @@ int main()
 
 
   
-
-
-  
-  
-
-
 
 
 
@@ -704,40 +617,6 @@ int main()
 
 
   <script>Fluid.plugins.imageCaption();</script>
-
-  
-      <script>
-        if (!window.MathJax) {
-          window.MathJax = {
-            tex    : {
-              inlineMath: { '[+]': [['$', '$']] }
-            },
-            loader : {
-              load: ['ui/lazy']
-            },
-            options: {
-              renderActions: {
-                insertedScript: [200, () => {
-                  document.querySelectorAll('mjx-container').forEach(node => {
-                    let target = node.parentNode;
-                    if (target.nodeName.toLowerCase() === 'li') {
-                      target.parentNode.classList.add('has-jax');
-                    }
-                  });
-                }, '', false]
-              }
-            }
-          };
-        } else {
-          MathJax.startup.document.state(0);
-          MathJax.texReset();
-          MathJax.typeset();
-          MathJax.typesetPromise();
-        }
-      </script>
-    
-
-  <script  src="https://lib.baomitu.com/mathjax/3.2.1/es5/tex-mml-chtml.js" ></script>
 
   <script  src="/js/local-search.js" ></script>
 

@@ -7,8 +7,8 @@
 
 <head>
   <meta charset="UTF-8">
-  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
-  <link rel="icon" href="/img/fluid.png">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/avatar.jpg">
+  <link rel="icon" href="/img/avatar.jpg">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
   <meta http-equiv="x-ua-compatible" content="ie=edge">
   
@@ -16,12 +16,12 @@
   <meta name="author" content="zql">
   <meta name="keywords" content="">
   
-    <meta name="description" content="进制转换 下面的模板可用于36以内进制任意转换  题目将M进制的数X转换为N进制的数输出。输入的第一行包括两个整数：M和N(2&lt;&#x3D;M,N&lt;&#x3D;36)。下面的一行输入一个数X，X是M进制的数，现在要求你将M进制的数X转换成N进制的数输出。 input: 36 9 XYZZA765 output: 10374545654665 代码： #include&lt;bits&#x2F;s">
+    <meta name="description" content="进制转换 下面的模板可用于36以内进制任意转换  题目将M进制的数X转换为N进制的数输出。输入的第一行包括两个整数：M和N(2&lt;&#x3D;M,N&lt;&#x3D;36)。下面的一行输入一个数X，X是M进制的数，现在要求你将M进制的数X转换成N进制的数输出。 input: 1236 9XYZZA765 output: 110374545654665 代码： 1234567891011121">
 <meta property="og:type" content="article">
 <meta property="og:title" content="进制转换与大阶乘">
 <meta property="og:url" content="http://lqz2.github.io/2022/08/27/%E8%BF%9B%E5%88%B6%E8%BD%AC%E6%8D%A2%E4%B8%8E%E5%A4%A7%E9%98%B6%E4%B9%98/index.html">
 <meta property="og:site_name" content="my blogs">
-<meta property="og:description" content="进制转换 下面的模板可用于36以内进制任意转换  题目将M进制的数X转换为N进制的数输出。输入的第一行包括两个整数：M和N(2&lt;&#x3D;M,N&lt;&#x3D;36)。下面的一行输入一个数X，X是M进制的数，现在要求你将M进制的数X转换成N进制的数输出。 input: 36 9 XYZZA765 output: 10374545654665 代码： #include&lt;bits&#x2F;s">
+<meta property="og:description" content="进制转换 下面的模板可用于36以内进制任意转换  题目将M进制的数X转换为N进制的数输出。输入的第一行包括两个整数：M和N(2&lt;&#x3D;M,N&lt;&#x3D;36)。下面的一行输入一个数X，X是M进制的数，现在要求你将M进制的数X转换成N进制的数输出。 input: 1236 9XYZZA765 output: 110374545654665 代码： 1234567891011121">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2022-08-27T03:11:46.000Z">
 <meta property="article:modified_time" content="2022-08-30T09:02:59.557Z">
@@ -218,7 +218,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          4k 字
+          4.2k 字
         
       </span>
     
@@ -229,7 +229,7 @@
         
         
         
-          34 分钟
+          36 分钟
         
       </span>
     
@@ -277,119 +277,19 @@
 </blockquote>
 <h4 id="题目"><a href="#题目" class="headerlink" title="题目"></a>题目</h4><p>将M进制的数X转换为N进制的数输出。<br>输入的第一行包括两个整数：M和N(2&lt;&#x3D;M,N&lt;&#x3D;36)。<br>下面的一行输入一个数X，X是M进制的数，现在要求你将M进制的数X转换成N进制的数输出。</p>
 <p>input:</p>
-<div class="code-wrapper"><pre><code class="hljs apache"><span class="hljs-attribute">36</span> <span class="hljs-number">9</span>
-<span class="hljs-attribute">XYZZA765</span></code></pre></div>
+<figure class="highlight apache"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs apache"><span class="hljs-attribute">36</span> <span class="hljs-number">9</span><br><span class="hljs-attribute">XYZZA765</span><br></code></pre></td></tr></table></figure>
 <p>output:</p>
-<div class="code-wrapper"><pre><code class="hljs">10374545654665</code></pre></div>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs">10374545654665<br></code></pre></td></tr></table></figure>
 <p>代码：</p>
-<div class="code-wrapper"><pre><code class="hljs pgsql"><span class="hljs-meta">#include&lt;bits/stdc++.h&gt;</span>
-<span class="hljs-keyword">using</span> namespace std;
-string convert(string s,<span class="hljs-type">int</span> a,<span class="hljs-type">int</span> b)
-&#123;
-    <span class="hljs-type">int</span> len=s.size();
-    <span class="hljs-type">int</span> i=<span class="hljs-number">0</span>;
-    string res;
-    <span class="hljs-keyword">while</span>(i&lt;len)
-    &#123;#<span class="hljs-keyword">include</span>&lt;bits/stdc++.h&gt;
-<span class="hljs-keyword">using</span> namespace std;
-<span class="hljs-type">int</span> a[<span class="hljs-number">100000</span>];
-<span class="hljs-type">int</span> main()
-&#123;
-    <span class="hljs-type">int</span> n;
-    cin&gt;&gt;n; 
-    <span class="hljs-type">int</span> ws=<span class="hljs-number">1</span>;
-    a[<span class="hljs-number">0</span>]=<span class="hljs-number">1</span>;
-    <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i=<span class="hljs-number">2</span>;i&lt;=n;++i)
-    &#123;
-        <span class="hljs-type">int</span> k=<span class="hljs-number">0</span>;
-        <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> j=<span class="hljs-number">0</span>;j&lt;ws;++j)
-        &#123;
-            <span class="hljs-type">int</span> t=i*a[j]+k;
-            k=t/<span class="hljs-number">10</span>;
-            a[j]=t%<span class="hljs-number">10</span>;
-        &#125;
-        <span class="hljs-keyword">while</span>(k)
-        &#123;
-            a[ws]=k%<span class="hljs-number">10</span>;
-            k/=<span class="hljs-number">10</span>;
-            ++ws;
-        &#125;
-    &#125;
-    <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i=ws<span class="hljs-number">-1</span>;i&gt;=<span class="hljs-number">0</span>;<span class="hljs-comment">--i)</span>
-        cout&lt;&lt;a[i];
-    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
-&#125;
-)
-        &#123;
-            <span class="hljs-keyword">if</span>(s[j]&gt;=<span class="hljs-string">&#x27;0&#x27;</span>&amp;&amp;s[j]&lt;=<span class="hljs-string">&#x27;9&#x27;</span>)
-                tmp1=s[j]-<span class="hljs-string">&#x27;0&#x27;</span>;
-            <span class="hljs-keyword">else</span>
-                tmp1=s[j]-<span class="hljs-string">&#x27;A&#x27;</span>+<span class="hljs-number">10</span>;
-            <span class="hljs-type">int</span> t=k*a+tmp1;
-            k=t%b;
-            tmp2=t/b;
-            <span class="hljs-keyword">if</span>(tmp2&lt;=<span class="hljs-number">9</span>)
-                s[j]=tmp2+<span class="hljs-string">&#x27;0&#x27;</span>;
-            <span class="hljs-keyword">else</span>
-                s[j]=tmp2<span class="hljs-number">-10</span>+<span class="hljs-string">&#x27;A&#x27;</span>;
-            
-        &#125;
-        <span class="hljs-keyword">if</span>(k&lt;=<span class="hljs-number">9</span>)
-            res+=k+<span class="hljs-string">&#x27;0&#x27;</span>;
-        <span class="hljs-keyword">else</span>
-            res+=k<span class="hljs-number">-10</span>+<span class="hljs-string">&#x27;A&#x27;</span>;
-        <span class="hljs-keyword">while</span>(s[i]==<span class="hljs-string">&#x27;0&#x27;</span>)
-            ++i;
-    &#125;
-    reverse(res.<span class="hljs-keyword">begin</span>(),res.<span class="hljs-keyword">end</span>());
-    <span class="hljs-keyword">return</span> res;
-&#125;
-
-<span class="hljs-type">int</span> main()
-&#123;
-    <span class="hljs-type">int</span> m,n;
-    string s;
-    cin&gt;&gt;m&gt;&gt;n;
-    cin&gt;&gt;s;
-    cout&lt;&lt;convert(s,m,n)&lt;&lt;endl;
-    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
-&#125;</code></pre></div>
+<figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br></pre></td><td class="code"><pre><code class="hljs pgsql"><span class="hljs-meta">#include&lt;bits/stdc++.h&gt;</span><br><span class="hljs-keyword">using</span> namespace std;<br>string convert(string s,<span class="hljs-type">int</span> a,<span class="hljs-type">int</span> b)<br>&#123;<br>    <span class="hljs-type">int</span> len=s.size();<br>    <span class="hljs-type">int</span> i=<span class="hljs-number">0</span>;<br>    string res;<br>    <span class="hljs-keyword">while</span>(i&lt;len)<br>    &#123;#<span class="hljs-keyword">include</span>&lt;bits/stdc++.h&gt;<br><span class="hljs-keyword">using</span> namespace std;<br><span class="hljs-type">int</span> a[<span class="hljs-number">100000</span>];<br><span class="hljs-type">int</span> main()<br>&#123;<br>    <span class="hljs-type">int</span> n;<br>    cin&gt;&gt;n; <br>    <span class="hljs-type">int</span> ws=<span class="hljs-number">1</span>;<br>    a[<span class="hljs-number">0</span>]=<span class="hljs-number">1</span>;<br>    <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i=<span class="hljs-number">2</span>;i&lt;=n;++i)<br>    &#123;<br>        <span class="hljs-type">int</span> k=<span class="hljs-number">0</span>;<br>        <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> j=<span class="hljs-number">0</span>;j&lt;ws;++j)<br>        &#123;<br>            <span class="hljs-type">int</span> t=i*a[j]+k;<br>            k=t/<span class="hljs-number">10</span>;<br>            a[j]=t%<span class="hljs-number">10</span>;<br>        &#125;<br>        <span class="hljs-keyword">while</span>(k)<br>        &#123;<br>            a[ws]=k%<span class="hljs-number">10</span>;<br>            k/=<span class="hljs-number">10</span>;<br>            ++ws;<br>        &#125;<br>    &#125;<br>    <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i=ws<span class="hljs-number">-1</span>;i&gt;=<span class="hljs-number">0</span>;<span class="hljs-comment">--i)</span><br>        cout&lt;&lt;a[i];<br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br>)<br>        &#123;<br>            <span class="hljs-keyword">if</span>(s[j]&gt;=<span class="hljs-string">&#x27;0&#x27;</span>&amp;&amp;s[j]&lt;=<span class="hljs-string">&#x27;9&#x27;</span>)<br>                tmp1=s[j]-<span class="hljs-string">&#x27;0&#x27;</span>;<br>            <span class="hljs-keyword">else</span><br>                tmp1=s[j]-<span class="hljs-string">&#x27;A&#x27;</span>+<span class="hljs-number">10</span>;<br>            <span class="hljs-type">int</span> t=k*a+tmp1;<br>            k=t%b;<br>            tmp2=t/b;<br>            <span class="hljs-keyword">if</span>(tmp2&lt;=<span class="hljs-number">9</span>)<br>                s[j]=tmp2+<span class="hljs-string">&#x27;0&#x27;</span>;<br>            <span class="hljs-keyword">else</span><br>                s[j]=tmp2<span class="hljs-number">-10</span>+<span class="hljs-string">&#x27;A&#x27;</span>;<br>            <br>        &#125;<br>        <span class="hljs-keyword">if</span>(k&lt;=<span class="hljs-number">9</span>)<br>            res+=k+<span class="hljs-string">&#x27;0&#x27;</span>;<br>        <span class="hljs-keyword">else</span><br>            res+=k<span class="hljs-number">-10</span>+<span class="hljs-string">&#x27;A&#x27;</span>;<br>        <span class="hljs-keyword">while</span>(s[i]==<span class="hljs-string">&#x27;0&#x27;</span>)<br>            ++i;<br>    &#125;<br>    reverse(res.<span class="hljs-keyword">begin</span>(),res.<span class="hljs-keyword">end</span>());<br>    <span class="hljs-keyword">return</span> res;<br>&#125;<br><br><span class="hljs-type">int</span> main()<br>&#123;<br>    <span class="hljs-type">int</span> m,n;<br>    string s;<br>    cin&gt;&gt;m&gt;&gt;n;<br>    cin&gt;&gt;s;<br>    cout&lt;&lt;convert(s,m,n)&lt;&lt;endl;<br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
 <h3 id="大阶乘"><a href="#大阶乘" class="headerlink" title="大阶乘"></a>大阶乘</h3><h4 id="题目-1"><a href="#题目-1" class="headerlink" title="题目"></a>题目</h4><p> 输入一个正整数N，输出N的阶乘<br> N&lt;&#x3D;1000</p>
 <p> input:</p>
-<div class="code-wrapper"><pre><code class="hljs yaml"><span class="hljs-number">1000</span></code></pre></div>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs yaml"><span class="hljs-number">1000</span><br></code></pre></td></tr></table></figure>
 
 <p> output:</p>
-<div class="code-wrapper"><pre><code class="hljs">402387260077093773543702433923003985719374864210714632543799910429938512398629020592044208486969404800479988610197196058631666872994808558901323829669944590997424504087073759918823627727188732519779505950995276120874975462497043601418278094646496291056393887437886487337119181045825783647849977012476632889835955735432513185323958463075557409114262417474349347553428646576611667797396668820291207379143853719588249808126867838374559731746136085379534524221586593201928090878297308431392844403281231558611036976801357304216168747609675871348312025478589320767169132448426236131412508780208000261683151027341827977704784635868170164365024153691398281264810213092761244896359928705114964975419909342221566832572080821333186116811553615836546984046708975602900950537616475847728421889679646244945160765353408198901385442487984959953319101723355556602139450399736280750137837615307127761926849034352625200015888535147331611702103968175921510907788019393178114194545257223865541461062892187960223838971476088506276862967146674697562911234082439208160153780889893964518263243671616762179168909779911903754031274622289988005195444414282012187361745992642956581746628302955570299024324153181617210465832036786906117260158783520751516284225540265170483304226143974286933061690897968482590125458327168226458066526769958652682272807075781391858178889652208164348344825993266043367660176999612831860788386150279465955131156552036093988180612138558600301435694527224206344631797460594682573103790084024432438465657245014402821885252470935190620929023136493273497565513958720559654228749774011413346962715422845862377387538230483865688976461927383814900140767310446640259899490222221765904339901886018566526485061799702356193897017860040811889729918311021171229845901641921068884387121855646124960798722908519296819372388642614839657382291123125024186649353143970137428531926649875337218940694281434118520158014123344828015051399694290153483077644569099073152433278288269864602789864321139083506217095002597389863554277196742822248757586765752344220207573630569498825087968928162753848863396909959826280956121450994871701244516461260379029309120889086942028510640182154399457156805941872748998094254742173582401063677404595741785160829230135358081840096996372524230560855903700624271243416909004153690105933983835777939410970027753472000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000</code></pre></div>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs">402387260077093773543702433923003985719374864210714632543799910429938512398629020592044208486969404800479988610197196058631666872994808558901323829669944590997424504087073759918823627727188732519779505950995276120874975462497043601418278094646496291056393887437886487337119181045825783647849977012476632889835955735432513185323958463075557409114262417474349347553428646576611667797396668820291207379143853719588249808126867838374559731746136085379534524221586593201928090878297308431392844403281231558611036976801357304216168747609675871348312025478589320767169132448426236131412508780208000261683151027341827977704784635868170164365024153691398281264810213092761244896359928705114964975419909342221566832572080821333186116811553615836546984046708975602900950537616475847728421889679646244945160765353408198901385442487984959953319101723355556602139450399736280750137837615307127761926849034352625200015888535147331611702103968175921510907788019393178114194545257223865541461062892187960223838971476088506276862967146674697562911234082439208160153780889893964518263243671616762179168909779911903754031274622289988005195444414282012187361745992642956581746628302955570299024324153181617210465832036786906117260158783520751516284225540265170483304226143974286933061690897968482590125458327168226458066526769958652682272807075781391858178889652208164348344825993266043367660176999612831860788386150279465955131156552036093988180612138558600301435694527224206344631797460594682573103790084024432438465657245014402821885252470935190620929023136493273497565513958720559654228749774011413346962715422845862377387538230483865688976461927383814900140767310446640259899490222221765904339901886018566526485061799702356193897017860040811889729918311021171229845901641921068884387121855646124960798722908519296819372388642614839657382291123125024186649353143970137428531926649875337218940694281434118520158014123344828015051399694290153483077644569099073152433278288269864602789864321139083506217095002597389863554277196742822248757586765752344220207573630569498825087968928162753848863396909959826280956121450994871701244516461260379029309120889086942028510640182154399457156805941872748998094254742173582401063677404595741785160829230135358081840096996372524230560855903700624271243416909004153690105933983835777939410970027753472000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000000<br></code></pre></td></tr></table></figure>
 <p>代码</p>
-<div class="code-wrapper"><pre><code class="hljs routeros"><span class="hljs-comment">#include&lt;bits/stdc++.h&gt;</span>
-using namespace std;
-int a[100000];
-int main()
-&#123;
-    int n;
-    cin&gt;&gt;n; 
-    int <span class="hljs-attribute">ws</span>=1;
-    a[0]=1;
-    <span class="hljs-keyword">for</span>(int <span class="hljs-attribute">i</span>=2;i&lt;=n;++i)
-    &#123;
-        int <span class="hljs-attribute">k</span>=0;
-        <span class="hljs-keyword">for</span>(int <span class="hljs-attribute">j</span>=0;j&lt;ws;++j)
-        &#123;
-            int <span class="hljs-attribute">t</span>=i*a[j]+k;
-            <span class="hljs-attribute">k</span>=t/10;
-            a[j]=t%10;
-        &#125;
-        <span class="hljs-keyword">while</span>(k)
-        &#123;
-            a[ws]=k%10;
-            k/=10;
-            ++ws;
-        &#125;
-    &#125;
-    <span class="hljs-keyword">for</span>(int <span class="hljs-attribute">i</span>=ws-1;i&gt;=0;--i)
-        cout&lt;&lt;a[i];
-    return 0;
-&#125;</code></pre></div>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><code class="hljs routeros"><span class="hljs-comment">#include&lt;bits/stdc++.h&gt;</span><br>using namespace std;<br>int a[100000];<br>int main()<br>&#123;<br>    int n;<br>    cin&gt;&gt;n; <br>    int <span class="hljs-attribute">ws</span>=1;<br>    a[0]=1;<br>    <span class="hljs-keyword">for</span>(int <span class="hljs-attribute">i</span>=2;i&lt;=n;++i)<br>    &#123;<br>        int <span class="hljs-attribute">k</span>=0;<br>        <span class="hljs-keyword">for</span>(int <span class="hljs-attribute">j</span>=0;j&lt;ws;++j)<br>        &#123;<br>            int <span class="hljs-attribute">t</span>=i*a[j]+k;<br>            <span class="hljs-attribute">k</span>=t/10;<br>            a[j]=t%10;<br>        &#125;<br>        <span class="hljs-keyword">while</span>(k)<br>        &#123;<br>            a[ws]=k%10;<br>            k/=10;<br>            ++ws;<br>        &#125;<br>    &#125;<br>    <span class="hljs-keyword">for</span>(int <span class="hljs-attribute">i</span>=ws-1;i&gt;=0;--i)<br>        cout&lt;&lt;a[i];<br>    return 0;<br>&#125;<br></code></pre></td></tr></table></figure>
 
                 
               </div>
@@ -536,12 +436,6 @@ int main()
 
 
   
-
-
-  
-  
-
-
 
 
 
@@ -708,40 +602,6 @@ int main()
 
 
   <script>Fluid.plugins.imageCaption();</script>
-
-  
-      <script>
-        if (!window.MathJax) {
-          window.MathJax = {
-            tex    : {
-              inlineMath: { '[+]': [['$', '$']] }
-            },
-            loader : {
-              load: ['ui/lazy']
-            },
-            options: {
-              renderActions: {
-                insertedScript: [200, () => {
-                  document.querySelectorAll('mjx-container').forEach(node => {
-                    let target = node.parentNode;
-                    if (target.nodeName.toLowerCase() === 'li') {
-                      target.parentNode.classList.add('has-jax');
-                    }
-                  });
-                }, '', false]
-              }
-            }
-          };
-        } else {
-          MathJax.startup.document.state(0);
-          MathJax.texReset();
-          MathJax.typeset();
-          MathJax.typesetPromise();
-        }
-      </script>
-    
-
-  <script  src="https://lib.baomitu.com/mathjax/3.2.1/es5/tex-mml-chtml.js" ></script>
 
   <script  src="/js/local-search.js" ></script>
 

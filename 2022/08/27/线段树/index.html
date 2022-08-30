@@ -7,8 +7,8 @@
 
 <head>
   <meta charset="UTF-8">
-  <link rel="apple-touch-icon" sizes="76x76" href="/img/fluid.png">
-  <link rel="icon" href="/img/fluid.png">
+  <link rel="apple-touch-icon" sizes="76x76" href="/img/avatar.jpg">
+  <link rel="icon" href="/img/avatar.jpg">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, shrink-to-fit=no">
   <meta http-equiv="x-ua-compatible" content="ie=edge">
   
@@ -16,15 +16,15 @@
   <meta name="author" content="zql">
   <meta name="keywords" content="">
   
-    <meta name="description" content="线段树 能把对区间的修改、查询的时间复杂度由 O(n) 变为 O(logn)  线段树实际上也是一种二叉树，每个节点用一个结构体node保存 struct node &amp;#123; 	int l,r,sum; &amp;#125; 其中，l和r表示线段的左右端点，sum表示线段的和 如果用数组存储，一棵二叉树，左孩子下标为2*i，右孩子下标为2*i+1因此，每一个节点的sum值为：tree[i].sum&#x3D;t">
+    <meta name="description" content="线段树 能把对区间的修改、查询的时间复杂度由 O(n) 变为 O(logn)  线段树实际上也是一种二叉树，每个节点用一个结构体node保存 1234struct node&amp;#123;	int l,r,sum;&amp;#125; 其中，l和r表示线段的左右端点，sum表示线段的和 如果用数组存储，一棵二叉树，左孩子下标为2*i，右孩子下标为2*i+1因此，每一个节点的sum值为：tree[i].sum&#x3D;">
 <meta property="og:type" content="article">
 <meta property="og:title" content="线段树">
 <meta property="og:url" content="http://lqz2.github.io/2022/08/27/%E7%BA%BF%E6%AE%B5%E6%A0%91/index.html">
 <meta property="og:site_name" content="my blogs">
-<meta property="og:description" content="线段树 能把对区间的修改、查询的时间复杂度由 O(n) 变为 O(logn)  线段树实际上也是一种二叉树，每个节点用一个结构体node保存 struct node &amp;#123; 	int l,r,sum; &amp;#125; 其中，l和r表示线段的左右端点，sum表示线段的和 如果用数组存储，一棵二叉树，左孩子下标为2*i，右孩子下标为2*i+1因此，每一个节点的sum值为：tree[i].sum&#x3D;t">
+<meta property="og:description" content="线段树 能把对区间的修改、查询的时间复杂度由 O(n) 变为 O(logn)  线段树实际上也是一种二叉树，每个节点用一个结构体node保存 1234struct node&amp;#123;	int l,r,sum;&amp;#125; 其中，l和r表示线段的左右端点，sum表示线段的和 如果用数组存储，一棵二叉树，左孩子下标为2*i，右孩子下标为2*i+1因此，每一个节点的sum值为：tree[i].sum&#x3D;">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2022-08-27T08:13:35.000Z">
-<meta property="article:modified_time" content="2022-08-30T09:03:33.293Z">
+<meta property="article:modified_time" content="2022-08-30T10:31:49.909Z">
 <meta property="article:author" content="zql">
 <meta name="twitter:card" content="summary_large_image">
   
@@ -218,7 +218,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          8.6k 字
+          9.4k 字
         
       </span>
     
@@ -229,7 +229,7 @@
         
         
         
-          72 分钟
+          79 分钟
         
       </span>
     
@@ -276,61 +276,13 @@
 <p>能把对区间的修改、查询的时间复杂度由 O(n) 变为 O(logn)</p>
 </blockquote>
 <p>线段树实际上也是一种二叉树，每个节点用一个结构体<code>node</code>保存</p>
-<div class="code-wrapper"><pre><code class="hljs crmsh">struct <span class="hljs-keyword">node</span>
-<span class="hljs-title">&#123;</span>
-<span class="hljs-title">	int</span> l,r,sum;
-&#125;</code></pre></div>
+<figure class="highlight crmsh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs crmsh">struct <span class="hljs-keyword">node</span><br><span class="hljs-title">&#123;</span><br><span class="hljs-title">	int</span> l,r,sum;<br>&#125;<br></code></pre></td></tr></table></figure>
 <p>其中，<code>l</code>和<code>r</code>表示线段的左右端点，<code>sum</code>表示线段的和</p>
 <p>如果用数组存储，一棵二叉树，左孩子下标为<code>2*i</code>，右孩子下标为<code>2*i+1</code><br>因此，每一个节点的<code>sum</code>值为：<code>tree[i].sum=tree[2*i].sum+tree[2*i+1].sum</code></p>
-<h4 id="递归建树"><a href="#递归建树" class="headerlink" title="递归建树"></a>递归建树</h4><div class="code-wrapper"><pre><code class="hljs stan"><span class="hljs-type">void</span> build(<span class="hljs-type">int</span> i,<span class="hljs-type">int</span> l,<span class="hljs-type">int</span> r)
-&#123;
-<span class="hljs-comment">//	i:当前节点编号 l:左端点 r:右端点 </span>
-	tree[i].l=l;
-	tree[i].r=r;
-	<span class="hljs-comment">//如果是叶子节点，赋值并返回 </span>
-	<span class="hljs-keyword">if</span>(l==r)
-	&#123;	
-		tree[i].<span class="hljs-built_in">sum</span>=<span class="hljs-type">array</span>[l];
-		<span class="hljs-keyword">return</span>;
-	&#125;
-	<span class="hljs-type">int</span> mid=(l+r)/<span class="hljs-number">2</span>;
-	build(<span class="hljs-number">2</span>*i,l,mid);<span class="hljs-comment">//建左子树 </span>
-	build(<span class="hljs-number">2</span>*i+<span class="hljs-number">1</span>,mid+<span class="hljs-number">1</span>,r);<span class="hljs-comment">//建右子树 </span>
-	<span class="hljs-comment">//更新线段和 </span>
-	tree[i].<span class="hljs-built_in">sum</span>=tree[<span class="hljs-number">2</span>*i].<span class="hljs-built_in">sum</span>+tree[<span class="hljs-number">2</span>*i+<span class="hljs-number">1</span>].<span class="hljs-built_in">sum</span>;
-&#125;</code></pre></div>
+<h4 id="递归建树"><a href="#递归建树" class="headerlink" title="递归建树"></a>递归建树</h4><figure class="highlight stan"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs stan"><span class="hljs-type">void</span> build(<span class="hljs-type">int</span> i,<span class="hljs-type">int</span> l,<span class="hljs-type">int</span> r)<br>&#123;<br><span class="hljs-comment">//	i:当前节点编号 l:左端点 r:右端点 </span><br>	tree[i].l=l;<br>	tree[i].r=r;<br>	<span class="hljs-comment">//如果是叶子节点，赋值并返回 </span><br>	<span class="hljs-keyword">if</span>(l==r)<br>	&#123;	<br>		tree[i].<span class="hljs-built_in">sum</span>=<span class="hljs-type">array</span>[l];<br>		<span class="hljs-keyword">return</span>;<br>	&#125;<br>	<span class="hljs-type">int</span> mid=(l+r)/<span class="hljs-number">2</span>;<br>	build(<span class="hljs-number">2</span>*i,l,mid);<span class="hljs-comment">//建左子树 </span><br>	build(<span class="hljs-number">2</span>*i+<span class="hljs-number">1</span>,mid+<span class="hljs-number">1</span>,r);<span class="hljs-comment">//建右子树 </span><br>	<span class="hljs-comment">//更新线段和 </span><br>	tree[i].<span class="hljs-built_in">sum</span>=tree[<span class="hljs-number">2</span>*i].<span class="hljs-built_in">sum</span>+tree[<span class="hljs-number">2</span>*i+<span class="hljs-number">1</span>].<span class="hljs-built_in">sum</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
 <h3 id="类型一：单点修改，区间查询"><a href="#类型一：单点修改，区间查询" class="headerlink" title="类型一：单点修改，区间查询"></a>类型一：单点修改，区间查询</h3><p>单点修改：给第<code>idx</code>个数加<code>k</code><br>区间查询：输出区间[x,y]内所有数的和</p>
-<h4 id="单点修改"><a href="#单点修改" class="headerlink" title="单点修改"></a>单点修改</h4><div class="code-wrapper"><pre><code class="hljs axapta"><span class="hljs-keyword">void</span> mod1(<span class="hljs-built_in">int</span> i,<span class="hljs-built_in">int</span> idx,<span class="hljs-built_in">int</span> k)
-&#123;
-	<span class="hljs-keyword">if</span>(tree[i].l==tree[i].r)
-	&#123;
-		tree[i].<span class="hljs-keyword">sum</span>+=k;
-		<span class="hljs-keyword">return</span>;
-	&#125;
-	<span class="hljs-built_in">int</span> mid=tree[i].l+tree[i].r&gt;&gt;<span class="hljs-number">1</span>;
-	<span class="hljs-keyword">if</span>(idx&lt;=mid)
-		mod1(<span class="hljs-number">2</span>*i,idx,k);
-	<span class="hljs-keyword">else</span>
-		mod1(<span class="hljs-number">2</span>*i+<span class="hljs-number">1</span>,idx,k);
-	<span class="hljs-comment">//更新线段和</span>
-	tree[i].<span class="hljs-keyword">sum</span>=tree[<span class="hljs-number">2</span>*i].<span class="hljs-keyword">sum</span>+tree[<span class="hljs-number">2</span>*i+<span class="hljs-number">1</span>].<span class="hljs-keyword">sum</span>;	
-&#125;</code></pre></div>
-<h4 id="区间查询"><a href="#区间查询" class="headerlink" title="区间查询"></a>区间查询</h4><div class="code-wrapper"><pre><code class="hljs arduino"><span class="hljs-comment">//区间查询</span>
-<span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">query1</span><span class="hljs-params">(<span class="hljs-type">int</span> i,<span class="hljs-type">int</span> l,<span class="hljs-type">int</span> r)</span></span>
-<span class="hljs-function"></span>&#123;
-	<span class="hljs-comment">//如果当前区间完全被查询区间包括，返回当前区间的和 </span>
-	<span class="hljs-keyword">if</span>(tree[i].l&gt;=l&amp;&amp;tree[i].r&lt;=r)
-		<span class="hljs-keyword">return</span> tree[i].sum;
-	<span class="hljs-type">int</span> res=<span class="hljs-number">0</span>;
-	<span class="hljs-type">int</span> mid=tree[i].l+tree[i].r&gt;&gt;<span class="hljs-number">1</span>;
-	<span class="hljs-comment">//如果左孩子区间与查询区间相交，进入左子树 </span>
-	<span class="hljs-keyword">if</span>(l&lt;=mid)
-		res+=<span class="hljs-built_in">query1</span>(<span class="hljs-number">2</span>*i,l,r);
-	<span class="hljs-comment">//如果右孩子区间与查询区间相交，进入右子树</span>
-	<span class="hljs-keyword">if</span>(r&gt;mid)
-		res+=<span class="hljs-built_in">query1</span>(<span class="hljs-number">2</span>*i+<span class="hljs-number">1</span>,l,r);
-	 <span class="hljs-keyword">return</span> res;
-&#125;</code></pre></div>
+<h4 id="单点修改"><a href="#单点修改" class="headerlink" title="单点修改"></a>单点修改</h4><figure class="highlight axapta"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs axapta"><span class="hljs-keyword">void</span> mod1(<span class="hljs-built_in">int</span> i,<span class="hljs-built_in">int</span> idx,<span class="hljs-built_in">int</span> k)<br>&#123;<br>	<span class="hljs-keyword">if</span>(tree[i].l==tree[i].r)<br>	&#123;<br>		tree[i].<span class="hljs-keyword">sum</span>+=k;<br>		<span class="hljs-keyword">return</span>;<br>	&#125;<br>	<span class="hljs-built_in">int</span> mid=tree[i].l+tree[i].r&gt;&gt;<span class="hljs-number">1</span>;<br>	<span class="hljs-keyword">if</span>(idx&lt;=mid)<br>		mod1(<span class="hljs-number">2</span>*i,idx,k);<br>	<span class="hljs-keyword">else</span><br>		mod1(<span class="hljs-number">2</span>*i+<span class="hljs-number">1</span>,idx,k);<br>	<span class="hljs-comment">//更新线段和</span><br>	tree[i].<span class="hljs-keyword">sum</span>=tree[<span class="hljs-number">2</span>*i].<span class="hljs-keyword">sum</span>+tree[<span class="hljs-number">2</span>*i+<span class="hljs-number">1</span>].<span class="hljs-keyword">sum</span>;	<br>&#125;<br></code></pre></td></tr></table></figure>
+<h4 id="区间查询"><a href="#区间查询" class="headerlink" title="区间查询"></a>区间查询</h4><figure class="highlight arduino"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs arduino"><span class="hljs-comment">//区间查询</span><br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">query1</span><span class="hljs-params">(<span class="hljs-type">int</span> i,<span class="hljs-type">int</span> l,<span class="hljs-type">int</span> r)</span></span><br><span class="hljs-function"></span>&#123;<br>	<span class="hljs-comment">//如果当前区间完全被查询区间包括，返回当前区间的和 </span><br>	<span class="hljs-keyword">if</span>(tree[i].l&gt;=l&amp;&amp;tree[i].r&lt;=r)<br>		<span class="hljs-keyword">return</span> tree[i].sum;<br>	<span class="hljs-type">int</span> res=<span class="hljs-number">0</span>;<br>	<span class="hljs-type">int</span> mid=tree[i].l+tree[i].r&gt;&gt;<span class="hljs-number">1</span>;<br>	<span class="hljs-comment">//如果左孩子区间与查询区间相交，进入左子树 </span><br>	<span class="hljs-keyword">if</span>(l&lt;=mid)<br>		res+=<span class="hljs-built_in">query1</span>(<span class="hljs-number">2</span>*i,l,r);<br>	<span class="hljs-comment">//如果右孩子区间与查询区间相交，进入右子树</span><br>	<span class="hljs-keyword">if</span>(r&gt;mid)<br>		res+=<span class="hljs-built_in">query1</span>(<span class="hljs-number">2</span>*i+<span class="hljs-number">1</span>,l,r);<br>	 <span class="hljs-keyword">return</span> res;<br>&#125; <br></code></pre></td></tr></table></figure>
 <h4 id="例题"><a href="#例题" class="headerlink" title="例题"></a>例题</h4><p><a target="_blank" rel="noopener" href="https://www.luogu.com.cn/problem/P3374">P3374 【模板】树状数组 1</a></p>
 <p><strong>题目描述</strong></p>
 <p>如题，已知一个数列，你需要进行下面两种操作：</p>
@@ -353,128 +305,20 @@
 <p><strong>输出格式</strong></p>
 <p>输出包含若干行整数，即为所有操作 $2$ 的结果。</p>
 <p>input:</p>
-<div class="code-wrapper"><pre><code class="hljs basic"><span class="hljs-symbol">5 </span><span class="hljs-number">5</span>
-<span class="hljs-symbol">1 </span><span class="hljs-number">5</span> <span class="hljs-number">4</span> <span class="hljs-number">2</span> <span class="hljs-number">3</span>
-<span class="hljs-symbol">1 </span><span class="hljs-number">1</span> <span class="hljs-number">3</span>
-<span class="hljs-symbol">2 </span><span class="hljs-number">2</span> <span class="hljs-number">5</span>
-<span class="hljs-symbol">1 </span><span class="hljs-number">3</span> -<span class="hljs-number">1</span>
-<span class="hljs-symbol">1 </span><span class="hljs-number">4</span> <span class="hljs-number">2</span>
-<span class="hljs-symbol">2 </span><span class="hljs-number">1</span> <span class="hljs-number">4</span></code></pre></div>
+<figure class="highlight basic"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs basic"><span class="hljs-symbol">5 </span><span class="hljs-number">5</span><br><span class="hljs-symbol">1 </span><span class="hljs-number">5</span> <span class="hljs-number">4</span> <span class="hljs-number">2</span> <span class="hljs-number">3</span><br><span class="hljs-symbol">1 </span><span class="hljs-number">1</span> <span class="hljs-number">3</span><br><span class="hljs-symbol">2 </span><span class="hljs-number">2</span> <span class="hljs-number">5</span><br><span class="hljs-symbol">1 </span><span class="hljs-number">3</span> -<span class="hljs-number">1</span><br><span class="hljs-symbol">1 </span><span class="hljs-number">4</span> <span class="hljs-number">2</span><br><span class="hljs-symbol">2 </span><span class="hljs-number">1</span> <span class="hljs-number">4</span><br></code></pre></td></tr></table></figure>
 
 <p>output:</p>
-<div class="code-wrapper"><pre><code class="hljs">14
-16</code></pre></div>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs">14<br>16<br></code></pre></td></tr></table></figure>
 
 <p><strong>【数据范围】</strong></p>
 <p>对于 $30%$ 的数据，$1 \le n \le 8$，$1\le m \le 10$；<br>对于 $70%$ 的数据，$1\le n,m \le 10^4$；<br>对于 $100%$ 的数据，$1\le n,m \le 5\times 10^5$。</p>
 <p>ac代码</p>
-<div class="code-wrapper"><pre><code class="hljs arduino"><span class="hljs-meta">#<span class="hljs-keyword">include</span><span class="hljs-string">&lt;bits/stdc++.h&gt;</span></span>
-<span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;
-<span class="hljs-type">const</span> <span class="hljs-type">int</span> N=<span class="hljs-number">5e5</span>+<span class="hljs-number">2</span>;
-<span class="hljs-type">int</span> nums[N];
-<span class="hljs-keyword">struct</span> <span class="hljs-title class_">node</span>
-&#123;
-	<span class="hljs-type">int</span> l,r,sum;
-&#125;tree[<span class="hljs-number">4</span>*N];
-<span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">build</span><span class="hljs-params">(<span class="hljs-type">int</span> i,<span class="hljs-type">int</span> l,<span class="hljs-type">int</span> r)</span></span>
-<span class="hljs-function"></span>&#123;
-<span class="hljs-comment">//	i:当前节点编号 l:左端点 r:右端点 </span>
-	tree[i].l=l;
-	tree[i].r=r;
-	<span class="hljs-comment">//如果是叶子节点，赋值并返回 </span>
-	<span class="hljs-keyword">if</span>(l==r)
-	&#123;	
-		tree[i].sum=nums[l];
-		<span class="hljs-keyword">return</span>;
-	&#125;
-	<span class="hljs-type">int</span> mid=(l+r)/<span class="hljs-number">2</span>;
-	<span class="hljs-built_in">build</span>(<span class="hljs-number">2</span>*i,l,mid);<span class="hljs-comment">//建左子树 </span>
-	<span class="hljs-built_in">build</span>(<span class="hljs-number">2</span>*i+<span class="hljs-number">1</span>,mid+<span class="hljs-number">1</span>,r);<span class="hljs-comment">//建右子树 </span>
-	<span class="hljs-comment">//更新线段和 </span>
-	tree[i].sum=tree[<span class="hljs-number">2</span>*i].sum+tree[<span class="hljs-number">2</span>*i+<span class="hljs-number">1</span>].sum;
-&#125;
-<span class="hljs-comment">//单点修改 </span>
-<span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">mod1</span><span class="hljs-params">(<span class="hljs-type">int</span> i,<span class="hljs-type">int</span> idx,<span class="hljs-type">int</span> k)</span></span>
-<span class="hljs-function"></span>&#123;
-	<span class="hljs-keyword">if</span>(tree[i].l==tree[i].r)
-	&#123;
-		tree[i].sum+=k;
-		<span class="hljs-keyword">return</span>;
-	&#125;
-	<span class="hljs-type">int</span> mid=tree[i].l+tree[i].r&gt;&gt;<span class="hljs-number">1</span>;
-	<span class="hljs-keyword">if</span>(idx&lt;=mid)
-		<span class="hljs-built_in">mod1</span>(<span class="hljs-number">2</span>*i,idx,k);
-	<span class="hljs-keyword">else</span>
-		<span class="hljs-built_in">mod1</span>(<span class="hljs-number">2</span>*i+<span class="hljs-number">1</span>,idx,k);
-	<span class="hljs-comment">//更新线段和</span>
-	tree[i].sum=tree[<span class="hljs-number">2</span>*i].sum+tree[<span class="hljs-number">2</span>*i+<span class="hljs-number">1</span>].sum;	
-&#125;
-<span class="hljs-comment">//区间查询</span>
-<span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">query1</span><span class="hljs-params">(<span class="hljs-type">int</span> i,<span class="hljs-type">int</span> l,<span class="hljs-type">int</span> r)</span></span>
-<span class="hljs-function"></span>&#123;
-	<span class="hljs-comment">//如果当前区间完全被查询区间包括，返回当前区间的和 </span>
-	<span class="hljs-keyword">if</span>(tree[i].l&gt;=l&amp;&amp;tree[i].r&lt;=r)
-		<span class="hljs-keyword">return</span> tree[i].sum;
-	<span class="hljs-type">int</span> res=<span class="hljs-number">0</span>;
-	<span class="hljs-type">int</span> mid=tree[i].l+tree[i].r&gt;&gt;<span class="hljs-number">1</span>;
-	<span class="hljs-comment">//如果左孩子区间与查询区间相交，进入左子树 </span>
-	<span class="hljs-keyword">if</span>(l&lt;=mid)
-		res+=<span class="hljs-built_in">query1</span>(<span class="hljs-number">2</span>*i,l,r);
-	<span class="hljs-comment">//如果右孩子区间与查询区间相交，进入右子树</span>
-	<span class="hljs-keyword">if</span>(r&gt;mid)
-		res+=<span class="hljs-built_in">query1</span>(<span class="hljs-number">2</span>*i+<span class="hljs-number">1</span>,l,r);
-	 <span class="hljs-keyword">return</span> res;
-&#125; 
-<span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span>
-<span class="hljs-function"></span>&#123;
-	<span class="hljs-type">int</span> n,m;
-	cin&gt;&gt;n&gt;&gt;m;
-	<span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i=<span class="hljs-number">1</span>;i&lt;=n;++i)
-		cin&gt;&gt;nums[i];
-	<span class="hljs-built_in">build</span>(<span class="hljs-number">1</span>,<span class="hljs-number">1</span>,n);
-	<span class="hljs-type">int</span> op,a,b;
-	<span class="hljs-keyword">while</span>(m--)
-	&#123;
-		cin&gt;&gt;op&gt;&gt;a&gt;&gt;b;
-		<span class="hljs-keyword">if</span>(op==<span class="hljs-number">1</span>)
-			<span class="hljs-built_in">mod1</span>(<span class="hljs-number">1</span>,a,b);
-		<span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span>(op==<span class="hljs-number">2</span>)
-			cout&lt;&lt;<span class="hljs-built_in">query1</span>(<span class="hljs-number">1</span>,a,b)&lt;&lt;endl;
-	&#125; 
-	<span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
-&#125;</code></pre></div>
+<figure class="highlight arduino"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br></pre></td><td class="code"><pre><code class="hljs arduino"><span class="hljs-meta">#<span class="hljs-keyword">include</span><span class="hljs-string">&lt;bits/stdc++.h&gt;</span></span><br><span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;<br><span class="hljs-type">const</span> <span class="hljs-type">int</span> N=<span class="hljs-number">5e5</span>+<span class="hljs-number">2</span>;<br><span class="hljs-type">int</span> nums[N];<br><span class="hljs-keyword">struct</span> <span class="hljs-title class_">node</span><br>&#123;<br>	<span class="hljs-type">int</span> l,r,sum;<br>&#125;tree[<span class="hljs-number">4</span>*N];<br><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">build</span><span class="hljs-params">(<span class="hljs-type">int</span> i,<span class="hljs-type">int</span> l,<span class="hljs-type">int</span> r)</span></span><br><span class="hljs-function"></span>&#123;<br><span class="hljs-comment">//	i:当前节点编号 l:左端点 r:右端点 </span><br>	tree[i].l=l;<br>	tree[i].r=r;<br>	<span class="hljs-comment">//如果是叶子节点，赋值并返回 </span><br>	<span class="hljs-keyword">if</span>(l==r)<br>	&#123;	<br>		tree[i].sum=nums[l];<br>		<span class="hljs-keyword">return</span>;<br>	&#125;<br>	<span class="hljs-type">int</span> mid=(l+r)/<span class="hljs-number">2</span>;<br>	<span class="hljs-built_in">build</span>(<span class="hljs-number">2</span>*i,l,mid);<span class="hljs-comment">//建左子树 </span><br>	<span class="hljs-built_in">build</span>(<span class="hljs-number">2</span>*i+<span class="hljs-number">1</span>,mid+<span class="hljs-number">1</span>,r);<span class="hljs-comment">//建右子树 </span><br>	<span class="hljs-comment">//更新线段和 </span><br>	tree[i].sum=tree[<span class="hljs-number">2</span>*i].sum+tree[<span class="hljs-number">2</span>*i+<span class="hljs-number">1</span>].sum;<br>&#125;<br><span class="hljs-comment">//单点修改 </span><br><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">mod1</span><span class="hljs-params">(<span class="hljs-type">int</span> i,<span class="hljs-type">int</span> idx,<span class="hljs-type">int</span> k)</span></span><br><span class="hljs-function"></span>&#123;<br>	<span class="hljs-keyword">if</span>(tree[i].l==tree[i].r)<br>	&#123;<br>		tree[i].sum+=k;<br>		<span class="hljs-keyword">return</span>;<br>	&#125;<br>	<span class="hljs-type">int</span> mid=tree[i].l+tree[i].r&gt;&gt;<span class="hljs-number">1</span>;<br>	<span class="hljs-keyword">if</span>(idx&lt;=mid)<br>		<span class="hljs-built_in">mod1</span>(<span class="hljs-number">2</span>*i,idx,k);<br>	<span class="hljs-keyword">else</span><br>		<span class="hljs-built_in">mod1</span>(<span class="hljs-number">2</span>*i+<span class="hljs-number">1</span>,idx,k);<br>	<span class="hljs-comment">//更新线段和</span><br>	tree[i].sum=tree[<span class="hljs-number">2</span>*i].sum+tree[<span class="hljs-number">2</span>*i+<span class="hljs-number">1</span>].sum;	<br>&#125;<br><span class="hljs-comment">//区间查询</span><br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">query1</span><span class="hljs-params">(<span class="hljs-type">int</span> i,<span class="hljs-type">int</span> l,<span class="hljs-type">int</span> r)</span></span><br><span class="hljs-function"></span>&#123;<br>	<span class="hljs-comment">//如果当前区间完全被查询区间包括，返回当前区间的和 </span><br>	<span class="hljs-keyword">if</span>(tree[i].l&gt;=l&amp;&amp;tree[i].r&lt;=r)<br>		<span class="hljs-keyword">return</span> tree[i].sum;<br>	<span class="hljs-type">int</span> res=<span class="hljs-number">0</span>;<br>	<span class="hljs-type">int</span> mid=tree[i].l+tree[i].r&gt;&gt;<span class="hljs-number">1</span>;<br>	<span class="hljs-comment">//如果左孩子区间与查询区间相交，进入左子树 </span><br>	<span class="hljs-keyword">if</span>(l&lt;=mid)<br>		res+=<span class="hljs-built_in">query1</span>(<span class="hljs-number">2</span>*i,l,r);<br>	<span class="hljs-comment">//如果右孩子区间与查询区间相交，进入右子树</span><br>	<span class="hljs-keyword">if</span>(r&gt;mid)<br>		res+=<span class="hljs-built_in">query1</span>(<span class="hljs-number">2</span>*i+<span class="hljs-number">1</span>,l,r);<br>	 <span class="hljs-keyword">return</span> res;<br>&#125; <br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br>	<span class="hljs-type">int</span> n,m;<br>	cin&gt;&gt;n&gt;&gt;m;<br>	<span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i=<span class="hljs-number">1</span>;i&lt;=n;++i)<br>		cin&gt;&gt;nums[i];<br>	<span class="hljs-built_in">build</span>(<span class="hljs-number">1</span>,<span class="hljs-number">1</span>,n);<br>	<span class="hljs-type">int</span> op,a,b;<br>	<span class="hljs-keyword">while</span>(m--)<br>	&#123;<br>		cin&gt;&gt;op&gt;&gt;a&gt;&gt;b;<br>		<span class="hljs-keyword">if</span>(op==<span class="hljs-number">1</span>)<br>			<span class="hljs-built_in">mod1</span>(<span class="hljs-number">1</span>,a,b);<br>		<span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span>(op==<span class="hljs-number">2</span>)<br>			cout&lt;&lt;<span class="hljs-built_in">query1</span>(<span class="hljs-number">1</span>,a,b)&lt;&lt;endl;<br>	&#125; <br>	<span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125; <br></code></pre></td></tr></table></figure>
 
 <h3 id="类型二：区间修改，单点查询"><a href="#类型二：区间修改，单点查询" class="headerlink" title="类型二：区间修改，单点查询"></a>类型二：区间修改，单点查询</h3><p>区间修改：给区间<code>[a,b]</code>每个数加k<br>单点查询：查询第<code>x</code>个数的值</p>
 <p>思路：把修改区间所覆盖的区间加k，然后单点查询时从上到下将所有k相加</p>
-<h4 id="区间修改"><a href="#区间修改" class="headerlink" title="区间修改"></a>区间修改</h4><div class="code-wrapper"><pre><code class="hljs axapta"><span class="hljs-keyword">void</span> <span class="hljs-keyword">mod</span>(<span class="hljs-built_in">int</span> i,<span class="hljs-built_in">int</span> l,<span class="hljs-built_in">int</span> r,<span class="hljs-built_in">int</span> k)
-&#123;
-	<span class="hljs-comment">//完全在区间内，+k </span>
-	<span class="hljs-keyword">if</span>(l&lt;=tree[i].l&amp;&amp;r&gt;=tree[i].r)
-	&#123;
-		tree[i].<span class="hljs-keyword">sum</span>+=k;
-		<span class="hljs-keyword">return</span> ;
-	&#125;
-	<span class="hljs-built_in">int</span> mid=tree[i].l+tree[i].r&gt;&gt;<span class="hljs-number">1</span>;
-	<span class="hljs-comment">//落在左区间 </span>
-	<span class="hljs-keyword">if</span>(l&lt;=mid)
-		<span class="hljs-keyword">mod</span>(<span class="hljs-number">2</span>*i,l,r,k);
-	<span class="hljs-comment">//落在右区间 </span>
-	<span class="hljs-keyword">if</span>(r&gt;mid)
-		<span class="hljs-keyword">mod</span>(<span class="hljs-number">2</span>*i+<span class="hljs-number">1</span>,l,r,k);
-&#125;</code></pre></div>
-<h4 id="单点查询"><a href="#单点查询" class="headerlink" title="单点查询"></a>单点查询</h4><div class="code-wrapper"><pre><code class="hljs axapta"><span class="hljs-built_in">int</span> query(<span class="hljs-built_in">int</span> i,<span class="hljs-built_in">int</span> x)
-&#123;
-	<span class="hljs-comment">//从上到下计算所有k的和 </span>
-	<span class="hljs-keyword">if</span>(tree[i].l==tree[i].r)
-		<span class="hljs-keyword">return</span> tree[i].<span class="hljs-keyword">sum</span>;
-	<span class="hljs-built_in">int</span> res=tree[i].<span class="hljs-keyword">sum</span>;
-	<span class="hljs-built_in">int</span> mid=tree[i].l+tree[i].r&gt;&gt;<span class="hljs-number">1</span>;
-	<span class="hljs-keyword">if</span>(x&lt;=mid)
-		res+=query(<span class="hljs-number">2</span>*i,x);
-	<span class="hljs-keyword">else</span>
-		res+=query(<span class="hljs-number">2</span>*i+<span class="hljs-number">1</span>,x);
-	<span class="hljs-keyword">return</span> res;	
-&#125;</code></pre></div>
+<h4 id="区间修改"><a href="#区间修改" class="headerlink" title="区间修改"></a>区间修改</h4><figure class="highlight axapta"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs axapta"><span class="hljs-keyword">void</span> <span class="hljs-keyword">mod</span>(<span class="hljs-built_in">int</span> i,<span class="hljs-built_in">int</span> l,<span class="hljs-built_in">int</span> r,<span class="hljs-built_in">int</span> k)<br>&#123;<br>	<span class="hljs-comment">//完全在区间内，+k </span><br>	<span class="hljs-keyword">if</span>(l&lt;=tree[i].l&amp;&amp;r&gt;=tree[i].r)<br>	&#123;<br>		tree[i].<span class="hljs-keyword">sum</span>+=k;<br>		<span class="hljs-keyword">return</span> ;<br>	&#125;<br>	<span class="hljs-built_in">int</span> mid=tree[i].l+tree[i].r&gt;&gt;<span class="hljs-number">1</span>;<br>	<span class="hljs-comment">//落在左区间 </span><br>	<span class="hljs-keyword">if</span>(l&lt;=mid)<br>		<span class="hljs-keyword">mod</span>(<span class="hljs-number">2</span>*i,l,r,k);<br>	<span class="hljs-comment">//落在右区间 </span><br>	<span class="hljs-keyword">if</span>(r&gt;mid)<br>		<span class="hljs-keyword">mod</span>(<span class="hljs-number">2</span>*i+<span class="hljs-number">1</span>,l,r,k);<br>&#125; <br></code></pre></td></tr></table></figure>
+<h4 id="单点查询"><a href="#单点查询" class="headerlink" title="单点查询"></a>单点查询</h4><figure class="highlight axapta"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs axapta"><span class="hljs-built_in">int</span> query(<span class="hljs-built_in">int</span> i,<span class="hljs-built_in">int</span> x)<br>&#123;<br>	<span class="hljs-comment">//从上到下计算所有k的和 </span><br>	<span class="hljs-keyword">if</span>(tree[i].l==tree[i].r)<br>		<span class="hljs-keyword">return</span> tree[i].<span class="hljs-keyword">sum</span>;<br>	<span class="hljs-built_in">int</span> res=tree[i].<span class="hljs-keyword">sum</span>;<br>	<span class="hljs-built_in">int</span> mid=tree[i].l+tree[i].r&gt;&gt;<span class="hljs-number">1</span>;<br>	<span class="hljs-keyword">if</span>(x&lt;=mid)<br>		res+=query(<span class="hljs-number">2</span>*i,x);<br>	<span class="hljs-keyword">else</span><br>		res+=query(<span class="hljs-number">2</span>*i+<span class="hljs-number">1</span>,x);<br>	<span class="hljs-keyword">return</span> res;	<br>&#125; <br></code></pre></td></tr></table></figure>
 <h4 id="例题-1"><a href="#例题-1" class="headerlink" title="例题"></a>例题</h4><p><a target="_blank" rel="noopener" href="https://www.luogu.com.cn/problem/P3368">P3368 树状数组 2</a></p>
 <p><strong>题目描述</strong></p>
 <p>如题，已知一个数列，你需要进行下面两种操作：</p>
@@ -493,88 +337,9 @@
 <p><strong>输出格式</strong></p>
 <p>输出包含若干行整数，即为所有操作 $2$ 的结果。</p>
 <p>input:</p>
-<div class="code-wrapper"><pre><code class="hljs axapta"><span class="hljs-number">5</span> <span class="hljs-number">5</span>
-<span class="hljs-number">1</span> <span class="hljs-number">5</span> <span class="hljs-number">4</span> <span class="hljs-number">2</span> <span class="hljs-number">3</span>
-<span class="hljs-number">1</span> <span class="hljs-number">2</span> <span class="hljs-number">4</span> <span class="hljs-number">2</span><span class="hljs-meta">#include&lt;bits/stdc++.h&gt;</span>
-<span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;
-<span class="hljs-keyword">const</span> <span class="hljs-built_in">int</span> N=<span class="hljs-number">5e5</span>+<span class="hljs-number">2</span>;
-<span class="hljs-built_in">int</span> nums[N];
-struct node
-&#123;
-	<span class="hljs-built_in">int</span> l,r,<span class="hljs-keyword">sum</span>;
-&#125;tree[<span class="hljs-number">4</span>*N];
-<span class="hljs-keyword">void</span> build(<span class="hljs-built_in">int</span> i,<span class="hljs-built_in">int</span> l,<span class="hljs-built_in">int</span> r)
-&#123;
-	tree[i].l=l;
-	tree[i].r=r;
-	tree[i].<span class="hljs-keyword">sum</span>=<span class="hljs-number">0</span>; 
-	<span class="hljs-comment">//如果是叶子节点，赋值并返回 </span>
-	<span class="hljs-keyword">if</span>(l==r)
-		<span class="hljs-keyword">return</span>; 
-	<span class="hljs-built_in">int</span> mid=(l+r)/<span class="hljs-number">2</span>;
-	build(<span class="hljs-number">2</span>*i,l,mid);<span class="hljs-comment">//建左子树 </span>
-	build(<span class="hljs-number">2</span>*i+<span class="hljs-number">1</span>,mid+<span class="hljs-number">1</span>,r);<span class="hljs-comment">//建右子树 </span>
-&#125;
-
-<span class="hljs-comment">//区间修改</span>
-<span class="hljs-keyword">void</span> <span class="hljs-keyword">mod</span>(<span class="hljs-built_in">int</span> i,<span class="hljs-built_in">int</span> l,<span class="hljs-built_in">int</span> r,<span class="hljs-built_in">int</span> k)
-&#123;
-	<span class="hljs-comment">//完全在区间内，+k </span>
-	<span class="hljs-keyword">if</span>(l&lt;=tree[i].l&amp;&amp;r&gt;=tree[i].r)
-	&#123;
-		tree[i].<span class="hljs-keyword">sum</span>+=k;
-		<span class="hljs-keyword">return</span> ;
-	&#125;
-	<span class="hljs-built_in">int</span> mid=tree[i].l+tree[i].r&gt;&gt;<span class="hljs-number">1</span>;
-	<span class="hljs-comment">//落在左区间 </span>
-	<span class="hljs-keyword">if</span>(l&lt;=mid)
-		<span class="hljs-keyword">mod</span>(<span class="hljs-number">2</span>*i,l,r,k);
-	<span class="hljs-comment">//落在右区间 </span>
-	<span class="hljs-keyword">if</span>(r&gt;mid)
-		<span class="hljs-keyword">mod</span>(<span class="hljs-number">2</span>*i+<span class="hljs-number">1</span>,l,r,k);
-&#125; 
-<span class="hljs-comment">//单点查询</span>
-<span class="hljs-built_in">int</span> query(<span class="hljs-built_in">int</span> i,<span class="hljs-built_in">int</span> x)
-&#123;
-	<span class="hljs-comment">//从上到下计算所有k的和 </span>
-	<span class="hljs-keyword">if</span>(tree[i].l==tree[i].r)
-		<span class="hljs-keyword">return</span> tree[i].<span class="hljs-keyword">sum</span>;
-	<span class="hljs-built_in">int</span> res=tree[i].<span class="hljs-keyword">sum</span>;
-	<span class="hljs-built_in">int</span> mid=tree[i].l+tree[i].r&gt;&gt;<span class="hljs-number">1</span>;
-	<span class="hljs-keyword">if</span>(x&lt;=mid)
-		res+=query(<span class="hljs-number">2</span>*i,x);
-	<span class="hljs-keyword">else</span>
-		res+=query(<span class="hljs-number">2</span>*i+<span class="hljs-number">1</span>,x);
-	<span class="hljs-keyword">return</span> res;	
-&#125; 
-<span class="hljs-built_in">int</span> main()
-&#123;
-	<span class="hljs-built_in">int</span> n,m;
-	cin&gt;&gt;n&gt;&gt;m;
-	<span class="hljs-keyword">for</span>(<span class="hljs-built_in">int</span> i=<span class="hljs-number">1</span>;i&lt;=n;++i)
-		cin&gt;&gt;nums[i];
-	build(<span class="hljs-number">1</span>,<span class="hljs-number">1</span>,n);
-	<span class="hljs-built_in">int</span> op,a,b,c;
-	<span class="hljs-keyword">while</span>(m--)
-	&#123;
-		cin&gt;&gt;op;
-		<span class="hljs-keyword">if</span>(op==<span class="hljs-number">1</span>)
-		&#123;
-			cin&gt;&gt;a&gt;&gt;b&gt;&gt;c;
-			<span class="hljs-keyword">mod</span>(<span class="hljs-number">1</span>,a,b,c);
-		&#125;
-		<span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span>(op==<span class="hljs-number">2</span>)
-		&#123;
-			cin&gt;&gt;a;
-			cout&lt;&lt;query(<span class="hljs-number">1</span>,a)+nums[a]&lt;&lt;endl; 
-		&#125;
-	&#125; 
-	<span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
-&#125; 
-<span class="hljs-number">2</span> <span class="hljs-number">4</span></code></pre></div>
+<figure class="highlight axapta"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br></pre></td><td class="code"><pre><code class="hljs axapta"><span class="hljs-number">5</span> <span class="hljs-number">5</span><br><span class="hljs-number">1</span> <span class="hljs-number">5</span> <span class="hljs-number">4</span> <span class="hljs-number">2</span> <span class="hljs-number">3</span><br><span class="hljs-number">1</span> <span class="hljs-number">2</span> <span class="hljs-number">4</span> <span class="hljs-number">2</span><span class="hljs-meta">#include&lt;bits/stdc++.h&gt;</span><br><span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;<br><span class="hljs-keyword">const</span> <span class="hljs-built_in">int</span> N=<span class="hljs-number">5e5</span>+<span class="hljs-number">2</span>;<br><span class="hljs-built_in">int</span> nums[N];<br>struct node<br>&#123;<br>	<span class="hljs-built_in">int</span> l,r,<span class="hljs-keyword">sum</span>;<br>&#125;tree[<span class="hljs-number">4</span>*N];<br><span class="hljs-keyword">void</span> build(<span class="hljs-built_in">int</span> i,<span class="hljs-built_in">int</span> l,<span class="hljs-built_in">int</span> r)<br>&#123;<br>	tree[i].l=l;<br>	tree[i].r=r;<br>	tree[i].<span class="hljs-keyword">sum</span>=<span class="hljs-number">0</span>; <br>	<span class="hljs-comment">//如果是叶子节点，赋值并返回 </span><br>	<span class="hljs-keyword">if</span>(l==r)<br>		<span class="hljs-keyword">return</span>; <br>	<span class="hljs-built_in">int</span> mid=(l+r)/<span class="hljs-number">2</span>;<br>	build(<span class="hljs-number">2</span>*i,l,mid);<span class="hljs-comment">//建左子树 </span><br>	build(<span class="hljs-number">2</span>*i+<span class="hljs-number">1</span>,mid+<span class="hljs-number">1</span>,r);<span class="hljs-comment">//建右子树 </span><br>&#125;<br><br><span class="hljs-comment">//区间修改</span><br><span class="hljs-keyword">void</span> <span class="hljs-keyword">mod</span>(<span class="hljs-built_in">int</span> i,<span class="hljs-built_in">int</span> l,<span class="hljs-built_in">int</span> r,<span class="hljs-built_in">int</span> k)<br>&#123;<br>	<span class="hljs-comment">//完全在区间内，+k </span><br>	<span class="hljs-keyword">if</span>(l&lt;=tree[i].l&amp;&amp;r&gt;=tree[i].r)<br>	&#123;<br>		tree[i].<span class="hljs-keyword">sum</span>+=k;<br>		<span class="hljs-keyword">return</span> ;<br>	&#125;<br>	<span class="hljs-built_in">int</span> mid=tree[i].l+tree[i].r&gt;&gt;<span class="hljs-number">1</span>;<br>	<span class="hljs-comment">//落在左区间 </span><br>	<span class="hljs-keyword">if</span>(l&lt;=mid)<br>		<span class="hljs-keyword">mod</span>(<span class="hljs-number">2</span>*i,l,r,k);<br>	<span class="hljs-comment">//落在右区间 </span><br>	<span class="hljs-keyword">if</span>(r&gt;mid)<br>		<span class="hljs-keyword">mod</span>(<span class="hljs-number">2</span>*i+<span class="hljs-number">1</span>,l,r,k);<br>&#125; <br><span class="hljs-comment">//单点查询</span><br><span class="hljs-built_in">int</span> query(<span class="hljs-built_in">int</span> i,<span class="hljs-built_in">int</span> x)<br>&#123;<br>	<span class="hljs-comment">//从上到下计算所有k的和 </span><br>	<span class="hljs-keyword">if</span>(tree[i].l==tree[i].r)<br>		<span class="hljs-keyword">return</span> tree[i].<span class="hljs-keyword">sum</span>;<br>	<span class="hljs-built_in">int</span> res=tree[i].<span class="hljs-keyword">sum</span>;<br>	<span class="hljs-built_in">int</span> mid=tree[i].l+tree[i].r&gt;&gt;<span class="hljs-number">1</span>;<br>	<span class="hljs-keyword">if</span>(x&lt;=mid)<br>		res+=query(<span class="hljs-number">2</span>*i,x);<br>	<span class="hljs-keyword">else</span><br>		res+=query(<span class="hljs-number">2</span>*i+<span class="hljs-number">1</span>,x);<br>	<span class="hljs-keyword">return</span> res;	<br>&#125; <br><span class="hljs-built_in">int</span> main()<br>&#123;<br>	<span class="hljs-built_in">int</span> n,m;<br>	cin&gt;&gt;n&gt;&gt;m;<br>	<span class="hljs-keyword">for</span>(<span class="hljs-built_in">int</span> i=<span class="hljs-number">1</span>;i&lt;=n;++i)<br>		cin&gt;&gt;nums[i];<br>	build(<span class="hljs-number">1</span>,<span class="hljs-number">1</span>,n);<br>	<span class="hljs-built_in">int</span> op,a,b,c;<br>	<span class="hljs-keyword">while</span>(m--)<br>	&#123;<br>		cin&gt;&gt;op;<br>		<span class="hljs-keyword">if</span>(op==<span class="hljs-number">1</span>)<br>		&#123;<br>			cin&gt;&gt;a&gt;&gt;b&gt;&gt;c;<br>			<span class="hljs-keyword">mod</span>(<span class="hljs-number">1</span>,a,b,c);<br>		&#125;<br>		<span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span>(op==<span class="hljs-number">2</span>)<br>		&#123;<br>			cin&gt;&gt;a;<br>			cout&lt;&lt;query(<span class="hljs-number">1</span>,a)+nums[a]&lt;&lt;endl; <br>		&#125;<br>	&#125; <br>	<span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125; <br><span class="hljs-number">2</span> <span class="hljs-number">4</span><br></code></pre></td></tr></table></figure>
 <p>output:</p>
-<div class="code-wrapper"><pre><code class="hljs">6
-10</code></pre></div>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs">6<br>10<br></code></pre></td></tr></table></figure>
 
 
 <p><strong>数据规模与约定</strong></p>
@@ -582,132 +347,16 @@ struct node
 <p>对于 $70%$ 的数据：$N\le 10000$，$M\le10000$；</p>
 <p>对于 $100%$ 的数据：$1 \leq N, M\le 500000$，$1 \leq x, y \leq n$，保证任意时刻序列中任意元素的绝对值都不大于 $2^{30}$。</p>
 <p>ac代码：</p>
-<div class="code-wrapper"><pre><code class="hljs axapta"><span class="hljs-meta">#include&lt;bits/stdc++.h&gt;</span>
-<span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;
-<span class="hljs-keyword">const</span> <span class="hljs-built_in">int</span> N=<span class="hljs-number">5e5</span>+<span class="hljs-number">2</span>;
-<span class="hljs-built_in">int</span> nums[N];
-struct node
-&#123;
-	<span class="hljs-built_in">int</span> l,r,<span class="hljs-keyword">sum</span>;
-&#125;tree[<span class="hljs-number">4</span>*N];
-<span class="hljs-keyword">void</span> build(<span class="hljs-built_in">int</span> i,<span class="hljs-built_in">int</span> l,<span class="hljs-built_in">int</span> r)
-&#123;
-	tree[i].l=l;
-	tree[i].r=r;
-	tree[i].<span class="hljs-keyword">sum</span>=<span class="hljs-number">0</span>; 
-	<span class="hljs-comment">//如果是叶子节点，赋值并返回 </span>
-	<span class="hljs-keyword">if</span>(l==r)
-		<span class="hljs-keyword">return</span>; 
-	<span class="hljs-built_in">int</span> mid=(l+r)/<span class="hljs-number">2</span>;
-	build(<span class="hljs-number">2</span>*i,l,mid);<span class="hljs-comment">//建左子树 </span>
-	build(<span class="hljs-number">2</span>*i+<span class="hljs-number">1</span>,mid+<span class="hljs-number">1</span>,r);<span class="hljs-comment">//建右子树 </span>
-&#125;
-
-<span class="hljs-comment">//区间修改</span>
-<span class="hljs-keyword">void</span> <span class="hljs-keyword">mod</span>(<span class="hljs-built_in">int</span> i,<span class="hljs-built_in">int</span> l,<span class="hljs-built_in">int</span> r,<span class="hljs-built_in">int</span> k)
-&#123;
-	<span class="hljs-comment">//完全在区间内，+k </span>
-	<span class="hljs-keyword">if</span>(l&lt;=tree[i].l&amp;&amp;r&gt;=tree[i].r)
-	&#123;
-		tree[i].<span class="hljs-keyword">sum</span>+=k;
-		<span class="hljs-keyword">return</span> ;
-	&#125;
-	<span class="hljs-built_in">int</span> mid=tree[i].l+tree[i].r&gt;&gt;<span class="hljs-number">1</span>;
-	<span class="hljs-comment">//落在左区间 </span>
-	<span class="hljs-keyword">if</span>(l&lt;=mid)
-		<span class="hljs-keyword">mod</span>(<span class="hljs-number">2</span>*i,l,r,k);
-	<span class="hljs-comment">//落在右区间 </span>
-	<span class="hljs-keyword">if</span>(r&gt;mid)
-		<span class="hljs-keyword">mod</span>(<span class="hljs-number">2</span>*i+<span class="hljs-number">1</span>,l,r,k);
-&#125; 
-<span class="hljs-comment">//单点查询</span>
-<span class="hljs-built_in">int</span> query(<span class="hljs-built_in">int</span> i,<span class="hljs-built_in">int</span> x)
-&#123;
-	<span class="hljs-comment">//从上到下计算所有k的和 </span>
-	<span class="hljs-keyword">if</span>(tree[i].l==tree[i].r)
-		<span class="hljs-keyword">return</span> tree[i].<span class="hljs-keyword">sum</span>;
-	<span class="hljs-built_in">int</span> res=tree[i].<span class="hljs-keyword">sum</span>;
-	<span class="hljs-built_in">int</span> mid=tree[i].l+tree[i].r&gt;&gt;<span class="hljs-number">1</span>;
-	<span class="hljs-keyword">if</span>(x&lt;=mid)
-		res+=query(<span class="hljs-number">2</span>*i,x);
-	<span class="hljs-keyword">else</span>
-		res+=query(<span class="hljs-number">2</span>*i+<span class="hljs-number">1</span>,x);
-	<span class="hljs-keyword">return</span> res;	
-&#125; 
-<span class="hljs-built_in">int</span> main()
-&#123;
-	<span class="hljs-built_in">int</span> n,m;
-	cin&gt;&gt;n&gt;&gt;m;
-	<span class="hljs-keyword">for</span>(<span class="hljs-built_in">int</span> i=<span class="hljs-number">1</span>;i&lt;=n;++i)
-		cin&gt;&gt;nums[i];
-	build(<span class="hljs-number">1</span>,<span class="hljs-number">1</span>,n);
-	<span class="hljs-built_in">int</span> op,a,b,c;
-	<span class="hljs-keyword">while</span>(m--)
-	&#123;
-		cin&gt;&gt;op;
-		<span class="hljs-keyword">if</span>(op==<span class="hljs-number">1</span>)
-		&#123;
-			cin&gt;&gt;a&gt;&gt;b&gt;&gt;c;
-			<span class="hljs-keyword">mod</span>(<span class="hljs-number">1</span>,a,b,c);
-		&#125;
-		<span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span>(op==<span class="hljs-number">2</span>)
-		&#123;
-			cin&gt;&gt;a;
-			cout&lt;&lt;query(<span class="hljs-number">1</span>,a)+nums[a]&lt;&lt;endl; 
-		&#125;
-	&#125; 
-	<span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
-&#125;</code></pre></div>
+<figure class="highlight axapta"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br></pre></td><td class="code"><pre><code class="hljs axapta"><span class="hljs-meta">#include&lt;bits/stdc++.h&gt;</span><br><span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;<br><span class="hljs-keyword">const</span> <span class="hljs-built_in">int</span> N=<span class="hljs-number">5e5</span>+<span class="hljs-number">2</span>;<br><span class="hljs-built_in">int</span> nums[N];<br>struct node<br>&#123;<br>	<span class="hljs-built_in">int</span> l,r,<span class="hljs-keyword">sum</span>;<br>&#125;tree[<span class="hljs-number">4</span>*N];<br><span class="hljs-keyword">void</span> build(<span class="hljs-built_in">int</span> i,<span class="hljs-built_in">int</span> l,<span class="hljs-built_in">int</span> r)<br>&#123;<br>	tree[i].l=l;<br>	tree[i].r=r;<br>	tree[i].<span class="hljs-keyword">sum</span>=<span class="hljs-number">0</span>; <br>	<span class="hljs-comment">//如果是叶子节点，赋值并返回 </span><br>	<span class="hljs-keyword">if</span>(l==r)<br>		<span class="hljs-keyword">return</span>; <br>	<span class="hljs-built_in">int</span> mid=(l+r)/<span class="hljs-number">2</span>;<br>	build(<span class="hljs-number">2</span>*i,l,mid);<span class="hljs-comment">//建左子树 </span><br>	build(<span class="hljs-number">2</span>*i+<span class="hljs-number">1</span>,mid+<span class="hljs-number">1</span>,r);<span class="hljs-comment">//建右子树 </span><br>&#125;<br><br><span class="hljs-comment">//区间修改</span><br><span class="hljs-keyword">void</span> <span class="hljs-keyword">mod</span>(<span class="hljs-built_in">int</span> i,<span class="hljs-built_in">int</span> l,<span class="hljs-built_in">int</span> r,<span class="hljs-built_in">int</span> k)<br>&#123;<br>	<span class="hljs-comment">//完全在区间内，+k </span><br>	<span class="hljs-keyword">if</span>(l&lt;=tree[i].l&amp;&amp;r&gt;=tree[i].r)<br>	&#123;<br>		tree[i].<span class="hljs-keyword">sum</span>+=k;<br>		<span class="hljs-keyword">return</span> ;<br>	&#125;<br>	<span class="hljs-built_in">int</span> mid=tree[i].l+tree[i].r&gt;&gt;<span class="hljs-number">1</span>;<br>	<span class="hljs-comment">//落在左区间 </span><br>	<span class="hljs-keyword">if</span>(l&lt;=mid)<br>		<span class="hljs-keyword">mod</span>(<span class="hljs-number">2</span>*i,l,r,k);<br>	<span class="hljs-comment">//落在右区间 </span><br>	<span class="hljs-keyword">if</span>(r&gt;mid)<br>		<span class="hljs-keyword">mod</span>(<span class="hljs-number">2</span>*i+<span class="hljs-number">1</span>,l,r,k);<br>&#125; <br><span class="hljs-comment">//单点查询</span><br><span class="hljs-built_in">int</span> query(<span class="hljs-built_in">int</span> i,<span class="hljs-built_in">int</span> x)<br>&#123;<br>	<span class="hljs-comment">//从上到下计算所有k的和 </span><br>	<span class="hljs-keyword">if</span>(tree[i].l==tree[i].r)<br>		<span class="hljs-keyword">return</span> tree[i].<span class="hljs-keyword">sum</span>;<br>	<span class="hljs-built_in">int</span> res=tree[i].<span class="hljs-keyword">sum</span>;<br>	<span class="hljs-built_in">int</span> mid=tree[i].l+tree[i].r&gt;&gt;<span class="hljs-number">1</span>;<br>	<span class="hljs-keyword">if</span>(x&lt;=mid)<br>		res+=query(<span class="hljs-number">2</span>*i,x);<br>	<span class="hljs-keyword">else</span><br>		res+=query(<span class="hljs-number">2</span>*i+<span class="hljs-number">1</span>,x);<br>	<span class="hljs-keyword">return</span> res;	<br>&#125; <br><span class="hljs-built_in">int</span> main()<br>&#123;<br>	<span class="hljs-built_in">int</span> n,m;<br>	cin&gt;&gt;n&gt;&gt;m;<br>	<span class="hljs-keyword">for</span>(<span class="hljs-built_in">int</span> i=<span class="hljs-number">1</span>;i&lt;=n;++i)<br>		cin&gt;&gt;nums[i];<br>	build(<span class="hljs-number">1</span>,<span class="hljs-number">1</span>,n);<br>	<span class="hljs-built_in">int</span> op,a,b,c;<br>	<span class="hljs-keyword">while</span>(m--)<br>	&#123;<br>		cin&gt;&gt;op;<br>		<span class="hljs-keyword">if</span>(op==<span class="hljs-number">1</span>)<br>		&#123;<br>			cin&gt;&gt;a&gt;&gt;b&gt;&gt;c;<br>			<span class="hljs-keyword">mod</span>(<span class="hljs-number">1</span>,a,b,c);<br>		&#125;<br>		<span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span>(op==<span class="hljs-number">2</span>)<br>		&#123;<br>			cin&gt;&gt;a;<br>			cout&lt;&lt;query(<span class="hljs-number">1</span>,a)+nums[a]&lt;&lt;endl; <br>		&#125;<br>	&#125; <br>	<span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125; <br></code></pre></td></tr></table></figure>
 <h3 id="类型三：-区间修改，区间查询"><a href="#类型三：-区间修改，区间查询" class="headerlink" title="类型三： 区间修改，区间查询"></a>类型三： 区间修改，区间查询</h3><p>需要定义一个懒标记，然后每次修改或查询需要进行<code>pushdown</code> </p>
 <p>pushdown步骤：</p>
 <ul>
 <li>当前节点懒标记不为0时，给左右子节点的懒标记加上父亲的懒标记</li>
 <li>更新左右子节点的sum</li>
-<li>父节点的懒标记置0<div class="code-wrapper"><pre><code class="hljs inform7">void pushdown(int i)
-&#123;
-	if(tree<span class="hljs-comment">[i]</span>.lz)
-	&#123;
-		tree<span class="hljs-comment">[2*i]</span>.lz+=tree<span class="hljs-comment">[i]</span>.lz;
-		tree<span class="hljs-comment">[2*i+1]</span>.lz+=tree<span class="hljs-comment">[i]</span>.lz;
-		int mid=tree<span class="hljs-comment">[i]</span>.l+tree<span class="hljs-comment">[i]</span>.r&gt;&gt;1;
-		tree<span class="hljs-comment">[2*i]</span>.sum+=tree<span class="hljs-comment">[i]</span>.lz*(mid-tree<span class="hljs-comment">[i]</span>.l+1);
-		tree<span class="hljs-comment">[2*i+1]</span>.sum+=tree<span class="hljs-comment">[i]</span>.lz*(tree<span class="hljs-comment">[i]</span>.r-mid);
-		tree<span class="hljs-comment">[i]</span>.lz=0;	
-	&#125;
-&#125;</code></pre></div></li>
+<li>父节点的懒标记置0<figure class="highlight inform7"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs inform7">void pushdown(int i)<br>&#123;<br>	if(tree<span class="hljs-comment">[i]</span>.lz)<br>	&#123;<br>		tree<span class="hljs-comment">[2*i]</span>.lz+=tree<span class="hljs-comment">[i]</span>.lz;<br>		tree<span class="hljs-comment">[2*i+1]</span>.lz+=tree<span class="hljs-comment">[i]</span>.lz;<br>		int mid=tree<span class="hljs-comment">[i]</span>.l+tree<span class="hljs-comment">[i]</span>.r&gt;&gt;1;<br>		tree<span class="hljs-comment">[2*i]</span>.sum+=tree<span class="hljs-comment">[i]</span>.lz*(mid-tree<span class="hljs-comment">[i]</span>.l+1);<br>		tree<span class="hljs-comment">[2*i+1]</span>.sum+=tree<span class="hljs-comment">[i]</span>.lz*(tree<span class="hljs-comment">[i]</span>.r-mid);<br>		tree<span class="hljs-comment">[i]</span>.lz=0;	<br>	&#125;<br>&#125;<br></code></pre></td></tr></table></figure></li>
 </ul>
-<h4 id="区间修改-1"><a href="#区间修改-1" class="headerlink" title="区间修改"></a>区间修改</h4><div class="code-wrapper"><pre><code class="hljs axapta"><span class="hljs-keyword">void</span> <span class="hljs-keyword">mod</span>(<span class="hljs-built_in">int</span> i,<span class="hljs-built_in">int</span> l,<span class="hljs-built_in">int</span> r,<span class="hljs-built_in">int</span> k)
-&#123;
-	<span class="hljs-comment">//区间被完全包括，更新sum，lz </span>
-	<span class="hljs-keyword">if</span>(l&lt;=tree[i].l&amp;&amp;r&gt;=tree[i].r)
-	&#123;
-		tree[i].<span class="hljs-keyword">sum</span>+=k*(tree[i].r-tree[i].l+<span class="hljs-number">1</span>);
-		tree[i].lz+=k;
-		<span class="hljs-keyword">return</span>;
-	&#125;
-	pushdown(i);
-	<span class="hljs-built_in">int</span> mid=tree[i].l+tree[i].r&gt;&gt;<span class="hljs-number">1</span>;
-	<span class="hljs-keyword">if</span>(l&lt;=mid)
-		<span class="hljs-keyword">mod</span>(<span class="hljs-number">2</span>*i,l,r,k);
-	<span class="hljs-keyword">if</span>(r&gt;mid)
-		<span class="hljs-keyword">mod</span>(<span class="hljs-number">2</span>*i+<span class="hljs-number">1</span>,l,r,k);
-	<span class="hljs-comment">//更新和</span>
-	tree[i].<span class="hljs-keyword">sum</span>=tree[<span class="hljs-number">2</span>*i].<span class="hljs-keyword">sum</span> +tree[<span class="hljs-number">2</span>*i+<span class="hljs-number">1</span>].<span class="hljs-keyword">sum</span>;
-&#125;</code></pre></div>
-<h4 id="区间查询-1"><a href="#区间查询-1" class="headerlink" title="区间查询"></a>区间查询</h4><div class="code-wrapper"><pre><code class="hljs excel"><span class="hljs-built_in">int</span> query(<span class="hljs-built_in">int</span> i,<span class="hljs-built_in">int</span> l,<span class="hljs-built_in">int</span> r)
-&#123;
-	//区间被完全包括，返回<span class="hljs-built_in">sum</span> 
-	<span class="hljs-built_in">if</span>(l&lt;=tree[i].l&amp;&amp;r&gt;=tree[i].r)
-		return tree[i].<span class="hljs-built_in">sum</span>;
-	pushdown(i);
-	<span class="hljs-built_in">int</span> <span class="hljs-built_in">mid</span>=tree[i].l+tree[i].r&gt;&gt;<span class="hljs-number">1</span>;
-	<span class="hljs-built_in">int</span> res=<span class="hljs-number">0</span>;
-	<span class="hljs-built_in">if</span>(l&lt;=<span class="hljs-built_in">mid</span>)
-		res+=query(<span class="hljs-number">2</span>*i,l,r);
-	<span class="hljs-built_in">if</span>(r&gt;<span class="hljs-built_in">mid</span>)
-		res+=query(<span class="hljs-number">2</span>*i+<span class="hljs-number">1</span>,l,r);
-	return res;
-&#125;</code></pre></div>
+<h4 id="区间修改-1"><a href="#区间修改-1" class="headerlink" title="区间修改"></a>区间修改</h4><figure class="highlight axapta"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs axapta"><span class="hljs-keyword">void</span> <span class="hljs-keyword">mod</span>(<span class="hljs-built_in">int</span> i,<span class="hljs-built_in">int</span> l,<span class="hljs-built_in">int</span> r,<span class="hljs-built_in">int</span> k)<br>&#123;<br>	<span class="hljs-comment">//区间被完全包括，更新sum，lz </span><br>	<span class="hljs-keyword">if</span>(l&lt;=tree[i].l&amp;&amp;r&gt;=tree[i].r)<br>	&#123;<br>		tree[i].<span class="hljs-keyword">sum</span>+=k*(tree[i].r-tree[i].l+<span class="hljs-number">1</span>);<br>		tree[i].lz+=k;<br>		<span class="hljs-keyword">return</span>;<br>	&#125;<br>	pushdown(i);<br>	<span class="hljs-built_in">int</span> mid=tree[i].l+tree[i].r&gt;&gt;<span class="hljs-number">1</span>;<br>	<span class="hljs-keyword">if</span>(l&lt;=mid)<br>		<span class="hljs-keyword">mod</span>(<span class="hljs-number">2</span>*i,l,r,k);<br>	<span class="hljs-keyword">if</span>(r&gt;mid)<br>		<span class="hljs-keyword">mod</span>(<span class="hljs-number">2</span>*i+<span class="hljs-number">1</span>,l,r,k);<br>	<span class="hljs-comment">//更新和</span><br>	tree[i].<span class="hljs-keyword">sum</span>=tree[<span class="hljs-number">2</span>*i].<span class="hljs-keyword">sum</span> +tree[<span class="hljs-number">2</span>*i+<span class="hljs-number">1</span>].<span class="hljs-keyword">sum</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+<h4 id="区间查询-1"><a href="#区间查询-1" class="headerlink" title="区间查询"></a>区间查询</h4><figure class="highlight excel"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs excel"><span class="hljs-built_in">int</span> query(<span class="hljs-built_in">int</span> i,<span class="hljs-built_in">int</span> l,<span class="hljs-built_in">int</span> r)<br>&#123;<br>	//区间被完全包括，返回<span class="hljs-built_in">sum</span> <br>	<span class="hljs-built_in">if</span>(l&lt;=tree[i].l&amp;&amp;r&gt;=tree[i].r)<br>		return tree[i].<span class="hljs-built_in">sum</span>;<br>	pushdown(i);<br>	<span class="hljs-built_in">int</span> <span class="hljs-built_in">mid</span>=tree[i].l+tree[i].r&gt;&gt;<span class="hljs-number">1</span>;<br>	<span class="hljs-built_in">int</span> res=<span class="hljs-number">0</span>;<br>	<span class="hljs-built_in">if</span>(l&lt;=<span class="hljs-built_in">mid</span>)<br>		res+=query(<span class="hljs-number">2</span>*i,l,r);<br>	<span class="hljs-built_in">if</span>(r&gt;<span class="hljs-built_in">mid</span>)<br>		res+=query(<span class="hljs-number">2</span>*i+<span class="hljs-number">1</span>,l,r);<br>	return res;<br>&#125;<br></code></pre></td></tr></table></figure>
 <h4 id="例题-2"><a href="#例题-2" class="headerlink" title="例题"></a>例题</h4><p><a target="_blank" rel="noopener" href="https://www.luogu.com.cn/problem/P3372">P3372【模板】线段树 1</a></p>
 <p><strong>题目描述</strong></p>
 <p>如题，已知一个数列，你需要进行下面两种操作：</p>
@@ -725,117 +374,16 @@ struct node
 </ol>
 <p><strong>输出格式</strong><br>输出包含若干行整数，即为所有操作 2 的结果。</p>
 <p>input:</p>
-<div class="code-wrapper"><pre><code class="hljs basic"><span class="hljs-symbol">5 </span><span class="hljs-number">5</span>
-<span class="hljs-symbol">1 </span><span class="hljs-number">5</span> <span class="hljs-number">4</span> <span class="hljs-number">2</span> <span class="hljs-number">3</span>
-<span class="hljs-symbol">2 </span><span class="hljs-number">2</span> <span class="hljs-number">4</span>
-<span class="hljs-symbol">1 </span><span class="hljs-number">2</span> <span class="hljs-number">3</span> <span class="hljs-number">2</span>
-<span class="hljs-symbol">2 </span><span class="hljs-number">3</span> <span class="hljs-number">4</span>
-<span class="hljs-symbol">1 </span><span class="hljs-number">1</span> <span class="hljs-number">5</span> <span class="hljs-number">1</span>
-<span class="hljs-symbol">2 </span><span class="hljs-number">1</span> <span class="hljs-number">4</span></code></pre></div>
+<figure class="highlight basic"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs basic"><span class="hljs-symbol">5 </span><span class="hljs-number">5</span><br><span class="hljs-symbol">1 </span><span class="hljs-number">5</span> <span class="hljs-number">4</span> <span class="hljs-number">2</span> <span class="hljs-number">3</span><br><span class="hljs-symbol">2 </span><span class="hljs-number">2</span> <span class="hljs-number">4</span><br><span class="hljs-symbol">1 </span><span class="hljs-number">2</span> <span class="hljs-number">3</span> <span class="hljs-number">2</span><br><span class="hljs-symbol">2 </span><span class="hljs-number">3</span> <span class="hljs-number">4</span><br><span class="hljs-symbol">1 </span><span class="hljs-number">1</span> <span class="hljs-number">5</span> <span class="hljs-number">1</span><br><span class="hljs-symbol">2 </span><span class="hljs-number">1</span> <span class="hljs-number">4</span><br></code></pre></td></tr></table></figure>
 
 <p>output:</p>
-<div class="code-wrapper"><pre><code class="hljs">11
-8
-20</code></pre></div>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs">11<br>8<br>20<br></code></pre></td></tr></table></figure>
 
 <p><strong>提示</strong></p>
 <p>对于 $30%$ 的数据：$n \le 8$，$m \le 10$。<br>对于 $70%$ 的数据：$n \le {10}^3$，$m \le {10}^4$。<br>对于 $100%$ 的数据：$1 \le n, m \le {10}^5$。</p>
 <p>保证任意时刻数列中所有元素的绝对值之和 $\le {10}^{18}$。</p>
 <p>ac代码：</p>
-<div class="code-wrapper"><pre><code class="hljs axapta"><span class="hljs-meta">#include&lt;bits/stdc++.h&gt;</span>
-<span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;
-typedef <span class="hljs-built_in">long</span> <span class="hljs-built_in">long</span> ll;
-<span class="hljs-keyword">const</span> <span class="hljs-built_in">int</span> N=<span class="hljs-number">1e5</span>+<span class="hljs-number">2</span>;
-<span class="hljs-built_in">int</span> nums[N];
-struct node
-&#123;
-	ll l,r,<span class="hljs-keyword">sum</span>,lz;
-&#125;tree[<span class="hljs-number">4</span>*N];
-<span class="hljs-keyword">void</span> build(<span class="hljs-built_in">int</span> i,<span class="hljs-built_in">int</span> l,<span class="hljs-built_in">int</span> r)
-&#123; 
-	tree[i].l=l;
-	tree[i].r=r;
-	tree[i].lz=<span class="hljs-number">0</span>;
-	<span class="hljs-comment">//如果是叶子节点，赋值并返回 </span>
-	<span class="hljs-keyword">if</span>(l==r)
-	&#123;	
-		tree[i].<span class="hljs-keyword">sum</span>=nums[l];
-		<span class="hljs-keyword">return</span>;
-	&#125;
-	ll mid=(l+r)/<span class="hljs-number">2</span>;
-	build(<span class="hljs-number">2</span>*i,l,mid);<span class="hljs-comment">//建左子树 </span>
-	build(<span class="hljs-number">2</span>*i+<span class="hljs-number">1</span>,mid+<span class="hljs-number">1</span>,r);<span class="hljs-comment">//建右子树 </span>
-	<span class="hljs-comment">//更新线段和 </span>
-	tree[i].<span class="hljs-keyword">sum</span>=tree[<span class="hljs-number">2</span>*i].<span class="hljs-keyword">sum</span>+tree[<span class="hljs-number">2</span>*i+<span class="hljs-number">1</span>].<span class="hljs-keyword">sum</span>;
-&#125;
-<span class="hljs-keyword">void</span> pushdown(<span class="hljs-built_in">int</span> i)
-&#123;
-	<span class="hljs-keyword">if</span>(tree[i].lz)
-	&#123;
-		tree[<span class="hljs-number">2</span>*i].lz+=tree[i].lz;
-		tree[<span class="hljs-number">2</span>*i+<span class="hljs-number">1</span>].lz+=tree[i].lz;
-		ll mid=tree[i].l+tree[i].r&gt;&gt;<span class="hljs-number">1</span>;
-		tree[<span class="hljs-number">2</span>*i].<span class="hljs-keyword">sum</span>+=tree[i].lz*(mid-tree[i].l+<span class="hljs-number">1</span>);
-		tree[<span class="hljs-number">2</span>*i+<span class="hljs-number">1</span>].<span class="hljs-keyword">sum</span>+=tree[i].lz*(tree[i].r-mid);
-		tree[i].lz=<span class="hljs-number">0</span>;	
-	&#125;
-&#125;
-<span class="hljs-keyword">void</span> <span class="hljs-keyword">mod</span>(<span class="hljs-built_in">int</span> i,<span class="hljs-built_in">int</span> l,<span class="hljs-built_in">int</span> r,<span class="hljs-built_in">int</span> k)
-&#123;
-	<span class="hljs-comment">//区间被完全包括，更新sum，lz </span>
-	<span class="hljs-keyword">if</span>(l&lt;=tree[i].l&amp;&amp;r&gt;=tree[i].r)
-	&#123;
-		tree[i].<span class="hljs-keyword">sum</span>+=k*(tree[i].r-tree[i].l+<span class="hljs-number">1</span>);
-		tree[i].lz+=k;
-		<span class="hljs-keyword">return</span>;
-	&#125;
-	pushdown(i);
-	ll mid=tree[i].l+tree[i].r&gt;&gt;<span class="hljs-number">1</span>;
-	<span class="hljs-keyword">if</span>(l&lt;=mid)
-		<span class="hljs-keyword">mod</span>(<span class="hljs-number">2</span>*i,l,r,k);
-	<span class="hljs-keyword">if</span>(r&gt;mid)
-		<span class="hljs-keyword">mod</span>(<span class="hljs-number">2</span>*i+<span class="hljs-number">1</span>,l,r,k);
-	<span class="hljs-comment">//更新和</span>
-	tree[i].<span class="hljs-keyword">sum</span>=tree[<span class="hljs-number">2</span>*i].<span class="hljs-keyword">sum</span> +tree[<span class="hljs-number">2</span>*i+<span class="hljs-number">1</span>].<span class="hljs-keyword">sum</span>;
-&#125;
-ll query(<span class="hljs-built_in">int</span> i,<span class="hljs-built_in">int</span> l,<span class="hljs-built_in">int</span> r)
-&#123;
-	<span class="hljs-comment">//区间被完全包括，返回sum </span>
-	<span class="hljs-keyword">if</span>(l&lt;=tree[i].l&amp;&amp;r&gt;=tree[i].r)
-		<span class="hljs-keyword">return</span> tree[i].<span class="hljs-keyword">sum</span>;
-	pushdown(i);
-	ll mid=tree[i].l+tree[i].r&gt;&gt;<span class="hljs-number">1</span>;
-	ll res=<span class="hljs-number">0</span>;
-	<span class="hljs-keyword">if</span>(l&lt;=mid)
-		res+=query(<span class="hljs-number">2</span>*i,l,r);
-	<span class="hljs-keyword">if</span>(r&gt;mid)
-		res+=query(<span class="hljs-number">2</span>*i+<span class="hljs-number">1</span>,l,r);
-	<span class="hljs-keyword">return</span> res;
-&#125;
-<span class="hljs-built_in">int</span> main()
-&#123;
-	<span class="hljs-built_in">int</span> n,m;
-	cin&gt;&gt;n&gt;&gt;m;
-	<span class="hljs-keyword">for</span>(<span class="hljs-built_in">int</span> i=<span class="hljs-number">1</span>;i&lt;=n;++i)
-		cin&gt;&gt;nums[i];
-	build(<span class="hljs-number">1</span>,<span class="hljs-number">1</span>,n);
-	<span class="hljs-built_in">int</span> op,a,b,c;
-	<span class="hljs-keyword">while</span>(m--)
-	&#123;
-		cin&gt;&gt;op;
-		<span class="hljs-keyword">if</span>(op==<span class="hljs-number">1</span>)
-		&#123;
-			cin&gt;&gt;a&gt;&gt;b&gt;&gt;c;
-			<span class="hljs-keyword">mod</span>(<span class="hljs-number">1</span>,a,b,c);
-		&#125;
-		<span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span>(op==<span class="hljs-number">2</span>)
-		&#123;
-			cin&gt;&gt;a&gt;&gt;b;
-			cout&lt;&lt;query(<span class="hljs-number">1</span>,a,b)&lt;&lt;endl;
-		&#125;
-	&#125; 
-	<span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;
-&#125;</code></pre></div>
+<figure class="highlight axapta"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br><span class="line">81</span><br><span class="line">82</span><br><span class="line">83</span><br><span class="line">84</span><br><span class="line">85</span><br><span class="line">86</span><br><span class="line">87</span><br><span class="line">88</span><br><span class="line">89</span><br><span class="line">90</span><br><span class="line">91</span><br><span class="line">92</span><br><span class="line">93</span><br><span class="line">94</span><br></pre></td><td class="code"><pre><code class="hljs axapta"><span class="hljs-meta">#include&lt;bits/stdc++.h&gt;</span><br><span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;<br>typedef <span class="hljs-built_in">long</span> <span class="hljs-built_in">long</span> ll;<br><span class="hljs-keyword">const</span> <span class="hljs-built_in">int</span> N=<span class="hljs-number">1e5</span>+<span class="hljs-number">2</span>;<br><span class="hljs-built_in">int</span> nums[N];<br>struct node<br>&#123;<br>	ll l,r,<span class="hljs-keyword">sum</span>,lz;<br>&#125;tree[<span class="hljs-number">4</span>*N];<br><span class="hljs-keyword">void</span> build(<span class="hljs-built_in">int</span> i,<span class="hljs-built_in">int</span> l,<span class="hljs-built_in">int</span> r)<br>&#123; <br>	tree[i].l=l;<br>	tree[i].r=r;<br>	tree[i].lz=<span class="hljs-number">0</span>;<br>	<span class="hljs-comment">//如果是叶子节点，赋值并返回 </span><br>	<span class="hljs-keyword">if</span>(l==r)<br>	&#123;	<br>		tree[i].<span class="hljs-keyword">sum</span>=nums[l];<br>		<span class="hljs-keyword">return</span>;<br>	&#125;<br>	ll mid=(l+r)/<span class="hljs-number">2</span>;<br>	build(<span class="hljs-number">2</span>*i,l,mid);<span class="hljs-comment">//建左子树 </span><br>	build(<span class="hljs-number">2</span>*i+<span class="hljs-number">1</span>,mid+<span class="hljs-number">1</span>,r);<span class="hljs-comment">//建右子树 </span><br>	<span class="hljs-comment">//更新线段和 </span><br>	tree[i].<span class="hljs-keyword">sum</span>=tree[<span class="hljs-number">2</span>*i].<span class="hljs-keyword">sum</span>+tree[<span class="hljs-number">2</span>*i+<span class="hljs-number">1</span>].<span class="hljs-keyword">sum</span>;<br>&#125;<br><span class="hljs-keyword">void</span> pushdown(<span class="hljs-built_in">int</span> i)<br>&#123;<br>	<span class="hljs-keyword">if</span>(tree[i].lz)<br>	&#123;<br>		tree[<span class="hljs-number">2</span>*i].lz+=tree[i].lz;<br>		tree[<span class="hljs-number">2</span>*i+<span class="hljs-number">1</span>].lz+=tree[i].lz;<br>		ll mid=tree[i].l+tree[i].r&gt;&gt;<span class="hljs-number">1</span>;<br>		tree[<span class="hljs-number">2</span>*i].<span class="hljs-keyword">sum</span>+=tree[i].lz*(mid-tree[i].l+<span class="hljs-number">1</span>);<br>		tree[<span class="hljs-number">2</span>*i+<span class="hljs-number">1</span>].<span class="hljs-keyword">sum</span>+=tree[i].lz*(tree[i].r-mid);<br>		tree[i].lz=<span class="hljs-number">0</span>;	<br>	&#125;<br>&#125;<br><span class="hljs-keyword">void</span> <span class="hljs-keyword">mod</span>(<span class="hljs-built_in">int</span> i,<span class="hljs-built_in">int</span> l,<span class="hljs-built_in">int</span> r,<span class="hljs-built_in">int</span> k)<br>&#123;<br>	<span class="hljs-comment">//区间被完全包括，更新sum，lz </span><br>	<span class="hljs-keyword">if</span>(l&lt;=tree[i].l&amp;&amp;r&gt;=tree[i].r)<br>	&#123;<br>		tree[i].<span class="hljs-keyword">sum</span>+=k*(tree[i].r-tree[i].l+<span class="hljs-number">1</span>);<br>		tree[i].lz+=k;<br>		<span class="hljs-keyword">return</span>;<br>	&#125;<br>	pushdown(i);<br>	ll mid=tree[i].l+tree[i].r&gt;&gt;<span class="hljs-number">1</span>;<br>	<span class="hljs-keyword">if</span>(l&lt;=mid)<br>		<span class="hljs-keyword">mod</span>(<span class="hljs-number">2</span>*i,l,r,k);<br>	<span class="hljs-keyword">if</span>(r&gt;mid)<br>		<span class="hljs-keyword">mod</span>(<span class="hljs-number">2</span>*i+<span class="hljs-number">1</span>,l,r,k);<br>	<span class="hljs-comment">//更新和</span><br>	tree[i].<span class="hljs-keyword">sum</span>=tree[<span class="hljs-number">2</span>*i].<span class="hljs-keyword">sum</span> +tree[<span class="hljs-number">2</span>*i+<span class="hljs-number">1</span>].<span class="hljs-keyword">sum</span>;<br>&#125;<br>ll query(<span class="hljs-built_in">int</span> i,<span class="hljs-built_in">int</span> l,<span class="hljs-built_in">int</span> r)<br>&#123;<br>	<span class="hljs-comment">//区间被完全包括，返回sum </span><br>	<span class="hljs-keyword">if</span>(l&lt;=tree[i].l&amp;&amp;r&gt;=tree[i].r)<br>		<span class="hljs-keyword">return</span> tree[i].<span class="hljs-keyword">sum</span>;<br>	pushdown(i);<br>	ll mid=tree[i].l+tree[i].r&gt;&gt;<span class="hljs-number">1</span>;<br>	ll res=<span class="hljs-number">0</span>;<br>	<span class="hljs-keyword">if</span>(l&lt;=mid)<br>		res+=query(<span class="hljs-number">2</span>*i,l,r);<br>	<span class="hljs-keyword">if</span>(r&gt;mid)<br>		res+=query(<span class="hljs-number">2</span>*i+<span class="hljs-number">1</span>,l,r);<br>	<span class="hljs-keyword">return</span> res;<br>&#125;<br><span class="hljs-built_in">int</span> main()<br>&#123;<br>	<span class="hljs-built_in">int</span> n,m;<br>	cin&gt;&gt;n&gt;&gt;m;<br>	<span class="hljs-keyword">for</span>(<span class="hljs-built_in">int</span> i=<span class="hljs-number">1</span>;i&lt;=n;++i)<br>		cin&gt;&gt;nums[i];<br>	build(<span class="hljs-number">1</span>,<span class="hljs-number">1</span>,n);<br>	<span class="hljs-built_in">int</span> op,a,b,c;<br>	<span class="hljs-keyword">while</span>(m--)<br>	&#123;<br>		cin&gt;&gt;op;<br>		<span class="hljs-keyword">if</span>(op==<span class="hljs-number">1</span>)<br>		&#123;<br>			cin&gt;&gt;a&gt;&gt;b&gt;&gt;c;<br>			<span class="hljs-keyword">mod</span>(<span class="hljs-number">1</span>,a,b,c);<br>		&#125;<br>		<span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span>(op==<span class="hljs-number">2</span>)<br>		&#123;<br>			cin&gt;&gt;a&gt;&gt;b;<br>			cout&lt;&lt;query(<span class="hljs-number">1</span>,a,b)&lt;&lt;endl;<br>		&#125;<br>	&#125; <br>	<span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125; <br></code></pre></td></tr></table></figure>
 
                 
               </div>
