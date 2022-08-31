@@ -16,12 +16,12 @@
   <meta name="author" content="zql">
   <meta name="keywords" content="">
   
-    <meta name="description" content="先来看一道题 输入一年中的一天，输出这一天是星期几 input: 114 October 2001 output: 1Sunday 用以下公式计算天数： S&#x3D;X−1+(X−1)&#x2F;4−(X−1)&#x2F;100+(X−1)&#x2F;400+CS&#x3D;X-1+(X-1)&#x2F;4-(X-1)&#x2F;100+(X-1)&#x2F;400+CS&#x3D;X−1+(X−1)&#x2F;4−(X−1)&#x2F;100+(X−1)&#x2F;400+C 其中，X是年份，C表示这一天是这一">
+    <meta name="description" content="先来看一道题 输入一年中的一天，输出这一天是星期几 input: 14 October 2001 output: Sunday 用以下公式计算天数： S&#x3D;X−1+(X−1)&#x2F;4−(X−1)&#x2F;100+(X−1)&#x2F;400+CS&#x3D;X-1+(X-1)&#x2F;4-(X-1)&#x2F;100+(X-1)&#x2F;400+CS&#x3D;X−1+(X−1)&#x2F;4−(X−1)&#x2F;100+(X−1)&#x2F;400+C 其中，X是年份，C表示这一天是这一年的">
 <meta property="og:type" content="article">
 <meta property="og:title" content="日期计算">
 <meta property="og:url" content="http://lqz2.github.io/2022/08/29/%E6%97%A5%E6%9C%9F%E8%AE%A1%E7%AE%97/index.html">
 <meta property="og:site_name" content="my blogs">
-<meta property="og:description" content="先来看一道题 输入一年中的一天，输出这一天是星期几 input: 114 October 2001 output: 1Sunday 用以下公式计算天数： S&#x3D;X−1+(X−1)&#x2F;4−(X−1)&#x2F;100+(X−1)&#x2F;400+CS&#x3D;X-1+(X-1)&#x2F;4-(X-1)&#x2F;100+(X-1)&#x2F;400+CS&#x3D;X−1+(X−1)&#x2F;4−(X−1)&#x2F;100+(X−1)&#x2F;400+C 其中，X是年份，C表示这一天是这一">
+<meta property="og:description" content="先来看一道题 输入一年中的一天，输出这一天是星期几 input: 14 October 2001 output: Sunday 用以下公式计算天数： S&#x3D;X−1+(X−1)&#x2F;4−(X−1)&#x2F;100+(X−1)&#x2F;400+CS&#x3D;X-1+(X-1)&#x2F;4-(X-1)&#x2F;100+(X-1)&#x2F;400+CS&#x3D;X−1+(X−1)&#x2F;4−(X−1)&#x2F;100+(X−1)&#x2F;400+C 其中，X是年份，C表示这一天是这一年的">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2022-08-29T07:05:12.000Z">
 <meta property="article:modified_time" content="2022-08-30T10:31:34.081Z">
@@ -39,6 +39,8 @@
   <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/prism/1.27.0/plugins/line-numbers/prism-line-numbers.min.css" />
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
 
@@ -277,15 +279,73 @@
                 <p>先来看一道题</p>
 <p>输入一年中的一天，输出这一天是星期几</p>
 <p>input:</p>
-<figure class="highlight basic"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs basic"><span class="hljs-symbol">14 </span>October <span class="hljs-number">2001</span><br></code></pre></td></tr></table></figure>
+<figure><div class="code-wrapper"><pre class="line-numbers language-none"><code class="language-none">14 October 2001<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre></div></figure>
 <p>output:</p>
-<figure class="highlight ebnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs ebnf"><span class="hljs-attribute">Sunday</span><br></code></pre></td></tr></table></figure>
+<figure><div class="code-wrapper"><pre class="line-numbers language-none"><code class="language-none">Sunday<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre></div></figure>
 <p>用以下公式计算天数：</p>
 <p><span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>S</mi><mo>=</mo><mi>X</mi><mo>−</mo><mn>1</mn><mo>+</mo><mo stretchy="false">(</mo><mi>X</mi><mo>−</mo><mn>1</mn><mo stretchy="false">)</mo><mi mathvariant="normal">/</mi><mn>4</mn><mo>−</mo><mo stretchy="false">(</mo><mi>X</mi><mo>−</mo><mn>1</mn><mo stretchy="false">)</mo><mi mathvariant="normal">/</mi><mn>100</mn><mo>+</mo><mo stretchy="false">(</mo><mi>X</mi><mo>−</mo><mn>1</mn><mo stretchy="false">)</mo><mi mathvariant="normal">/</mi><mn>400</mn><mo>+</mo><mi>C</mi></mrow><annotation encoding="application/x-tex">S=X-1+(X-1)/4-(X-1)/100+(X-1)/400+C</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathnormal" style="margin-right:0.05764em;">S</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">=</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.76666em;vertical-align:-0.08333em;"></span><span class="mord mathnormal" style="margin-right:0.07847em;">X</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.72777em;vertical-align:-0.08333em;"></span><span class="mord">1</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">(</span><span class="mord mathnormal" style="margin-right:0.07847em;">X</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">1</span><span class="mclose">)</span><span class="mord">/</span><span class="mord">4</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">(</span><span class="mord mathnormal" style="margin-right:0.07847em;">X</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">1</span><span class="mclose">)</span><span class="mord">/</span><span class="mord">1</span><span class="mord">0</span><span class="mord">0</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mopen">(</span><span class="mord mathnormal" style="margin-right:0.07847em;">X</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord">1</span><span class="mclose">)</span><span class="mord">/</span><span class="mord">4</span><span class="mord">0</span><span class="mord">0</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.68333em;vertical-align:0em;"></span><span class="mord mathnormal" style="margin-right:0.07153em;">C</span></span></span></span></p>
 <p>其中，<code>X</code>是年份，<code>C</code>表示这一天是这一年的第<code>C</code>天</p>
 <p>计算出<code>S</code>后用<code>S%7</code>判断星期几即可</p>
 <p>代码：</p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-meta">#<span class="hljs-keyword">include</span><span class="hljs-string">&lt;bits/stdc++.h&gt;</span></span><br><span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;<br><span class="hljs-comment">// S=X-1+(X-1)/4-(X-1)/100+(X-1)/400+C</span><br><span class="hljs-function"><span class="hljs-type">bool</span> <span class="hljs-title">isrun</span><span class="hljs-params">(<span class="hljs-type">int</span> n)</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-keyword">if</span>(n%<span class="hljs-number">4</span>==<span class="hljs-number">0</span>&amp;&amp;n%<span class="hljs-number">100</span>||n%<span class="hljs-number">400</span>==<span class="hljs-number">0</span>)<br>        <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;<br>    <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;<br>&#125;<br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-type">int</span> d,y;<br>    string m;<br>    vector&lt;pair&lt;string,<span class="hljs-type">int</span>&gt;&gt; mon=&#123;&#123;<span class="hljs-string">&quot;January&quot;</span>,<span class="hljs-number">31</span>&#125;,&#123;<span class="hljs-string">&quot;February&quot;</span>,<span class="hljs-number">28</span>&#125;,<br>    &#123;<span class="hljs-string">&quot;March&quot;</span>,<span class="hljs-number">31</span>&#125;,&#123;<span class="hljs-string">&quot;April&quot;</span>,<span class="hljs-number">30</span>&#125;,&#123;<span class="hljs-string">&quot;May&quot;</span>,<span class="hljs-number">31</span>&#125;,&#123;<span class="hljs-string">&quot;June&quot;</span>,<span class="hljs-number">30</span>&#125;,&#123;<span class="hljs-string">&quot;July&quot;</span>,<span class="hljs-number">31</span>&#125;,<br>    &#123;<span class="hljs-string">&quot;August&quot;</span>,<span class="hljs-number">31</span>&#125;,&#123;<span class="hljs-string">&quot;September&quot;</span>,<span class="hljs-number">30</span>&#125;,&#123;<span class="hljs-string">&quot;October&quot;</span>,<span class="hljs-number">31</span>&#125;,&#123;<span class="hljs-string">&quot;November&quot;</span>,<span class="hljs-number">30</span>&#125;,<br>                                  &#123;<span class="hljs-string">&quot;December&quot;</span>,<span class="hljs-number">31</span>&#125;&#125;;<br>    <span class="hljs-keyword">while</span>(cin&gt;&gt;d&gt;&gt;m&gt;&gt;y)<br>    &#123;<br>        <span class="hljs-type">int</span> flag=<span class="hljs-number">0</span>;<br>        <span class="hljs-keyword">if</span>(<span class="hljs-built_in">isrun</span>(y))<br>            flag=<span class="hljs-number">1</span>;<br>        <span class="hljs-type">int</span> sum=<span class="hljs-number">0</span>;<br>        <span class="hljs-keyword">for</span>(<span class="hljs-keyword">auto</span> it=mon.<span class="hljs-built_in">begin</span>();it!=mon.<span class="hljs-built_in">end</span>();++it)<br>        &#123;<br>            <span class="hljs-keyword">if</span>(it-&gt;first!=m)   <br>                sum+=it-&gt;second;<br>            <span class="hljs-keyword">else</span><br>                <span class="hljs-keyword">break</span>;<br>        &#125;<br>        sum=sum+d+flag;<br>        <span class="hljs-type">int</span> s=y<span class="hljs-number">-1</span>+(y<span class="hljs-number">-1</span>)/<span class="hljs-number">4</span>-(y<span class="hljs-number">-1</span>)/<span class="hljs-number">100</span>+(y<span class="hljs-number">-1</span>)/<span class="hljs-number">400</span>+sum;<br>        <span class="hljs-keyword">switch</span>(s%<span class="hljs-number">7</span>)<br>        &#123;<br>            <span class="hljs-keyword">case</span> <span class="hljs-number">0</span>: <br>                cout&lt;&lt;<span class="hljs-string">&quot;Sunday&quot;</span>&lt;&lt;endl;<br>                <span class="hljs-keyword">break</span>;<br>            <span class="hljs-keyword">case</span> <span class="hljs-number">1</span>: <br>                cout&lt;&lt;<span class="hljs-string">&quot;Monday&quot;</span>&lt;&lt;endl;<br>                <span class="hljs-keyword">break</span>;<br>            <span class="hljs-keyword">case</span> <span class="hljs-number">2</span>: <br>                cout&lt;&lt;<span class="hljs-string">&quot;Tuesday&quot;</span>&lt;&lt;endl;<br>                <span class="hljs-keyword">break</span>;<br>            <span class="hljs-keyword">case</span> <span class="hljs-number">3</span>: <br>                cout&lt;&lt;<span class="hljs-string">&quot;Wednesday&quot;</span>&lt;&lt;endl;<br>                <span class="hljs-keyword">break</span>;<br>            <span class="hljs-keyword">case</span> <span class="hljs-number">4</span>: <br>                cout&lt;&lt;<span class="hljs-string">&quot;Thursday&quot;</span>&lt;&lt;endl;<br>                <span class="hljs-keyword">break</span>;<br>            <span class="hljs-keyword">case</span> <span class="hljs-number">5</span>: <br>                cout&lt;&lt;<span class="hljs-string">&quot;Friday&quot;</span>&lt;&lt;endl;<br>                <span class="hljs-keyword">break</span>;<br>            <span class="hljs-keyword">case</span> <span class="hljs-number">6</span>: <br>                cout&lt;&lt;<span class="hljs-string">&quot;Saturday&quot;</span>&lt;&lt;endl;<br>                <span class="hljs-keyword">break</span>;<br>        &#125;<br>    &#125;<br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+<figure><div class="code-wrapper"><pre class="line-numbers language-none"><code class="language-none">#include&lt;bits&#x2F;stdc++.h&gt;
+using namespace std;
+&#x2F;&#x2F; S&#x3D;X-1+(X-1)&#x2F;4-(X-1)&#x2F;100+(X-1)&#x2F;400+C
+bool isrun(int n)
+&#123;
+    if(n%4&#x3D;&#x3D;0&amp;&amp;n%100||n%400&#x3D;&#x3D;0)
+        return true;
+    return false;
+&#125;
+int main()
+&#123;
+    int d,y;
+    string m;
+    vector&lt;pair&lt;string,int&gt;&gt; mon&#x3D;&#123;&#123;&quot;January&quot;,31&#125;,&#123;&quot;February&quot;,28&#125;,
+    &#123;&quot;March&quot;,31&#125;,&#123;&quot;April&quot;,30&#125;,&#123;&quot;May&quot;,31&#125;,&#123;&quot;June&quot;,30&#125;,&#123;&quot;July&quot;,31&#125;,
+    &#123;&quot;August&quot;,31&#125;,&#123;&quot;September&quot;,30&#125;,&#123;&quot;October&quot;,31&#125;,&#123;&quot;November&quot;,30&#125;,
+                                  &#123;&quot;December&quot;,31&#125;&#125;;
+    while(cin&gt;&gt;d&gt;&gt;m&gt;&gt;y)
+    &#123;
+        int flag&#x3D;0;
+        if(isrun(y))
+            flag&#x3D;1;
+        int sum&#x3D;0;
+        for(auto it&#x3D;mon.begin();it!&#x3D;mon.end();++it)
+        &#123;
+            if(it-&gt;first!&#x3D;m)   
+                sum+&#x3D;it-&gt;second;
+            else
+                break;
+        &#125;
+        sum&#x3D;sum+d+flag;
+        int s&#x3D;y-1+(y-1)&#x2F;4-(y-1)&#x2F;100+(y-1)&#x2F;400+sum;
+        switch(s%7)
+        &#123;
+            case 0: 
+                cout&lt;&lt;&quot;Sunday&quot;&lt;&lt;endl;
+                break;
+            case 1: 
+                cout&lt;&lt;&quot;Monday&quot;&lt;&lt;endl;
+                break;
+            case 2: 
+                cout&lt;&lt;&quot;Tuesday&quot;&lt;&lt;endl;
+                break;
+            case 3: 
+                cout&lt;&lt;&quot;Wednesday&quot;&lt;&lt;endl;
+                break;
+            case 4: 
+                cout&lt;&lt;&quot;Thursday&quot;&lt;&lt;endl;
+                break;
+            case 5: 
+                cout&lt;&lt;&quot;Friday&quot;&lt;&lt;endl;
+                break;
+            case 6: 
+                cout&lt;&lt;&quot;Saturday&quot;&lt;&lt;endl;
+                break;
+        &#125;
+    &#125;
+    return 0;
+&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div></figure>
 
                 
               </div>
@@ -565,6 +625,8 @@
   });
 </script>
 
+
+  <script  src="https://lib.baomitu.com/prism/1.27.0/plugins/line-numbers/prism-line-numbers.min.js" ></script>
 
   <script src=https://lib.baomitu.com/clipboard.js/2.0.10/clipboard.min.js></script>
 

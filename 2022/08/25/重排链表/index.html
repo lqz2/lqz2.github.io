@@ -40,6 +40,8 @@
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
 
+  <link  rel="stylesheet" href="https://lib.baomitu.com/prism/1.27.0/plugins/line-numbers/prism-line-numbers.min.css" />
+
   <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
 
 
@@ -218,7 +220,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          1.8k 字
+          1.9k 字
         
       </span>
     
@@ -229,7 +231,7 @@
         
         
         
-          15 分钟
+          17 分钟
         
       </span>
     
@@ -300,21 +302,96 @@
 <p>设置两个指针，其中快的指针每次移动2次，慢指针移动一次，当快指针到达尾部，慢指针的位置就是中点</p>
 </blockquote>
 <p>代码：</p>
-<figure class="highlight autoit"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs autoit">ListNode* middleNode(ListNode* head) &#123;<br>        ListNode *low=head<span class="hljs-comment">;</span><br>        ListNode *fast=head<span class="hljs-comment">;</span><br>        //如果有偶数个节点，以下条件找到的是右侧中点<br>        //如果要找左侧中点，改为：fast-&gt;<span class="hljs-keyword">next</span>!=<span class="hljs-literal">NULL</span>&amp;&amp;fast-&gt;<span class="hljs-keyword">next</span>-&gt;<span class="hljs-keyword">next</span>!=<span class="hljs-literal">NULL</span>即可<br>        <span class="hljs-keyword">while</span>(fast!=<span class="hljs-literal">NULL</span>&amp;&amp;fast-&gt;<span class="hljs-keyword">next</span>!=<span class="hljs-literal">NULL</span>)<br>        &#123;<br>            low=low-&gt;<span class="hljs-keyword">next</span><span class="hljs-comment">;</span><br>            fast=fast-&gt;<span class="hljs-keyword">next</span>-&gt;<span class="hljs-keyword">next</span><span class="hljs-comment">;</span><br>        &#125;<br>        <span class="hljs-keyword">return</span> low<span class="hljs-comment">;</span><br>    &#125;<br></code></pre></td></tr></table></figure>
+<figure><div class="code-wrapper"><pre class="line-numbers language-none"><code class="language-none">ListNode* middleNode(ListNode* head) &#123;
+        ListNode *low&#x3D;head;
+        ListNode *fast&#x3D;head;
+        &#x2F;&#x2F;如果有偶数个节点，以下条件找到的是右侧中点
+        &#x2F;&#x2F;如果要找左侧中点，改为：fast-&gt;next!&#x3D;NULL&amp;&amp;fast-&gt;next-&gt;next!&#x3D;NULL即可
+        while(fast!&#x3D;NULL&amp;&amp;fast-&gt;next!&#x3D;NULL)
+        &#123;
+            low&#x3D;low-&gt;next;
+            fast&#x3D;fast-&gt;next-&gt;next;
+        &#125;
+        return low;
+    &#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div></figure>
 <h3 id="反转链表"><a class="markdownIt-Anchor" href="#反转链表"></a> 反转链表</h3>
 <blockquote>
 <p>其实反转链表可以用线性表做，时间复杂度差不多，但这里还是回归链表操作</p>
 </blockquote>
 <p>代码：</p>
-<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs routeros">ListNode* reverseList(ListNode* head) &#123;<br>        ListNode* <span class="hljs-attribute">pre</span>=<span class="hljs-literal">NULL</span>;<br>        ListNode* <span class="hljs-attribute">l</span>=head;<br>        <span class="hljs-keyword">while</span>(l!=<span class="hljs-literal">NULL</span>)<br>        &#123;<br>            ListNode* <span class="hljs-attribute">tmp</span>=l-&gt;next;<br>            l-&gt;<span class="hljs-attribute">next</span>=pre;<br>            <span class="hljs-attribute">pre</span>=l;<br>            <span class="hljs-attribute">l</span>=tmp;<br>        &#125;<br>        return pre;<br>    &#125;<br></code></pre></td></tr></table></figure>
+<figure><div class="code-wrapper"><pre class="line-numbers language-none"><code class="language-none">ListNode* reverseList(ListNode* head) &#123;
+        ListNode* pre&#x3D;NULL;
+        ListNode* l&#x3D;head;
+        while(l!&#x3D;NULL)
+        &#123;
+            ListNode* tmp&#x3D;l-&gt;next;
+            l-&gt;next&#x3D;pre;
+            pre&#x3D;l;
+            l&#x3D;tmp;
+        &#125;
+        return pre;
+    &#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div></figure>
 <h3 id="合并链表"><a class="markdownIt-Anchor" href="#合并链表"></a> 合并链表</h3>
 <blockquote>
 <p>将l1和l2交错合并</p>
 </blockquote>
 <p>代码：</p>
-<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs routeros">void merge(ListNode* l1,ListNode* l2)<br>&#123;<br>    <span class="hljs-keyword">while</span>(l1!=<span class="hljs-literal">NULL</span>&amp;&amp;l2!=<span class="hljs-literal">NULL</span>)<br>    &#123;<br>        ListNode* <span class="hljs-attribute">l1t</span>=l1-&gt;next;<br>        ListNode* <span class="hljs-attribute">l2t</span>=l2-&gt;next;<br>        l1-&gt;<span class="hljs-attribute">next</span>=l2;<br>        <span class="hljs-attribute">l1</span>=l1t;<br>        l2-&gt;<span class="hljs-attribute">next</span>=l1;<br>        <span class="hljs-attribute">l2</span>=l2t;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<figure><div class="code-wrapper"><pre class="line-numbers language-none"><code class="language-none">void merge(ListNode* l1,ListNode* l2)
+&#123;
+    while(l1!&#x3D;NULL&amp;&amp;l2!&#x3D;NULL)
+    &#123;
+        ListNode* l1t&#x3D;l1-&gt;next;
+        ListNode* l2t&#x3D;l2-&gt;next;
+        l1-&gt;next&#x3D;l2;
+        l1&#x3D;l1t;
+        l2-&gt;next&#x3D;l1;
+        l2&#x3D;l2t;
+    &#125;
+&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div></figure>
 <h3 id="题解"><a class="markdownIt-Anchor" href="#题解"></a> 题解</h3>
-<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><code class="hljs routeros">void reorderList(ListNode* head) &#123;<br>    ListNode* <span class="hljs-attribute">mid</span>=middleNode(head);<br>    ListNode* <span class="hljs-attribute">l1</span>=head;<br>    ListNode* <span class="hljs-attribute">l2</span>=mid-&gt;next;<br>    mid-&gt;<span class="hljs-attribute">next</span>=<span class="hljs-literal">NULL</span>;<br>    ListNode* <span class="hljs-attribute">r</span>=reverseList(l2);<br>    merge(l1,r);<br>&#125;<br>ListNode* reverseList(ListNode* head) &#123;<br>    ListNode* <span class="hljs-attribute">pre</span>=<span class="hljs-literal">NULL</span>;<br>    ListNode* <span class="hljs-attribute">l</span>=head;<br>    <span class="hljs-keyword">while</span>(l!=<span class="hljs-literal">NULL</span>)<br>    &#123;<br>        ListNode* <span class="hljs-attribute">tmp</span>=l-&gt;next;<br>        l-&gt;<span class="hljs-attribute">next</span>=pre;<br>        <span class="hljs-attribute">pre</span>=l;<br>        <span class="hljs-attribute">l</span>=tmp;<br>    &#125;<br>    return pre;<br>&#125;<br>ListNode* middleNode(ListNode* head) &#123;<br>    ListNode *<span class="hljs-attribute">low</span>=head;<br>    ListNode <span class="hljs-number">*fa</span><span class="hljs-attribute">st</span>=head;<br>    <span class="hljs-keyword">while</span>(fast-&gt;next!=<span class="hljs-literal">NULL</span>&amp;&amp;fast-&gt;next-&gt;next!=<span class="hljs-literal">NULL</span>)<br>    &#123;<br>        <span class="hljs-attribute">low</span>=low-&gt;next;<br>        <span class="hljs-attribute">fast</span>=fast-&gt;next-&gt;next;<br>    &#125;<br>    return low;<br>&#125;<br>void merge(ListNode* l1,ListNode* l2)<br>&#123;<br>    <br>    <span class="hljs-keyword">while</span>(l1!=<span class="hljs-literal">NULL</span>&amp;&amp;l2!=<span class="hljs-literal">NULL</span>)<br>    &#123;<br>        ListNode* <span class="hljs-attribute">l1t</span>=l1-&gt;next;<br>        ListNode* <span class="hljs-attribute">l2t</span>=l2-&gt;next;<br>        l1-&gt;<span class="hljs-attribute">next</span>=l2;<br>        <span class="hljs-attribute">l1</span>=l1t;<br>        l2-&gt;<span class="hljs-attribute">next</span>=l1;<br>        <span class="hljs-attribute">l2</span>=l2t;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<figure><div class="code-wrapper"><pre class="line-numbers language-none"><code class="language-none">void reorderList(ListNode* head) &#123;
+    ListNode* mid&#x3D;middleNode(head);
+    ListNode* l1&#x3D;head;
+    ListNode* l2&#x3D;mid-&gt;next;
+    mid-&gt;next&#x3D;NULL;
+    ListNode* r&#x3D;reverseList(l2);
+    merge(l1,r);
+&#125;
+ListNode* reverseList(ListNode* head) &#123;
+    ListNode* pre&#x3D;NULL;
+    ListNode* l&#x3D;head;
+    while(l!&#x3D;NULL)
+    &#123;
+        ListNode* tmp&#x3D;l-&gt;next;
+        l-&gt;next&#x3D;pre;
+        pre&#x3D;l;
+        l&#x3D;tmp;
+    &#125;
+    return pre;
+&#125;
+ListNode* middleNode(ListNode* head) &#123;
+    ListNode *low&#x3D;head;
+    ListNode *fast&#x3D;head;
+    while(fast-&gt;next!&#x3D;NULL&amp;&amp;fast-&gt;next-&gt;next!&#x3D;NULL)
+    &#123;
+        low&#x3D;low-&gt;next;
+        fast&#x3D;fast-&gt;next-&gt;next;
+    &#125;
+    return low;
+&#125;
+void merge(ListNode* l1,ListNode* l2)
+&#123;
+    
+    while(l1!&#x3D;NULL&amp;&amp;l2!&#x3D;NULL)
+    &#123;
+        ListNode* l1t&#x3D;l1-&gt;next;
+        ListNode* l2t&#x3D;l2-&gt;next;
+        l1-&gt;next&#x3D;l2;
+        l1&#x3D;l1t;
+        l2-&gt;next&#x3D;l1;
+        l2&#x3D;l2t;
+    &#125;
+&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div></figure>
 
                 
               </div>
@@ -589,6 +666,8 @@
   });
 </script>
 
+
+  <script  src="https://lib.baomitu.com/prism/1.27.0/plugins/line-numbers/prism-line-numbers.min.js" ></script>
 
   <script src=https://lib.baomitu.com/clipboard.js/2.0.10/clipboard.min.js></script>
 
