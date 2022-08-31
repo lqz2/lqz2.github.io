@@ -16,15 +16,15 @@
   <meta name="author" content="zql">
   <meta name="keywords" content="">
   
-    <meta name="description" content="快速幂 快速幂常用于计算指数非常大的幂，核心思想就是每一步都把指数分成两半，而相应的底数做平方运算。这样不仅能把非常大的指数给不断变小，所需要执行的循环次数也变小，而最后表示的结果却一直不会变。  直接看例题 例1 快速幂输入三个数字a,b,c,输出 a^b mod cinput: 12 10 10 output: 14 代码 123456789101112131415161718192021#">
+    <meta name="description" content="例1 快速幂 例2 矩阵幂    快速幂 快速幂常用于计算指数非常大的幂，核心思想就是每一步都把指数分成两半，而相应的底数做平方运算。这样不仅能把非常大的指数给不断变小，所需要执行的循环次数也变小，而最后表示的结果却一直不会变。  直接看例题  例1 快速幂 输入三个数字a,b,c,输出 a^b mod c input: 12 10 10 output: 14 代码 1234567891011">
 <meta property="og:type" content="article">
 <meta property="og:title" content="快速幂矩阵幂">
 <meta property="og:url" content="http://lqz2.github.io/2022/08/23/%E5%BF%AB%E9%80%9F%E5%B9%82%E7%9F%A9%E9%98%B5%E5%B9%82/index.html">
 <meta property="og:site_name" content="my blogs">
-<meta property="og:description" content="快速幂 快速幂常用于计算指数非常大的幂，核心思想就是每一步都把指数分成两半，而相应的底数做平方运算。这样不仅能把非常大的指数给不断变小，所需要执行的循环次数也变小，而最后表示的结果却一直不会变。  直接看例题 例1 快速幂输入三个数字a,b,c,输出 a^b mod cinput: 12 10 10 output: 14 代码 123456789101112131415161718192021#">
+<meta property="og:description" content="例1 快速幂 例2 矩阵幂    快速幂 快速幂常用于计算指数非常大的幂，核心思想就是每一步都把指数分成两半，而相应的底数做平方运算。这样不仅能把非常大的指数给不断变小，所需要执行的循环次数也变小，而最后表示的结果却一直不会变。  直接看例题  例1 快速幂 输入三个数字a,b,c,输出 a^b mod c input: 12 10 10 output: 14 代码 1234567891011">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2022-08-23T02:56:25.000Z">
-<meta property="article:modified_time" content="2022-08-30T09:03:08.781Z">
+<meta property="article:modified_time" content="2022-08-31T02:34:03.159Z">
 <meta property="article:author" content="zql">
 <meta name="twitter:card" content="summary_large_image">
   
@@ -272,18 +272,34 @@
             
               <div class="markdown-body">
                 
-                <blockquote>
+                <!-- TOC -->
+<ul>
+<li><a href="#%E4%BE%8B1-%E5%BF%AB%E9%80%9F%E5%B9%82">例1 快速幂</a></li>
+<li><a href="#%E4%BE%8B2-%E7%9F%A9%E9%98%B5%E5%B9%82">例2 矩阵幂</a></li>
+</ul>
+<!-- /TOC -->
+<blockquote>
 <p><strong>快速幂</strong> 快速幂常用于计算指数非常大的幂，核心思想就是每一步都把指数分成两半，而相应的底数做平方运算。这样不仅能把非常大的指数给不断变小，所需要执行的循环次数也变小，而最后表示的结果却一直不会变。</p>
 </blockquote>
 <p><em>直接看例题</em></p>
-<h3 id="例1-快速幂"><a href="#例1-快速幂" class="headerlink" title="例1 快速幂"></a>例1 快速幂</h3><p>输入三个数字a,b,c,输出 a^b <strong>mod</strong> c<br>input:</p>
+<h3 id="例1-快速幂"><a class="markdownIt-Anchor" href="#例1-快速幂"></a> 例1 快速幂</h3>
+<p>输入三个数字a,b,c,输出 a^b <strong>mod</strong> c<br />
+input:</p>
 <figure class="highlight basic"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs basic"><span class="hljs-symbol">2 </span><span class="hljs-number">10</span> <span class="hljs-number">10</span><br></code></pre></td></tr></table></figure>
 <p>output:</p>
 <figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs">4<br></code></pre></td></tr></table></figure>
 <p>代码</p>
 <figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-meta">#<span class="hljs-keyword">include</span><span class="hljs-string">&lt;bits/stdc++.h&gt;</span></span><br><span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;<br><span class="hljs-type">int</span> a,b,c;<br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">ksm</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br>	<span class="hljs-type">int</span> ans=<span class="hljs-number">1</span>;<br>	a=a%c;<br>	<span class="hljs-keyword">while</span>(b&gt;<span class="hljs-number">0</span>)<br>	&#123;<br>		<span class="hljs-keyword">if</span>(b%<span class="hljs-number">2</span>)<br>			ans=(ans*a)%c;<br>		a=(a*a)%c;<br>		b/=<span class="hljs-number">2</span>;<br>	&#125;<br>	<span class="hljs-keyword">return</span> ans;<br>&#125;<br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br>	cin&gt;&gt;a&gt;&gt;b&gt;&gt;c;<br>	cout&lt;&lt;<span class="hljs-built_in">ksm</span>()&lt;&lt;endl;<br>&#125;<br></code></pre></td></tr></table></figure>
-<h3 id="例2-矩阵幂"><a href="#例2-矩阵幂" class="headerlink" title="例2 矩阵幂"></a>例2 矩阵幂</h3><p>描述<br>给定一个n*n的矩阵，输出矩阵的k次方</p>
-<p>输入描述<br>有多组输入，第一行输入n和k<br>后面n行输入矩阵元素<br>2&lt;&#x3D;n&lt;&#x3D;10,1&lt;&#x3D;k&lt;&#x3D;5<br>输出描述<br>每组输入输出矩阵的k次方<br>input:</p>
+<h3 id="例2-矩阵幂"><a class="markdownIt-Anchor" href="#例2-矩阵幂"></a> 例2 矩阵幂</h3>
+<p>描述<br />
+给定一个n*n的矩阵，输出矩阵的k次方</p>
+<p>输入描述<br />
+有多组输入，第一行输入n和k<br />
+后面n行输入矩阵元素<br />
+2&lt;=n&lt;=10,1&lt;=k&lt;=5<br />
+输出描述<br />
+每组输入输出矩阵的k次方<br />
+input:</p>
 <figure class="highlight basic"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs basic"><span class="hljs-symbol">2 </span><span class="hljs-number">2</span><br><span class="hljs-symbol">9 </span><span class="hljs-number">8</span><br><span class="hljs-symbol">9 </span><span class="hljs-number">3</span><br><span class="hljs-symbol">3 </span><span class="hljs-number">3</span><br><span class="hljs-symbol">4 </span><span class="hljs-number">8</span> <span class="hljs-number">4</span><br><span class="hljs-symbol">9 </span><span class="hljs-number">3</span> <span class="hljs-number">0</span><br><span class="hljs-symbol">3 </span><span class="hljs-number">5</span> <span class="hljs-number">7</span><br><span class="hljs-symbol">5 </span><span class="hljs-number">2</span><br><span class="hljs-symbol">4 </span><span class="hljs-number">0</span> <span class="hljs-number">3</span> <span class="hljs-number">0</span> <span class="hljs-number">1</span><br><span class="hljs-symbol">0 </span><span class="hljs-number">0</span> <span class="hljs-number">5</span> <span class="hljs-number">8</span> <span class="hljs-number">5</span><br><span class="hljs-symbol">8 </span><span class="hljs-number">9</span> <span class="hljs-number">8</span> <span class="hljs-number">5</span> <span class="hljs-number">3</span><br><span class="hljs-symbol">9 </span><span class="hljs-number">6</span> <span class="hljs-number">1</span> <span class="hljs-number">7</span> <span class="hljs-number">8</span><br><span class="hljs-symbol">7 </span><span class="hljs-number">2</span> <span class="hljs-number">5</span> <span class="hljs-number">7</span> <span class="hljs-number">3</span><br></code></pre></td></tr></table></figure>
 <p>output:</p>
 <figure class="highlight basic"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs basic"><span class="hljs-symbol">153 </span><span class="hljs-number">96</span><br><span class="hljs-symbol">108 </span><span class="hljs-number">81</span><br><span class="hljs-symbol">1216 </span><span class="hljs-number">1248</span> <span class="hljs-number">708</span><br><span class="hljs-symbol">1089 </span><span class="hljs-number">927</span> <span class="hljs-number">504</span><br><span class="hljs-symbol">1161 </span><span class="hljs-number">1151</span> <span class="hljs-number">739</span><br><span class="hljs-symbol">47 </span><span class="hljs-number">29</span> <span class="hljs-number">41</span> <span class="hljs-number">22</span> <span class="hljs-number">16</span><br><span class="hljs-symbol">147 </span><span class="hljs-number">103</span> <span class="hljs-number">73</span> <span class="hljs-number">116</span> <span class="hljs-number">94</span><br><span class="hljs-symbol">162 </span><span class="hljs-number">108</span> <span class="hljs-number">153</span> <span class="hljs-number">168</span> <span class="hljs-number">126</span><br><span class="hljs-symbol">163 </span><span class="hljs-number">67</span> <span class="hljs-number">112</span> <span class="hljs-number">158</span> <span class="hljs-number">122</span><br><span class="hljs-symbol">152 </span><span class="hljs-number">93</span> <span class="hljs-number">93</span> <span class="hljs-number">111</span> <span class="hljs-number">97</span><br></code></pre></td></tr></table></figure>

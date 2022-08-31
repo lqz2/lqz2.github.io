@@ -16,15 +16,15 @@
   <meta name="author" content="zql">
   <meta name="keywords" content="">
   
-    <meta name="description" content="背包问题 是经典的一类动态规划类型的题目，一般是有n种物品，每个物品有对应的价值w，然后背包体积为V，求能装入的物品的最大价值。  思路设 dp[i][j] 为前 i 个物品，背包容量为 j 的最大价值。 那么考虑第i个物品是否放入，有两种情况：  如果不放，那么等同于前 i−1 个物品，容量为j的背包的最优方案。 如果放，那么等同于前 i−1 个物品，容量为 j−v[i] 的背包的最优方案，再">
+    <meta name="description" content="思路 例题1：01背包 例题2：完全背包    背包问题 是经典的一类动态规划类型的题目，一般是有n种物品，每个物品有对应的价值w，然后背包体积为V，求能装入的物品的最大价值。   思路 设 dp[i][j] 为前 i 个物品，背包容量为 j 的最大价值。 那么考虑第i个物品是否放入，有两种情况：  如果不放，那么等同于前 i−1 个物品，容量为j的背包的最优方案。 如果放，那么等同于前 i−">
 <meta property="og:type" content="article">
 <meta property="og:title" content="背包问题">
 <meta property="og:url" content="http://lqz2.github.io/2022/08/22/%E8%83%8C%E5%8C%85%E9%97%AE%E9%A2%98/index.html">
 <meta property="og:site_name" content="my blogs">
-<meta property="og:description" content="背包问题 是经典的一类动态规划类型的题目，一般是有n种物品，每个物品有对应的价值w，然后背包体积为V，求能装入的物品的最大价值。  思路设 dp[i][j] 为前 i 个物品，背包容量为 j 的最大价值。 那么考虑第i个物品是否放入，有两种情况：  如果不放，那么等同于前 i−1 个物品，容量为j的背包的最优方案。 如果放，那么等同于前 i−1 个物品，容量为 j−v[i] 的背包的最优方案，再">
+<meta property="og:description" content="思路 例题1：01背包 例题2：完全背包    背包问题 是经典的一类动态规划类型的题目，一般是有n种物品，每个物品有对应的价值w，然后背包体积为V，求能装入的物品的最大价值。   思路 设 dp[i][j] 为前 i 个物品，背包容量为 j 的最大价值。 那么考虑第i个物品是否放入，有两种情况：  如果不放，那么等同于前 i−1 个物品，容量为j的背包的最优方案。 如果放，那么等同于前 i−">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2022-08-22T07:08:09.000Z">
-<meta property="article:modified_time" content="2022-08-30T09:02:11.869Z">
+<meta property="article:modified_time" content="2022-08-31T02:32:32.467Z">
 <meta property="article:author" content="zql">
 <meta name="twitter:card" content="summary_large_image">
   
@@ -272,39 +272,50 @@
             
               <div class="markdown-body">
                 
-                <blockquote>
+                <!-- TOC -->
+<ul>
+<li><a href="#%E6%80%9D%E8%B7%AF">思路</a></li>
+<li><a href="#%E4%BE%8B%E9%A2%98101%E8%83%8C%E5%8C%85">例题1：01背包</a></li>
+<li><a href="#%E4%BE%8B%E9%A2%982%E5%AE%8C%E5%85%A8%E8%83%8C%E5%8C%85">例题2：完全背包</a></li>
+</ul>
+<!-- /TOC -->
+<blockquote>
 <p><em><strong>背包问题</strong></em> 是经典的一类动态规划类型的题目，一般是有n种物品，每个物品有对应的价值w，然后背包体积为V，求能装入的物品的最大价值。</p>
 </blockquote>
-<h4 id="思路"><a href="#思路" class="headerlink" title="思路"></a>思路</h4><p>设 <strong>dp[i][j]</strong> 为前 i 个物品，背包容量为 j 的最大价值。</p>
+<h4 id="思路"><a class="markdownIt-Anchor" href="#思路"></a> 思路</h4>
+<p>设 <strong>dp[i][j]</strong> 为前 i 个物品，背包容量为 j 的最大价值。</p>
 <p>那么考虑第i个物品是否放入，有两种情况：</p>
 <ul>
 <li>如果不放，那么等同于前 <strong>i−1</strong> 个物品，容量为j的背包的最优方案。</li>
 <li>如果放，那么等同于前 <strong>i−1</strong> 个物品，容量为 <strong>j−v[i]</strong> 的背包的最优方案，再加上第i个物品的价值。</li>
 </ul>
 <p>那么可以得到转移方程：</p>
-<p><em><strong>dp[i][j]&#x3D;max(dp[i−1][j],dp[i−1][j−v[i]]+w[i])</strong></em></p>
+<p><em><strong>dp[i][j]=max(dp[i−1][j],dp[i−1][j−v[i]]+w[i])</strong></em></p>
 <p>最终的答案就是 <strong>dp[n][V]</strong></p>
 <p>观察到dp数组，第i行仅跟上一行有关系，故可以压缩一维，为了防止dp[i−1][j−v[i]]被覆盖掉，第二维度须<strong>反向枚举</strong>。</p>
-<h4 id="例题1：01背包"><a href="#例题1：01背包" class="headerlink" title="例题1：01背包"></a>例题1：01背包</h4><p>你有一个背包，最多能容纳的体积是V，现在有n个物品，第i个物品的体积为vi,价值为wi。</p>
+<h4 id="例题101背包"><a class="markdownIt-Anchor" href="#例题101背包"></a> 例题1：01背包</h4>
+<p>你有一个背包，最多能容纳的体积是V，现在有n个物品，第i个物品的体积为vi,价值为wi。</p>
 <ol>
 <li>求这个背包至多能装多大价值的物品？</li>
 <li>若背包恰好装满，求至多能装多大价值的物品？</li>
 </ol>
-<p>输入第一行n,V<br>后面n行，输入第i件物品的体积vi和价值wi<br>输出：两个问题的答案，各占一行，如果无解输出0</p>
+<p>输入第一行n,V<br />
+后面n行，输入第i件物品的体积vi和价值wi<br />
+输出：两个问题的答案，各占一行，如果无解输出0</p>
 <p>input:</p>
 <figure class="highlight basic"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs basic"><span class="hljs-symbol">3 </span><span class="hljs-number">5</span><br><span class="hljs-symbol">2 </span><span class="hljs-number">10</span><br><span class="hljs-symbol">4 </span><span class="hljs-number">5</span><br><span class="hljs-symbol">1 </span><span class="hljs-number">4</span><br></code></pre></td></tr></table></figure>
 <p>output:</p>
 <figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs">14<br>9<br></code></pre></td></tr></table></figure>
 <p>题解：</p>
 <figure class="highlight inform7"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><code class="hljs inform7">#include&lt;bits/stdc++.h&gt;<br>using namespace std;<br>int n,V;<br>const int N=1005;<br>int v<span class="hljs-comment">[N]</span>,w<span class="hljs-comment">[N]</span>;<br>int dp<span class="hljs-comment">[N]</span>;<br>int main()<br>&#123;<br>    cin&gt;&gt;n&gt;&gt;V;<br>    for(int i=1;i&lt;=n;++i)<br>    &#123;<br>        cin&gt;&gt;v<span class="hljs-comment">[i]</span>;<br>        cin&gt;&gt;w<span class="hljs-comment">[i]</span>;<br>    &#125;<br>    //不要求装满<br>    for(int i=1;i&lt;=n;++i)<br>    &#123;<br>        for(int j=V;j&gt;=v<span class="hljs-comment">[i]</span>;--j)<br>            dp<span class="hljs-comment">[j]</span>=max(dp<span class="hljs-comment">[j]</span>,dp<span class="hljs-comment">[j-v<span class="hljs-comment">[i]</span>]</span>+w<span class="hljs-comment">[i]</span>);<br>    &#125;<br>    cout&lt;&lt;dp<span class="hljs-comment">[V]</span>&lt;&lt;endl;<br>    <br>    //要求装满<br>    memset(dp,-0x3f,sizeof(dp));<br>    dp<span class="hljs-comment">[0]</span>=0;<br>    for(int i=1;i&lt;=n;++i)<br>    &#123;<br>        for(int j=V;j&gt;=v<span class="hljs-comment">[i]</span>;--j)<br>            dp<span class="hljs-comment">[j]</span>=max(dp<span class="hljs-comment">[j]</span>,dp<span class="hljs-comment">[j-v<span class="hljs-comment">[i]</span>]</span>+w<span class="hljs-comment">[i]</span>);<br>    &#125;<br>    if(dp<span class="hljs-comment">[V]</span>&gt;0)<br>        cout&lt;&lt;dp<span class="hljs-comment">[V]</span>&lt;&lt;endl;<br>    else<br>        cout&lt;&lt;0&lt;&lt;endl;<br>    return 0;<br>&#125;<br></code></pre></td></tr></table></figure>
-<h4 id="例题2：完全背包"><a href="#例题2：完全背包" class="headerlink" title="例题2：完全背包"></a>例题2：完全背包</h4><p>描述与例题1相同，不过每种物品有<strong>任意</strong>个</p>
+<h4 id="例题2完全背包"><a class="markdownIt-Anchor" href="#例题2完全背包"></a> 例题2：完全背包</h4>
+<p>描述与例题1相同，不过每种物品有<strong>任意</strong>个</p>
 <p>input:</p>
 <figure class="highlight basic"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs basic"><span class="hljs-symbol">6 </span><span class="hljs-number">13</span><br><span class="hljs-symbol">13 </span><span class="hljs-number">189</span><br><span class="hljs-symbol">17 </span><span class="hljs-number">360</span><br><span class="hljs-symbol">19 </span><span class="hljs-number">870</span><br><span class="hljs-symbol">14 </span><span class="hljs-number">184</span><br><span class="hljs-symbol">6 </span><span class="hljs-number">298</span><br><span class="hljs-symbol">16 </span><span class="hljs-number">242</span><br></code></pre></td></tr></table></figure>
 <p>output:</p>
 <figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs">596<br>189<br></code></pre></td></tr></table></figure>
 <p>题解：</p>
 <figure class="highlight inform7"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><code class="hljs inform7">#include&lt;bits/stdc++.h&gt;<br>using namespace std;<br>int n,V;<br>const int N=1005;<br>int v<span class="hljs-comment">[N]</span>,w<span class="hljs-comment">[N]</span>;<br>int dp<span class="hljs-comment">[N]</span>;<br>int main()<br>&#123;<br>    cin&gt;&gt;n&gt;&gt;V;<br>    for(int i=1;i&lt;=n;++i)<br>    &#123;<br>        cin&gt;&gt;v<span class="hljs-comment">[i]</span>;<br>        cin&gt;&gt;w<span class="hljs-comment">[i]</span>;<br>    &#125;<br>    //不要求装满<br>    for(int i=1;i&lt;=n;++i)<br>    &#123;<br>        for(int j=v<span class="hljs-comment">[i]</span>;j&lt;=V;++j)<br>            dp<span class="hljs-comment">[j]</span>=max(dp<span class="hljs-comment">[j]</span>,dp<span class="hljs-comment">[j-v<span class="hljs-comment">[i]</span>]</span>+w<span class="hljs-comment">[i]</span>);<br>    &#125;<br>    cout&lt;&lt;dp<span class="hljs-comment">[V]</span>&lt;&lt;endl;<br>    <br>    //要求装满<br>    memset(dp,-0x3f,sizeof(dp));<br>    dp<span class="hljs-comment">[0]</span>=0;<br>    for(int i=1;i&lt;=n;++i)<br>    &#123;<br>        for(int j=v<span class="hljs-comment">[i]</span>;j&lt;=V;++j)<br>            dp<span class="hljs-comment">[j]</span>=max(dp<span class="hljs-comment">[j]</span>,dp<span class="hljs-comment">[j-v<span class="hljs-comment">[i]</span>]</span>+w<span class="hljs-comment">[i]</span>);<br>    &#125;<br>    if(dp<span class="hljs-comment">[V]</span>&gt;0)<br>        cout&lt;&lt;dp<span class="hljs-comment">[V]</span>&lt;&lt;endl;<br>    else<br>        cout&lt;&lt;0&lt;&lt;endl;<br>    return 0;<br>&#125;<br></code></pre></td></tr></table></figure>
-
 
                 
               </div>
