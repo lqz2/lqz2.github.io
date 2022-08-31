@@ -475,13 +475,13 @@
       
         jQuery.ajax({
           type: 'GET',
-          url: '',
+          url: 'https://v1.hitokoto.cn/',
           headers: {},
           dataType: 'json',
           success: function(result) {
             var apiText;
             if (result) {
-              var keys = ''.split(',');
+              var keys = 'hitokoto'.split(',');
               if (result instanceof Array) {
                 result = result[0];
               }
@@ -499,7 +499,7 @@
           },
           error: function(xhr, status, error) {
             if (error) {
-              console.error('Failed to request :', error);
+              console.error('Failed to request https://v1.hitokoto.cn/:', error);
             }
             typing(text);
           }
