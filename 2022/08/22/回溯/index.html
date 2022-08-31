@@ -16,12 +16,12 @@
   <meta name="author" content="zql">
   <meta name="keywords" content="">
   
-    <meta name="description" content="回溯  核心思想和dfs相似，主要通过递归寻找可行解    例题1: 例题2:    例题1: 给定一个数组a[]和target的值，找出数组中可以使数字和为target的不同组合，输出所有符合要求的组合  数组中数字可以重复使用 1,1,5和1,5,1视为一种方式 input:  3 8 2 3 5 output: 3 5 2 3 3 2 2 2 2 题解 #include&lt;bits&amp;#">
+    <meta name="description" content="回溯  核心思想和dfs相似，主要通过递归寻找可行解    例题1: 例题2:    例题1: 给定一个数组a[]和target的值，找出数组中可以使数字和为target的不同组合，输出所有符合要求的组合  数组中数字可以重复使用 1,1,5和1,5,1视为一种方式 input:  123 82 3 5 output: 1233 52 3 32 2 2 2 题解 1234567891011121">
 <meta property="og:type" content="article">
 <meta property="og:title" content="回溯">
 <meta property="og:url" content="http://lqz2.github.io/2022/08/22/%E5%9B%9E%E6%BA%AF/index.html">
 <meta property="og:site_name" content="my blogs">
-<meta property="og:description" content="回溯  核心思想和dfs相似，主要通过递归寻找可行解    例题1: 例题2:    例题1: 给定一个数组a[]和target的值，找出数组中可以使数字和为target的不同组合，输出所有符合要求的组合  数组中数字可以重复使用 1,1,5和1,5,1视为一种方式 input:  3 8 2 3 5 output: 3 5 2 3 3 2 2 2 2 题解 #include&lt;bits&amp;#">
+<meta property="og:description" content="回溯  核心思想和dfs相似，主要通过递归寻找可行解    例题1: 例题2:    例题1: 给定一个数组a[]和target的值，找出数组中可以使数字和为target的不同组合，输出所有符合要求的组合  数组中数字可以重复使用 1,1,5和1,5,1视为一种方式 input:  123 82 3 5 output: 1233 52 3 32 2 2 2 题解 1234567891011121">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2022-08-22T01:54:48.000Z">
 <meta property="article:modified_time" content="2022-08-31T02:33:48.767Z">
@@ -39,8 +39,6 @@
   <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
-
-  <link  rel="stylesheet" href="https://lib.baomitu.com/prism/1.27.0/plugins/line-numbers/prism-line-numbers.min.css" />
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
 
@@ -70,7 +68,7 @@
   <script id="fluid-configs">
     var Fluid = window.Fluid || {};
     Fluid.ctx = Object.assign({}, Fluid.ctx)
-    var CONFIG = {"hostname":"lqz2.github.io","root":"/","version":"1.9.2","typing":{"enable":true,"typeSpeed":50,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+    var CONFIG = {"hostname":"lqz2.github.io","root":"/","version":"1.9.2","typing":{"enable":true,"typeSpeed":60,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
 
     if (CONFIG.web_analytics.follow_dnt) {
       var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
@@ -220,7 +218,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          1.5k 字
+          1.6k 字
         
       </span>
     
@@ -231,7 +229,7 @@
         
         
         
-          13 分钟
+          14 分钟
         
       </span>
     
@@ -290,53 +288,11 @@
 <li>1,1,5和1,5,1视为一种方式<br />
 input:</li>
 </ul>
-<figure><div class="code-wrapper"><pre class="line-numbers language-none"><code class="language-none">3 8
-2 3 5<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre></div></figure>
+<figure class="highlight basic"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs basic"><span class="hljs-symbol">3 </span><span class="hljs-number">8</span><br><span class="hljs-symbol">2 </span><span class="hljs-number">3</span> <span class="hljs-number">5</span><br></code></pre></td></tr></table></figure>
 <p>output:</p>
-<figure><div class="code-wrapper"><pre class="line-numbers language-none"><code class="language-none">3 5
-2 3 3
-2 2 2 2<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre></div></figure>
+<figure class="highlight basic"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs basic"><span class="hljs-symbol">3 </span><span class="hljs-number">5</span><br><span class="hljs-symbol">2 </span><span class="hljs-number">3</span> <span class="hljs-number">3</span><br><span class="hljs-symbol">2 </span><span class="hljs-number">2</span> <span class="hljs-number">2</span> <span class="hljs-number">2</span><br></code></pre></td></tr></table></figure>
 <p>题解</p>
-<figure><div class="code-wrapper"><pre class="line-numbers language-none"><code class="language-none">#include&lt;bits&#x2F;stdc++.h&gt;
-using namespace std;
-int n,target;
-const int N&#x3D;1e5+5;
-typedef vector&lt;int&gt; vi;
-vi a(N);
-vi tmp;
-vector&lt;vi&gt; ans; 
-void bk(int idx,int target)
-&#123;
-    if(idx&#x3D;&#x3D;n)
-        return;
-    if(target&#x3D;&#x3D;0)
-    &#123;
-        ans.push_back(tmp);
-        return;
-    &#125;
-    bk(idx+1,target);
-    if(target&gt;&#x3D;a[idx])
-    &#123;
-        tmp.push_back(a[idx]);
-        bk(idx,target-a[idx]);
-        tmp.pop_back();
-    &#125;
-&#125;
-int main()
-&#123;
-	cin&gt;&gt;n&gt;&gt;target;
-	for(int i&#x3D;0;i&lt;n;++i)
-		cin&gt;&gt;a[i];
-	
-    bk(0,target);
-    for(vi&amp; t:ans)
-    &#123;
-    	for(int tt :t)
-    		cout&lt;&lt;tt&lt;&lt;&#39; &#39;;
-    	cout&lt;&lt;endl;
-    &#125;
-    return 0;
-&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div></figure>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-meta">#<span class="hljs-keyword">include</span><span class="hljs-string">&lt;bits/stdc++.h&gt;</span></span><br><span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;<br><span class="hljs-type">int</span> n,target;<br><span class="hljs-type">const</span> <span class="hljs-type">int</span> N=<span class="hljs-number">1e5</span>+<span class="hljs-number">5</span>;<br><span class="hljs-keyword">typedef</span> vector&lt;<span class="hljs-type">int</span>&gt; vi;<br><span class="hljs-function">vi <span class="hljs-title">a</span><span class="hljs-params">(N)</span></span>;<br>vi tmp;<br>vector&lt;vi&gt; ans; <br><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">bk</span><span class="hljs-params">(<span class="hljs-type">int</span> idx,<span class="hljs-type">int</span> target)</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-keyword">if</span>(idx==n)<br>        <span class="hljs-keyword">return</span>;<br>    <span class="hljs-keyword">if</span>(target==<span class="hljs-number">0</span>)<br>    &#123;<br>        ans.<span class="hljs-built_in">push_back</span>(tmp);<br>        <span class="hljs-keyword">return</span>;<br>    &#125;<br>    <span class="hljs-built_in">bk</span>(idx+<span class="hljs-number">1</span>,target);<br>    <span class="hljs-keyword">if</span>(target&gt;=a[idx])<br>    &#123;<br>        tmp.<span class="hljs-built_in">push_back</span>(a[idx]);<br>        <span class="hljs-built_in">bk</span>(idx,target-a[idx]);<br>        tmp.<span class="hljs-built_in">pop_back</span>();<br>    &#125;<br>&#125;<br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br>	cin&gt;&gt;n&gt;&gt;target;<br>	<span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i=<span class="hljs-number">0</span>;i&lt;n;++i)<br>		cin&gt;&gt;a[i];<br>	<br>    <span class="hljs-built_in">bk</span>(<span class="hljs-number">0</span>,target);<br>    <span class="hljs-keyword">for</span>(vi&amp; t:ans)<br>    &#123;<br>    	<span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> tt :t)<br>    		cout&lt;&lt;tt&lt;&lt;<span class="hljs-string">&#x27; &#x27;</span>;<br>    	cout&lt;&lt;endl;<br>    &#125;<br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
 <h3 id="例题2"><a class="markdownIt-Anchor" href="#例题2"></a> 例题2:</h3>
 <p>给定一个数组a[]和target的值，找出数组中可以使数字和为target的不同组合，输出所有符合要求的组合</p>
 <ul>
@@ -344,58 +300,11 @@ int main()
 <li>1,1,5和1,5,1视为一种方式<br />
 input:</li>
 </ul>
-<figure><div class="code-wrapper"><pre class="line-numbers language-none"><code class="language-none">7 8
-10 1 2 7 6 1 5<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span></span></code></pre></div></figure>
+<figure class="highlight basic"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs basic"><span class="hljs-symbol">7 </span><span class="hljs-number">8</span><br><span class="hljs-symbol">10 </span><span class="hljs-number">1</span> <span class="hljs-number">2</span> <span class="hljs-number">7</span> <span class="hljs-number">6</span> <span class="hljs-number">1</span> <span class="hljs-number">5</span><br></code></pre></td></tr></table></figure>
 <p>output:</p>
-<figure><div class="code-wrapper"><pre class="line-numbers language-none"><code class="language-none">1 7
-1 6 1
-2 6
-7 1<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre></div></figure>
+<figure class="highlight basic"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs basic"><span class="hljs-symbol">1 </span><span class="hljs-number">7</span><br><span class="hljs-symbol">1 </span><span class="hljs-number">6</span> <span class="hljs-number">1</span><br><span class="hljs-symbol">2 </span><span class="hljs-number">6</span><br><span class="hljs-symbol">7 </span><span class="hljs-number">1</span><br></code></pre></td></tr></table></figure>
 <p>题解</p>
-<figure><div class="code-wrapper"><pre class="line-numbers language-none"><code class="language-none">#include&lt;bits&#x2F;stdc++.h&gt;
-using namespace std;
-int n,target;
-const int N&#x3D;1e5+5;
-typedef vector&lt;int&gt; vi;
-vi a(N);
-vi tmp;
-vector&lt;vi&gt; ans; 
-void bk(int idx,int target)
-&#123;
-    if(idx&#x3D;&#x3D;n)
-        return;
-    if(target&#x3D;&#x3D;0)
-    &#123;
-        ans.push_back(tmp);
-        return;
-    &#125;
-    for(int i&#x3D;idx;i&lt;n;++i)
-    &#123;
-    	if(target&gt;&#x3D;a[i])
-    	&#123;
-    		if(i&gt;idx&amp;&amp;a[i]&#x3D;&#x3D;a[i-1])
-    			continue;
-    		tmp.push_back(a[i]);
-    		bk(i+1,target-a[i]);
-    		tmp.pop_back();
-    	&#125;
-    &#125;
-&#125;
-int main()
-&#123;
-	cin&gt;&gt;n&gt;&gt;target;
-	for(int i&#x3D;0;i&lt;n;++i)
-		cin&gt;&gt;a[i];
-	
-    bk(0,target);
-    for(vi&amp; t:ans)
-    &#123;
-    	for(int tt :t)
-    		cout&lt;&lt;tt&lt;&lt;&#39; &#39;;
-    	cout&lt;&lt;endl;
-    &#125;
-    return 0;
-&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div></figure>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-meta">#<span class="hljs-keyword">include</span><span class="hljs-string">&lt;bits/stdc++.h&gt;</span></span><br><span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;<br><span class="hljs-type">int</span> n,target;<br><span class="hljs-type">const</span> <span class="hljs-type">int</span> N=<span class="hljs-number">1e5</span>+<span class="hljs-number">5</span>;<br><span class="hljs-keyword">typedef</span> vector&lt;<span class="hljs-type">int</span>&gt; vi;<br><span class="hljs-function">vi <span class="hljs-title">a</span><span class="hljs-params">(N)</span></span>;<br>vi tmp;<br>vector&lt;vi&gt; ans; <br><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">bk</span><span class="hljs-params">(<span class="hljs-type">int</span> idx,<span class="hljs-type">int</span> target)</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-keyword">if</span>(idx==n)<br>        <span class="hljs-keyword">return</span>;<br>    <span class="hljs-keyword">if</span>(target==<span class="hljs-number">0</span>)<br>    &#123;<br>        ans.<span class="hljs-built_in">push_back</span>(tmp);<br>        <span class="hljs-keyword">return</span>;<br>    &#125;<br>    <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i=idx;i&lt;n;++i)<br>    &#123;<br>    	<span class="hljs-keyword">if</span>(target&gt;=a[i])<br>    	&#123;<br>    		<span class="hljs-keyword">if</span>(i&gt;idx&amp;&amp;a[i]==a[i<span class="hljs-number">-1</span>])<br>    			<span class="hljs-keyword">continue</span>;<br>    		tmp.<span class="hljs-built_in">push_back</span>(a[i]);<br>    		<span class="hljs-built_in">bk</span>(i+<span class="hljs-number">1</span>,target-a[i]);<br>    		tmp.<span class="hljs-built_in">pop_back</span>();<br>    	&#125;<br>    &#125;<br>&#125;<br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br>	cin&gt;&gt;n&gt;&gt;target;<br>	<span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i=<span class="hljs-number">0</span>;i&lt;n;++i)<br>		cin&gt;&gt;a[i];<br>	<br>    <span class="hljs-built_in">bk</span>(<span class="hljs-number">0</span>,target);<br>    <span class="hljs-keyword">for</span>(vi&amp; t:ans)<br>    &#123;<br>    	<span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> tt :t)<br>    		cout&lt;&lt;tt&lt;&lt;<span class="hljs-string">&#x27; &#x27;</span>;<br>    	cout&lt;&lt;endl;<br>    &#125;<br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
 
                 
               </div>
@@ -670,8 +579,6 @@ int main()
   });
 </script>
 
-
-  <script  src="https://lib.baomitu.com/prism/1.27.0/plugins/line-numbers/prism-line-numbers.min.js" ></script>
 
   <script src=https://lib.baomitu.com/clipboard.js/2.0.10/clipboard.min.js></script>
 

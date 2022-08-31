@@ -16,12 +16,12 @@
   <meta name="author" content="zql">
   <meta name="keywords" content="">
   
-    <meta name="description" content="前缀和 一维前缀和 二维前缀和 例题 差分 一维差分 例题 二维差分 例题    前缀和  前缀和指的是序列的前n项和   一维前缀和 先看一个例题： 输入一个长度为n的整数序列。接下来再输入m个询问，每个询问输入一对l, r。对于每个询问，输出原序列中从第l个数到第r个数的和。 如果使用暴力枚举，时间复杂度为 O(n*m),但是使用前缀和的话，时间复杂度可降为 O(n) input: 5 3">
+    <meta name="description" content="前缀和 一维前缀和 二维前缀和 例题 差分 一维差分 例题 二维差分 例题    前缀和  前缀和指的是序列的前n项和   一维前缀和 先看一个例题： 输入一个长度为n的整数序列。接下来再输入m个询问，每个询问输入一对l, r。对于每个询问，输出原序列中从第l个数到第r个数的和。 如果使用暴力枚举，时间复杂度为 O(n*m),但是使用前缀和的话，时间复杂度可降为 O(n) input: 123">
 <meta property="og:type" content="article">
 <meta property="og:title" content="差分与前缀和">
 <meta property="og:url" content="http://lqz2.github.io/2022/08/24/%E5%B7%AE%E5%88%86%E4%B8%8E%E5%89%8D%E7%BC%80%E5%92%8C/index.html">
 <meta property="og:site_name" content="my blogs">
-<meta property="og:description" content="前缀和 一维前缀和 二维前缀和 例题 差分 一维差分 例题 二维差分 例题    前缀和  前缀和指的是序列的前n项和   一维前缀和 先看一个例题： 输入一个长度为n的整数序列。接下来再输入m个询问，每个询问输入一对l, r。对于每个询问，输出原序列中从第l个数到第r个数的和。 如果使用暴力枚举，时间复杂度为 O(n*m),但是使用前缀和的话，时间复杂度可降为 O(n) input: 5 3">
+<meta property="og:description" content="前缀和 一维前缀和 二维前缀和 例题 差分 一维差分 例题 二维差分 例题    前缀和  前缀和指的是序列的前n项和   一维前缀和 先看一个例题： 输入一个长度为n的整数序列。接下来再输入m个询问，每个询问输入一对l, r。对于每个询问，输出原序列中从第l个数到第r个数的和。 如果使用暴力枚举，时间复杂度为 O(n*m),但是使用前缀和的话，时间复杂度可降为 O(n) input: 123">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://img-blog.csdnimg.cn/20201214201734653.png">
 <meta property="article:published_time" content="2022-08-24T02:54:34.000Z">
@@ -41,8 +41,6 @@
   <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
-
-  <link  rel="stylesheet" href="https://lib.baomitu.com/prism/1.27.0/plugins/line-numbers/prism-line-numbers.min.css" />
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
 
@@ -72,7 +70,7 @@
   <script id="fluid-configs">
     var Fluid = window.Fluid || {};
     Fluid.ctx = Object.assign({}, Fluid.ctx)
-    var CONFIG = {"hostname":"lqz2.github.io","root":"/","version":"1.9.2","typing":{"enable":true,"typeSpeed":50,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+    var CONFIG = {"hostname":"lqz2.github.io","root":"/","version":"1.9.2","typing":{"enable":true,"typeSpeed":60,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
 
     if (CONFIG.web_analytics.follow_dnt) {
       var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
@@ -233,7 +231,7 @@
         
         
         
-          26 分钟
+          25 分钟
         
       </span>
     
@@ -298,36 +296,11 @@
 输入一个长度为n的整数序列。接下来再输入m个询问，每个询问输入一对l, r。对于每个询问，输出原序列中从第l个数到第r个数的和。<br />
 如果使用暴力枚举，时间复杂度为 <code>O(n*m)</code>,但是使用前缀和的话，时间复杂度可降为 <code>O(n)</code><br />
 input:</p>
-<figure><div class="code-wrapper"><pre class="line-numbers language-none"><code class="language-none">5 3
-2 1 3 6 4
-1 2
-1 3
-2 4<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre></div></figure>
+<figure class="highlight basic"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs basic"><span class="hljs-symbol">5 </span><span class="hljs-number">3</span><br><span class="hljs-symbol">2 </span><span class="hljs-number">1</span> <span class="hljs-number">3</span> <span class="hljs-number">6</span> <span class="hljs-number">4</span><br><span class="hljs-symbol">1 </span><span class="hljs-number">2</span><br><span class="hljs-symbol">1 </span><span class="hljs-number">3</span><br><span class="hljs-symbol">2 </span><span class="hljs-number">4</span><br></code></pre></td></tr></table></figure>
 <p>output:</p>
-<figure><div class="code-wrapper"><pre class="line-numbers language-none"><code class="language-none">3
-6
-10<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre></div></figure>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs">3<br>6<br>10<br></code></pre></td></tr></table></figure>
 <p>代码：</p>
-<figure><div class="code-wrapper"><pre class="line-numbers language-none"><code class="language-none">#include&lt;bits&#x2F;stdc++.h&gt;
-using namespace std;
-const int N&#x3D;1e5;
-int a[N]; 
-int main()
-&#123;
-	int n,m,l,r;
-	cin&gt;&gt;n&gt;&gt;m;
-	for(int i&#x3D;1;i&lt;&#x3D;n;++i)
-	&#123;
-		cin&gt;&gt;a[i];
-		a[i]+&#x3D;a[i-1];
-	&#125;
-	while(m--)
-	&#123;
-		cin&gt;&gt;l&gt;&gt;r;
-		cout&lt;&lt;a[r]-a[l-1]&lt;&lt;endl;
-	&#125;
-	return 0;
-&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div></figure>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-meta">#<span class="hljs-keyword">include</span><span class="hljs-string">&lt;bits/stdc++.h&gt;</span></span><br><span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;<br><span class="hljs-type">const</span> <span class="hljs-type">int</span> N=<span class="hljs-number">1e5</span>;<br><span class="hljs-type">int</span> a[N]; <br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br>	<span class="hljs-type">int</span> n,m,l,r;<br>	cin&gt;&gt;n&gt;&gt;m;<br>	<span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i=<span class="hljs-number">1</span>;i&lt;=n;++i)<br>	&#123;<br>		cin&gt;&gt;a[i];<br>		a[i]+=a[i<span class="hljs-number">-1</span>];<br>	&#125;<br>	<span class="hljs-keyword">while</span>(m--)<br>	&#123;<br>		cin&gt;&gt;l&gt;&gt;r;<br>		cout&lt;&lt;a[r]-a[l<span class="hljs-number">-1</span>]&lt;&lt;endl;<br>	&#125;<br>	<span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
 <h3 id="二维前缀和"><a class="markdownIt-Anchor" href="#二维前缀和"></a> 二维前缀和</h3>
 <p>每一个元素<code>a[i][j]</code>表示左上角和第<code>i</code>行，第<code>j</code>列围成的元素之和</p>
 <p>更新方式： <code>a[i][j]+=a[i-1][j]+a[i][j-1]-a[i-1][j-1]</code></p>
@@ -337,42 +310,11 @@ int main()
 <p>输入一个n行m列的整数矩阵，再输入q个询问，每个询问包含四个整数x1, y1, x2, y2，表示一个子矩阵的左上角坐标和右下角坐标。<br />
 对于每个询问输出子矩阵中所有数的和</p>
 <p>input:</p>
-<figure><div class="code-wrapper"><pre class="line-numbers language-none"><code class="language-none">3 4 3
-1 7 2 4
-3 6 2 8
-2 1 2 3
-1 1 2 2
-2 1 3 4
-1 3 3 4<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div></figure>
+<figure class="highlight basic"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs basic"><span class="hljs-symbol">3 </span><span class="hljs-number">4</span> <span class="hljs-number">3</span><br><span class="hljs-symbol">1 </span><span class="hljs-number">7</span> <span class="hljs-number">2</span> <span class="hljs-number">4</span><br><span class="hljs-symbol">3 </span><span class="hljs-number">6</span> <span class="hljs-number">2</span> <span class="hljs-number">8</span><br><span class="hljs-symbol">2 </span><span class="hljs-number">1</span> <span class="hljs-number">2</span> <span class="hljs-number">3</span><br><span class="hljs-symbol">1 </span><span class="hljs-number">1</span> <span class="hljs-number">2</span> <span class="hljs-number">2</span><br><span class="hljs-symbol">2 </span><span class="hljs-number">1</span> <span class="hljs-number">3</span> <span class="hljs-number">4</span><br><span class="hljs-symbol">1 </span><span class="hljs-number">3</span> <span class="hljs-number">3</span> <span class="hljs-number">4</span><br></code></pre></td></tr></table></figure>
 <p>output:</p>
-<figure><div class="code-wrapper"><pre class="line-numbers language-none"><code class="language-none">17
-27
-21<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre></div></figure>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs">17<br>27<br>21<br></code></pre></td></tr></table></figure>
 <p>代码：</p>
-<figure><div class="code-wrapper"><pre class="line-numbers language-none"><code class="language-none">#include&lt;bits&#x2F;stdc++.h&gt;
-using namespace std;
-const int N&#x3D;1e3;
-int a[N][N]; 
-int main()
-&#123;
-	int n,m,q;
-	int x1,y1,x2,y2;
-	cin&gt;&gt;n&gt;&gt;m&gt;&gt;q;
-	for(int i&#x3D;1;i&lt;&#x3D;n;++i)
-	&#123;
-		for(int j&#x3D;1;j&lt;&#x3D;m;++j)
-		&#123;
-			cin&gt;&gt;a[i][j];
-			a[i][j]+&#x3D;a[i-1][j]+a[i][j-1]-a[i-1][j-1];
-		&#125;
-	&#125;
-	while(q--)
-	&#123;
-		cin&gt;&gt;x1&gt;&gt;y1&gt;&gt;x2&gt;&gt;y2;
-		cout&lt;&lt;a[x2][y2]-a[x1-1][y2]-a[x2][y1-1]+a[x1-1][y1-1]&lt;&lt;endl;
-	&#125;
-	return 0;
-&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div></figure>
+<figure class="highlight inform7"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><code class="hljs inform7">#include&lt;bits/stdc++.h&gt;<br>using namespace std;<br>const int N=1e3;<br>int a<span class="hljs-comment">[N]</span><span class="hljs-comment">[N]</span>; <br>int main()<br>&#123;<br>	int n,m,q;<br>	int x1,y1,x2,y2;<br>	cin&gt;&gt;n&gt;&gt;m&gt;&gt;q;<br>	for(int i=1;i&lt;=n;++i)<br>	&#123;<br>		for(int j=1;j&lt;=m;++j)<br>		&#123;<br>			cin&gt;&gt;a<span class="hljs-comment">[i]</span><span class="hljs-comment">[j]</span>;<br>			a<span class="hljs-comment">[i]</span><span class="hljs-comment">[j]</span>+=a<span class="hljs-comment">[i-1]</span><span class="hljs-comment">[j]</span>+a<span class="hljs-comment">[i]</span><span class="hljs-comment">[j-1]</span>-a<span class="hljs-comment">[i-1]</span><span class="hljs-comment">[j-1]</span>;<br>		&#125;<br>	&#125;<br>	while(q--)<br>	&#123;<br>		cin&gt;&gt;x1&gt;&gt;y1&gt;&gt;x2&gt;&gt;y2;<br>		cout&lt;&lt;a<span class="hljs-comment">[x2]</span><span class="hljs-comment">[y2]</span>-a<span class="hljs-comment">[x1-1]</span><span class="hljs-comment">[y2]</span>-a<span class="hljs-comment">[x2]</span><span class="hljs-comment">[y1-1]</span>+a<span class="hljs-comment">[x1-1]</span><span class="hljs-comment">[y1-1]</span>&lt;&lt;endl;<br>	&#125;<br>	return 0;<br>&#125;<br></code></pre></td></tr></table></figure>
 <h3 id="差分"><a class="markdownIt-Anchor" href="#差分"></a> 差分</h3>
 <blockquote>
 <p>可以看作前缀和的逆运算</p>
@@ -389,48 +331,17 @@ int main()
 接下来输入m个操作，每个操作包含三个整数l, r, c，表示将序列中[l, r]之间的每个数加上c。<br />
 请你输出进行完所有操作后的序列。</p>
 <p>input:</p>
-<figure><div class="code-wrapper"><pre class="line-numbers language-none"><code class="language-none">6 3
-1 2 2 1 2 1
-1 3 1
-3 5 1
-1 6 1<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span></span></code></pre></div></figure>
+<figure class="highlight basic"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs basic"><span class="hljs-symbol">6 </span><span class="hljs-number">3</span><br><span class="hljs-symbol">1 </span><span class="hljs-number">2</span> <span class="hljs-number">2</span> <span class="hljs-number">1</span> <span class="hljs-number">2</span> <span class="hljs-number">1</span><br><span class="hljs-symbol">1 </span><span class="hljs-number">3</span> <span class="hljs-number">1</span><br><span class="hljs-symbol">3 </span><span class="hljs-number">5</span> <span class="hljs-number">1</span><br><span class="hljs-symbol">1 </span><span class="hljs-number">6</span> <span class="hljs-number">1</span><br></code></pre></td></tr></table></figure>
 <p>output:</p>
-<figure><div class="code-wrapper"><pre class="line-numbers language-none"><code class="language-none">3 4 5 3 4 2<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre></div></figure>
+<figure class="highlight basic"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs basic"><span class="hljs-symbol">3 </span><span class="hljs-number">4</span> <span class="hljs-number">5</span> <span class="hljs-number">3</span> <span class="hljs-number">4</span> <span class="hljs-number">2</span><br></code></pre></td></tr></table></figure>
 <p>代码：</p>
-<figure><div class="code-wrapper"><pre class="line-numbers language-none"><code class="language-none">#include&lt;bits&#x2F;stdc++.h&gt;
-using namespace std;
-const int N&#x3D;1e3;
-int a[N],b[N]; 
-int main()
-&#123;
-	int n,m,l,r,c;
-	cin&gt;&gt;n&gt;&gt;m;
-	for(int i&#x3D;1;i&lt;&#x3D;n;++i)
-	&#123;
-		cin&gt;&gt;a[i];
-		b[i]&#x3D;a[i]-a[i-1];
-	&#125;
-	while(m--)
-	&#123;
-		cin&gt;&gt;l&gt;&gt;r&gt;&gt;c;
-		b[l]+&#x3D;c;
-		b[r+1]-&#x3D;c;
-	&#125;
-	for(int i&#x3D;1;i&lt;&#x3D;n;++i)
-		b[i]+&#x3D;b[i-1];
-	for(int i&#x3D;1;i&lt;&#x3D;n;++i)
-		cout&lt;&lt;b[i]&lt;&lt;&#39; &#39;;
-	return 0;
-&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div></figure>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-meta">#<span class="hljs-keyword">include</span><span class="hljs-string">&lt;bits/stdc++.h&gt;</span></span><br><span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;<br><span class="hljs-type">const</span> <span class="hljs-type">int</span> N=<span class="hljs-number">1e3</span>;<br><span class="hljs-type">int</span> a[N],b[N]; <br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br>	<span class="hljs-type">int</span> n,m,l,r,c;<br>	cin&gt;&gt;n&gt;&gt;m;<br>	<span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i=<span class="hljs-number">1</span>;i&lt;=n;++i)<br>	&#123;<br>		cin&gt;&gt;a[i];<br>		b[i]=a[i]-a[i<span class="hljs-number">-1</span>];<br>	&#125;<br>	<span class="hljs-keyword">while</span>(m--)<br>	&#123;<br>		cin&gt;&gt;l&gt;&gt;r&gt;&gt;c;<br>		b[l]+=c;<br>		b[r+<span class="hljs-number">1</span>]-=c;<br>	&#125;<br>	<span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i=<span class="hljs-number">1</span>;i&lt;=n;++i)<br>		b[i]+=b[i<span class="hljs-number">-1</span>];<br>	<span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i=<span class="hljs-number">1</span>;i&lt;=n;++i)<br>		cout&lt;&lt;b[i]&lt;&lt;<span class="hljs-string">&#x27; &#x27;</span>;<br>	<span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
 <h3 id="二维差分"><a class="markdownIt-Anchor" href="#二维差分"></a> 二维差分</h3>
 <p>常用于给某个子矩阵的每个元素加上 c</p>
 <ul>
 <li>二维差分数组的构造：<br />
 <code>b[i][j]=a[i][j]-a[i-1][j]-a[i][j-1]+a[i-1][j-1]</code></li>
-<li>修改差分数组：  <figure><div class="code-wrapper"><pre class="line-numbers language-none"><code class="language-none">b[x1][y1]+&#x3D;c;
-b[x1][y2+1]-&#x3D;c;
-b[x2+1][y1]-&#x3D;c;
-b[x2+1][y2+1]+&#x3D;c;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span></span></code></pre></div></figure>
+<li>修改差分数组：  <figure class="highlight inform7"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs inform7">b<span class="hljs-comment">[x1]</span><span class="hljs-comment">[y1]</span>+=c;<br>b<span class="hljs-comment">[x1]</span><span class="hljs-comment">[y2+1]</span>-=c;<br>b<span class="hljs-comment">[x2+1]</span><span class="hljs-comment">[y1]</span>-=c;<br>b<span class="hljs-comment">[x2+1]</span><span class="hljs-comment">[y2+1]</span>+=c;<br></code></pre></td></tr></table></figure>
 </li>
 <li>生成前缀和数组：<br />
 <code>b[i][j]+=b[i-1][j]+b[i][j-1]-b[i-1][j-1];</code></li>
@@ -440,56 +351,11 @@ b[x2+1][y2+1]+&#x3D;c;<span aria-hidden="true" class="line-numbers-rows"><span><
 每个操作都要将选中的子矩阵中的每个元素的值加上c。<br />
 请你将进行完所有操作后的矩阵输出。</p>
 <p>input:</p>
-<figure><div class="code-wrapper"><pre class="line-numbers language-none"><code class="language-none">3 4 3
-1 2 2 1
-3 2 2 1
-1 1 1 1
-1 1 2 2 1
-1 3 2 3 2
-3 1 3 4 1<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div></figure>
+<figure class="highlight basic"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs basic"><span class="hljs-symbol">3 </span><span class="hljs-number">4</span> <span class="hljs-number">3</span><br><span class="hljs-symbol">1 </span><span class="hljs-number">2</span> <span class="hljs-number">2</span> <span class="hljs-number">1</span><br><span class="hljs-symbol">3 </span><span class="hljs-number">2</span> <span class="hljs-number">2</span> <span class="hljs-number">1</span><br><span class="hljs-symbol">1 </span><span class="hljs-number">1</span> <span class="hljs-number">1</span> <span class="hljs-number">1</span><br><span class="hljs-symbol">1 </span><span class="hljs-number">1</span> <span class="hljs-number">2</span> <span class="hljs-number">2</span> <span class="hljs-number">1</span><br><span class="hljs-symbol">1 </span><span class="hljs-number">3</span> <span class="hljs-number">2</span> <span class="hljs-number">3</span> <span class="hljs-number">2</span><br><span class="hljs-symbol">3 </span><span class="hljs-number">1</span> <span class="hljs-number">3</span> <span class="hljs-number">4</span> <span class="hljs-number">1</span><br></code></pre></td></tr></table></figure>
 <p>output:</p>
-<figure><div class="code-wrapper"><pre class="line-numbers language-none"><code class="language-none">2 3 4 1
-4 3 4 1
-2 2 2 2<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span></span></code></pre></div></figure>
+<figure class="highlight basic"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs basic"><span class="hljs-symbol">2 </span><span class="hljs-number">3</span> <span class="hljs-number">4</span> <span class="hljs-number">1</span><br><span class="hljs-symbol">4 </span><span class="hljs-number">3</span> <span class="hljs-number">4</span> <span class="hljs-number">1</span><br><span class="hljs-symbol">2 </span><span class="hljs-number">2</span> <span class="hljs-number">2</span> <span class="hljs-number">2</span><br></code></pre></td></tr></table></figure>
 <p>代码：</p>
-<figure><div class="code-wrapper"><pre class="line-numbers language-none"><code class="language-none">#include&lt;bits&#x2F;stdc++.h&gt;
-using namespace std;
-const int N&#x3D;1e3;
-int a[N][N],b[N][N]; 
-int main()
-&#123;
-	int n,m,q;
-	int x1,y1,x2,y2,c;
-	cin&gt;&gt;n&gt;&gt;m&gt;&gt;q;
-	for(int i&#x3D;1;i&lt;&#x3D;n;++i)
-	&#123;
-		for(int j&#x3D;1;j&lt;&#x3D;m;++j)
-		&#123;
-			cin&gt;&gt;a[i][j];
-			b[i][j]&#x3D;a[i][j]-a[i-1][j]-a[i][j-1]+a[i-1][j-1];
-		&#125;
-	&#125;
-	while(q--)
-	&#123;
-		cin&gt;&gt;x1&gt;&gt;y1&gt;&gt;x2&gt;&gt;y2&gt;&gt;c;
-		b[x1][y1]+&#x3D;c;
-		b[x1][y2+1]-&#x3D;c;
-		b[x2+1][y1]-&#x3D;c;
-		b[x2+1][y2+1]+&#x3D;c;
-	&#125;
-	for(int i&#x3D;1;i&lt;&#x3D;n;++i)
-	&#123;
-		for(int j&#x3D;1;j&lt;&#x3D;m;++j)
-			b[i][j]+&#x3D;b[i-1][j]+b[i][j-1]-b[i-1][j-1];
-	&#125;
-	for(int i&#x3D;1;i&lt;&#x3D;n;++i)
-	&#123;
-		for(int j&#x3D;1;j&lt;&#x3D;m;++j)
-			cout&lt;&lt;b[i][j]&lt;&lt;&#39; &#39;;
-		cout&lt;&lt;endl;
-	&#125;
-	return 0;
-&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div></figure>
+<figure class="highlight prolog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><code class="hljs prolog">#include&lt;bits/stdc++.h&gt;<br>using namespace std;<br>const int <span class="hljs-symbol">N</span>=<span class="hljs-number">1e3</span>;<br>int a[<span class="hljs-symbol">N</span>][<span class="hljs-symbol">N</span>],b[<span class="hljs-symbol">N</span>][<span class="hljs-symbol">N</span>]; <br>int main()<br>&#123;<br>	int n,m,q;<br>	int x1,y1,x2,y2,c;<br>	cin&gt;&gt;n&gt;&gt;m&gt;&gt;q;<br>	for(int i=<span class="hljs-number">1</span>;i&lt;=n;++i)<br>	&#123;<br>		for(int j=<span class="hljs-number">1</span>;j&lt;=m;++j)<br>		&#123;<br>			cin&gt;&gt;a[i][j];<br>			b[i][j]=a[i][j]-a[i<span class="hljs-number">-1</span>][j]-a[i][j<span class="hljs-number">-1</span>]+a[i<span class="hljs-number">-1</span>][j<span class="hljs-number">-1</span>];<br>		&#125;<br>	&#125;<br>	while(q--)<br>	&#123;<br>		cin&gt;&gt;x1&gt;&gt;y1&gt;&gt;x2&gt;&gt;y2&gt;&gt;c;<br>		b[x1][y1]+=c;<br>		b[x1][y2+<span class="hljs-number">1</span>]-=c;<br>		b[x2+<span class="hljs-number">1</span>][y1]-=c;<br>		b[x2+<span class="hljs-number">1</span>][y2+<span class="hljs-number">1</span>]+=c;<br>	&#125;<br>	for(int i=<span class="hljs-number">1</span>;i&lt;=n;++i)<br>	&#123;<br>		for(int j=<span class="hljs-number">1</span>;j&lt;=m;++j)<br>			b[i][j]+=b[i<span class="hljs-number">-1</span>][j]+b[i][j<span class="hljs-number">-1</span>]-b[i<span class="hljs-number">-1</span>][j<span class="hljs-number">-1</span>];<br>	&#125;<br>	for(int i=<span class="hljs-number">1</span>;i&lt;=n;++i)<br>	&#123;<br>		for(int j=<span class="hljs-number">1</span>;j&lt;=m;++j)<br>			cout&lt;&lt;b[i][j]&lt;&lt;<span class="hljs-string">&#x27; &#x27;</span>;<br>		cout&lt;&lt;endl;<br>	&#125;<br>	return <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
 
                 
               </div>
@@ -764,8 +630,6 @@ int main()
   });
 </script>
 
-
-  <script  src="https://lib.baomitu.com/prism/1.27.0/plugins/line-numbers/prism-line-numbers.min.js" ></script>
 
   <script src=https://lib.baomitu.com/clipboard.js/2.0.10/clipboard.min.js></script>
 

@@ -40,8 +40,6 @@
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
 
-  <link  rel="stylesheet" href="https://lib.baomitu.com/prism/1.27.0/plugins/line-numbers/prism-line-numbers.min.css" />
-
   <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
 
 
@@ -70,7 +68,7 @@
   <script id="fluid-configs">
     var Fluid = window.Fluid || {};
     Fluid.ctx = Object.assign({}, Fluid.ctx)
-    var CONFIG = {"hostname":"lqz2.github.io","root":"/","version":"1.9.2","typing":{"enable":true,"typeSpeed":50,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+    var CONFIG = {"hostname":"lqz2.github.io","root":"/","version":"1.9.2","typing":{"enable":true,"typeSpeed":60,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
 
     if (CONFIG.web_analytics.follow_dnt) {
       var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
@@ -324,22 +322,7 @@
 <p>创建一个通用的函数，函数返回值类型和形参可以不指定，用一个虚拟的类型来表示</p>
 <p>声明一个模板<code>template&lt;typename T&gt;</code>或者<code>template&lt;class T&gt;</code></p>
 <p>示例：</p>
-<figure><div class="code-wrapper"><pre class="line-numbers language-none"><code class="language-none">#include&lt;bits&#x2F;stdc++.h&gt;
-using namespace std;
-template&lt;typename T&gt;
-T sum(T a,T b)
-&#123;
-	return a+b;
-&#125;
-int main()
-&#123;
-	double a&#x3D;10.5,b&#x3D;20.00002;
-	cout&lt;&lt;&quot;自动类型推导&quot;&lt;&lt;endl;
-	printf(&quot;%lf\n&quot;,sum(a,b));
-	cout&lt;&lt;&quot;显示指定类型&quot;&lt;&lt;endl;
-	printf(&quot;%lf&quot;,sum&lt;double&gt;(a,b));
-	return 0;
-&#125; <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div></figure>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-meta">#<span class="hljs-keyword">include</span><span class="hljs-string">&lt;bits/stdc++.h&gt;</span></span><br><span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;<br><span class="hljs-function"><span class="hljs-keyword">template</span>&lt;<span class="hljs-keyword">typename</span> T&gt;</span><br><span class="hljs-function">T <span class="hljs-title">sum</span><span class="hljs-params">(T a,T b)</span></span><br><span class="hljs-function"></span>&#123;<br>	<span class="hljs-keyword">return</span> a+b;<br>&#125;<br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br>	<span class="hljs-type">double</span> a=<span class="hljs-number">10.5</span>,b=<span class="hljs-number">20.00002</span>;<br>	cout&lt;&lt;<span class="hljs-string">&quot;自动类型推导&quot;</span>&lt;&lt;endl;<br>	<span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;%lf\n&quot;</span>,<span class="hljs-built_in">sum</span>(a,b));<br>	cout&lt;&lt;<span class="hljs-string">&quot;显示指定类型&quot;</span>&lt;&lt;endl;<br>	<span class="hljs-built_in">printf</span>(<span class="hljs-string">&quot;%lf&quot;</span>,<span class="hljs-built_in">sum</span>&lt;<span class="hljs-type">double</span>&gt;(a,b));<br>	<span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125; <br></code></pre></td></tr></table></figure>
 <p>注意</p>
 <ul>
 <li>自动推导类型需要推导出一致的类型</li>
@@ -349,23 +332,7 @@ int main()
 </ul>
 <p><strong>类模板</strong></p>
 <p>示例：</p>
-<figure><div class="code-wrapper"><pre class="line-numbers language-none"><code class="language-none">#include&lt;bits&#x2F;stdc++.h&gt;
-using namespace std;
-template&lt;class T,class M&gt;
-class person
-&#123;
-public:
-	T name;
-	M age;
-	person(T a,M b):name(a),age(b)&#123;&#125;
-&#125;;
-int main()
-&#123;
-	person&lt;string,int&gt; p(&quot;cndh&quot;,18);
-	cout&lt;&lt;p.name&lt;&lt;endl;
-	cout&lt;&lt;p.age&lt;&lt;endl;
-	return 0;
-&#125; <span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div></figure>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-meta">#<span class="hljs-keyword">include</span><span class="hljs-string">&lt;bits/stdc++.h&gt;</span></span><br><span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;<br><span class="hljs-keyword">template</span>&lt;<span class="hljs-keyword">class</span> <span class="hljs-title class_">T</span>,<span class="hljs-keyword">class</span> <span class="hljs-title class_">M</span>&gt;<br><span class="hljs-keyword">class</span> <span class="hljs-title class_">person</span><br>&#123;<br><span class="hljs-keyword">public</span>:<br>	T name;<br>	M age;<br>	<span class="hljs-built_in">person</span>(T a,M b):<span class="hljs-built_in">name</span>(a),<span class="hljs-built_in">age</span>(b)&#123;&#125;<br>&#125;;<br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br>	<span class="hljs-function">person&lt;string,<span class="hljs-type">int</span>&gt; <span class="hljs-title">p</span><span class="hljs-params">(<span class="hljs-string">&quot;cndh&quot;</span>,<span class="hljs-number">18</span>)</span></span>;<br>	cout&lt;&lt;p.name&lt;&lt;endl;<br>	cout&lt;&lt;p.age&lt;&lt;endl;<br>	<span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125; <br></code></pre></td></tr></table></figure>
 <p>注意：</p>
 <ul>
 <li>类模板不能自动推导类型</li>
@@ -702,8 +669,6 @@ int main()
   });
 </script>
 
-
-  <script  src="https://lib.baomitu.com/prism/1.27.0/plugins/line-numbers/prism-line-numbers.min.js" ></script>
 
   <script src=https://lib.baomitu.com/clipboard.js/2.0.10/clipboard.min.js></script>
 

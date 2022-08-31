@@ -16,12 +16,12 @@
   <meta name="author" content="zql">
   <meta name="keywords" content="">
   
-    <meta name="description" content="例1 快速幂 例2 矩阵幂    快速幂 快速幂常用于计算指数非常大的幂，核心思想就是每一步都把指数分成两半，而相应的底数做平方运算。这样不仅能把非常大的指数给不断变小，所需要执行的循环次数也变小，而最后表示的结果却一直不会变。  直接看例题  例1 快速幂 输入三个数字a,b,c,输出 a^b mod c input: 2 10 10 output: 4 代码 #include&lt;bit">
+    <meta name="description" content="例1 快速幂 例2 矩阵幂    快速幂 快速幂常用于计算指数非常大的幂，核心思想就是每一步都把指数分成两半，而相应的底数做平方运算。这样不仅能把非常大的指数给不断变小，所需要执行的循环次数也变小，而最后表示的结果却一直不会变。  直接看例题  例1 快速幂 输入三个数字a,b,c,输出 a^b mod c input: 12 10 10 output: 14 代码 1234567891011">
 <meta property="og:type" content="article">
 <meta property="og:title" content="快速幂矩阵幂">
 <meta property="og:url" content="http://lqz2.github.io/2022/08/23/%E5%BF%AB%E9%80%9F%E5%B9%82%E7%9F%A9%E9%98%B5%E5%B9%82/index.html">
 <meta property="og:site_name" content="my blogs">
-<meta property="og:description" content="例1 快速幂 例2 矩阵幂    快速幂 快速幂常用于计算指数非常大的幂，核心思想就是每一步都把指数分成两半，而相应的底数做平方运算。这样不仅能把非常大的指数给不断变小，所需要执行的循环次数也变小，而最后表示的结果却一直不会变。  直接看例题  例1 快速幂 输入三个数字a,b,c,输出 a^b mod c input: 2 10 10 output: 4 代码 #include&lt;bit">
+<meta property="og:description" content="例1 快速幂 例2 矩阵幂    快速幂 快速幂常用于计算指数非常大的幂，核心思想就是每一步都把指数分成两半，而相应的底数做平方运算。这样不仅能把非常大的指数给不断变小，所需要执行的循环次数也变小，而最后表示的结果却一直不会变。  直接看例题  例1 快速幂 输入三个数字a,b,c,输出 a^b mod c input: 12 10 10 output: 14 代码 1234567891011">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2022-08-23T02:56:25.000Z">
 <meta property="article:modified_time" content="2022-08-31T02:34:03.159Z">
@@ -39,8 +39,6 @@
   <link  rel="stylesheet" href="https://lib.baomitu.com/github-markdown-css/4.0.0/github-markdown.min.css" />
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
-
-  <link  rel="stylesheet" href="https://lib.baomitu.com/prism/1.27.0/plugins/line-numbers/prism-line-numbers.min.css" />
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
 
@@ -70,7 +68,7 @@
   <script id="fluid-configs">
     var Fluid = window.Fluid || {};
     Fluid.ctx = Object.assign({}, Fluid.ctx)
-    var CONFIG = {"hostname":"lqz2.github.io","root":"/","version":"1.9.2","typing":{"enable":true,"typeSpeed":50,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+    var CONFIG = {"hostname":"lqz2.github.io","root":"/","version":"1.9.2","typing":{"enable":true,"typeSpeed":60,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
 
     if (CONFIG.web_analytics.follow_dnt) {
       var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
@@ -220,7 +218,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          1.7k 字
+          1.8k 字
         
       </span>
     
@@ -231,7 +229,7 @@
         
         
         
-          15 分钟
+          16 分钟
         
       </span>
     
@@ -287,31 +285,11 @@
 <h3 id="例1-快速幂"><a class="markdownIt-Anchor" href="#例1-快速幂"></a> 例1 快速幂</h3>
 <p>输入三个数字a,b,c,输出 a^b <strong>mod</strong> c<br />
 input:</p>
-<figure><div class="code-wrapper"><pre class="line-numbers language-none"><code class="language-none">2 10 10<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre></div></figure>
+<figure class="highlight basic"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs basic"><span class="hljs-symbol">2 </span><span class="hljs-number">10</span> <span class="hljs-number">10</span><br></code></pre></td></tr></table></figure>
 <p>output:</p>
-<figure><div class="code-wrapper"><pre class="line-numbers language-none"><code class="language-none">4<span aria-hidden="true" class="line-numbers-rows"><span></span></span></code></pre></div></figure>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs">4<br></code></pre></td></tr></table></figure>
 <p>代码</p>
-<figure><div class="code-wrapper"><pre class="line-numbers language-none"><code class="language-none">#include&lt;bits&#x2F;stdc++.h&gt;
-using namespace std;
-int a,b,c;
-int ksm()
-&#123;
-	int ans&#x3D;1;
-	a&#x3D;a%c;
-	while(b&gt;0)
-	&#123;
-		if(b%2)
-			ans&#x3D;(ans*a)%c;
-		a&#x3D;(a*a)%c;
-		b&#x2F;&#x3D;2;
-	&#125;
-	return ans;
-&#125;
-int main()
-&#123;
-	cin&gt;&gt;a&gt;&gt;b&gt;&gt;c;
-	cout&lt;&lt;ksm()&lt;&lt;endl;
-&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div></figure>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-meta">#<span class="hljs-keyword">include</span><span class="hljs-string">&lt;bits/stdc++.h&gt;</span></span><br><span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;<br><span class="hljs-type">int</span> a,b,c;<br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">ksm</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br>	<span class="hljs-type">int</span> ans=<span class="hljs-number">1</span>;<br>	a=a%c;<br>	<span class="hljs-keyword">while</span>(b&gt;<span class="hljs-number">0</span>)<br>	&#123;<br>		<span class="hljs-keyword">if</span>(b%<span class="hljs-number">2</span>)<br>			ans=(ans*a)%c;<br>		a=(a*a)%c;<br>		b/=<span class="hljs-number">2</span>;<br>	&#125;<br>	<span class="hljs-keyword">return</span> ans;<br>&#125;<br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br>	cin&gt;&gt;a&gt;&gt;b&gt;&gt;c;<br>	cout&lt;&lt;<span class="hljs-built_in">ksm</span>()&lt;&lt;endl;<br>&#125;<br></code></pre></td></tr></table></figure>
 <h3 id="例2-矩阵幂"><a class="markdownIt-Anchor" href="#例2-矩阵幂"></a> 例2 矩阵幂</h3>
 <p>描述<br />
 给定一个n*n的矩阵，输出矩阵的k次方</p>
@@ -322,111 +300,11 @@ int main()
 输出描述<br />
 每组输入输出矩阵的k次方<br />
 input:</p>
-<figure><div class="code-wrapper"><pre class="line-numbers language-none"><code class="language-none">2 2
-9 8
-9 3
-3 3
-4 8 4
-9 3 0
-3 5 7
-5 2
-4 0 3 0 1
-0 0 5 8 5
-8 9 8 5 3
-9 6 1 7 8
-7 2 5 7 3<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div></figure>
+<figure class="highlight basic"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs basic"><span class="hljs-symbol">2 </span><span class="hljs-number">2</span><br><span class="hljs-symbol">9 </span><span class="hljs-number">8</span><br><span class="hljs-symbol">9 </span><span class="hljs-number">3</span><br><span class="hljs-symbol">3 </span><span class="hljs-number">3</span><br><span class="hljs-symbol">4 </span><span class="hljs-number">8</span> <span class="hljs-number">4</span><br><span class="hljs-symbol">9 </span><span class="hljs-number">3</span> <span class="hljs-number">0</span><br><span class="hljs-symbol">3 </span><span class="hljs-number">5</span> <span class="hljs-number">7</span><br><span class="hljs-symbol">5 </span><span class="hljs-number">2</span><br><span class="hljs-symbol">4 </span><span class="hljs-number">0</span> <span class="hljs-number">3</span> <span class="hljs-number">0</span> <span class="hljs-number">1</span><br><span class="hljs-symbol">0 </span><span class="hljs-number">0</span> <span class="hljs-number">5</span> <span class="hljs-number">8</span> <span class="hljs-number">5</span><br><span class="hljs-symbol">8 </span><span class="hljs-number">9</span> <span class="hljs-number">8</span> <span class="hljs-number">5</span> <span class="hljs-number">3</span><br><span class="hljs-symbol">9 </span><span class="hljs-number">6</span> <span class="hljs-number">1</span> <span class="hljs-number">7</span> <span class="hljs-number">8</span><br><span class="hljs-symbol">7 </span><span class="hljs-number">2</span> <span class="hljs-number">5</span> <span class="hljs-number">7</span> <span class="hljs-number">3</span><br></code></pre></td></tr></table></figure>
 <p>output:</p>
-<figure><div class="code-wrapper"><pre class="line-numbers language-none"><code class="language-none">153 96
-108 81
-1216 1248 708
-1089 927 504
-1161 1151 739
-47 29 41 22 16
-147 103 73 116 94
-162 108 153 168 126
-163 67 112 158 122
-152 93 93 111 97<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div></figure>
+<figure class="highlight basic"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs basic"><span class="hljs-symbol">153 </span><span class="hljs-number">96</span><br><span class="hljs-symbol">108 </span><span class="hljs-number">81</span><br><span class="hljs-symbol">1216 </span><span class="hljs-number">1248</span> <span class="hljs-number">708</span><br><span class="hljs-symbol">1089 </span><span class="hljs-number">927</span> <span class="hljs-number">504</span><br><span class="hljs-symbol">1161 </span><span class="hljs-number">1151</span> <span class="hljs-number">739</span><br><span class="hljs-symbol">47 </span><span class="hljs-number">29</span> <span class="hljs-number">41</span> <span class="hljs-number">22</span> <span class="hljs-number">16</span><br><span class="hljs-symbol">147 </span><span class="hljs-number">103</span> <span class="hljs-number">73</span> <span class="hljs-number">116</span> <span class="hljs-number">94</span><br><span class="hljs-symbol">162 </span><span class="hljs-number">108</span> <span class="hljs-number">153</span> <span class="hljs-number">168</span> <span class="hljs-number">126</span><br><span class="hljs-symbol">163 </span><span class="hljs-number">67</span> <span class="hljs-number">112</span> <span class="hljs-number">158</span> <span class="hljs-number">122</span><br><span class="hljs-symbol">152 </span><span class="hljs-number">93</span> <span class="hljs-number">93</span> <span class="hljs-number">111</span> <span class="hljs-number">97</span><br></code></pre></td></tr></table></figure>
 <p>代码：</p>
-<figure><div class="code-wrapper"><pre class="line-numbers language-none"><code class="language-none">#include&lt;bits&#x2F;stdc++.h&gt;
-using namespace std;
-class M
-&#123;
-public:
-    int row;
-    int col;
-    int m[11][11];
-    M(int r,int c):row(r),col(c)
-    &#123;
-        for(int i&#x3D;0;i&lt;row;++i)
-        &#123;
-            for(int j&#x3D;0;j&lt;col;++j)
-            &#123;
-                if(i&#x3D;&#x3D;j)
-                    m[i][j]&#x3D;1;
-                else
-                    m[i][j]&#x3D;0;
-            &#125;
-        &#125;      
-    &#125;
-    void input()
-    &#123;
-        for(int i&#x3D;0;i&lt;row;++i)
-        &#123;
-            for(int j&#x3D;0;j&lt;col;++j)
-                cin&gt;&gt;m[i][j];
-        &#125; 
-    &#125;
-    void output()
-    &#123;
-        for(int i&#x3D;0;i&lt;row;++i)
-        &#123;
-            for(int j&#x3D;0;j&lt;col;++j)
-                cout&lt;&lt;m[i][j]&lt;&lt;&#39; &#39;;
-            cout&lt;&lt;endl;
-        &#125;
-    &#125;
-    M operator* (const M&amp; t) const
-    &#123;
-        M ans(row,t.col);
-        memset(ans.m,0,sizeof(ans.m));
-        for(int i&#x3D;0;i&lt;row;++i)
-        &#123;
-            for(int j&#x3D;0;j&lt;t.col;++j)
-            &#123;
-                for(int k&#x3D;0;k&lt;col;++k)
-                &#123;
-                    ans.m[i][j]+&#x3D;m[i][k]*t.m[k][j];
-                &#125;
-            &#125;
-        &#125;
-        return ans;
-    &#125;
-
-&#125;;
-M ksm(M a,int k)
-&#123;
-    M ans(a.row,a.col);
-    while(k&gt;0)
-    &#123;
-        if(k%2)
-            ans&#x3D;ans*a;
-        a&#x3D;a*a;
-        k&#x2F;&#x3D;2;
-    &#125;
-    return ans; 
-&#125;
-int main()
-&#123;
-    int n,k;
-    while(cin&gt;&gt;n&gt;&gt;k)
-    &#123;
-        M a(n,n);
-        a.input();
-        M ans&#x3D;ksm(a,k);
-        ans.output();
-    &#125;
-    return 0;
-&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div></figure>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br></pre></td><td class="code"><pre><code class="hljs csharp"><span class="hljs-meta">#include&lt;bits/stdc++.h&gt;</span><br><span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> <span class="hljs-title">std</span>;<br><span class="hljs-keyword">class</span> <span class="hljs-title">M</span><br>&#123;<br><span class="hljs-keyword">public</span>:<br>    <span class="hljs-built_in">int</span> row;<br>    <span class="hljs-built_in">int</span> col;<br>    <span class="hljs-built_in">int</span> m[<span class="hljs-number">11</span>][<span class="hljs-number">11</span>];<br>    M(<span class="hljs-built_in">int</span> r,<span class="hljs-built_in">int</span> c):row(r),col(c)<br>    &#123;<br>        <span class="hljs-keyword">for</span>(<span class="hljs-built_in">int</span> i=<span class="hljs-number">0</span>;i&lt;row;++i)<br>        &#123;<br>            <span class="hljs-keyword">for</span>(<span class="hljs-built_in">int</span> j=<span class="hljs-number">0</span>;j&lt;col;++j)<br>            &#123;<br>                <span class="hljs-keyword">if</span>(i==j)<br>                    m[i][j]=<span class="hljs-number">1</span>;<br>                <span class="hljs-keyword">else</span><br>                    m[i][j]=<span class="hljs-number">0</span>;<br>            &#125;<br>        &#125;      <br>    &#125;<br>    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">input</span>()</span><br>    &#123;<br>        <span class="hljs-keyword">for</span>(<span class="hljs-built_in">int</span> i=<span class="hljs-number">0</span>;i&lt;row;++i)<br>        &#123;<br>            <span class="hljs-keyword">for</span>(<span class="hljs-built_in">int</span> j=<span class="hljs-number">0</span>;j&lt;col;++j)<br>                cin&gt;&gt;m[i][j];<br>        &#125; <br>    &#125;<br>    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">output</span>()</span><br>    &#123;<br>        <span class="hljs-keyword">for</span>(<span class="hljs-built_in">int</span> i=<span class="hljs-number">0</span>;i&lt;row;++i)<br>        &#123;<br>            <span class="hljs-keyword">for</span>(<span class="hljs-built_in">int</span> j=<span class="hljs-number">0</span>;j&lt;col;++j)<br>                cout&lt;&lt;m[i][j]&lt;&lt;<span class="hljs-string">&#x27; &#x27;</span>;<br>            cout&lt;&lt;endl;<br>        &#125;<br>    &#125;<br>    M <span class="hljs-keyword">operator</span>* (<span class="hljs-keyword">const</span> M&amp; t) <span class="hljs-keyword">const</span><br>    &#123;<br>        <span class="hljs-function">M <span class="hljs-title">ans</span>(<span class="hljs-params">row,t.col</span>)</span>;<br>        memset(ans.m,<span class="hljs-number">0</span>,<span class="hljs-keyword">sizeof</span>(ans.m));<br>        <span class="hljs-keyword">for</span>(<span class="hljs-built_in">int</span> i=<span class="hljs-number">0</span>;i&lt;row;++i)<br>        &#123;<br>            <span class="hljs-keyword">for</span>(<span class="hljs-built_in">int</span> j=<span class="hljs-number">0</span>;j&lt;t.col;++j)<br>            &#123;<br>                <span class="hljs-keyword">for</span>(<span class="hljs-built_in">int</span> k=<span class="hljs-number">0</span>;k&lt;col;++k)<br>                &#123;<br>                    ans.m[i][j]+=m[i][k]*t.m[k][j];<br>                &#125;<br>            &#125;<br>        &#125;<br>        <span class="hljs-keyword">return</span> ans;<br>    &#125;<br><br>&#125;;<br><span class="hljs-function">M <span class="hljs-title">ksm</span>(<span class="hljs-params">M a,<span class="hljs-built_in">int</span> k</span>)</span><br>&#123;<br>    <span class="hljs-function">M <span class="hljs-title">ans</span>(<span class="hljs-params">a.row,a.col</span>)</span>;<br>    <span class="hljs-keyword">while</span>(k&gt;<span class="hljs-number">0</span>)<br>    &#123;<br>        <span class="hljs-keyword">if</span>(k%<span class="hljs-number">2</span>)<br>            ans=ans*a;<br>        a=a*a;<br>        k/=<span class="hljs-number">2</span>;<br>    &#125;<br>    <span class="hljs-keyword">return</span> ans; <br>&#125;<br><span class="hljs-function"><span class="hljs-built_in">int</span> <span class="hljs-title">main</span>()</span><br>&#123;<br>    <span class="hljs-built_in">int</span> n,k;<br>    <span class="hljs-keyword">while</span>(cin&gt;&gt;n&gt;&gt;k)<br>    &#123;<br>        <span class="hljs-function">M <span class="hljs-title">a</span>(<span class="hljs-params">n,n</span>)</span>;<br>        a.input();<br>        M ans=ksm(a,k);<br>        ans.output();<br>    &#125;<br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
 
                 
               </div>
@@ -701,8 +579,6 @@ int main()
   });
 </script>
 
-
-  <script  src="https://lib.baomitu.com/prism/1.27.0/plugins/line-numbers/prism-line-numbers.min.js" ></script>
 
   <script src=https://lib.baomitu.com/clipboard.js/2.0.10/clipboard.min.js></script>
 

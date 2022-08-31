@@ -40,8 +40,6 @@
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
 
-  <link  rel="stylesheet" href="https://lib.baomitu.com/prism/1.27.0/plugins/line-numbers/prism-line-numbers.min.css" />
-
   <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/KaTeX/0.15.6/katex.min.css" />
@@ -72,7 +70,7 @@
   <script id="fluid-configs">
     var Fluid = window.Fluid || {};
     Fluid.ctx = Object.assign({}, Fluid.ctx)
-    var CONFIG = {"hostname":"lqz2.github.io","root":"/","version":"1.9.2","typing":{"enable":true,"typeSpeed":50,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+    var CONFIG = {"hostname":"lqz2.github.io","root":"/","version":"1.9.2","typing":{"enable":true,"typeSpeed":60,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
 
     if (CONFIG.web_analytics.follow_dnt) {
       var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
@@ -222,7 +220,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          4.6k 字
+          4.5k 字
         
       </span>
     
@@ -233,7 +231,7 @@
         
         
         
-          39 分钟
+          38 分钟
         
       </span>
     
@@ -381,234 +379,42 @@
 <blockquote>
 <p>每次选择一个元素，并且将这个元素和前面元素进行比较，然后插入到合适的位置</p>
 </blockquote>
-<figure><div class="code-wrapper"><pre class="line-numbers language-none"><code class="language-none">void insert_sort(int arr[], int length)
-&#123;
-    int i,j;
-    for (i &#x3D; 1; i &lt; length; i++) &#123;
-        int tmp &#x3D; arr[i];
-        for (j &#x3D; i; j &gt; 0 &amp;&amp; arr[j - 1] &gt; tmp; j--) &#123;
-            arr[j] &#x3D; arr[j - 1];
-        &#125;
-        arr[j] &#x3D; tmp;
-    &#125;
-&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div></figure>
+<figure class="highlight mipsasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs mipsasm">void <span class="hljs-keyword">insert_sort(int </span>arr[], int length)<br>&#123;<br>    int i,<span class="hljs-keyword">j;</span><br><span class="hljs-keyword"></span>    for (i = <span class="hljs-number">1</span><span class="hljs-comment">; i &lt; length; i++) &#123;</span><br>        int tmp = arr[i];<br>        for (<span class="hljs-keyword">j </span>= i<span class="hljs-comment">; j &gt; 0 &amp;&amp; arr[j - 1] &gt; tmp; j--) &#123;</span><br>            arr[<span class="hljs-keyword">j] </span>= arr[<span class="hljs-keyword">j </span>- <span class="hljs-number">1</span>];<br>        &#125;<br>        arr[<span class="hljs-keyword">j] </span>= tmp;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
 <h3 id="希尔排序"><a class="markdownIt-Anchor" href="#希尔排序"></a> 希尔排序</h3>
 <blockquote>
 <p>插入排序的升级版，初始间隔<em>gap</em>为元素数目的一般，每次间隔<em>gap</em>个元素进行插入排序，直到gap为1</p>
 </blockquote>
-<figure><div class="code-wrapper"><pre class="line-numbers language-none"><code class="language-none">void shellSort(int arr[], int n) 
-&#123; 
-    for (int gap &#x3D; n&#x2F;2; gap &gt; 0; gap &#x2F;&#x3D; 2) 
-    &#123; 
-        for (int i &#x3D; gap; i &lt; n; i +&#x3D; 1) 
-        &#123; 
-            int temp &#x3D; arr[i]; 
-            int j;             
-            for (j &#x3D; i; j &gt;&#x3D; gap &amp;&amp; arr[j - gap] &gt; temp; j -&#x3D; gap) 
-                arr[j] &#x3D; arr[j - gap]; 
-            arr[j] &#x3D; temp; 
-        &#125; 
-    &#125; 
-&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div></figure>
+<figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs pgsql"><span class="hljs-type">void</span> shellSort(<span class="hljs-type">int</span> arr[], <span class="hljs-type">int</span> n) <br>&#123; <br>    <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> gap = n/<span class="hljs-number">2</span>; gap &gt; <span class="hljs-number">0</span>; gap /= <span class="hljs-number">2</span>) <br>    &#123; <br>        <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = gap; i &lt; n; i += <span class="hljs-number">1</span>) <br>        &#123; <br>            <span class="hljs-type">int</span> <span class="hljs-keyword">temp</span> = arr[i]; <br>            <span class="hljs-type">int</span> j;             <br>            <span class="hljs-keyword">for</span> (j = i; j &gt;= gap &amp;&amp; arr[j - gap] &gt; <span class="hljs-keyword">temp</span>; j -= gap) <br>                arr[j] = arr[j - gap]; <br>            arr[j] = <span class="hljs-keyword">temp</span>; <br>        &#125; <br>    &#125; <br>&#125;<br></code></pre></td></tr></table></figure>
 <h3 id="基数排序radix-sort"><a class="markdownIt-Anchor" href="#基数排序radix-sort"></a> 基数排序（Radix Sort)</h3>
 <blockquote>
 <p>将整数按位数切割成不同的数字，然后按每个位数分别比较。排序过程是将所有待比较数值统一为同样的数位长度，数位较短的数前面补零，然后从最低位开始，依次进行一次排序。这样从最低位排序一直到最高位排序完成以后, 数列就变成一个有序序列。</p>
 </blockquote>
-<figure><div class="code-wrapper"><pre class="line-numbers language-none"><code class="language-none">int getMax(int arr[], int n) 
-&#123; 
-    int mx &#x3D; arr[0]; 
-    for (int i &#x3D; 1; i &lt; n; i++) 
-        if (arr[i] &gt; mx) 
-            mx &#x3D; arr[i]; 
-    return mx; 
-&#125; 
-
-void countSort(int arr[], int n, int exp) 
-&#123; 
-    int output[n]; 
-    int i, count[10] &#x3D; &#123;0&#125;; 
-  
-    for (i &#x3D; 0; i &lt; n; i++) 
-        count[ (arr[i]&#x2F;exp)%10 ]++; 
-  
-    for (i &#x3D; 1; i &lt; 10; i++) 
-        count[i] +&#x3D; count[i - 1]; &#x2F;&#x2F;此时count[i]每位数字存放的位置，实际下标还要-1
-  
-    for (i &#x3D; n - 1; i &gt;&#x3D; 0; i--) &#x2F;&#x2F;从后往前保证稳定性
-    &#123; 
-        output[count[ (arr[i]&#x2F;exp)%10 ] - 1] &#x3D; arr[i]; 
-        count[ (arr[i]&#x2F;exp)%10 ]--; 
-    &#125; 
-  
-    for (i &#x3D; 0; i &lt; n; i++) 
-        arr[i] &#x3D; output[i]; 
-&#125; 
-  
-void radixsort(int arr[], int n) 
-&#123; 
-    int m &#x3D; getMax(arr, n); 
-    for (int exp &#x3D; 1; m&#x2F;exp &gt; 0; exp *&#x3D; 10) 
-        countSort(arr, n, exp); 
-&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div></figure>
+<figure class="highlight excel"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><code class="hljs excel"><span class="hljs-built_in">int</span> getMax(<span class="hljs-built_in">int</span> arr[], <span class="hljs-built_in">int</span> <span class="hljs-built_in">n</span>) <br>&#123; <br>    <span class="hljs-built_in">int</span> mx = arr[<span class="hljs-number">0</span>]; <br>    for (<span class="hljs-built_in">int</span> i = <span class="hljs-number">1</span>; i &lt; <span class="hljs-built_in">n</span>; i++) <br>        <span class="hljs-built_in">if</span> (arr[i] &gt; mx) <br>            mx = arr[i]; <br>    return mx; <br>&#125; <br><br>void countSort(<span class="hljs-built_in">int</span> arr[], <span class="hljs-built_in">int</span> <span class="hljs-built_in">n</span>, <span class="hljs-built_in">int</span> <span class="hljs-built_in">exp</span>) <br>&#123; <br>    <span class="hljs-built_in">int</span> output[<span class="hljs-built_in">n</span>]; <br>    <span class="hljs-built_in">int</span> i, <span class="hljs-built_in">count</span>[<span class="hljs-number">10</span>] = &#123;<span class="hljs-number">0</span>&#125;; <br>  <br>    for (i = <span class="hljs-number">0</span>; i &lt; <span class="hljs-built_in">n</span>; i++) <br>        <span class="hljs-built_in">count</span>[ (arr[i]/<span class="hljs-built_in">exp</span>)%<span class="hljs-number">10</span> ]++; <br>  <br>    for (i = <span class="hljs-number">1</span>; i &lt; <span class="hljs-number">10</span>; i++) <br>        <span class="hljs-built_in">count</span>[i] += <span class="hljs-built_in">count</span>[i - <span class="hljs-number">1</span>]; //此时<span class="hljs-built_in">count</span>[i]每位数字存放的位置，实际下标还要-<span class="hljs-number">1</span><br>  <br>    for (i = <span class="hljs-built_in">n</span> - <span class="hljs-number">1</span>; i &gt;= <span class="hljs-number">0</span>; i--) //从后往前保证稳定性<br>    &#123; <br>        output[<span class="hljs-built_in">count</span>[ (arr[i]/<span class="hljs-built_in">exp</span>)%<span class="hljs-number">10</span> ] - <span class="hljs-number">1</span>] = arr[i]; <br>        <span class="hljs-built_in">count</span>[ (arr[i]/<span class="hljs-built_in">exp</span>)%<span class="hljs-number">10</span> ]--; <br>    &#125; <br>  <br>    for (i = <span class="hljs-number">0</span>; i &lt; <span class="hljs-built_in">n</span>; i++) <br>        arr[i] = output[i]; <br>&#125; <br>  <br>void radixsort(<span class="hljs-built_in">int</span> arr[], <span class="hljs-built_in">int</span> <span class="hljs-built_in">n</span>) <br>&#123; <br>    <span class="hljs-built_in">int</span> m = getMax(arr, <span class="hljs-built_in">n</span>); <br>    for (<span class="hljs-built_in">int</span> <span class="hljs-built_in">exp</span> = <span class="hljs-number">1</span>; m/<span class="hljs-built_in">exp</span> &gt; <span class="hljs-number">0</span>; <span class="hljs-built_in">exp</span> *= <span class="hljs-number">10</span>) <br>        countSort(arr, <span class="hljs-built_in">n</span>, <span class="hljs-built_in">exp</span>); <br>&#125;<br></code></pre></td></tr></table></figure>
 <h3 id="冒泡排序"><a class="markdownIt-Anchor" href="#冒泡排序"></a> 冒泡排序</h3>
 <blockquote>
 <p>每次比较相邻两个元素大小，然后交换位置，每次将最大或最小的元素放到最后</p>
 </blockquote>
-<figure><div class="code-wrapper"><pre class="line-numbers language-none"><code class="language-none">void bubblesort(int arr[],int len)
-&#123;
-	for(int i&#x3D;0;i&lt;len-1;++i)
-	&#123;
-		for( int j&#x3D;0;j&lt;len-i-1;++j)
-		&#123;
-			if(arr[j]&gt;arr[j+1])
-			&#123;
-				int t&#x3D;arr[j];
-				arr[j]&#x3D;arr[j+1];
-				arr[j+1]&#x3D;t;
-			&#125;
-		&#125;
-	&#125;
-&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div></figure>
+<figure class="highlight excel"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs excel">void bubblesort(<span class="hljs-built_in">int</span> arr[],<span class="hljs-built_in">int</span> <span class="hljs-built_in">len</span>)<br>&#123;<br>	for(<span class="hljs-built_in">int</span> i=<span class="hljs-number">0</span>;i&lt;<span class="hljs-built_in">len</span>-<span class="hljs-number">1</span>;++i)<br>	&#123;<br>		for( <span class="hljs-built_in">int</span> j=<span class="hljs-number">0</span>;j&lt;<span class="hljs-built_in">len</span>-i-<span class="hljs-number">1</span>;++j)<br>		&#123;<br>			<span class="hljs-built_in">if</span>(arr[j]&gt;arr[j+<span class="hljs-number">1</span>])<br>			&#123;<br>				<span class="hljs-built_in">int</span> <span class="hljs-built_in">t</span>=arr[j];<br>				arr[j]=arr[j+<span class="hljs-number">1</span>];<br>				arr[j+<span class="hljs-number">1</span>]=<span class="hljs-built_in">t</span>;<br>			&#125;<br>		&#125;<br>	&#125;<br>&#125;<br></code></pre></td></tr></table></figure>
 <h3 id="归并排序merge-sort"><a class="markdownIt-Anchor" href="#归并排序merge-sort"></a> 归并排序（Merge Sort）</h3>
 <blockquote>
 <p>主要思想是分治（Divide and Conquer），将数组不断分成两个部分，对分开的部分比较然后拼接</p>
 </blockquote>
-<figure><div class="code-wrapper"><pre class="line-numbers language-none"><code class="language-none">void merge(int arr[], int l, int m, int r) 
-&#123; 
-    int i, j, k; 
-    int n1 &#x3D; m - l + 1; 
-    int n2 &#x3D;  r - m; 
-
-    int L[n1], R[n2]; 
-
-    for (i &#x3D; 0; i &lt; n1; i++) 
-        L[i] &#x3D; arr[l + i]; 
-    for (j &#x3D; 0; j &lt; n2; j++) 
-        R[j] &#x3D; arr[m + 1+ j]; 
-
-    i &#x3D; 0; 
-    j &#x3D; 0; 
-    k &#x3D; l; 
-    while (i &lt; n1 &amp;&amp; j &lt; n2) 
-    &#123; 
-        if (L[i] &lt;&#x3D; R[j]) 
-        &#123; 
-            arr[k] &#x3D; L[i]; 
-            i++; 
-        &#125; 
-        else
-        &#123; 
-            arr[k] &#x3D; R[j]; 
-            j++; 
-        &#125; 
-        k++; 
-    &#125; 
-  
-    while (i &lt; n1) 
-    &#123; 
-        arr[k] &#x3D; L[i]; 
-        i++; 
-        k++; 
-    &#125; 
-  
-    while (j &lt; n2) 
-    &#123; 
-        arr[k] &#x3D; R[j]; 
-        j++; 
-        k++; 
-    &#125; 
-&#125; 
-  
-void mergeSort(int arr[], int l, int r) 
-&#123; 
-    if (l &lt; r) 
-    &#123; 
-        int m &#x3D; l+r&gt;&gt;1; 
-        mergeSort(arr, l, m); 
-        mergeSort(arr, m+1, r); 
-        merge(arr, l, m, r); 
-    &#125; 
-&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div></figure>
+<figure class="highlight reasonml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br></pre></td><td class="code"><pre><code class="hljs reasonml">void merge(<span class="hljs-built_in">int</span> arr<span class="hljs-literal">[]</span>, <span class="hljs-built_in">int</span> l, <span class="hljs-built_in">int</span> m, <span class="hljs-built_in">int</span> r) <br>&#123; <br>    <span class="hljs-built_in">int</span> i, j, k; <br>    <span class="hljs-built_in">int</span> n1 = m - l + <span class="hljs-number">1</span>; <br>    <span class="hljs-built_in">int</span> n2 =  r - m; <br><br>    <span class="hljs-built_in">int</span> L<span class="hljs-literal">[<span class="hljs-identifier">n1</span>]</span>, R<span class="hljs-literal">[<span class="hljs-identifier">n2</span>]</span>; <br><br>    <span class="hljs-keyword">for</span> (i = <span class="hljs-number">0</span>; i &lt; n1; i++) <br>        L<span class="hljs-literal">[<span class="hljs-identifier">i</span>]</span> = arr<span class="hljs-literal">[<span class="hljs-identifier">l</span> + <span class="hljs-identifier">i</span>]</span>; <br>    <span class="hljs-keyword">for</span> (j = <span class="hljs-number">0</span>; j &lt; n2; j++) <br>        R<span class="hljs-literal">[<span class="hljs-identifier">j</span>]</span> = arr<span class="hljs-literal">[<span class="hljs-identifier">m</span> + <span class="hljs-number">1</span>+ <span class="hljs-identifier">j</span>]</span>; <br><br>    i = <span class="hljs-number">0</span>; <br>    j = <span class="hljs-number">0</span>; <br>    k = l; <br>    <span class="hljs-keyword">while</span> (i &lt; n1<span class="hljs-operator"> &amp;&amp; </span>j &lt; n2) <br>    &#123; <br>        <span class="hljs-keyword">if</span> (L<span class="hljs-literal">[<span class="hljs-identifier">i</span>]</span> &lt;= R<span class="hljs-literal">[<span class="hljs-identifier">j</span>]</span>) <br>        &#123; <br>            arr<span class="hljs-literal">[<span class="hljs-identifier">k</span>]</span> = L<span class="hljs-literal">[<span class="hljs-identifier">i</span>]</span>; <br>            i++; <br>        &#125; <br>        <span class="hljs-keyword">else</span><br>        &#123; <br>            arr<span class="hljs-literal">[<span class="hljs-identifier">k</span>]</span> = R<span class="hljs-literal">[<span class="hljs-identifier">j</span>]</span>; <br>            j++; <br>        &#125; <br>        k++; <br>    &#125; <br>  <br>    <span class="hljs-keyword">while</span> (i &lt; n1) <br>    &#123; <br>        arr<span class="hljs-literal">[<span class="hljs-identifier">k</span>]</span> = L<span class="hljs-literal">[<span class="hljs-identifier">i</span>]</span>; <br>        i++; <br>        k++; <br>    &#125; <br>  <br>    <span class="hljs-keyword">while</span> (j &lt; n2) <br>    &#123; <br>        arr<span class="hljs-literal">[<span class="hljs-identifier">k</span>]</span> = R<span class="hljs-literal">[<span class="hljs-identifier">j</span>]</span>; <br>        j++; <br>        k++; <br>    &#125; <br>&#125; <br>  <br>void merge<span class="hljs-constructor">Sort(<span class="hljs-params">int</span> <span class="hljs-params">arr</span>[], <span class="hljs-params">int</span> <span class="hljs-params">l</span>, <span class="hljs-params">int</span> <span class="hljs-params">r</span>)</span> <br>&#123; <br>    <span class="hljs-keyword">if</span> (l &lt; r) <br>    &#123; <br>        <span class="hljs-built_in">int</span> m = l+r&gt;&gt;<span class="hljs-number">1</span>; <br>        merge<span class="hljs-constructor">Sort(<span class="hljs-params">arr</span>, <span class="hljs-params">l</span>, <span class="hljs-params">m</span>)</span>; <br>        merge<span class="hljs-constructor">Sort(<span class="hljs-params">arr</span>, <span class="hljs-params">m</span>+1, <span class="hljs-params">r</span>)</span>; <br>        merge(arr, l, m, r); <br>    &#125; <br>&#125;<br></code></pre></td></tr></table></figure>
 <h3 id="堆排序"><a class="markdownIt-Anchor" href="#堆排序"></a> 堆排序</h3>
 <blockquote>
 <p>主要是建立小顶堆或者大顶堆，排序的时候，每次取出堆顶元素，然后剩下元素重新建堆，<s>建堆可以直接用STL的make_heap()😄</s></p>
 </blockquote>
-<figure><div class="code-wrapper"><pre class="line-numbers language-none"><code class="language-none">void heapify(int arr[], int n, int i) 
-&#123; 
-    int maxv &#x3D; i; 
-    int l &#x3D; 2*i + 1;  
-    int r &#x3D; 2*i + 2; 
-    if (l &lt; n &amp;&amp; arr[l] &gt; arr[maxv]) 
-        maxv &#x3D; l; 
-    if (r &lt; n &amp;&amp; arr[r] &gt; arr[maxv]) 
-        maxv &#x3D; r; 
-    if (maxv !&#x3D; i) 
-    &#123; 
-        swap(arr[i], arr[maxv]); 
-        heapify(arr, n, maxv); 
-    &#125; 
-&#125;
-void heapsort(int arr[],int len)
-&#123;
-    &#x2F;&#x2F;建堆
-    for(int i&#x3D;len&#x2F;2-1;i&gt;&#x3D;0;--i)
-        heapify(arr,len;i);
-    &#x2F;&#x2F;排序
-    for(int i&#x3D;len-1;i&gt;&#x3D;0;--i)
-    &#123;
-        swap(arr[i],a[0]);&#x2F;&#x2F;堆顶放到最后
-        heapify(arr,i,0);&#x2F;&#x2F;重新调整
-    &#125;
-&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div></figure>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">void</span> <span class="hljs-title function_">heapify</span><span class="hljs-params">(<span class="hljs-type">int</span> arr[], <span class="hljs-type">int</span> n, <span class="hljs-type">int</span> i)</span> <br>&#123; <br>    <span class="hljs-type">int</span> <span class="hljs-variable">maxv</span> <span class="hljs-operator">=</span> i; <br>    <span class="hljs-type">int</span> <span class="hljs-variable">l</span> <span class="hljs-operator">=</span> <span class="hljs-number">2</span>*i + <span class="hljs-number">1</span>;  <br>    <span class="hljs-type">int</span> <span class="hljs-variable">r</span> <span class="hljs-operator">=</span> <span class="hljs-number">2</span>*i + <span class="hljs-number">2</span>; <br>    <span class="hljs-keyword">if</span> (l &lt; n &amp;&amp; arr[l] &gt; arr[maxv]) <br>        maxv = l; <br>    <span class="hljs-keyword">if</span> (r &lt; n &amp;&amp; arr[r] &gt; arr[maxv]) <br>        maxv = r; <br>    <span class="hljs-keyword">if</span> (maxv != i) <br>    &#123; <br>        swap(arr[i], arr[maxv]); <br>        heapify(arr, n, maxv); <br>    &#125; <br>&#125;<br><span class="hljs-keyword">void</span> <span class="hljs-title function_">heapsort</span><span class="hljs-params">(<span class="hljs-type">int</span> arr[],<span class="hljs-type">int</span> len)</span><br>&#123;<br>    <span class="hljs-comment">//建堆</span><br>    <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i=len/<span class="hljs-number">2</span>-<span class="hljs-number">1</span>;i&gt;=<span class="hljs-number">0</span>;--i)<br>        heapify(arr,len;i);<br>    <span class="hljs-comment">//排序</span><br>    <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i=len-<span class="hljs-number">1</span>;i&gt;=<span class="hljs-number">0</span>;--i)<br>    &#123;<br>        swap(arr[i],a[<span class="hljs-number">0</span>]);<span class="hljs-comment">//堆顶放到最后</span><br>        heapify(arr,i,<span class="hljs-number">0</span>);<span class="hljs-comment">//重新调整</span><br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
 <h3 id="桶排序bucket-sort"><a class="markdownIt-Anchor" href="#桶排序bucket-sort"></a> 桶排序（Bucket Sort）</h3>
 <blockquote>
 <p>将数组分到有限数量的桶中，再对每个桶子再分别排序（有可能再使用别的排序算法或是以递归方式继续使用桶排序进行排序），最后将各个桶中的数据有序的合并起来。</p>
 </blockquote>
-<figure><div class="code-wrapper"><pre class="line-numbers language-none"><code class="language-none">\\该代码只适合正数数组的排序
-void bucketSort(float arr[], int n) 
-&#123; 
-    vector&lt;float&gt; b[n]; 
-
-    for (int i&#x3D;0; i&lt;n; i++) 
-    &#123; 
-       int bi &#x3D; n*arr[i]; 
-       b[bi].push_back(arr[i]); 
-    &#125; 
-    for (int i&#x3D;0; i&lt;n; i++) 
-       sort(b[i].begin(), b[i].end()); 
-    int index &#x3D; 0; 
-    for (int i &#x3D; 0; i &lt; n; i++) 
-        for (int j &#x3D; 0; j &lt; b[i].size(); j++) 
-          arr[index++] &#x3D; b[i][j]; 
-&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div></figure>
+<figure class="highlight reasonml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs reasonml">\\该代码只适合正数数组的排序<br>void bucket<span class="hljs-constructor">Sort(<span class="hljs-params">float</span> <span class="hljs-params">arr</span>[], <span class="hljs-params">int</span> <span class="hljs-params">n</span>)</span> <br>&#123; <br>    vector&lt;<span class="hljs-built_in">float</span>&gt; b<span class="hljs-literal">[<span class="hljs-identifier">n</span>]</span>; <br><br>    <span class="hljs-keyword">for</span> (<span class="hljs-built_in">int</span> i=<span class="hljs-number">0</span>; i&lt;n; i++) <br>    &#123; <br>       <span class="hljs-built_in">int</span> bi = n*arr<span class="hljs-literal">[<span class="hljs-identifier">i</span>]</span>; <br>       b<span class="hljs-literal">[<span class="hljs-identifier">bi</span>]</span>.push<span class="hljs-constructor">_back(<span class="hljs-params">arr</span>[<span class="hljs-params">i</span>])</span>; <br>    &#125; <br>    <span class="hljs-keyword">for</span> (<span class="hljs-built_in">int</span> i=<span class="hljs-number">0</span>; i&lt;n; i++) <br>       sort(b<span class="hljs-literal">[<span class="hljs-identifier">i</span>]</span>.<span class="hljs-keyword">begin</span><span class="hljs-literal">()</span>, b<span class="hljs-literal">[<span class="hljs-identifier">i</span>]</span>.<span class="hljs-keyword">end</span><span class="hljs-literal">()</span>); <br>    <span class="hljs-built_in">int</span> index = <span class="hljs-number">0</span>; <br>    <span class="hljs-keyword">for</span> (<span class="hljs-built_in">int</span> i = <span class="hljs-number">0</span>; i &lt; n; i++) <br>        <span class="hljs-keyword">for</span> (<span class="hljs-built_in">int</span> j = <span class="hljs-number">0</span>; j &lt; b<span class="hljs-literal">[<span class="hljs-identifier">i</span>]</span>.size<span class="hljs-literal">()</span>; j++) <br>          arr<span class="hljs-literal">[<span class="hljs-identifier">index</span><span class="hljs-operator">++</span>]</span> = b<span class="hljs-literal">[<span class="hljs-identifier">i</span>]</span><span class="hljs-literal">[<span class="hljs-identifier">j</span>]</span>; <br>&#125;<br></code></pre></td></tr></table></figure>
 <h3 id="快速排序"><a class="markdownIt-Anchor" href="#快速排序"></a> 快速排序</h3>
 <blockquote>
 <p>核心思想也是分治，每次选择一个pivot(一般选第一个)，设置左右端点两个指针，每一趟调整将比pivot元素小的值放到左指针位置，比pivot元素大的值放到位置，这样左半部分就小于右半部分，然后递归，分别对左右两个部分进行快排</p>
 </blockquote>
-<figure><div class="code-wrapper"><pre class="line-numbers language-none"><code class="language-none">int adjust(int arr[],int l,int r)
-&#123;
-	int t&#x3D;arr[l];
-	while(l&lt;r)
-	&#123;
-		while(l&lt;r&amp;&amp;arr[r]&gt;&#x3D;t)
-			--r;
-		arr[l]&#x3D;arr[r];
-		while(l&lt;r&amp;&amp;arr[l]&lt;&#x3D;t)
-			++l;
-		arr[r]&#x3D;arr[l];
-	&#125;
-	arr[l]&#x3D;t;
-	return l;
-&#125;
-void quicksort(int arr[],int l,int r)
-&#123;
-	if(l&lt;r)
-	&#123;
-		int pos&#x3D;adjust(arr,l,r);
-		quicksort(arr,l,pos);
-		quicksort(arr,pos+1,r);
-	&#125;	
-&#125;<span aria-hidden="true" class="line-numbers-rows"><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span><span></span></span></code></pre></div></figure>
+<figure class="highlight pgsql"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><code class="hljs pgsql"><span class="hljs-type">int</span> adjust(<span class="hljs-type">int</span> arr[],<span class="hljs-type">int</span> l,<span class="hljs-type">int</span> r)<br>&#123;<br>	<span class="hljs-type">int</span> t=arr[l];<br>	<span class="hljs-keyword">while</span>(l&lt;r)<br>	&#123;<br>		<span class="hljs-keyword">while</span>(l&lt;r&amp;&amp;arr[r]&gt;=t)<br>			<span class="hljs-comment">--r;</span><br>		arr[l]=arr[r];<br>		<span class="hljs-keyword">while</span>(l&lt;r&amp;&amp;arr[l]&lt;=t)<br>			++l;<br>		arr[r]=arr[l];<br>	&#125;<br>	arr[l]=t;<br>	<span class="hljs-keyword">return</span> l;<br>&#125;<br><span class="hljs-type">void</span> quicksort(<span class="hljs-type">int</span> arr[],<span class="hljs-type">int</span> l,<span class="hljs-type">int</span> r)<br>&#123;<br>	<span class="hljs-keyword">if</span>(l&lt;r)<br>	&#123;<br>		<span class="hljs-type">int</span> pos=adjust(arr,l,r);<br>		quicksort(arr,l,pos);<br>		quicksort(arr,pos+<span class="hljs-number">1</span>,r);<br>	&#125;	<br>&#125;<br></code></pre></td></tr></table></figure>
 
                 
               </div>
@@ -882,8 +688,6 @@ void quicksort(int arr[],int l,int r)
   });
 </script>
 
-
-  <script  src="https://lib.baomitu.com/prism/1.27.0/plugins/line-numbers/prism-line-numbers.min.js" ></script>
 
   <script src=https://lib.baomitu.com/clipboard.js/2.0.10/clipboard.min.js></script>
 
