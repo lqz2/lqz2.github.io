@@ -4,6 +4,25 @@
   
   
   <entry>
+    <title>最大子矩阵</title>
+    <link href="/2022/09/01/%E6%9C%80%E5%A4%A7%E5%AD%90%E7%9F%A9%E9%98%B5/"/>
+    <url>/2022/09/01/%E6%9C%80%E5%A4%A7%E5%AD%90%E7%9F%A9%E9%98%B5/</url>
+    
+    <content type="html"><![CDATA[<!-- TOC --><ul><li><a href="#%E9%A2%98%E7%9B%AE%E6%8F%8F%E8%BF%B0">题目描述</a></li><li><a href="#%E6%80%9D%E8%B7%AF">思路</a></li><li><a href="#%E4%BB%A3%E7%A0%81">代码</a></li></ul><!-- /TOC --><h3 id="题目描述"><a class="markdownIt-Anchor" href="#题目描述"></a> 题目描述</h3><p>矩阵的大小定义为矩阵中所有元素的和，现在给定一个n维矩阵，输出他的最大子矩阵</p><p>输入：第一行输入n，表示矩阵的维数，随后输入n×n的矩阵</p><p>input:</p><figure class="highlight subunit"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs subunit">4<br>0 <span class="hljs-string">-2</span> <span class="hljs-string">-7</span> 0<br>9 2 <span class="hljs-string">-6</span> 2<br><span class="hljs-string">-4</span> 1 <span class="hljs-string">-4</span>  1<br><span class="hljs-string">-1</span> 8  0 <span class="hljs-string">-2</span><br></code></pre></td></tr></table></figure><p>output:</p><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs">15<br></code></pre></td></tr></table></figure><h3 id="思路"><a class="markdownIt-Anchor" href="#思路"></a> 思路</h3><p>这道题可以说是矩阵版的<em>最大连续子序列的和</em>，为了减少时间复杂度，将矩阵每个元素变成所在列的前缀和，如<code>s[i][j]</code>表示第<code>j</code>列前<code>i</code>个元素的和，然后按照一维的方式求最大和就好了</p><h3 id="代码"><a class="markdownIt-Anchor" href="#代码"></a> 代码</h3><figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br></pre></td><td class="code"><pre><code class="hljs routeros"><span class="hljs-comment">#include&lt;bits/stdc++.h&gt;</span><br>using namespace std;<br>const int <span class="hljs-attribute">N</span>=105;<br>int <span class="hljs-attribute">inf</span>=-1e6;<br>int s[N][N];<br>int main()<br>&#123;<br>    int n;<br>    cin&gt;&gt;n;<br>    <span class="hljs-keyword">for</span>(int <span class="hljs-attribute">i</span>=1;i&lt;=n;++i)<br>    &#123;<br>        <span class="hljs-keyword">for</span>(int <span class="hljs-attribute">j</span>=1;j&lt;=n;++j)<br>        &#123;<br>            cin&gt;&gt;s[i][j];<br>            s[i][j]+=s[i-1][j];<br>        &#125;<br>    &#125;<br>    int <span class="hljs-attribute">ans</span>=inf;<br>    <span class="hljs-keyword">for</span>(int <span class="hljs-attribute">i</span>=1;i&lt;=n;++i)<br>    &#123;<br>        <span class="hljs-keyword">for</span>(int <span class="hljs-attribute">j</span>=i;j&lt;=n;++j)<br>        &#123;<br>            int <span class="hljs-attribute">pre</span>=inf;<br>            <span class="hljs-keyword">for</span>(int <span class="hljs-attribute">col</span>=1;col&lt;=n;++col)<br>            &#123;<br>                int <span class="hljs-attribute">t</span>=s[j][col]-s[i-1][col];<br>                <span class="hljs-attribute">pre</span>=max(pre+t,t);<br>                <span class="hljs-attribute">ans</span>=max(ans,pre);<br>            &#125;<br>        &#125;<br>    &#125;<br>    cout&lt;&lt;ans&lt;&lt;endl;<br>    return 0;<br>&#125;<br></code></pre></td></tr></table></figure>]]></content>
+    
+    
+    <categories>
+      
+      <category>机试</category>
+      
+    </categories>
+    
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>常见排序算法</title>
     <link href="/2022/08/31/%E5%B8%B8%E8%A7%81%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95/"/>
     <url>/2022/08/31/%E5%B8%B8%E8%A7%81%E6%8E%92%E5%BA%8F%E7%AE%97%E6%B3%95/</url>
