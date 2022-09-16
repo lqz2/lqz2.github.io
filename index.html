@@ -58,7 +58,7 @@
   <script id="fluid-configs">
     var Fluid = window.Fluid || {};
     Fluid.ctx = Object.assign({}, Fluid.ctx)
-    var CONFIG = {"hostname":"lqz2.github.io","root":"/","version":"1.9.2","typing":{"enable":true,"typeSpeed":60,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
+    var CONFIG = {"hostname":"lqz2.github.io","root":"/","version":"1.9.3","typing":{"enable":true,"typeSpeed":60,"cursorChar":"_","loop":false,"scope":[]},"anchorjs":{"enable":true,"element":"h1,h2,h3,h4,h5,h6","placement":"left","visible":"hover","icon":""},"progressbar":{"enable":true,"height_px":3,"color":"#29d","options":{"showSpinner":false,"trickleSpeed":100}},"code_language":{"enable":true,"default":"TEXT"},"copy_btn":true,"image_caption":{"enable":true},"image_zoom":{"enable":true,"img_url_replace":["",""]},"toc":{"enable":true,"placement":"right","headingSelector":"h1,h2,h3,h4,h5,h6","collapseDepth":0},"lazyload":{"enable":true,"loading_img":"/img/loading.gif","onlypost":false,"offset_factor":2},"web_analytics":{"enable":false,"follow_dnt":true,"baidu":null,"google":null,"gtag":null,"tencent":{"sid":null,"cid":null},"woyaola":null,"cnzz":null,"leancloud":{"app_id":null,"app_key":null,"server_url":null,"path":"window.location.pathname","ignore_local":false}},"search_path":"/local-search.xml"};
 
     if (CONFIG.web_analytics.follow_dnt) {
       var dntVal = navigator.doNotTrack || window.doNotTrack || navigator.msDoNotTrack;
@@ -285,7 +285,7 @@
       
       <a class="index-excerpt index-excerpt__noimg" href="/2022/09/13/%E5%8D%95%E8%B0%83%E6%A0%88/" target="_self">
         <div>
-          例1 接雨水    例1 题目描述 给出项数为 nnn 的整数数列 a1…na_{1 \dots n}a1…n​。 定义函数 f(i)f(i)f(i) 代表数列中第 iii 个元素之后第一个大于 aia_iai​ 的元素的下标，即 f(i)&#x3D;min⁡i&lt;j≤n,aj&gt;ai{j}f(i)&#x3D;\min_{i&lt;j\leq n, a_j &gt; a_i} \{j\}f(i)&#x3D;mini
+          例1 接雨水    例1 题目描述 给出项数为 nnn 的整数数列 a1…na_{1 \dots n}a1…n​。 定义函数 f(i)f(i)f(i) 代表数列中第 iii 个元素之后第一个大于 aia_iai​ 的元素的下标，即 f(i)=min⁡i&lt;j≤n,aj&gt;ai{j}f(i)=\min_{i&lt;j\leq n, a_j &gt; a_i} \{j\}f(i)=mini
         </div>
       </a>
 
@@ -555,7 +555,7 @@
       
       <a class="index-excerpt index-excerpt__noimg" href="/2022/08/29/%E6%97%A5%E6%9C%9F%E8%AE%A1%E7%AE%97/" target="_self">
         <div>
-          先来看一道题 输入一年中的一天，输出这一天是星期几 input: 114 October 2001 output: 1Sunday 用以下公式计算天数： S&#x3D;X−1+(X−1)&#x2F;4−(X−1)&#x2F;100+(X−1)&#x2F;400+CS&#x3D;X-1+(X-1)&#x2F;4-(X-1)&#x2F;100+(X-1)&#x2F;400+CS&#x3D;X−1+(X−1)&#x2F;4−(X−1)&#x2F;100+(X−1)&#x2F;400+C 其中，X是年份，C表示这一天是这一
+          先来看一道题 输入一年中的一天，输出这一天是星期几 input: 114 October 2001 output: 1Sunday 用以下公式计算天数： S=X−1+(X−1)/4−(X−1)/100+(X−1)/400+CS=X-1+(X-1)/4-(X-1)/100+(X-1)/400+CS=X−1+(X−1)/4−(X−1)/100+(X−1)/400+C 其中，X是年份，C表示这一天是这一
         </div>
       </a>
 
@@ -609,7 +609,7 @@
       
       <a class="index-excerpt index-excerpt__noimg" href="/2022/08/27/%E7%BA%BF%E6%AE%B5%E6%A0%91/" target="_self">
         <div>
-          线段树  递归建树   类型一：单点修改，区间查询  单点修改 区间查询 例题   类型二：区间修改，单点查询  区间修改 单点查询 例题   类型三： 区间修改，区间查询  区间修改 区间查询 例题      线段树  能把对区间的修改、查询的时间复杂度由 O(n) 变为 O(logn)  线段树实际上也是一种二叉树，每个节点用一个结构体node保存 1234struct node&amp;#123
+          线段树  递归建树   类型一：单点修改，区间查询  单点修改 区间查询 例题   类型二：区间修改，单点查询  区间修改 单点查询 例题   类型三： 区间修改，区间查询  区间修改 区间查询 例题      线段树  能把对区间的修改、查询的时间复杂度由 O(n) 变为 O(logn)  线段树实际上也是一种二叉树，每个节点用一个结构体node保存 1234struct node&#123
         </div>
       </a>
 
@@ -663,7 +663,7 @@
       
       <a class="index-excerpt index-excerpt__noimg" href="/2022/08/27/%E8%BF%9B%E5%88%B6%E8%BD%AC%E6%8D%A2%E4%B8%8E%E5%A4%A7%E9%98%B6%E4%B9%98/" target="_self">
         <div>
-          进制转换  题目   大阶乘  题目      进制转换  下面的模板可用于36以内进制任意转换   题目 将M进制的数X转换为N进制的数输出。 输入的第一行包括两个整数：M和N(2&lt;&#x3D;M,N&lt;&#x3D;36)。 下面的一行输入一个数X，X是M进制的数，现在要求你将M进制的数X转换成N进制的数输出。 input: 1236 9XYZZA765 output: 110374545654665
+          进制转换  题目   大阶乘  题目      进制转换  下面的模板可用于36以内进制任意转换   题目 将M进制的数X转换为N进制的数输出。 输入的第一行包括两个整数：M和N(2&lt;=M,N&lt;=36)。 下面的一行输入一个数X，X是M进制的数，现在要求你将M进制的数X转换成N进制的数输出。 input: 1236 9XYZZA765 output: 110374545654665
         </div>
       </a>
 
