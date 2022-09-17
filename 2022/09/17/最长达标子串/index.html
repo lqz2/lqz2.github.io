@@ -16,21 +16,21 @@
   <meta name="author" content="zql">
   <meta name="keywords" content="">
   
-    <meta name="description" content="龙与地下城迷宫问题 思路    龙与地下城迷宫问题 题目链接 题目描述 给定一个二维数组map，含义是一张地图 游戏的规则如下: 1）骑士从左上角出发，每次只能向右或向下走，最后到达右下角见到公主。 2）地图中每个位置的值代表骑士要遭遇的事情。如果是负数，说明此处有怪兽，要让骑士损失血量。如果是非负数，代表此处有血瓶，能让骑士回血。 3）骑士从左上角到右下角的过程中，走到任何一个位置时，血量都">
+    <meta name="description" content="最长达标子串    最长达标子串 题目描述 给定一个字符串s，其中都是英文小写字母，如果s的子串中含有的每种字符都是偶数个，那么这样的子串就是达标子串，输出达标子串的最大长度。 input: 1aababcdcdc output: 18 思路 用一个数组记录当前的状态，1表示当前字母出现了奇数次，0表示当前字母出现了偶数次 例如：如果s一共有四个字母abcd，子串a的状态可记为1000，子串a">
 <meta property="og:type" content="article">
-<meta property="og:title" content="龙与地下城游戏问题">
-<meta property="og:url" content="http://lqz2.github.io/2022/09/16/%E9%BE%99%E4%B8%8E%E5%9C%B0%E4%B8%8B%E5%9F%8E%E6%B8%B8%E6%88%8F%E9%97%AE%E9%A2%98/index.html">
+<meta property="og:title" content="最长达标子串">
+<meta property="og:url" content="http://lqz2.github.io/2022/09/17/%E6%9C%80%E9%95%BF%E8%BE%BE%E6%A0%87%E5%AD%90%E4%B8%B2/index.html">
 <meta property="og:site_name" content="my blogs">
-<meta property="og:description" content="龙与地下城迷宫问题 思路    龙与地下城迷宫问题 题目链接 题目描述 给定一个二维数组map，含义是一张地图 游戏的规则如下: 1）骑士从左上角出发，每次只能向右或向下走，最后到达右下角见到公主。 2）地图中每个位置的值代表骑士要遭遇的事情。如果是负数，说明此处有怪兽，要让骑士损失血量。如果是非负数，代表此处有血瓶，能让骑士回血。 3）骑士从左上角到右下角的过程中，走到任何一个位置时，血量都">
+<meta property="og:description" content="最长达标子串    最长达标子串 题目描述 给定一个字符串s，其中都是英文小写字母，如果s的子串中含有的每种字符都是偶数个，那么这样的子串就是达标子串，输出达标子串的最大长度。 input: 1aababcdcdc output: 18 思路 用一个数组记录当前的状态，1表示当前字母出现了奇数次，0表示当前字母出现了偶数次 例如：如果s一共有四个字母abcd，子串a的状态可记为1000，子串a">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2022-09-16T13:22:56.000Z">
-<meta property="article:modified_time" content="2022-09-16T14:05:36.574Z">
+<meta property="article:published_time" content="2022-09-16T23:52:03.000Z">
+<meta property="article:modified_time" content="2022-09-17T08:22:39.522Z">
 <meta property="article:author" content="zql">
 <meta name="twitter:card" content="summary_large_image">
   
   
   
-  <title>龙与地下城游戏问题 - my blogs</title>
+  <title>最长达标子串 - my blogs</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -195,7 +195,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="龙与地下城游戏问题"></span>
+            <span id="subtitle" data-typed-text="最长达标子串"></span>
           
         </div>
 
@@ -206,8 +206,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2022-09-16 21:22" pubdate>
-          2022年9月16日 晚上
+        <time datetime="2022-09-17 07:52" pubdate>
+          2022年9月17日 早上
         </time>
       </span>
     
@@ -218,7 +218,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          1.1k 字
+          810 字
         
       </span>
     
@@ -229,7 +229,7 @@
         
         
         
-          10 分钟
+          7 分钟
         
       </span>
     
@@ -267,40 +267,32 @@
         <div id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">龙与地下城游戏问题</h1>
+            <h1 style="display: none">最长达标子串</h1>
             
             
               <div class="markdown-body">
                 
                 <!-- TOC -->
 <ul>
-<li><a href="#%E9%BE%99%E4%B8%8E%E5%9C%B0%E4%B8%8B%E5%9F%8E%E8%BF%B7%E5%AE%AB%E9%97%AE%E9%A2%98">龙与地下城迷宫问题</a></li>
-<li><a href="#%E6%80%9D%E8%B7%AF">思路</a></li>
+<li><a href="#%E6%9C%80%E9%95%BF%E8%BE%BE%E6%A0%87%E5%AD%90%E4%B8%B2">最长达标子串</a></li>
 </ul>
 <!-- /TOC -->
-<h2 id="龙与地下城迷宫问题"><a class="markdownIt-Anchor" href="#龙与地下城迷宫问题"></a> 龙与地下城迷宫问题</h2>
-<p><a target="_blank" rel="noopener" href="https://www.nowcoder.com/practice/c0ca4c9e65144af69ada03febaa0e33a?tpId=230&amp;tqId=537494&amp;ru=/exam/oj&amp;qru=/ta/dynamic-programming/question-ranking&amp;sourceUrl=%2Fexam%2Foj%3Fpage%3D1%26tab%3D%25E7%25AE%2597%25E6%25B3%2595%25E7%25AF%2587%26topicId%3D230">题目链接</a></p>
+<h3 id="最长达标子串"><a class="markdownIt-Anchor" href="#最长达标子串"></a> 最长达标子串</h3>
 <p><strong>题目描述</strong></p>
-<p>给定一个二维数组map，含义是一张地图</p>
-<p>游戏的规则如下:<br />
-1）骑士从左上角出发，每次只能向右或向下走，最后到达右下角见到公主。<br />
-2）地图中每个位置的值代表骑士要遭遇的事情。如果是负数，说明此处有怪兽，要让骑士损失血量。如果是非负数，代表此处有血瓶，能让骑士回血。<br />
-3）骑士从左上角到右下角的过程中，走到任何一个位置时，血量都不能少于1。为了保证骑土能见到公主，初始血量至少是多少?</p>
-<p>根据map,输出初始血量。</p>
-<p>输入第一行<code>n,m</code>，表示矩阵大小<br />
-然后输入矩阵</p>
-<p>输出初始血量</p>
+<p>给定一个字符串<code>s</code>，其中都是英文小写字母，如果<code>s</code>的子串中含有的每种字符都是偶数个，那么这样的子串就是达标子串，输出达标子串的最大长度。</p>
 <p>input:</p>
-<figure class="highlight subunit"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs subunit">3 3<br><span class="hljs-string">-2</span> <span class="hljs-string">-3</span> 3<br><span class="hljs-string">-5</span> <span class="hljs-string">-10</span> 1<br>0 30 <span class="hljs-string">-5</span><br></code></pre></td></tr></table></figure>
+<figure class="highlight ebnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs ebnf"><span class="hljs-attribute">aababcdcdc</span><br></code></pre></td></tr></table></figure>
 <p>output:</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs">7<br></code></pre></td></tr></table></figure>
-<h2 id="思路"><a class="markdownIt-Anchor" href="#思路"></a> 思路</h2>
-<p>这道题也属于dp，但是有意思的是，如果我们选择 <code>自顶向下</code> 的方式，即从左上角出发，在前进过程中，每一个位置的最小血量是由后面的路径决定的，因此<code>自顶向下</code> 方法是不行的，那么我们可以选择<code> 自底向上</code> 的方式，从右下角出发。</p>
-<p><code>dp[i][j]</code>可理解为，走<code>a[i][j]</code>之前，至少要拥有的血量，且这个血量始终不能小于1</p>
-<p>所以<code>dp[n][m]</code>初始化为<code>max(1-a[n][m],1)</code></p>
-<p>然后从右下角到左上角更新dp数组即可</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs">8<br></code></pre></td></tr></table></figure>
+<p><strong>思路</strong></p>
+<p>用一个数组记录当前的状态，<code>1</code>表示当前字母出现了奇数次，<code>0</code>表示当前字母出现了偶数次</p>
+<p>例如：如果<code>s</code>一共有四个字母<code>abcd</code>，子串<code>a</code>的状态可记为<code>1000</code>，子串<code>aab</code>记为<code>0100</code><br />
+,子串<code>abacd</code>记为<code>0111</code></p>
+<p>可以得出这样的结论：如果<code>i</code>处的状态与<code>i+k</code>处的状态相同，则<code>i~i+k</code>之间的子串中的每个字母都出现了偶数次</p>
+<p>原理就是出现偶数次，不会改变某个字母的状态</p>
+<p>所以，只需要记录每个状态序列最早出现的位置，然后当他再次出现时，最晚出现的位置减去最早出现的位置就是最长的达标子串。</p>
 <p><strong>代码</strong></p>
-<figure class="highlight inform7"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><code class="hljs inform7">#include &lt;bits/stdc++.h&gt;<br>using namespace std;<br><br>const int N=1e3+5;<br>int a<span class="hljs-comment">[N]</span><span class="hljs-comment">[N]</span>,dp<span class="hljs-comment">[N]</span><span class="hljs-comment">[N]</span>;<br>int main()<br>&#123;<br>    int n,m;<br>    cin&gt;&gt;n&gt;&gt;m;<br>    for(int i=1;i&lt;=n;++i)<br>    &#123;<br>        for(int j=1;j&lt;=m;++j)<br>            cin&gt;&gt;a<span class="hljs-comment">[i]</span><span class="hljs-comment">[j]</span>;<br>    &#125;<br>    dp<span class="hljs-comment">[n]</span><span class="hljs-comment">[m]</span>=max(1-a<span class="hljs-comment">[n]</span><span class="hljs-comment">[m]</span>,1);<br>    for(int i=n-1;i&gt;=1;--i)<br>        dp<span class="hljs-comment">[i]</span><span class="hljs-comment">[m]</span>=max(dp<span class="hljs-comment">[i+1]</span><span class="hljs-comment">[m]</span>-a<span class="hljs-comment">[i]</span><span class="hljs-comment">[m]</span>,1);<br>    for(int i=m-1;i&gt;=1;--i)<br>        dp<span class="hljs-comment">[n]</span><span class="hljs-comment">[i]</span>=max(dp<span class="hljs-comment">[n]</span><span class="hljs-comment">[i+1]</span>-a<span class="hljs-comment">[n]</span><span class="hljs-comment">[i]</span>,1);<br>    for(int i=n-1;i&gt;=1;--i)<br>    &#123;<br>        for(int j=m-1;j&gt;=1;--j)<br>        &#123;<br>            int t=min(dp<span class="hljs-comment">[i+1]</span><span class="hljs-comment">[j]</span>-a<span class="hljs-comment">[i]</span><span class="hljs-comment">[j]</span>,dp<span class="hljs-comment">[i]</span><span class="hljs-comment">[j+1]</span>-a<span class="hljs-comment">[i]</span><span class="hljs-comment">[j]</span>);<br>            dp<span class="hljs-comment">[i]</span><span class="hljs-comment">[j]</span>=max(t,1);<br>        &#125;<br>    &#125;<br>    <br>    cout&lt;&lt;dp<span class="hljs-comment">[1]</span><span class="hljs-comment">[1]</span>&lt;&lt;endl;<br>    return 0;<br>&#125;<br></code></pre></td></tr></table></figure>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-meta">#<span class="hljs-keyword">include</span> <span class="hljs-string">&lt;bits/stdc++.h&gt;</span></span><br><span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;<br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br>	string s;<br>	cin&gt;&gt;s;<br>	<span class="hljs-type">int</span> len=s.<span class="hljs-built_in">size</span>();<br>	unordered_map&lt;<span class="hljs-type">int</span>,<span class="hljs-type">int</span>&gt; mp;<br>	<span class="hljs-type">int</span> status=<span class="hljs-number">0</span>;<br>	<span class="hljs-type">int</span> ans=<span class="hljs-number">0</span>;<br>	mp[<span class="hljs-number">0</span>]=<span class="hljs-number">-1</span>;<span class="hljs-comment">//初始化-1位置为0...00 32个0</span><br>	<span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i=<span class="hljs-number">0</span>;i&lt;len;++i)<br>	&#123;<br>		<span class="hljs-comment">//假设当前s[i]是&#x27;c&#x27;,那么将1左移2位，然后和status异或</span><br>		<span class="hljs-comment">//即可改变&#x27;c&#x27;处的状态 </span><br>		status=status^<span class="hljs-number">1</span>&lt;&lt;s[i]-<span class="hljs-string">&#x27;a&#x27;</span>;<br>		<span class="hljs-keyword">if</span>(mp.<span class="hljs-built_in">count</span>(status))<br>			ans=<span class="hljs-built_in">max</span>(ans,i-mp[status]);<br>		<span class="hljs-keyword">else</span><br>			mp[status]=i; <br>	&#125;<br>	cout&lt;&lt;ans&lt;&lt;endl; <br>	<span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
 
                 
               </div>
@@ -339,8 +331,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>龙与地下城游戏问题</div>
-      <div>http://lqz2.github.io/2022/09/16/龙与地下城游戏问题/</div>
+      <div>最长达标子串</div>
+      <div>http://lqz2.github.io/2022/09/17/最长达标子串/</div>
     </div>
     <div class="license-meta">
       
@@ -352,7 +344,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2022年9月16日</div>
+          <div>2022年9月17日</div>
         </div>
       
       
@@ -384,7 +376,7 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2022/09/17/%E6%9C%80%E9%95%BF%E8%BE%BE%E6%A0%87%E5%AD%90%E4%B8%B2/" title="最长达标子串">
+                      <a href="/2022/09/17/%E6%9C%80%E9%95%BF%E8%BE%BE%E6%A0%87%E5%AD%90%E4%B8%B2-1/" title="最长达标子串">
                         <i class="iconfont icon-arrowleft"></i>
                         <span class="hidden-mobile">最长达标子串</span>
                         <span class="visible-mobile">上一篇</span>
@@ -394,8 +386,8 @@
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2022/09/15/dp%E7%BB%83%E4%B9%A0/" title="dp练习">
-                        <span class="hidden-mobile">dp练习</span>
+                      <a href="/2022/09/16/%E9%BE%99%E4%B8%8E%E5%9C%B0%E4%B8%8B%E5%9F%8E%E6%B8%B8%E6%88%8F%E9%97%AE%E9%A2%98/" title="龙与地下城游戏问题">
+                        <span class="hidden-mobile">龙与地下城游戏问题</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
