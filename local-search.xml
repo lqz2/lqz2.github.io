@@ -4,6 +4,44 @@
   
   
   <entry>
+    <title>非零段划分</title>
+    <link href="/2022/09/29/%E9%9D%9E%E9%9B%B6%E6%AE%B5%E5%88%92%E5%88%86/"/>
+    <url>/2022/09/29/%E9%9D%9E%E9%9B%B6%E6%AE%B5%E5%88%92%E5%88%86/</url>
+    
+    <content type="html"><![CDATA[<!-- TOC --><ul><li><a href="#%E9%9D%9E%E9%9B%B6%E6%AE%B5%E5%88%92%E5%88%86">非零段划分</a><ul><li><a href="#%E9%A2%98%E7%9B%AE%E6%8F%8F%E8%BF%B0">题目描述</a></li><li><a href="#%E6%80%9D%E8%B7%AF">思路</a></li><li><a href="#%E4%BB%A3%E7%A0%81">代码</a></li></ul></li></ul><!-- /TOC --><h2 id="非零段划分"><a class="markdownIt-Anchor" href="#非零段划分"></a> 非零段划分</h2><p>题目来自CCF 201909-2</p><h3 id="题目描述"><a class="markdownIt-Anchor" href="#题目描述"></a> 题目描述</h3><p>A1,A2,⋯,An 是一个由 n 个自然数组成的数组。我们称其中 Ai,⋯,Aj 是一个非零段，当且仅当以下条件同时满足：</p><ul><li>1≤i≤j≤n；</li><li>对于任意的整数 k，若 i≤k≤j，则 Ak&gt;0；</li><li>i=1 或 Ai−1=0；</li><li>j=n 或 Aj+1=0。</li></ul><p>下面展示了几个简单的例子：</p><p>A=[3,1,2,0,0,2,0,4,5,0,2] 中的 4 个非零段依次为 [3,1,2]、[2]、[4,5] 和 [2]；<br />A=[2,3,1,4,5] 仅有 1 个非零段；<br />A=[0,0,0] 则不含非零段（即非零段个数为 0）。</p><p>现在我们可以对数组 A 进行如下操作：任选一个正整数 p，然后将 A 中所有小于 p 的数都变为 0。试选取一个合适的 p，使得数组 A 中的非零段个数达到最大。若输入的 A 所含非零段数已达最大值，可取 p=1，即不对 A 做任何修改。</p><p>输入：<br />从标准输入读入数据。</p><p>输入的第一行包含一个正整数 n。</p><p>输入的第二行包含 n 个用空格分隔的自然数 A1,A2,⋯,An。</p><p>输出：</p><p>输出到标准输出。</p><p>仅输出一个整数，表示对数组 A 进行操作后，其非零段个数能达到的最大值。</p><h3 id="思路"><a class="markdownIt-Anchor" href="#思路"></a> 思路</h3><p>差分与前缀和<br />如果 <code>a[i]&gt;a[i−1]</code>，意味着当p取到 <code>a[i−1]+1 </code>到 <code>a[i]</code>之间的值时，非零段+1<br />数组<code>b[i]</code>表示<code>p</code>从<code>a[i-1]</code>到<code>a[i]</code>，非零段数量的变化<br />从正向前缀和中找出最大值就是所要的结果</p><p>差分前缀和之前练习过，但这道题真没想到还能这样，tcl😢，看了别人的思路，实在是太妙了啊😢😢😢😢</p><h3 id="代码"><a class="markdownIt-Anchor" href="#代码"></a> 代码</h3><figure class="highlight arduino"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><code class="hljs arduino"><span class="hljs-meta">#<span class="hljs-keyword">include</span><span class="hljs-string">&lt;bits/stdc++.h&gt;</span></span><br><span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;<br><span class="hljs-type">const</span> <span class="hljs-type">int</span> N=<span class="hljs-number">5e5</span>+<span class="hljs-number">1</span>;<br><span class="hljs-type">const</span> <span class="hljs-type">int</span> M=<span class="hljs-number">1e4</span>+<span class="hljs-number">1</span>;<br><span class="hljs-type">int</span> a[N];<br><span class="hljs-type">int</span> b[M];<br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br><span class="hljs-type">int</span> n;<br>cin&gt;&gt;n;<br><span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i=<span class="hljs-number">1</span>;i&lt;=n;++i)<br>&#123;<br>cin&gt;&gt;a[i];<br><span class="hljs-keyword">if</span>(a[i]&gt;a[i<span class="hljs-number">-1</span>])<br>&#123;<br><span class="hljs-comment">//a[i-1]~a[i]的非零段数加1 </span><br>++b[a[i<span class="hljs-number">-1</span>]+<span class="hljs-number">1</span>];<br>--b[a[i]+<span class="hljs-number">1</span>];<br>&#125; <br>&#125;<br><span class="hljs-type">int</span> ans=<span class="hljs-number">0</span>,sum=<span class="hljs-number">0</span>;<br><span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i=<span class="hljs-number">1</span>;i&lt;=M;++i)<br>&#123;<br>sum+=b[i];<br>ans=<span class="hljs-built_in">max</span>(ans,sum);<br>&#125;<br>cout&lt;&lt;ans&lt;&lt;endl;<br><span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure>]]></content>
+    
+    
+    <categories>
+      
+      <category>机试</category>
+      
+    </categories>
+    
+    
+  </entry>
+  
+  
+  
+  <entry>
+    <title>第k个数</title>
+    <link href="/2022/09/29/%E7%AC%ACk%E4%B8%AA%E6%95%B0/"/>
+    <url>/2022/09/29/%E7%AC%ACk%E4%B8%AA%E6%95%B0/</url>
+    
+    <content type="html"><![CDATA[<!-- TOC --><ul><li><a href="#%E7%AC%ACk%E4%B8%AA%E6%95%B0">第k个数</a><ul><li><a href="#%E9%A2%98%E7%9B%AE%E6%8F%8F%E8%BF%B0">题目描述</a></li><li><a href="#%E6%80%9D%E8%B7%AF">思路</a></li><li><a href="#%E4%BB%A3%E7%A0%81">代码</a></li></ul></li></ul><!-- /TOC --><h2 id="第k个数"><a class="markdownIt-Anchor" href="#第k个数"></a> 第k个数</h2><blockquote><p>此题不是特别难，但是第一眼看过去没有什么太好的想法，看了眼题解觉得思路很好，就记录下来<br /><s>顺便水一个博客😄</s></p></blockquote><h3 id="题目描述"><a class="markdownIt-Anchor" href="#题目描述"></a> 题目描述</h3><p>有些数的素因子只有 3，5，7，请设计一个算法找出第 k 个数。注意，不是必须有这些素因子，而是必须不包含其他的素因子。例如，前几个数按顺序应该是 1，3，5，7，9，15，21。</p><p>输入k，输出符合条件的第k个数</p><p>input:</p><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs">5<br></code></pre></td></tr></table></figure><p>output:</p><figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs">9<br></code></pre></td></tr></table></figure><h3 id="思路"><a class="markdownIt-Anchor" href="#思路"></a> 思路</h3><p>建立一个数组<code>dp[]</code>，<code>dp[i]</code>表示第<code>i</code>个数什么，然后三个变量a,b,c表示3、5、7的指针</p><p>状态方程：</p><figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs routeros">int <span class="hljs-attribute">numa</span>=dp[a]<span class="hljs-number">*3</span>,<span class="hljs-attribute">numb</span>=dp[b]<span class="hljs-number">*5</span>,<span class="hljs-attribute">numc</span>=dp[c]<span class="hljs-number">*7</span>;<br>dp[i]=min(min(numa,numb),numc);<br></code></pre></td></tr></table></figure><p>然后如果<code>dp[i]</code>与任何一个num相等，对应的指针加1</p><h3 id="代码"><a class="markdownIt-Anchor" href="#代码"></a> 代码</h3><figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><code class="hljs routeros"><span class="hljs-comment">#include&lt;bits/stdc++.h&gt;</span><br>using namespace std;<br>const int <span class="hljs-attribute">N</span>=1e3;<br>int dp[N];<br>int main()<br>&#123;<br>int n;<br>cin&gt;&gt;n;<br>int <span class="hljs-attribute">a</span>=1,b=1,c=1;<br>dp[1]=1;<br><span class="hljs-keyword">for</span>(int <span class="hljs-attribute">i</span>=2;i&lt;=n;++i)<br>&#123;<br>int <span class="hljs-attribute">numa</span>=dp[a]<span class="hljs-number">*3</span>,<span class="hljs-attribute">numb</span>=dp[b]<span class="hljs-number">*5</span>,<span class="hljs-attribute">numc</span>=dp[c]<span class="hljs-number">*7</span>;<br>dp[i]=min(min(numa,numb),numc);<br><span class="hljs-keyword">if</span>(dp[i]==numa)<br>++a;<br><span class="hljs-keyword">if</span>(dp[i]==numb)<br>++b;<br><span class="hljs-keyword">if</span>(dp[i]==numc)<br>++c;<br>&#125;<br>cout&lt;&lt;dp[n]&lt;&lt;endl;<br>return 0;<br>&#125;<br></code></pre></td></tr></table></figure>]]></content>
+    
+    
+    <categories>
+      
+      <category>机试</category>
+      
+    </categories>
+    
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>素数筛</title>
     <link href="/2022/09/25/%E7%B4%A0%E6%95%B0%E7%AD%9B/"/>
     <url>/2022/09/25/%E7%B4%A0%E6%95%B0%E7%AD%9B/</url>

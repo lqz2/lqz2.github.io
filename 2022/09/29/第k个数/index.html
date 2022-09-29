@@ -16,21 +16,21 @@
   <meta name="author" content="zql">
   <meta name="keywords" content="">
   
-    <meta name="description" content="暴力 埃氏筛 欧拉筛 例题   素数筛  找到1到n区间里的所有素数,通常有以下几种方法   暴力 最基本的方法，时间复杂度O(n2)O(n^2)O(n2)  埃氏筛 主要思想是通过一个bool类型的数组记录某数是否为素数，思路不难，直接看代码就行 代码 123456789101112void getPrime(int n)&amp;#123;    for(int i&#x3D;2;i&lt;&#x3D;n;++i)">
+    <meta name="description" content="第k个数  题目描述 思路 代码      第k个数  此题不是特别难，但是第一眼看过去没有什么太好的想法，看了眼题解觉得思路很好，就记录下来 顺便水一个博客😄   题目描述 有些数的素因子只有 3，5，7，请设计一个算法找出第 k 个数。注意，不是必须有这些素因子，而是必须不包含其他的素因子。例如，前几个数按顺序应该是 1，3，5，7，9，15，21。 输入k，输出符合条件的第k个数 in">
 <meta property="og:type" content="article">
-<meta property="og:title" content="素数筛">
-<meta property="og:url" content="http://lqz2.github.io/2022/09/25/%E7%B4%A0%E6%95%B0%E7%AD%9B/index.html">
+<meta property="og:title" content="第k个数">
+<meta property="og:url" content="http://lqz2.github.io/2022/09/29/%E7%AC%ACk%E4%B8%AA%E6%95%B0/index.html">
 <meta property="og:site_name" content="my blogs">
-<meta property="og:description" content="暴力 埃氏筛 欧拉筛 例题   素数筛  找到1到n区间里的所有素数,通常有以下几种方法   暴力 最基本的方法，时间复杂度O(n2)O(n^2)O(n2)  埃氏筛 主要思想是通过一个bool类型的数组记录某数是否为素数，思路不难，直接看代码就行 代码 123456789101112void getPrime(int n)&amp;#123;    for(int i&#x3D;2;i&lt;&#x3D;n;++i)">
+<meta property="og:description" content="第k个数  题目描述 思路 代码      第k个数  此题不是特别难，但是第一眼看过去没有什么太好的想法，看了眼题解觉得思路很好，就记录下来 顺便水一个博客😄   题目描述 有些数的素因子只有 3，5，7，请设计一个算法找出第 k 个数。注意，不是必须有这些素因子，而是必须不包含其他的素因子。例如，前几个数按顺序应该是 1，3，5，7，9，15，21。 输入k，输出符合条件的第k个数 in">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2022-09-25T01:52:47.000Z">
-<meta property="article:modified_time" content="2022-09-25T02:22:45.956Z">
+<meta property="article:published_time" content="2022-09-29T02:13:29.000Z">
+<meta property="article:modified_time" content="2022-09-29T03:13:35.842Z">
 <meta property="article:author" content="zql">
 <meta name="twitter:card" content="summary_large_image">
   
   
   
-  <title>素数筛 - my blogs</title>
+  <title>第k个数 - my blogs</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -41,8 +41,6 @@
   <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
-
-  <link  rel="stylesheet" href="https://lib.baomitu.com/KaTeX/0.15.6/katex.min.css" />
 
 
 
@@ -197,7 +195,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="素数筛"></span>
+            <span id="subtitle" data-typed-text="第k个数"></span>
           
         </div>
 
@@ -208,8 +206,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2022-09-25 09:52" pubdate>
-          2022年9月25日 上午
+        <time datetime="2022-09-29 10:13" pubdate>
+          2022年9月29日 上午
         </time>
       </span>
     
@@ -220,7 +218,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          953 字
+          721 字
         
       </span>
     
@@ -231,7 +229,7 @@
         
         
         
-          8 分钟
+          7 分钟
         
       </span>
     
@@ -269,41 +267,41 @@
         <div id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">素数筛</h1>
+            <h1 style="display: none">第k个数</h1>
             
             
               <div class="markdown-body">
                 
                 <!-- TOC -->
 <ul>
-<li><a href="#%E6%9A%B4%E5%8A%9B">暴力</a></li>
-<li><a href="#%E5%9F%83%E6%B0%8F%E7%AD%9B">埃氏筛</a></li>
-<li><a href="#%E6%AC%A7%E6%8B%89%E7%AD%9B">欧拉筛</a></li>
-<li><a href="#%E4%BE%8B%E9%A2%98">例题</a></li>
+<li><a href="#%E7%AC%ACk%E4%B8%AA%E6%95%B0">第k个数</a>
+<ul>
+<li><a href="#%E9%A2%98%E7%9B%AE%E6%8F%8F%E8%BF%B0">题目描述</a></li>
+<li><a href="#%E6%80%9D%E8%B7%AF">思路</a></li>
+<li><a href="#%E4%BB%A3%E7%A0%81">代码</a></li>
+</ul>
+</li>
 </ul>
 <!-- /TOC -->
-<p><strong>素数筛</strong></p>
+<h2 id="第k个数"><a class="markdownIt-Anchor" href="#第k个数"></a> 第k个数</h2>
 <blockquote>
-<p>找到1到n区间里的所有素数,通常有以下几种方法</p>
+<p>此题不是特别难，但是第一眼看过去没有什么太好的想法，看了眼题解觉得思路很好，就记录下来<br />
+<s>顺便水一个博客😄</s></p>
 </blockquote>
-<h3 id="暴力"><a class="markdownIt-Anchor" href="#暴力"></a> 暴力</h3>
-<p>最基本的方法，时间复杂度<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>O</mi><mo stretchy="false">(</mo><msup><mi>n</mi><mn>2</mn></msup><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">O(n^2)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1.064108em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.02778em;">O</span><span class="mopen">(</span><span class="mord"><span class="mord mathnormal">n</span><span class="msupsub"><span class="vlist-t"><span class="vlist-r"><span class="vlist" style="height:0.8141079999999999em;"><span style="top:-3.063em;margin-right:0.05em;"><span class="pstrut" style="height:2.7em;"></span><span class="sizing reset-size6 size3 mtight"><span class="mord mtight">2</span></span></span></span></span></span></span></span><span class="mclose">)</span></span></span></span></p>
-<h3 id="埃氏筛"><a class="markdownIt-Anchor" href="#埃氏筛"></a> 埃氏筛</h3>
-<p>主要思想是通过一个<code>bool</code>类型的数组记录某数是否为素数，思路不难，直接看代码就行</p>
-<p><strong>代码</strong></p>
-<figure class="highlight arduino"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs arduino"><span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">getPrime</span><span class="hljs-params">(<span class="hljs-type">int</span> n)</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i=<span class="hljs-number">2</span>;i&lt;=n;++i)<br>        isPrime[i] = <span class="hljs-literal">true</span>;  <span class="hljs-comment">//假设2-n都是素数</span><br>    <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i=<span class="hljs-number">2</span>;i&lt;=n;++i)   <span class="hljs-comment">//遍历2-n里面所有数</span><br>        <span class="hljs-keyword">if</span>(isPrime[i])      <span class="hljs-comment">//如果i是素数</span><br>            <span class="hljs-comment">//i是素数的话，那么i的倍数肯定就不是合适</span><br>            <span class="hljs-comment">//即 i*2，i*3 .....i*j肯定不是素数，注意边界i*j&lt;=n</span><br>            <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> j=i;i*j&lt;=n;++j)<br>                <span class="hljs-comment">//n以内，且是i的倍数的数肯定不是素数，设为false</span><br>                isPrime[i*j] = <span class="hljs-literal">false</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
-<p>时间复杂度<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>O</mi><mo stretchy="false">(</mo><mi>l</mi><mi>o</mi><mi>g</mi><mi>n</mi><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">O(logn)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.02778em;">O</span><span class="mopen">(</span><span class="mord mathnormal" style="margin-right:0.01968em;">l</span><span class="mord mathnormal">o</span><span class="mord mathnormal" style="margin-right:0.03588em;">g</span><span class="mord mathnormal">n</span><span class="mclose">)</span></span></span></span></p>
-<h3 id="欧拉筛"><a class="markdownIt-Anchor" href="#欧拉筛"></a> 欧拉筛</h3>
-<p>在埃尼筛的基础上加以改进，需要维护一个<code>vis[]</code>数组判断是否被标记过，然后<code>prime[]</code>数组记录第几个素数是什么，比较好理解，看一道例题就行</p>
-<h3 id="例题"><a class="markdownIt-Anchor" href="#例题"></a> 例题</h3>
-<p><strong>题目描述</strong></p>
-<p>Output the k-th prime number.</p>
+<h3 id="题目描述"><a class="markdownIt-Anchor" href="#题目描述"></a> 题目描述</h3>
+<p>有些数的素因子只有 3，5，7，请设计一个算法找出第 k 个数。注意，不是必须有这些素因子，而是必须不包含其他的素因子。例如，前几个数按顺序应该是 1，3，5，7，9，15，21。</p>
+<p>输入k，输出符合条件的第k个数</p>
 <p>input:</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs">7<br></code></pre></td></tr></table></figure>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs">5<br></code></pre></td></tr></table></figure>
 <p>output:</p>
-<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs">15<br></code></pre></td></tr></table></figure>
-<p><strong>代码</strong></p>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-meta">#<span class="hljs-keyword">include</span><span class="hljs-string">&lt;bits/stdc++.h&gt;</span></span><br><span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;<br><span class="hljs-type">const</span> <span class="hljs-type">int</span> N=<span class="hljs-number">1e6</span>;<br><span class="hljs-type">int</span> cnt;<br><span class="hljs-type">bool</span> vis[N];<br><span class="hljs-type">int</span> prime[<span class="hljs-number">10000</span>];<br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span><br><span class="hljs-function"></span>&#123;<br>    <span class="hljs-type">int</span> k;<br>    cin&gt;&gt;k;<br>    <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i=<span class="hljs-number">2</span>;i&lt;=N;++i)<br>    &#123;<br>        <span class="hljs-keyword">if</span>(cnt==k)<br>            <span class="hljs-keyword">break</span>;<br>        <span class="hljs-keyword">if</span>(vis[i]==<span class="hljs-literal">false</span>)<br>            prime[++cnt]=i;<br>        <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> j=<span class="hljs-number">1</span>;j&lt;=cnt&amp;&amp;i*prime[j]&lt;=N;++j)<br>        &#123;<br>            vis[i*prime[j]]=<span class="hljs-literal">true</span>;<br>            <span class="hljs-keyword">if</span>(i%prime[j]==<span class="hljs-number">0</span>)<br>                <span class="hljs-keyword">break</span>;<br>        &#125;<br>    &#125;<br>    cout&lt;&lt;prime[k]&lt;&lt;endl;<br>    <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs">9<br></code></pre></td></tr></table></figure>
+<h3 id="思路"><a class="markdownIt-Anchor" href="#思路"></a> 思路</h3>
+<p>建立一个数组<code>dp[]</code>，<code>dp[i]</code>表示第<code>i</code>个数什么，然后三个变量a,b,c表示3、5、7的指针</p>
+<p>状态方程：</p>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs routeros">int <span class="hljs-attribute">numa</span>=dp[a]<span class="hljs-number">*3</span>,<span class="hljs-attribute">numb</span>=dp[b]<span class="hljs-number">*5</span>,<span class="hljs-attribute">numc</span>=dp[c]<span class="hljs-number">*7</span>;<br>dp[i]=min(min(numa,numb),numc);<br></code></pre></td></tr></table></figure>
+<p>然后如果<code>dp[i]</code>与任何一个num相等，对应的指针加1</p>
+<h3 id="代码"><a class="markdownIt-Anchor" href="#代码"></a> 代码</h3>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><code class="hljs routeros"><span class="hljs-comment">#include&lt;bits/stdc++.h&gt;</span><br>using namespace std;<br>const int <span class="hljs-attribute">N</span>=1e3;<br>int dp[N];<br>int main()<br>&#123;<br>	int n;<br>	cin&gt;&gt;n;<br>	int <span class="hljs-attribute">a</span>=1,b=1,c=1;<br>	dp[1]=1;<br>	<span class="hljs-keyword">for</span>(int <span class="hljs-attribute">i</span>=2;i&lt;=n;++i)<br>	&#123;<br>		int <span class="hljs-attribute">numa</span>=dp[a]<span class="hljs-number">*3</span>,<span class="hljs-attribute">numb</span>=dp[b]<span class="hljs-number">*5</span>,<span class="hljs-attribute">numc</span>=dp[c]<span class="hljs-number">*7</span>;<br>		dp[i]=min(min(numa,numb),numc);<br>		<span class="hljs-keyword">if</span>(dp[i]==numa)<br>			++a;<br>		<span class="hljs-keyword">if</span>(dp[i]==numb)<br>			++b;<br>		<span class="hljs-keyword">if</span>(dp[i]==numc)<br>			++c;	<br>	&#125;<br>	cout&lt;&lt;dp[n]&lt;&lt;endl;<br>	return 0;<br>&#125;<br></code></pre></td></tr></table></figure>
 
                 
               </div>
@@ -342,8 +340,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>素数筛</div>
-      <div>http://lqz2.github.io/2022/09/25/素数筛/</div>
+      <div>第k个数</div>
+      <div>http://lqz2.github.io/2022/09/29/第k个数/</div>
     </div>
     <div class="license-meta">
       
@@ -355,7 +353,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2022年9月25日</div>
+          <div>2022年9月29日</div>
         </div>
       
       
@@ -387,9 +385,9 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2022/09/29/%E7%AC%ACk%E4%B8%AA%E6%95%B0/" title="第k个数">
+                      <a href="/2022/09/29/%E9%9D%9E%E9%9B%B6%E6%AE%B5%E5%88%92%E5%88%86/" title="非零段划分">
                         <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">第k个数</span>
+                        <span class="hidden-mobile">非零段划分</span>
                         <span class="visible-mobile">上一篇</span>
                       </a>
                     
@@ -397,8 +395,8 @@
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2022/09/23/%E7%9B%B8%E4%BC%BC%E5%BA%A6%E4%B8%BAk%E7%9A%84%E5%AD%97%E7%AC%A6%E4%B8%B2/" title="相似度为k的字符串">
-                        <span class="hidden-mobile">相似度为k的字符串</span>
+                      <a href="/2022/09/25/%E7%B4%A0%E6%95%B0%E7%AD%9B/" title="素数筛">
+                        <span class="hidden-mobile">素数筛</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
@@ -452,11 +450,6 @@
 
 
   
-
-
-  
-  
-
 
 
 
