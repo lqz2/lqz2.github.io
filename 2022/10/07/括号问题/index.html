@@ -16,21 +16,21 @@
   <meta name="author" content="zql">
   <meta name="keywords" content="">
   
-    <meta name="description" content="在LR字符串中交换相邻字符  题目描述 思路 代码      在LR字符串中交换相邻字符 原题链接  题目描述 在一个由 ‘L’ , ‘R’ 和 ‘X’ 三个字符组成的字符串（例如&quot;RXXLRXRXL&quot;）中进行移动操作。一次移动操作指用一个&quot;LX&quot;替换一个&quot;XL&quot;，或者用一个&quot;XR&quot;替换一个&quot;RX&amp;quo">
+    <meta name="description" content="括号匹配 使括号有效的最少添加 括号生成    关于括号多多少少会用到栈，下面举几个简单例子   括号匹配 题目链接 题目描述 给定一个只包括 ‘(’，‘)’，‘{’，‘}’，‘[’，‘]’ 的字符串 s ，判断字符串是否有效。 有效字符串需满足：  左括号必须用相同类型的右括号闭合。 左括号必须以正确的顺序闭合。 每个右括号都有一个对应的相同类型的左括号。  example： 12输入：s">
 <meta property="og:type" content="article">
-<meta property="og:title" content="LR字符串">
-<meta property="og:url" content="http://lqz2.github.io/2022/10/02/LR%E5%AD%97%E7%AC%A6%E4%B8%B2/index.html">
+<meta property="og:title" content="括号问题">
+<meta property="og:url" content="http://lqz2.github.io/2022/10/07/%E6%8B%AC%E5%8F%B7%E9%97%AE%E9%A2%98/index.html">
 <meta property="og:site_name" content="my blogs">
-<meta property="og:description" content="在LR字符串中交换相邻字符  题目描述 思路 代码      在LR字符串中交换相邻字符 原题链接  题目描述 在一个由 ‘L’ , ‘R’ 和 ‘X’ 三个字符组成的字符串（例如&quot;RXXLRXRXL&quot;）中进行移动操作。一次移动操作指用一个&quot;LX&quot;替换一个&quot;XL&quot;，或者用一个&quot;XR&quot;替换一个&quot;RX&amp;quo">
+<meta property="og:description" content="括号匹配 使括号有效的最少添加 括号生成    关于括号多多少少会用到栈，下面举几个简单例子   括号匹配 题目链接 题目描述 给定一个只包括 ‘(’，‘)’，‘{’，‘}’，‘[’，‘]’ 的字符串 s ，判断字符串是否有效。 有效字符串需满足：  左括号必须用相同类型的右括号闭合。 左括号必须以正确的顺序闭合。 每个右括号都有一个对应的相同类型的左括号。  example： 12输入：s">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2022-10-02T07:12:39.000Z">
-<meta property="article:modified_time" content="2022-10-02T07:20:15.245Z">
+<meta property="article:published_time" content="2022-10-07T03:17:55.000Z">
+<meta property="article:modified_time" content="2022-10-07T03:37:33.131Z">
 <meta property="article:author" content="zql">
 <meta name="twitter:card" content="summary_large_image">
   
   
   
-  <title>LR字符串 - my blogs</title>
+  <title>括号问题 - my blogs</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -195,7 +195,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="LR字符串"></span>
+            <span id="subtitle" data-typed-text="括号问题"></span>
           
         </div>
 
@@ -206,8 +206,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2022-10-02 15:12" pubdate>
-          2022年10月2日 下午
+        <time datetime="2022-10-07 11:17" pubdate>
+          2022年10月7日 上午
         </time>
       </span>
     
@@ -218,7 +218,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          1.1k 字
+          2.1k 字
         
       </span>
     
@@ -229,7 +229,7 @@
         
         
         
-          10 分钟
+          18 分钟
         
       </span>
     
@@ -267,34 +267,57 @@
         <div id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">LR字符串</h1>
+            <h1 style="display: none">括号问题</h1>
             
             
               <div class="markdown-body">
                 
                 <!-- TOC -->
 <ul>
-<li><a href="#%E5%9C%A8lr%E5%AD%97%E7%AC%A6%E4%B8%B2%E4%B8%AD%E4%BA%A4%E6%8D%A2%E7%9B%B8%E9%82%BB%E5%AD%97%E7%AC%A6">在LR字符串中交换相邻字符</a>
-<ul>
-<li><a href="#%E9%A2%98%E7%9B%AE%E6%8F%8F%E8%BF%B0">题目描述</a></li>
-<li><a href="#%E6%80%9D%E8%B7%AF">思路</a></li>
-<li><a href="#%E4%BB%A3%E7%A0%81">代码</a></li>
-</ul>
-</li>
+<li><a href="#%E6%8B%AC%E5%8F%B7%E5%8C%B9%E9%85%8D">括号匹配</a></li>
+<li><a href="#%E4%BD%BF%E6%8B%AC%E5%8F%B7%E6%9C%89%E6%95%88%E7%9A%84%E6%9C%80%E5%B0%91%E6%B7%BB%E5%8A%A0">使括号有效的最少添加</a></li>
+<li><a href="#%E6%8B%AC%E5%8F%B7%E7%94%9F%E6%88%90">括号生成</a></li>
 </ul>
 <!-- /TOC -->
-<h2 id="在lr字符串中交换相邻字符"><a class="markdownIt-Anchor" href="#在lr字符串中交换相邻字符"></a> 在LR字符串中交换相邻字符</h2>
-<p><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/swap-adjacent-in-lr-string/">原题链接</a></p>
-<h3 id="题目描述"><a class="markdownIt-Anchor" href="#题目描述"></a> 题目描述</h3>
-<p>在一个由 ‘L’ , ‘R’ 和 ‘X’ 三个字符组成的字符串（例如&quot;RXXLRXRXL&quot;）中进行移动操作。一次移动操作指用一个&quot;LX&quot;替换一个&quot;XL&quot;，或者用一个&quot;XR&quot;替换一个&quot;RX&quot;。现给定起始字符串start和结束字符串end，请编写代码，当且仅当存在一系列移动操作使得start可以转换成end时， 返回True。</p>
-<p>input:</p>
-<figure class="highlight ini"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs ini"><span class="hljs-attr">start</span> = <span class="hljs-string">&quot;RXXLRXRXL&quot;</span>, end = <span class="hljs-string">&quot;XRLXXRRLX&quot;</span><br></code></pre></td></tr></table></figure>
-<p>output:</p>
-<figure class="highlight actionscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs actionscript"><span class="hljs-literal">true</span><br></code></pre></td></tr></table></figure>
-<h3 id="思路"><a class="markdownIt-Anchor" href="#思路"></a> 思路</h3>
-<p>用 i 和 j 分别表示 start 和 end 中的下标，跳过所有的<code>X</code>，当<code>start[i]!=start[j]</code>,直接返回false,当<code>start[i]==start[j]</code>，如果字符是<code>L</code>,应满足<code>j&lt;=i</code>,如果字符是<code>R</code>,应满足<code>i&lt;=j</code>，否则返回<code>false</code></p>
-<h3 id="代码"><a class="markdownIt-Anchor" href="#代码"></a> 代码</h3>
-<figure class="highlight arduino"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><code class="hljs arduino"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span> &#123;<br><span class="hljs-keyword">public</span>:<br>    <span class="hljs-function"><span class="hljs-type">bool</span> <span class="hljs-title">canTransform</span><span class="hljs-params">(string start, string end)</span> </span>&#123;<br>        <span class="hljs-type">int</span> n=start.<span class="hljs-built_in">size</span>();<br>        <span class="hljs-type">int</span> i=<span class="hljs-number">0</span>,j=<span class="hljs-number">0</span>;<br>        <span class="hljs-keyword">while</span>(i&lt;n&amp;&amp;j&lt;n)<br>        &#123;<br>            <span class="hljs-keyword">while</span>(i&lt;n&amp;&amp;start[i]==<span class="hljs-string">&#x27;X&#x27;</span>)<br>                ++i;<br>            <span class="hljs-keyword">while</span>(j&lt;n&amp;&amp;end[j]==<span class="hljs-string">&#x27;X&#x27;</span>)<br>                ++j;<br>            <span class="hljs-keyword">if</span>(i&lt;n&amp;&amp;j&lt;n)<br>            &#123;<br>                <span class="hljs-keyword">if</span>(start[i]!=end[j])<br>                    <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;<br>                <span class="hljs-keyword">else</span><br>                &#123;<br>                    <span class="hljs-keyword">if</span>(start[i]==<span class="hljs-string">&#x27;L&#x27;</span>&amp;&amp;i&lt;j)<br>                        <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;<br>                    <span class="hljs-keyword">if</span>(start[i]==<span class="hljs-string">&#x27;R&#x27;</span>&amp;&amp;i&gt;j)<br>                        <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;<br>                &#125;<br>                ++i;<br>                ++j;<br>            &#125;<br>        &#125;<br>        <span class="hljs-keyword">while</span>(i&lt;n)<br>        &#123;<br>            <span class="hljs-keyword">if</span>(start[i]!=<span class="hljs-string">&#x27;X&#x27;</span>)<br>                <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;<br>            ++i;<br>        &#125;<br>        <span class="hljs-keyword">while</span>(j&lt;n)<br>        &#123;<br>            <span class="hljs-keyword">if</span>(end[j]!=<span class="hljs-string">&#x27;X&#x27;</span>)<br>                <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;<br>            ++j;<br>        &#125;<br>        <span class="hljs-keyword">return</span> <span class="hljs-literal">true</span>;<br>    &#125;<br>&#125;;<br></code></pre></td></tr></table></figure>
+<blockquote>
+<p>关于括号多多少少会用到栈，下面举几个简单例子</p>
+</blockquote>
+<h3 id="括号匹配"><a class="markdownIt-Anchor" href="#括号匹配"></a> 括号匹配</h3>
+<p><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/valid-parentheses/">题目链接</a></p>
+<p><strong>题目描述</strong></p>
+<p>给定一个只包括 ‘(’，‘)’，‘{’，‘}’，‘[’，‘]’ 的字符串 s ，判断字符串是否有效。</p>
+<p>有效字符串需满足：</p>
+<ul>
+<li>左括号必须用相同类型的右括号闭合。</li>
+<li>左括号必须以正确的顺序闭合。</li>
+<li>每个右括号都有一个对应的相同类型的左括号。</li>
+</ul>
+<p>example：</p>
+<figure class="highlight nix"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs nix">输入：<span class="hljs-attr">s</span> = <span class="hljs-string">&quot;()&quot;</span><br>输出：<span class="hljs-literal">true</span><br></code></pre></td></tr></table></figure>
+<p>代码：</p>
+<figure class="highlight zephir"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><code class="hljs zephir"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Solution</span> </span>&#123;<br><span class="hljs-keyword">public</span>:<br>    <span class="hljs-keyword">bool</span> isValid(<span class="hljs-keyword">string</span> s) &#123;<br>        <span class="hljs-keyword">int</span> len=s.size();<br>        stack&lt;<span class="hljs-keyword">char</span>&gt; st;<br>        <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> i=<span class="hljs-number">0</span>;i&lt;len;++i)<br>        &#123;<br>            <span class="hljs-keyword">if</span>(st.<span class="hljs-keyword">empty</span>()&amp;&amp;(s[i]==<span class="hljs-string">&#x27;)&#x27;</span>||s[i]==<span class="hljs-string">&#x27;]&#x27;</span>||s[i]==<span class="hljs-string">&#x27;&#125;&#x27;</span>))<br>                <span class="hljs-keyword">return</span> <span class="hljs-keyword">false</span>;<br>            <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span>(st.<span class="hljs-keyword">empty</span>())<br>                st.push(s[i]);<br>            <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span>(s[i]==<span class="hljs-string">&#x27;(&#x27;</span>||s[i]==<span class="hljs-string">&#x27;[&#x27;</span>||s[i]==<span class="hljs-string">&#x27;&#123;&#x27;</span>)<br>            &#123;<br>                <span class="hljs-comment">// if(s[i]&lt;=st.top())</span><br>                    st.push(s[i]);<br>                <span class="hljs-comment">// else</span><br>                <span class="hljs-comment">//     return false;</span><br>            &#125;<br>            <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span>(s[i]==<span class="hljs-string">&#x27;)&#x27;</span>||s[i]==<span class="hljs-string">&#x27;]&#x27;</span>||s[i]==<span class="hljs-string">&#x27;&#125;&#x27;</span>)<br>            &#123;<br>                <span class="hljs-keyword">if</span>(st.top()==s[i]<span class="hljs-number">-1</span>||st.top()==s[i]<span class="hljs-number">-2</span>)<br>                    st.pop();<br>                <span class="hljs-keyword">else</span> <br>                    <span class="hljs-keyword">return</span> <span class="hljs-keyword">false</span>;<br>            &#125;<br>        &#125;<br>        <span class="hljs-keyword">if</span>(!st.<span class="hljs-keyword">empty</span>())<br>            <span class="hljs-keyword">return</span> <span class="hljs-keyword">false</span>;<br>        <span class="hljs-keyword">return</span> <span class="hljs-keyword">true</span>;<br>    &#125;<br>&#125;;<br></code></pre></td></tr></table></figure>
+<h3 id="使括号有效的最少添加"><a class="markdownIt-Anchor" href="#使括号有效的最少添加"></a> 使括号有效的最少添加</h3>
+<p><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/minimum-add-to-make-parentheses-valid/">题目链接</a></p>
+<p><strong>题目描述</strong></p>
+<p>只有满足下面几点之一，括号字符串才是有效的：</p>
+<p>它是一个空字符串，或者<br />
+它可以被写成 AB （A 与 B 连接）, 其中 A 和 B 都是有效字符串，或者<br />
+它可以被写作 (A)，其中 A 是有效字符串。<br />
+给定一个括号字符串 s ，移动N次，你就可以在字符串的任何位置插入一个括号。</p>
+<p>例如，如果 s = “()))” ，你可以插入一个开始括号为 “(()))” 或结束括号为 “())))” 。<br />
+返回 为使结果字符串 s 有效而必须添加的最少括号数。</p>
+<p>example：</p>
+<figure class="highlight abnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs abnf">输入：s <span class="hljs-operator">=</span> <span class="hljs-string">&quot;())&quot;</span><br>输出：<span class="hljs-number">1</span><br></code></pre></td></tr></table></figure>
+<p>代码：</p>
+<figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><code class="hljs gradle"><span class="hljs-keyword">class</span> Solution &#123;<br><span class="hljs-keyword">public</span>:<br>    <span class="hljs-keyword">int</span> minAddToMakeValid(string s) &#123;<br>        <span class="hljs-keyword">int</span> len=s.<span class="hljs-keyword">size</span>();<br>        stack&lt;<span class="hljs-keyword">char</span>&gt; st;<br>        <span class="hljs-keyword">int</span> ans=<span class="hljs-number">0</span>;<br>        <span class="hljs-keyword">for</span>(<span class="hljs-keyword">char</span>&amp; c:s)<br>        &#123;<br>            <span class="hljs-keyword">if</span>(c==<span class="hljs-string">&#x27;(&#x27;</span>)<br>                st.<span class="hljs-keyword">push</span>(c);<br>            <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span>(c==<span class="hljs-string">&#x27;)&#x27;</span>)<br>            &#123;<br>                <span class="hljs-keyword">if</span>(st.empty())<br>                    ++ans;<br>                <span class="hljs-keyword">else</span><br>                    st.<span class="hljs-keyword">pop</span>();<br>            &#125;<br>        &#125;<br>        <span class="hljs-keyword">return</span> ans+st.<span class="hljs-keyword">size</span>();<br>    &#125;<br>&#125;;<br></code></pre></td></tr></table></figure>
+<h3 id="括号生成"><a class="markdownIt-Anchor" href="#括号生成"></a> 括号生成</h3>
+<p><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/generate-parentheses/">题目链接</a></p>
+<p><strong>题目描述</strong><br />
+数字 n 代表生成括号的对数，请你设计一个函数，用于能够生成所有可能的并且有效的括号组合。</p>
+<p>example：</p>
+<figure class="highlight excel"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs excel">输入：<span class="hljs-built_in">n</span> = <span class="hljs-number">3</span><br>输出：[<span class="hljs-string">&quot;((()))&quot;</span>,<span class="hljs-string">&quot;(()())&quot;</span>,<span class="hljs-string">&quot;(())()&quot;</span>,<span class="hljs-string">&quot;()(())&quot;</span>,<span class="hljs-string">&quot;()()()&quot;</span>]<br></code></pre></td></tr></table></figure>
+<p>代码：</p>
+<figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br></pre></td><td class="code"><pre><code class="hljs csharp"><span class="hljs-keyword">class</span> <span class="hljs-title">Solution</span> &#123;<br><span class="hljs-keyword">public</span>:<br><br>    <span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">bk</span>(<span class="hljs-params"><span class="hljs-built_in">string</span> &amp;tmp,vector&lt;<span class="hljs-built_in">string</span>&gt;&amp; ans,<span class="hljs-built_in">int</span> l,<span class="hljs-built_in">int</span> r,<span class="hljs-built_in">int</span> n</span>)</span><br>    &#123;<br>        <span class="hljs-keyword">if</span>(tmp.size()==<span class="hljs-number">2</span>*n)<br>        &#123;<br>            ans.push_back(tmp);<br>            <span class="hljs-keyword">return</span>;<br>        &#125;<br>        <span class="hljs-keyword">if</span>(l&lt;n)<br>        &#123;<br>            tmp.push_back(<span class="hljs-string">&#x27;(&#x27;</span>);<br>            bk(tmp,ans,l+<span class="hljs-number">1</span>,r,n);<br>            tmp.pop_back();<br>        &#125;<br>        <span class="hljs-keyword">if</span>(r&lt;l)<br>        &#123;<br>            tmp.push_back(<span class="hljs-string">&#x27;)&#x27;</span>);<br>            bk(tmp,ans,l,r+<span class="hljs-number">1</span>,n);<br>            tmp.pop_back();<br>        &#125;<br>    &#125;<br><br>    <span class="hljs-function">vector&lt;<span class="hljs-built_in">string</span>&gt; <span class="hljs-title">generateParenthesis</span>(<span class="hljs-params"><span class="hljs-built_in">int</span> n</span>)</span> &#123;<br>        <span class="hljs-built_in">string</span> tmp;<br>        vector&lt;<span class="hljs-built_in">string</span>&gt; ans;<br>        bk(tmp,ans,<span class="hljs-number">0</span>,<span class="hljs-number">0</span>,n);<br>        <span class="hljs-keyword">return</span> ans;<br>    &#125;<br>&#125;;<br></code></pre></td></tr></table></figure>
                 
               </div>
             
@@ -332,8 +355,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>LR字符串</div>
-      <div>http://lqz2.github.io/2022/10/02/LR字符串/</div>
+      <div>括号问题</div>
+      <div>http://lqz2.github.io/2022/10/07/括号问题/</div>
     </div>
     <div class="license-meta">
       
@@ -345,7 +368,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2022年10月2日</div>
+          <div>2022年10月7日</div>
         </div>
       
       
@@ -377,18 +400,12 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2022/10/07/%E6%8B%AC%E5%8F%B7%E9%97%AE%E9%A2%98/" title="括号问题">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">括号问题</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2022/09/29/%E9%9D%9E%E9%9B%B6%E6%AE%B5%E5%88%92%E5%88%86/" title="非零段划分">
-                        <span class="hidden-mobile">非零段划分</span>
+                      <a href="/2022/10/02/LR%E5%AD%97%E7%AC%A6%E4%B8%B2/" title="LR字符串">
+                        <span class="hidden-mobile">LR字符串</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
