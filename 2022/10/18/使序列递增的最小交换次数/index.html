@@ -16,21 +16,21 @@
   <meta name="author" content="zql">
   <meta name="keywords" content="">
   
-    <meta name="description" content="不同的子序列  题目描述 思路 代码      不同的子序列 题目链接  题目描述 给定一个字符串 s，计算 s 的 不同非空子序列 的个数。因为结果可能很大，所以返回答案需要对 10^9 + 7 取余 。 字符串的 子序列 是经由原字符串删除一些（也可能不删除）字符但不改变剩余字符相对位置的一个新字符串。 例如，“ace” 是 “abcde” 的一个子序列，但 “aec” 不是。 示例： 1">
+    <meta name="description" content="使序列递增的最小交换次数  题目描述 思路 代码      使序列递增的最小交换次数  题目描述 原题 我们有两个长度相等且不为空的整型数组 nums1 和 nums2 。在一次操作中，我们可以交换 nums1[i] 和 nums2[i]的元素。 例如，如果 nums1 &#x3D; [1,2,3,8] ， nums2 &#x3D;[5,6,7,4] ，你可以交换 i &#x3D; 3 处的元素，得到 nums1 &#x3D;[1,">
 <meta property="og:type" content="article">
-<meta property="og:title" content="不同的子序列">
-<meta property="og:url" content="http://lqz2.github.io/2022/10/14/%E4%B8%8D%E5%90%8C%E7%9A%84%E5%AD%90%E5%BA%8F%E5%88%97/index.html">
+<meta property="og:title" content="使序列递增的最小交换次数">
+<meta property="og:url" content="http://lqz2.github.io/2022/10/18/%E4%BD%BF%E5%BA%8F%E5%88%97%E9%80%92%E5%A2%9E%E7%9A%84%E6%9C%80%E5%B0%8F%E4%BA%A4%E6%8D%A2%E6%AC%A1%E6%95%B0/index.html">
 <meta property="og:site_name" content="my blogs">
-<meta property="og:description" content="不同的子序列  题目描述 思路 代码      不同的子序列 题目链接  题目描述 给定一个字符串 s，计算 s 的 不同非空子序列 的个数。因为结果可能很大，所以返回答案需要对 10^9 + 7 取余 。 字符串的 子序列 是经由原字符串删除一些（也可能不删除）字符但不改变剩余字符相对位置的一个新字符串。 例如，“ace” 是 “abcde” 的一个子序列，但 “aec” 不是。 示例： 1">
+<meta property="og:description" content="使序列递增的最小交换次数  题目描述 思路 代码      使序列递增的最小交换次数  题目描述 原题 我们有两个长度相等且不为空的整型数组 nums1 和 nums2 。在一次操作中，我们可以交换 nums1[i] 和 nums2[i]的元素。 例如，如果 nums1 &#x3D; [1,2,3,8] ， nums2 &#x3D;[5,6,7,4] ，你可以交换 i &#x3D; 3 处的元素，得到 nums1 &#x3D;[1,">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2022-10-14T02:32:58.000Z">
-<meta property="article:modified_time" content="2022-10-14T02:55:09.883Z">
+<meta property="article:published_time" content="2022-10-18T02:22:26.000Z">
+<meta property="article:modified_time" content="2022-10-18T03:10:07.013Z">
 <meta property="article:author" content="zql">
 <meta name="twitter:card" content="summary_large_image">
   
   
   
-  <title>不同的子序列 - my blogs</title>
+  <title>使序列递增的最小交换次数 - my blogs</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -195,7 +195,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="不同的子序列"></span>
+            <span id="subtitle" data-typed-text="使序列递增的最小交换次数"></span>
           
         </div>
 
@@ -206,8 +206,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2022-10-14 10:32" pubdate>
-          2022年10月14日 上午
+        <time datetime="2022-10-18 10:22" pubdate>
+          2022年10月18日 上午
         </time>
       </span>
     
@@ -218,7 +218,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          1k 字
+          1.2k 字
         
       </span>
     
@@ -229,7 +229,7 @@
         
         
         
-          9 分钟
+          10 分钟
         
       </span>
     
@@ -267,14 +267,14 @@
         <div id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">不同的子序列</h1>
+            <h1 style="display: none">使序列递增的最小交换次数</h1>
             
             
               <div class="markdown-body">
                 
                 <!-- TOC -->
 <ul>
-<li><a href="#%E4%B8%8D%E5%90%8C%E7%9A%84%E5%AD%90%E5%BA%8F%E5%88%97">不同的子序列</a>
+<li><a href="#%E4%BD%BF%E5%BA%8F%E5%88%97%E9%80%92%E5%A2%9E%E7%9A%84%E6%9C%80%E5%B0%8F%E4%BA%A4%E6%8D%A2%E6%AC%A1%E6%95%B0">使序列递增的最小交换次数</a>
 <ul>
 <li><a href="#%E9%A2%98%E7%9B%AE%E6%8F%8F%E8%BF%B0">题目描述</a></li>
 <li><a href="#%E6%80%9D%E8%B7%AF">思路</a></li>
@@ -283,35 +283,27 @@
 </li>
 </ul>
 <!-- /TOC -->
-<h2 id="不同的子序列"><a class="markdownIt-Anchor" href="#不同的子序列"></a> 不同的子序列</h2>
-<p><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/distinct-subsequences-ii/">题目链接</a></p>
+<h2 id="使序列递增的最小交换次数"><a class="markdownIt-Anchor" href="#使序列递增的最小交换次数"></a> 使序列递增的最小交换次数</h2>
 <h3 id="题目描述"><a class="markdownIt-Anchor" href="#题目描述"></a> 题目描述</h3>
-<p>给定一个字符串 s，计算 s 的 不同非空子序列 的个数。因为结果可能很大，所以返回答案需要对 10^9 + 7 取余 。</p>
-<p>字符串的 子序列 是经由原字符串删除一些（也可能不删除）字符但不改变剩余字符相对位置的一个新字符串。</p>
-<p>例如，“ace” 是 “abcde” 的一个子序列，但 “aec” 不是。</p>
-<p>示例：</p>
-<figure class="highlight nix"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs nix">输入：<span class="hljs-attr">s</span> = <span class="hljs-string">&quot;aba&quot;</span><br>输出：<span class="hljs-number">6</span><br>解释：<span class="hljs-number">6</span> 个不同的子序列分别是 <span class="hljs-string">&quot;a&quot;</span>, <span class="hljs-string">&quot;b&quot;</span>, <span class="hljs-string">&quot;ab&quot;</span>, <span class="hljs-string">&quot;ba&quot;</span>, <span class="hljs-string">&quot;aa&quot;</span> 以及 <span class="hljs-string">&quot;aba&quot;</span>。<br></code></pre></td></tr></table></figure>
+<p><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/minimum-swaps-to-make-sequences-increasing/">原题</a></p>
+<p>我们有两个长度相等且不为空的整型数组 nums1 和 nums2 。在一次操作中，我们可以交换 nums1[i] 和 nums2[i]的元素。</p>
+<p>例如，如果 nums1 = [1,2,3,8] ， nums2 =[5,6,7,4] ，你可以交换 i = 3 处的元素，得到 nums1 =[1,2,3,4] 和 nums2 =[5,6,7,8] 。<br />
+返回 使 nums1 和 nums2 严格递增 所需操作的最小次数 。</p>
+<p>数组 arr 严格递增 且  arr[0] &lt; arr[1] &lt; arr[2] &lt; … &lt; arr[arr.length - 1] 。<br />
+input:</p>
+<figure class="highlight basic"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs basic"><span class="hljs-number">4</span><br><span class="hljs-symbol">1 </span><span class="hljs-number">3</span> <span class="hljs-number">5</span> <span class="hljs-number">4</span><br><span class="hljs-symbol">1 </span><span class="hljs-number">2</span> <span class="hljs-number">3</span> <span class="hljs-number">7</span><br></code></pre></td></tr></table></figure>
+<p>output:</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs">1<br></code></pre></td></tr></table></figure>
 <h3 id="思路"><a class="markdownIt-Anchor" href="#思路"></a> 思路</h3>
-<p>这是一道动态规划的题目，自己没想出来，看了题解才理解<br />
-核心的思想就是，<em>以当前字符结尾的不同子序列的个数=之前部分的个数+新增加的个数-重复序列个数</em><br />
-其中，需要一个数组<code>recount[]</code>来记录每个字符带来的增加量，当某字符多次出现时，它带来的重复量就等于<code>recount[i]</code></p>
-<p>比如：对于序列 abcb</p>
-<p>a : “”, a<br />
-<strong>newcnt=1</strong></p>
-<p>ab : “”, a, b, ab<br />
-<strong>newcnt=2</strong></p>
-<p>abc : “”,a, b, ab, c, ac, bc, cc<br />
-<strong>newcnt=4</strong></p>
-<p>abcb: “”,a, b, ab, c, ac, bc, cc, <s>b</s>, <s>ab</s>, bb, abb, cb, acb, bcb, ccb<br />
-<strong>newcnt=8, recount[‘b’]=2</strong></p>
-<p>根据以上例子，可得到下面的结论：</p>
+<p><code>dp[i][0]</code>表示不交换 <code>i</code> 处元素时满足条件的最小操作次数，<code>dp[i][1]</code>表示交换 <code>i</code> 处元素时满足条件的最小操作次数</p>
+<p>下面要分类讨论：</p>
 <ul>
-<li>newcnt=pre_cnt(上一个字符的个数)</li>
-<li>recount[x]=newcnt_x(字符x上一次出现带来的新增个数)</li>
+<li>当nums1和nums都递增，且在<code>i</code>处交换后也都递增，那么在<code>i</code>处可换可不换</li>
+<li>当nums1和nums都递增，但在<code>i</code>处交换后不递增，那么如果在<code>i</code>处交换，在<code>i-1</code>处也要交换</li>
+<li>当nums1或nums2不递增，如果在<code>i</code>处交换，那么<code>i-1</code>处不交换，如果<code>i-1</code>处交换，<code>i</code>处不交换</li>
 </ul>
-<p>为了计算，在子集前面加了空串 <code>“”</code>，所以初始个数为1</p>
 <h3 id="代码"><a class="markdownIt-Anchor" href="#代码"></a> 代码</h3>
-<figure class="highlight axapta"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs axapta"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span> &#123;<br><span class="hljs-keyword">public</span>:<br>    <span class="hljs-built_in">int</span> distinctSubseqII(string s) &#123;<br>        <span class="hljs-keyword">const</span> <span class="hljs-built_in">int</span> <span class="hljs-keyword">mod</span>=<span class="hljs-number">1e9</span>+<span class="hljs-number">7</span>;<br>        <span class="hljs-built_in">int</span> len=s.size();<br>        vector&lt;<span class="hljs-built_in">int</span>&gt; recount(<span class="hljs-number">26</span>,<span class="hljs-number">0</span>);<br>        <span class="hljs-built_in">int</span> ans=<span class="hljs-number">1</span>;<br>        <span class="hljs-built_in">int</span> newcnt;<br>        <span class="hljs-keyword">for</span>(<span class="hljs-built_in">int</span> i=<span class="hljs-number">0</span>;i&lt;len;++i)<br>        &#123;<br>            newcnt=ans;<br>            ans=((ans+newcnt)%<span class="hljs-keyword">mod</span>-recount[s[i]-<span class="hljs-string">&#x27;a&#x27;</span>]+<span class="hljs-keyword">mod</span>)%<span class="hljs-keyword">mod</span>;<br>            recount[s[i]-<span class="hljs-string">&#x27;a&#x27;</span>]=newcnt;<br>        &#125;<br>        <span class="hljs-keyword">return</span> ans<span class="hljs-number">-1</span>;<br>    &#125;<br>&#125;;<br></code></pre></td></tr></table></figure>
+<figure class="highlight inform7"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br></pre></td><td class="code"><pre><code class="hljs inform7">#include&lt;bits/stdc++.h&gt;<br>using namespace std;<br>const int N=1e5;<br>int a<span class="hljs-comment">[N]</span>;<br>int b<span class="hljs-comment">[N]</span>;<br>int dp<span class="hljs-comment">[N]</span><span class="hljs-comment">[2]</span>;<br>int main()<br>&#123;<br>	int n;<br>	cin&gt;&gt;n;<br>	for(int i=0;i&lt;n;++i)<br>		cin&gt;&gt;a<span class="hljs-comment">[i]</span>;<br>	for(int i=0;i&lt;n;++i)<br>		cin&gt;&gt;b<span class="hljs-comment">[i]</span>;<br>	dp<span class="hljs-comment">[0]</span><span class="hljs-comment">[1]</span>=1;<br>	for(int i=1;i&lt;n;++i)<br>	&#123;<br>		if((a<span class="hljs-comment">[i-1]</span>&lt;a<span class="hljs-comment">[i]</span>&amp;&amp;b<span class="hljs-comment">[i-1]</span>&lt;b<span class="hljs-comment">[i]</span>)&amp;&amp;(a<span class="hljs-comment">[i-1]</span>&lt;b<span class="hljs-comment">[i]</span>&amp;&amp;b<span class="hljs-comment">[i-1]</span>&lt;a<span class="hljs-comment">[i]</span>))<br>		&#123;<br>			dp<span class="hljs-comment">[i]</span><span class="hljs-comment">[0]</span>=min(dp<span class="hljs-comment">[i-1]</span><span class="hljs-comment">[0]</span>,dp<span class="hljs-comment">[i-1]</span><span class="hljs-comment">[1]</span>);<br>			dp<span class="hljs-comment">[i]</span><span class="hljs-comment">[1]</span>=dp<span class="hljs-comment">[i]</span><span class="hljs-comment">[0]</span>+1;<br>		&#125;<br>		else if(a<span class="hljs-comment">[i-1]</span>&lt;a<span class="hljs-comment">[i]</span>&amp;&amp;b<span class="hljs-comment">[i-1]</span>&lt;b<span class="hljs-comment">[i]</span>)<br>		&#123;<br>			dp<span class="hljs-comment">[i]</span><span class="hljs-comment">[0]</span>=dp<span class="hljs-comment">[i-1]</span><span class="hljs-comment">[0]</span>;<br>			dp<span class="hljs-comment">[i]</span><span class="hljs-comment">[1]</span>=dp<span class="hljs-comment">[i-1]</span><span class="hljs-comment">[1]</span>+1;<br>		&#125;<br>		else<br>		&#123;<br>			dp<span class="hljs-comment">[i]</span><span class="hljs-comment">[0]</span>=dp<span class="hljs-comment">[i-1]</span><span class="hljs-comment">[1]</span>;<br>			dp<span class="hljs-comment">[i]</span><span class="hljs-comment">[1]</span>=dp<span class="hljs-comment">[i-1]</span><span class="hljs-comment">[0]</span>+1;<br>		&#125;<br>	&#125;<br>	cout&lt;&lt;min(dp<span class="hljs-comment">[n-1]</span><span class="hljs-comment">[0]</span>,dp<span class="hljs-comment">[n-1]</span><span class="hljs-comment">[1]</span>);<br>	return 0;<br>&#125;<br></code></pre></td></tr></table></figure>
 
                 
               </div>
@@ -350,8 +342,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>不同的子序列</div>
-      <div>http://lqz2.github.io/2022/10/14/不同的子序列/</div>
+      <div>使序列递增的最小交换次数</div>
+      <div>http://lqz2.github.io/2022/10/18/使序列递增的最小交换次数/</div>
     </div>
     <div class="license-meta">
       
@@ -363,7 +355,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2022年10月14日</div>
+          <div>2022年10月18日</div>
         </div>
       
       
@@ -395,18 +387,12 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2022/10/18/%E4%BD%BF%E5%BA%8F%E5%88%97%E9%80%92%E5%A2%9E%E7%9A%84%E6%9C%80%E5%B0%8F%E4%BA%A4%E6%8D%A2%E6%AC%A1%E6%95%B0/" title="使序列递增的最小交换次数">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">使序列递增的最小交换次数</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2022/10/09/%E4%BC%98%E5%8A%BF%E6%B4%97%E7%89%8C/" title="优势洗牌">
-                        <span class="hidden-mobile">优势洗牌</span>
+                      <a href="/2022/10/14/%E4%B8%8D%E5%90%8C%E7%9A%84%E5%AD%90%E5%BA%8F%E5%88%97/" title="不同的子序列">
+                        <span class="hidden-mobile">不同的子序列</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
