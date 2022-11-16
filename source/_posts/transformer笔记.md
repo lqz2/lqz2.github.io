@@ -35,7 +35,11 @@ tags:
 注意力机制可以描述为将query和一系列的key-value对映射到某个输出的过程，而这个输出的向量就是根据query和key计算得到的权重作用于value上的权重和。
 
 ![](https://pic2.zhimg.com/80/v2-21ebe709cd12dda0a9c9da7559d3e045_720w.webp)
-可以看出，自注意力的计算过程就是通过Query和Key计算出权重，然后与Value相乘得到输出。$$Attention(Q,K,V)=softmax\left(\frac{QK^T}{\sqrt{d_k}}\right)V$$
+可以看出，自注意力的计算过程就是通过Query和Key计算出权重，然后与Value相乘得到输出。
+
+$$
+Attention\left(Q,K,V\right)=softmax\left(\frac{QK^T}{\sqrt{d_k}}\right)V
+$$
 
 其中Q,K,V分别是三个矩阵，而除以$\sqrt{d_k}$就是上图中的scale过程。作者发现某些情况下$QK^T$会得到很大的值，这会导致softmax后产生很小的梯度，不利于训练，所以加入scale的过程。
 
