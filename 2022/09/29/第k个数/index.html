@@ -16,15 +16,15 @@
   <meta name="author" content="zql">
   <meta name="keywords" content="">
   
-    <meta name="description" content="第k个数  题目描述 思路 代码      第k个数  此题不是特别难，但是第一眼看过去没有什么太好的想法，看了眼题解觉得思路很好，就记录下来 顺便水一个博客😄   题目描述 有些数的素因子只有 3，5，7，请设计一个算法找出第 k 个数。注意，不是必须有这些素因子，而是必须不包含其他的素因子。例如，前几个数按顺序应该是 1，3，5，7，9，15，21。 输入k，输出符合条件的第k个数 in">
+    <meta name="description" content="第k个数  题目描述 思路 代码   第 N 个神奇数字  题目描述 思路 代码      第k个数  此题不是特别难，但是第一眼看过去没有什么太好的想法，看了眼题解觉得思路很好，就记录下来 顺便水一个博客😄   题目描述 有些数的素因子只有 3，5，7，请设计一个算法找出第 k 个数。注意，不是必须有这些素因子，而是必须不包含其他的素因子。例如，前几个数按顺序应该是 1，3，5，7，9，1">
 <meta property="og:type" content="article">
 <meta property="og:title" content="第k个数">
 <meta property="og:url" content="http://lqz2.github.io/2022/09/29/%E7%AC%ACk%E4%B8%AA%E6%95%B0/index.html">
 <meta property="og:site_name" content="my blogs">
-<meta property="og:description" content="第k个数  题目描述 思路 代码      第k个数  此题不是特别难，但是第一眼看过去没有什么太好的想法，看了眼题解觉得思路很好，就记录下来 顺便水一个博客😄   题目描述 有些数的素因子只有 3，5，7，请设计一个算法找出第 k 个数。注意，不是必须有这些素因子，而是必须不包含其他的素因子。例如，前几个数按顺序应该是 1，3，5，7，9，15，21。 输入k，输出符合条件的第k个数 in">
+<meta property="og:description" content="第k个数  题目描述 思路 代码   第 N 个神奇数字  题目描述 思路 代码      第k个数  此题不是特别难，但是第一眼看过去没有什么太好的想法，看了眼题解觉得思路很好，就记录下来 顺便水一个博客😄   题目描述 有些数的素因子只有 3，5，7，请设计一个算法找出第 k 个数。注意，不是必须有这些素因子，而是必须不包含其他的素因子。例如，前几个数按顺序应该是 1，3，5，7，9，1">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2022-09-29T02:13:29.000Z">
-<meta property="article:modified_time" content="2022-09-29T03:13:35.842Z">
+<meta property="article:modified_time" content="2022-11-22T02:00:56.990Z">
 <meta property="article:author" content="zql">
 <meta name="twitter:card" content="summary_large_image">
   
@@ -218,7 +218,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          721 字
+          1.4k 字
         
       </span>
     
@@ -229,7 +229,7 @@
         
         
         
-          7 分钟
+          12 分钟
         
       </span>
     
@@ -281,6 +281,13 @@
 <li><a href="#%E4%BB%A3%E7%A0%81">代码</a></li>
 </ul>
 </li>
+<li><a href="#%E7%AC%AC-n-%E4%B8%AA%E7%A5%9E%E5%A5%87%E6%95%B0%E5%AD%97">第 N 个神奇数字</a>
+<ul>
+<li><a href="#%E9%A2%98%E7%9B%AE%E6%8F%8F%E8%BF%B0-1">题目描述</a></li>
+<li><a href="#%E6%80%9D%E8%B7%AF-1">思路</a></li>
+<li><a href="#%E4%BB%A3%E7%A0%81-1">代码</a></li>
+</ul>
+</li>
 </ul>
 <!-- /TOC -->
 <h2 id="第k个数"><a class="markdownIt-Anchor" href="#第k个数"></a> 第k个数</h2>
@@ -302,6 +309,18 @@
 <p>然后如果<code>dp[i]</code>与任何一个num相等，对应的指针加1</p>
 <h3 id="代码"><a class="markdownIt-Anchor" href="#代码"></a> 代码</h3>
 <figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><code class="hljs routeros"><span class="hljs-comment">#include&lt;bits/stdc++.h&gt;</span><br>using namespace std;<br>const int <span class="hljs-attribute">N</span>=1e3;<br>int dp[N];<br>int main()<br>&#123;<br>	int n;<br>	cin&gt;&gt;n;<br>	int <span class="hljs-attribute">a</span>=1,b=1,c=1;<br>	dp[1]=1;<br>	<span class="hljs-keyword">for</span>(int <span class="hljs-attribute">i</span>=2;i&lt;=n;++i)<br>	&#123;<br>		int <span class="hljs-attribute">numa</span>=dp[a]<span class="hljs-number">*3</span>,<span class="hljs-attribute">numb</span>=dp[b]<span class="hljs-number">*5</span>,<span class="hljs-attribute">numc</span>=dp[c]<span class="hljs-number">*7</span>;<br>		dp[i]=min(min(numa,numb),numc);<br>		<span class="hljs-keyword">if</span>(dp[i]==numa)<br>			++a;<br>		<span class="hljs-keyword">if</span>(dp[i]==numb)<br>			++b;<br>		<span class="hljs-keyword">if</span>(dp[i]==numc)<br>			++c;	<br>	&#125;<br>	cout&lt;&lt;dp[n]&lt;&lt;endl;<br>	return 0;<br>&#125;<br></code></pre></td></tr></table></figure>
+<h2 id="第-n-个神奇数字"><a class="markdownIt-Anchor" href="#第-n-个神奇数字"></a> 第 N 个神奇数字</h2>
+<p><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/nth-magical-number/description/">原题</a></p>
+<h3 id="题目描述-2"><a class="markdownIt-Anchor" href="#题目描述-2"></a> 题目描述</h3>
+<p>一个正整数如果能被 a 或 b 整除，那么它是神奇的。</p>
+<p>给定三个整数 n , a , b ，返回第 n 个神奇的数字。因为答案可能很大，所以返回答案 对 109 + 7 取模 后的值。</p>
+<p>示例</p>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs stylus">输入：n = <span class="hljs-number">4</span>, <span class="hljs-selector-tag">a</span> = <span class="hljs-number">2</span>, <span class="hljs-selector-tag">b</span> = <span class="hljs-number">3</span><br>输出：<span class="hljs-number">6</span><br></code></pre></td></tr></table></figure>
+<h3 id="思路-2"><a class="markdownIt-Anchor" href="#思路-2"></a> 思路</h3>
+<p>用到了容斥原理，对于一个数x，他包含<code>x/a</code>个数能被a整除，包含<code>x/b</code>个数能被b整除,若a和b最小公倍数为c，那么x包含<code>x/c</code>个数能被a和b同时整除，因此，能被a或b整除的数的个数为：<code>x/a+x/b-x/c</code></p>
+<p>根据以上规律，使用二分查找即可得出答案。</p>
+<h3 id="代码-2"><a class="markdownIt-Anchor" href="#代码-2"></a> 代码</h3>
+<figure class="highlight axapta"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><code class="hljs axapta"><span class="hljs-keyword">const</span> <span class="hljs-built_in">int</span> <span class="hljs-keyword">mod</span>=<span class="hljs-number">1e9</span>+<span class="hljs-number">7</span>;<br><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span> &#123;<br><span class="hljs-keyword">public</span>:<br>    <span class="hljs-keyword">const</span> <span class="hljs-built_in">int</span> <span class="hljs-keyword">mod</span>=<span class="hljs-number">1e9</span>+<span class="hljs-number">7</span>;<br>    <span class="hljs-built_in">int</span> gcd(<span class="hljs-built_in">int</span> a,<span class="hljs-built_in">int</span> b)<br>    &#123;<br>        <span class="hljs-keyword">if</span>(b)<br>            <span class="hljs-keyword">return</span> gcd(b,a%b);<br>        <span class="hljs-keyword">return</span> a;<br>    &#125;<br>    <span class="hljs-built_in">int</span> nthMagicalNumber(<span class="hljs-built_in">int</span> n, <span class="hljs-built_in">int</span> a, <span class="hljs-built_in">int</span> b) &#123;<br>        <span class="hljs-built_in">long</span> <span class="hljs-built_in">long</span> l=min(a,b);<br>        <span class="hljs-built_in">long</span> <span class="hljs-built_in">long</span> r=(<span class="hljs-built_in">long</span> <span class="hljs-built_in">long</span>)n*l;<br>        <span class="hljs-built_in">long</span> <span class="hljs-built_in">long</span> c=a*b/gcd(a,b);<br>        <span class="hljs-built_in">long</span> <span class="hljs-built_in">long</span> mid,t;<br>        <span class="hljs-keyword">while</span>(l&lt;=r)<br>        &#123;<br>            mid=l+r&gt;&gt;<span class="hljs-number">1</span>;<br>            t=mid/a+mid/b-mid/c;<br>            <span class="hljs-keyword">if</span>(t&lt;n)<br>                l=mid+<span class="hljs-number">1</span>;<br>            <span class="hljs-keyword">else</span><br>                r=mid<span class="hljs-number">-1</span>;<br>        &#125;<br>        <span class="hljs-keyword">return</span> (r+<span class="hljs-number">1</span>)%<span class="hljs-keyword">mod</span>;<br>    &#125;<br>&#125;;<br></code></pre></td></tr></table></figure>
 
                 
               </div>
