@@ -11,6 +11,10 @@ tags:
     - [题目描述](#题目描述)
     - [思路](#思路)
     - [代码](#代码)
+- [第 N 个神奇数字](#第-n-个神奇数字)
+    - [题目描述](#题目描述-1)
+    - [思路](#思路-1)
+    - [代码](#代码-1)
 
 <!-- /TOC -->
 ## 第k个数
@@ -70,5 +74,56 @@ int main()
 	return 0;
 }
 ```
+## 第 N 个神奇数字
 
+[原题](https://leetcode.cn/problems/nth-magical-number/description/)
+
+### 题目描述
+
+一个正整数如果能被 a 或 b 整除，那么它是神奇的。
+
+给定三个整数 n , a , b ，返回第 n 个神奇的数字。因为答案可能很大，所以返回答案 对 109 + 7 取模 后的值。
+
+示例
+```
+输入：n = 4, a = 2, b = 3
+输出：6
+```
+
+### 思路
+
+用到了容斥原理，对于一个数x，他包含`x/a`个数能被a整除，包含`x/b`个数能被b整除,若a和b最小公倍数为c，那么x包含`x/c`个数能被a和b同时整除，因此，能被a或b整除的数的个数为：`x/a+x/b-x/c`
+
+根据以上规律，使用二分查找即可得出答案。
+
+### 代码
+```
+const int mod=1e9+7;
+class Solution {
+public:
+    const int mod=1e9+7;
+    int gcd(int a,int b)
+    {
+        if(b)
+            return gcd(b,a%b);
+        return a;
+    }
+    int nthMagicalNumber(int n, int a, int b) {
+        long long l=min(a,b);
+        long long r=(long long)n*l;
+        long long c=a*b/gcd(a,b);
+        long long mid,t;
+        while(l<=r)
+        {
+            mid=l+r>>1;
+            t=mid/a+mid/b-mid/c;
+            if(t<n)
+                l=mid+1;
+            else
+                r=mid-1;
+        }
+        return (r+1)%mod;
+    }
+};
+```
 
