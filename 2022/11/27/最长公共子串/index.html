@@ -16,21 +16,21 @@
   <meta name="author" content="zql">
   <meta name="keywords" content="">
   
-    <meta name="description" content="细分图的可到达节点  题目描述 思路 代码      细分图的可到达节点 原题  题目描述 给你一个无向图（原始图），图中有 n 个节点，编号从 0 到 n - 1 。你决定将图中的每条边 细分 为一条节点链，每条边之间的新节点数各不相同。 图用由边组成的二维数组 edges 表示，其中 edges[i] &#x3D; [ui, vi, cnti] 表示原始图中节点 ui 和 vi 之间存在一条边，cn">
+    <meta name="description" content="最长公共子串  题目要求 思路 代码      最长公共子串  题目要求 给定两个字符串str1和str2,输出两个字符串的最长公共子串，如果最长公共子串为空，输出-1。  思路 一道模板题，这里要输出最长的公共子串而不是其长度，代码如下 注意，starti从第一个字符串末尾开始，startj从第二个字符串开头开始  代码 12345678910111213141516171819202122">
 <meta property="og:type" content="article">
-<meta property="og:title" content="细分图的可到达节点">
-<meta property="og:url" content="http://lqz2.github.io/2022/11/26/%E7%BB%86%E5%88%86%E5%9B%BE%E7%9A%84%E5%8F%AF%E5%88%B0%E8%BE%BE%E8%8A%82%E7%82%B9/index.html">
+<meta property="og:title" content="最长公共子串">
+<meta property="og:url" content="http://lqz2.github.io/2022/11/27/%E6%9C%80%E9%95%BF%E5%85%AC%E5%85%B1%E5%AD%90%E4%B8%B2/index.html">
 <meta property="og:site_name" content="my blogs">
-<meta property="og:description" content="细分图的可到达节点  题目描述 思路 代码      细分图的可到达节点 原题  题目描述 给你一个无向图（原始图），图中有 n 个节点，编号从 0 到 n - 1 。你决定将图中的每条边 细分 为一条节点链，每条边之间的新节点数各不相同。 图用由边组成的二维数组 edges 表示，其中 edges[i] &#x3D; [ui, vi, cnti] 表示原始图中节点 ui 和 vi 之间存在一条边，cn">
+<meta property="og:description" content="最长公共子串  题目要求 思路 代码      最长公共子串  题目要求 给定两个字符串str1和str2,输出两个字符串的最长公共子串，如果最长公共子串为空，输出-1。  思路 一道模板题，这里要输出最长的公共子串而不是其长度，代码如下 注意，starti从第一个字符串末尾开始，startj从第二个字符串开头开始  代码 12345678910111213141516171819202122">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2022-11-26T03:06:03.000Z">
-<meta property="article:modified_time" content="2022-11-26T03:17:18.490Z">
+<meta property="article:published_time" content="2022-11-27T07:15:49.000Z">
+<meta property="article:modified_time" content="2022-11-27T07:23:17.125Z">
 <meta property="article:author" content="zql">
 <meta name="twitter:card" content="summary_large_image">
   
   
   
-  <title>细分图的可到达节点 - my blogs</title>
+  <title>最长公共子串 - my blogs</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -195,7 +195,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="细分图的可到达节点"></span>
+            <span id="subtitle" data-typed-text="最长公共子串"></span>
           
         </div>
 
@@ -206,8 +206,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2022-11-26 11:06" pubdate>
-          2022年11月26日 上午
+        <time datetime="2022-11-27 15:15" pubdate>
+          2022年11月27日 下午
         </time>
       </span>
     
@@ -218,7 +218,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          2k 字
+          818 字
         
       </span>
     
@@ -229,7 +229,7 @@
         
         
         
-          17 分钟
+          7 分钟
         
       </span>
     
@@ -267,42 +267,30 @@
         <div id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">细分图的可到达节点</h1>
+            <h1 style="display: none">最长公共子串</h1>
             
             
               <div class="markdown-body">
                 
                 <!-- TOC -->
 <ul>
-<li><a href="#%E7%BB%86%E5%88%86%E5%9B%BE%E7%9A%84%E5%8F%AF%E5%88%B0%E8%BE%BE%E8%8A%82%E7%82%B9">细分图的可到达节点</a>
+<li><a href="#%E6%9C%80%E9%95%BF%E5%85%AC%E5%85%B1%E5%AD%90%E4%B8%B2">最长公共子串</a>
 <ul>
-<li><a href="#%E9%A2%98%E7%9B%AE%E6%8F%8F%E8%BF%B0">题目描述</a></li>
+<li><a href="#%E9%A2%98%E7%9B%AE%E8%A6%81%E6%B1%82">题目要求</a></li>
 <li><a href="#%E6%80%9D%E8%B7%AF">思路</a></li>
 <li><a href="#%E4%BB%A3%E7%A0%81">代码</a></li>
 </ul>
 </li>
 </ul>
 <!-- /TOC -->
-<h2 id="细分图的可到达节点"><a class="markdownIt-Anchor" href="#细分图的可到达节点"></a> 细分图的可到达节点</h2>
-<p><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/reachable-nodes-in-subdivided-graph/description/">原题</a></p>
-<h3 id="题目描述"><a class="markdownIt-Anchor" href="#题目描述"></a> 题目描述</h3>
-<p>给你一个无向图（原始图），图中有 n 个节点，编号从 0 到 n - 1 。你决定将图中的每条边 细分 为一条节点链，每条边之间的新节点数各不相同。</p>
-<p>图用由边组成的二维数组 edges 表示，其中 edges[i] = [ui, vi, cnti] 表示原始图中节点 ui 和 vi 之间存在一条边，cnti 是将边 细分 后的新节点总数。注意，cnti == 0 表示边不可细分。</p>
-<p>要 细分 边 [ui, vi] ，需要将其替换为 (cnti + 1) 条新边，和 cnti 个新节点。新节点为 x1, x2, …, xcnti ，新边为 [ui, x1], [x1, x2], [x2, x3], …, [xcnti+1, xcnti], [xcnti, vi] 。</p>
-<p>现在得到一个 新的细分图 ，请你计算从节点 0 出发，可以到达多少个节点？如果节点间距离是 maxMoves 或更少，则视为 可以到达 。</p>
-<p>给你原始图和 maxMoves ，返回 新的细分图中从节点 0 出发 可到达的节点数 。</p>
-<p>示例</p>
-<figure class="highlight inform7"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs inform7">输入：edges = <span class="hljs-comment">[<span class="hljs-comment">[0,1,4]</span>,<span class="hljs-comment">[1,2,6]</span>,<span class="hljs-comment">[0,2,8]</span>,<span class="hljs-comment">[1,3,1]</span>]</span>, maxMoves = 10, n = 4<br>输出：23<br></code></pre></td></tr></table></figure>
+<h2 id="最长公共子串"><a class="markdownIt-Anchor" href="#最长公共子串"></a> 最长公共子串</h2>
+<h3 id="题目要求"><a class="markdownIt-Anchor" href="#题目要求"></a> 题目要求</h3>
+<p>给定两个字符串str1和str2,输出两个字符串的最长公共子串，如果最长公共子串为空，输出-1。</p>
 <h3 id="思路"><a class="markdownIt-Anchor" href="#思路"></a> 思路</h3>
-<p>这道题看了一遍题没太看懂，本来想直接cv了😢，看了眼题解发现是最短路，就参考大佬灵茶山的题解写了，顺便复习一下堆优化的dijkstra和链式前向星存图</p>
-<p><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/reachable-nodes-in-subdivided-graph/solutions/1991509/tu-jie-zhuan-huan-cheng-dan-yuan-zui-dua-6l8o/">链接</a></p>
-<ul>
-<li>首先需要进行一边dijkstra，求出0到其他点的最短路</li>
-<li>遍历所有顶点，小于maxmoves则<code>++ans</code></li>
-<li>遍历所有边，设一条边的起点和终点为u和v，分别用maxmoves减去<code>dis[u]</code>和<code>dis[v]</code>得到a和b,这条边上符合要求的点个数即为<code>min(a+b,cnt)</code>,加入到ans中即可</li>
-</ul>
+<p>一道模板题，这里要输出最长的公共子串而不是其长度，代码如下</p>
+<p>注意，<code>starti</code>从第一个字符串末尾开始，<code>startj</code>从第二个字符串开头开始</p>
 <h3 id="代码"><a class="markdownIt-Anchor" href="#代码"></a> 代码</h3>
-<figure class="highlight angelscript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br><span class="line">69</span><br><span class="line">70</span><br><span class="line">71</span><br><span class="line">72</span><br><span class="line">73</span><br><span class="line">74</span><br><span class="line">75</span><br><span class="line">76</span><br><span class="line">77</span><br><span class="line">78</span><br><span class="line">79</span><br><span class="line">80</span><br></pre></td><td class="code"><pre><code class="hljs angelscript"><span class="hljs-keyword">class</span> <span class="hljs-symbol">Solution</span> &#123;<br><span class="hljs-keyword">public</span>:<br>    <span class="hljs-built_in">int</span> dis[<span class="hljs-number">3005</span>];<br>    <span class="hljs-built_in">bool</span> vis[<span class="hljs-number">3005</span>];<br>    static <span class="hljs-keyword">const</span> <span class="hljs-built_in">int</span> N=<span class="hljs-number">1e5</span>+<span class="hljs-number">5</span>;<br>    <span class="hljs-built_in">int</span> head[N];<br>    <span class="hljs-built_in">int</span> cnt;<br>    struct edges<br>    &#123;<br>        <span class="hljs-built_in">int</span> to,next,w;<br>    &#125;e[<span class="hljs-number">2</span>*N];<br><br>    struct node<br>    &#123;<br>        <span class="hljs-built_in">int</span> n,w;<br>        node(<span class="hljs-built_in">int</span> nn,<span class="hljs-built_in">int</span> ww):n(nn),w(ww)&#123;&#125;<br>        <span class="hljs-built_in">bool</span> operator &lt; (<span class="hljs-keyword">const</span> node &amp; t) <span class="hljs-keyword">const</span>&#123;<br>            <span class="hljs-keyword">return</span> w&gt;t.w;<br>        &#125;<br>    &#125;;<br>    priority_queue&lt;node&gt; q;<br>    <span class="hljs-built_in">void</span> add(<span class="hljs-built_in">int</span> u,<span class="hljs-built_in">int</span> v,<span class="hljs-built_in">int</span> w)<br>    &#123;<br>        ++cnt;<br>        e[cnt].to=v;<br>        e[cnt].w=w;<br>        e[cnt].next=head[u];<br>        head[u]=cnt;<br>    &#125;<br>    <span class="hljs-built_in">int</span> reachableNodes(vector&lt;vector&lt;<span class="hljs-built_in">int</span>&gt;&gt;&amp; edges, <span class="hljs-built_in">int</span> maxMoves, <span class="hljs-built_in">int</span> n) <br>    &#123;<br>        <span class="hljs-keyword">for</span> (<span class="hljs-built_in">auto</span> &amp;e: edges) <br>        &#123;<br>            <span class="hljs-built_in">int</span> u = e[<span class="hljs-number">0</span>], v = e[<span class="hljs-number">1</span>], cnt = e[<span class="hljs-number">2</span>];<br>            add(u,v,cnt+<span class="hljs-number">1</span>);<br>            add(v,u,cnt+<span class="hljs-number">1</span>);<br>        &#125;<br>        memset(dis,<span class="hljs-number">0x3f</span>,sizeof(dis));<br>        <span class="hljs-built_in">int</span> u,v,w;<br>        dis[<span class="hljs-number">0</span>]=<span class="hljs-number">0</span>;<br>        q.push(node(<span class="hljs-number">0</span>,<span class="hljs-number">0</span>));<br>        <span class="hljs-keyword">while</span>(!q.empty())<br>        &#123;<br>            node t=q.top();<br>            q.pop();<br>            u=t.n;<br>            <span class="hljs-keyword">if</span>(!vis[u])<br>            &#123;<br>                vis[u]=<span class="hljs-literal">true</span>;<br>                <span class="hljs-keyword">for</span>(<span class="hljs-built_in">int</span> i=head[u];i;i=e[i].next)<br>                &#123;<br>                    v=e[i].to;<br>                    w=e[i].w;<br>                    <span class="hljs-keyword">if</span>(dis[u]+w&lt;dis[v])<br>                    &#123;<br>                        dis[v]=dis[u]+w;<br>                        <span class="hljs-keyword">if</span>(!vis[v])<br>                            q.push(node(v,dis[v]));<br>                    &#125;<br>                &#125;<br>            &#125;<br>        &#125;<br>        <span class="hljs-built_in">int</span> ans=<span class="hljs-number">0</span>;<br>        <span class="hljs-comment">// return dis[2];</span><br>        <span class="hljs-keyword">for</span>(<span class="hljs-built_in">int</span> i=<span class="hljs-number">0</span>;i&lt;n;++i)<br>        &#123;<br>            <span class="hljs-keyword">if</span>(dis[i]&lt;=maxMoves)<br>                ++ans;<br>        &#125;<br><br>        <span class="hljs-keyword">for</span> (<span class="hljs-built_in">auto</span> &amp;e: edges) <br>        &#123;<br>            <span class="hljs-built_in">int</span> u = e[<span class="hljs-number">0</span>], v = e[<span class="hljs-number">1</span>], cnt = e[<span class="hljs-number">2</span>];<br>            <span class="hljs-built_in">int</span> a=max(maxMoves-dis[u],<span class="hljs-number">0</span>);<br>            <span class="hljs-built_in">int</span> b=max(maxMoves-dis[v],<span class="hljs-number">0</span>);<br>            ans+=min(a+b,cnt);<br>        &#125;<br>        <span class="hljs-keyword">return</span> ans;<br>    &#125;<br>&#125;;<br></code></pre></td></tr></table></figure>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><code class="hljs routeros"><span class="hljs-comment">#include&lt;bits/stdc++.h&gt;</span><br>using namespace std;<br>string maxsubstr(string s1,string s2)<br>&#123;<br>	int <span class="hljs-attribute">l1</span>=s1.size();<br>	int <span class="hljs-attribute">l2</span>=s2.size();<br>	int <span class="hljs-attribute">maxlen</span>=0,curlen=0;<br>	int <span class="hljs-attribute">starti</span>=l1-1,startj=0;<br>	int <span class="hljs-attribute">endi</span>=-1;<br>	<span class="hljs-keyword">while</span>(startj&lt;l2)<br>	&#123;<br>		<span class="hljs-attribute">curlen</span>=0;<br>		<span class="hljs-keyword">for</span>(int <span class="hljs-attribute">i</span>=starti,j=startj;i&lt;l1&amp;&amp;j&lt;l2;++i,++j)<br>		&#123;<br>			<span class="hljs-keyword">if</span>(s1[i]==s2[j])<br>			&#123;<br>				++curlen;<br>				<span class="hljs-keyword">if</span>(curlen&gt;maxlen)<br>				&#123;<br>					<span class="hljs-attribute">maxlen</span>=curlen;<br>					<span class="hljs-attribute">endi</span>=i;<br>				&#125;<br>			&#125;<br>			<span class="hljs-keyword">else</span><br>				<span class="hljs-attribute">curlen</span>=0;<br>		&#125;<br>		<span class="hljs-keyword">if</span>(starti&gt;0)<br>			--starti;<br>		<span class="hljs-keyword">else</span><br>			++startj;<br>	&#125;<br>	return <span class="hljs-attribute">maxlen</span>==0 ? <span class="hljs-string">&quot;-1&quot;</span>:s1.substr(endi-maxlen+1,maxlen);<br>&#125;<br><br>int main()<br>&#123;<br>	string s1,s2;<br>	cin&gt;&gt;s1&gt;&gt;s2;<br>	cout&lt;&lt;maxsubstr(s1,s2)&lt;&lt;endl;<br>	return 0;<br>	<br>&#125; <br></code></pre></td></tr></table></figure>
                 
               </div>
             
@@ -340,8 +328,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>细分图的可到达节点</div>
-      <div>http://lqz2.github.io/2022/11/26/细分图的可到达节点/</div>
+      <div>最长公共子串</div>
+      <div>http://lqz2.github.io/2022/11/27/最长公共子串/</div>
     </div>
     <div class="license-meta">
       
@@ -353,7 +341,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2022年11月26日</div>
+          <div>2022年11月27日</div>
         </div>
       
       
@@ -385,18 +373,12 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2022/11/27/%E6%9C%80%E9%95%BF%E5%85%AC%E5%85%B1%E5%AD%90%E4%B8%B2/" title="最长公共子串">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">最长公共子串</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2022/11/25/%E6%83%85%E6%84%9F%E4%B8%B0%E5%AF%8C%E7%9A%84%E6%96%87%E5%AD%97/" title="情感丰富的文字">
-                        <span class="hidden-mobile">情感丰富的文字</span>
+                      <a href="/2022/11/26/%E7%BB%86%E5%88%86%E5%9B%BE%E7%9A%84%E5%8F%AF%E5%88%B0%E8%BE%BE%E8%8A%82%E7%82%B9/" title="细分图的可到达节点">
+                        <span class="hidden-mobile">细分图的可到达节点</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
