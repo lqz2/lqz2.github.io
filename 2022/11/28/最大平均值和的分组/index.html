@@ -16,21 +16,21 @@
   <meta name="author" content="zql">
   <meta name="keywords" content="">
   
-    <meta name="description" content="最长公共子串  题目要求 思路 代码      最长公共子串  题目要求 给定两个字符串str1和str2,输出两个字符串的最长公共子串，如果最长公共子串为空，输出-1。  思路 一道模板题，这里要输出最长的公共子串而不是其长度，代码如下 注意，starti从第一个字符串末尾开始，startj从第二个字符串开头开始  代码 12345678910111213141516171819202122">
+    <meta name="description" content="最大平均值和的分组  题目描述 思路 代码      最大平均值和的分组 题目链接  题目描述 给定数组 nums 和一个整数 k 。我们将给定的数组 nums 分成 最多 k 个相邻的非空子数组 。 分数 由每个子数组内的平均值的总和构成。 注意我们必须使用 nums 数组中的每一个数进行分组，并且分数不一定需要是整数。 返回我们所能得到的最大 分数 是多少。答案误差在 10-6 内被视为是">
 <meta property="og:type" content="article">
-<meta property="og:title" content="最长公共子串">
-<meta property="og:url" content="http://lqz2.github.io/2022/11/27/%E6%9C%80%E9%95%BF%E5%85%AC%E5%85%B1%E5%AD%90%E4%B8%B2/index.html">
+<meta property="og:title" content="最大平均值和的分组">
+<meta property="og:url" content="http://lqz2.github.io/2022/11/28/%E6%9C%80%E5%A4%A7%E5%B9%B3%E5%9D%87%E5%80%BC%E5%92%8C%E7%9A%84%E5%88%86%E7%BB%84/index.html">
 <meta property="og:site_name" content="my blogs">
-<meta property="og:description" content="最长公共子串  题目要求 思路 代码      最长公共子串  题目要求 给定两个字符串str1和str2,输出两个字符串的最长公共子串，如果最长公共子串为空，输出-1。  思路 一道模板题，这里要输出最长的公共子串而不是其长度，代码如下 注意，starti从第一个字符串末尾开始，startj从第二个字符串开头开始  代码 12345678910111213141516171819202122">
+<meta property="og:description" content="最大平均值和的分组  题目描述 思路 代码      最大平均值和的分组 题目链接  题目描述 给定数组 nums 和一个整数 k 。我们将给定的数组 nums 分成 最多 k 个相邻的非空子数组 。 分数 由每个子数组内的平均值的总和构成。 注意我们必须使用 nums 数组中的每一个数进行分组，并且分数不一定需要是整数。 返回我们所能得到的最大 分数 是多少。答案误差在 10-6 内被视为是">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2022-11-27T07:15:49.000Z">
-<meta property="article:modified_time" content="2022-11-27T07:23:17.125Z">
+<meta property="article:published_time" content="2022-11-28T00:49:38.000Z">
+<meta property="article:modified_time" content="2022-11-28T01:02:53.076Z">
 <meta property="article:author" content="zql">
 <meta name="twitter:card" content="summary_large_image">
   
   
   
-  <title>最长公共子串 - my blogs</title>
+  <title>最大平均值和的分组 - my blogs</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -195,7 +195,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="最长公共子串"></span>
+            <span id="subtitle" data-typed-text="最大平均值和的分组"></span>
           
         </div>
 
@@ -206,8 +206,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2022-11-27 15:15" pubdate>
-          2022年11月27日 下午
+        <time datetime="2022-11-28 08:49" pubdate>
+          2022年11月28日 早上
         </time>
       </span>
     
@@ -218,7 +218,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          818 字
+          985 字
         
       </span>
     
@@ -229,7 +229,7 @@
         
         
         
-          7 分钟
+          9 分钟
         
       </span>
     
@@ -267,30 +267,40 @@
         <div id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">最长公共子串</h1>
+            <h1 style="display: none">最大平均值和的分组</h1>
             
             
               <div class="markdown-body">
                 
                 <!-- TOC -->
 <ul>
-<li><a href="#%E6%9C%80%E9%95%BF%E5%85%AC%E5%85%B1%E5%AD%90%E4%B8%B2">最长公共子串</a>
+<li><a href="#%E6%9C%80%E5%A4%A7%E5%B9%B3%E5%9D%87%E5%80%BC%E5%92%8C%E7%9A%84%E5%88%86%E7%BB%84">最大平均值和的分组</a>
 <ul>
-<li><a href="#%E9%A2%98%E7%9B%AE%E8%A6%81%E6%B1%82">题目要求</a></li>
+<li><a href="#%E9%A2%98%E7%9B%AE%E6%8F%8F%E8%BF%B0">题目描述</a></li>
 <li><a href="#%E6%80%9D%E8%B7%AF">思路</a></li>
 <li><a href="#%E4%BB%A3%E7%A0%81">代码</a></li>
 </ul>
 </li>
 </ul>
 <!-- /TOC -->
-<h2 id="最长公共子串"><a class="markdownIt-Anchor" href="#最长公共子串"></a> 最长公共子串</h2>
-<h3 id="题目要求"><a class="markdownIt-Anchor" href="#题目要求"></a> 题目要求</h3>
-<p>给定两个字符串str1和str2,输出两个字符串的最长公共子串，如果最长公共子串为空，输出-1。</p>
+<h2 id="最大平均值和的分组"><a class="markdownIt-Anchor" href="#最大平均值和的分组"></a> 最大平均值和的分组</h2>
+<p><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/largest-sum-of-averages/description/">题目链接</a></p>
+<h3 id="题目描述"><a class="markdownIt-Anchor" href="#题目描述"></a> 题目描述</h3>
+<p>给定数组 nums 和一个整数 k 。我们将给定的数组 nums 分成 最多 k 个相邻的非空子数组 。 分数 由每个子数组内的平均值的总和构成。</p>
+<p>注意我们必须使用 nums 数组中的每一个数进行分组，并且分数不一定需要是整数。</p>
+<p>返回我们所能得到的最大 分数 是多少。答案误差在 10-6 内被视为是正确的。</p>
+<p>示例</p>
+<figure class="highlight prolog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs prolog">输入: nums = [<span class="hljs-number">9</span>,<span class="hljs-number">1</span>,<span class="hljs-number">2</span>,<span class="hljs-number">3</span>,<span class="hljs-number">9</span>], k = <span class="hljs-number">3</span><br>输出: <span class="hljs-number">20.00000</span><br>解释: <br>nums 的最优分组是[<span class="hljs-number">9</span>], [<span class="hljs-number">1</span>, <span class="hljs-number">2</span>, <span class="hljs-number">3</span>], [<span class="hljs-number">9</span>]. 得到的分数是 <span class="hljs-number">9</span> + (<span class="hljs-number">1</span> + <span class="hljs-number">2</span> + <span class="hljs-number">3</span>) / <span class="hljs-number">3</span> + <span class="hljs-number">9</span> = <span class="hljs-number">20.</span> <br>我们也可以把 nums 分成[<span class="hljs-number">9</span>, <span class="hljs-number">1</span>], [<span class="hljs-number">2</span>], [<span class="hljs-number">3</span>, <span class="hljs-number">9</span>]. <br>这样的分组得到的分数为 <span class="hljs-number">5</span> + <span class="hljs-number">2</span> + <span class="hljs-number">6</span> = <span class="hljs-number">13</span>, 但不是最大值.<br></code></pre></td></tr></table></figure>
 <h3 id="思路"><a class="markdownIt-Anchor" href="#思路"></a> 思路</h3>
-<p>一道模板题，这里要输出最长的公共子串而不是其长度，代码如下</p>
-<p>注意，<code>starti</code>从第一个字符串末尾开始，<code>startj</code>从第二个字符串开头开始</p>
+<p>动态规划，用<code>dp[i][j]</code>表示前i个数分j组时的最大平均值和，然后写出状态方程:<br />
+<code>dp[i][j]=max(dp[i][j],dp[x][j-1]+(sum[i]-sum[x])/(i-x))</code></p>
+<ul>
+<li>j:<code>2~k</code></li>
+<li>i:<code>j~n</code></li>
+<li>x:<code>j-1~i</code></li>
+</ul>
 <h3 id="代码"><a class="markdownIt-Anchor" href="#代码"></a> 代码</h3>
-<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br></pre></td><td class="code"><pre><code class="hljs routeros"><span class="hljs-comment">#include&lt;bits/stdc++.h&gt;</span><br>using namespace std;<br>string maxsubstr(string s1,string s2)<br>&#123;<br>	int <span class="hljs-attribute">l1</span>=s1.size();<br>	int <span class="hljs-attribute">l2</span>=s2.size();<br>	int <span class="hljs-attribute">maxlen</span>=0,curlen=0;<br>	int <span class="hljs-attribute">starti</span>=l1-1,startj=0;<br>	int <span class="hljs-attribute">endi</span>=-1;<br>	<span class="hljs-keyword">while</span>(startj&lt;l2)<br>	&#123;<br>		<span class="hljs-attribute">curlen</span>=0;<br>		<span class="hljs-keyword">for</span>(int <span class="hljs-attribute">i</span>=starti,j=startj;i&lt;l1&amp;&amp;j&lt;l2;++i,++j)<br>		&#123;<br>			<span class="hljs-keyword">if</span>(s1[i]==s2[j])<br>			&#123;<br>				++curlen;<br>				<span class="hljs-keyword">if</span>(curlen&gt;maxlen)<br>				&#123;<br>					<span class="hljs-attribute">maxlen</span>=curlen;<br>					<span class="hljs-attribute">endi</span>=i;<br>				&#125;<br>			&#125;<br>			<span class="hljs-keyword">else</span><br>				<span class="hljs-attribute">curlen</span>=0;<br>		&#125;<br>		<span class="hljs-keyword">if</span>(starti&gt;0)<br>			--starti;<br>		<span class="hljs-keyword">else</span><br>			++startj;<br>	&#125;<br>	return <span class="hljs-attribute">maxlen</span>==0 ? <span class="hljs-string">&quot;-1&quot;</span>:s1.substr(endi-maxlen+1,maxlen);<br>&#125;<br><br>int main()<br>&#123;<br>	string s1,s2;<br>	cin&gt;&gt;s1&gt;&gt;s2;<br>	cout&lt;&lt;maxsubstr(s1,s2)&lt;&lt;endl;<br>	return 0;<br>	<br>&#125; <br></code></pre></td></tr></table></figure>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span> &#123;<br><span class="hljs-keyword">public</span>:<br>    <span class="hljs-function"><span class="hljs-type">double</span> <span class="hljs-title">largestSumOfAverages</span><span class="hljs-params">(vector&lt;<span class="hljs-type">int</span>&gt;&amp; nums, <span class="hljs-type">int</span> k)</span> </span>&#123;<br>        <span class="hljs-type">int</span> n=nums.<span class="hljs-built_in">size</span>();<br>        <span class="hljs-function">vector&lt;<span class="hljs-type">double</span>&gt; <span class="hljs-title">sum</span><span class="hljs-params">(n+<span class="hljs-number">1</span>)</span></span>;<br>        <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i=<span class="hljs-number">0</span>;i&lt;n;++i)<br>        &#123;<br>            sum[i+<span class="hljs-number">1</span>]=sum[i]+nums[i];<br>        &#125;<br>        vector&lt;vector&lt;<span class="hljs-type">double</span>&gt;&gt; <span class="hljs-built_in">dp</span>(n+<span class="hljs-number">1</span>,<span class="hljs-built_in">vector</span>&lt;<span class="hljs-type">double</span>&gt;(k+<span class="hljs-number">1</span>));<br>        <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i=<span class="hljs-number">1</span>;i&lt;=n;++i)<br>        &#123;<br>            dp[i][<span class="hljs-number">1</span>]=sum[i]/i;<br>        &#125;<br>        <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> j=<span class="hljs-number">2</span>;j&lt;=k;++j)<br>        &#123;<br>            <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i=j;i&lt;=n;++i)<br>            &#123;<br>                <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> x=j<span class="hljs-number">-1</span>;x&lt;i;++x)<br>                &#123;<br>                    dp[i][j]=<span class="hljs-built_in">max</span>(dp[i][j],dp[x][j<span class="hljs-number">-1</span>]+(sum[i]-sum[x])/(i-x));<br>                &#125;<br>            &#125;<br>        &#125;<br>        <span class="hljs-keyword">return</span> dp[n][k];<br>    &#125;<br>&#125;;<br></code></pre></td></tr></table></figure>
                 
               </div>
             
@@ -328,8 +338,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>最长公共子串</div>
-      <div>http://lqz2.github.io/2022/11/27/最长公共子串/</div>
+      <div>最大平均值和的分组</div>
+      <div>http://lqz2.github.io/2022/11/28/最大平均值和的分组/</div>
     </div>
     <div class="license-meta">
       
@@ -341,7 +351,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2022年11月27日</div>
+          <div>2022年11月28日</div>
         </div>
       
       
@@ -373,18 +383,12 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2022/11/28/%E6%9C%80%E5%A4%A7%E5%B9%B3%E5%9D%87%E5%80%BC%E5%92%8C%E7%9A%84%E5%88%86%E7%BB%84/" title="最大平均值和的分组">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">最大平均值和的分组</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2022/11/26/%E7%BB%86%E5%88%86%E5%9B%BE%E7%9A%84%E5%8F%AF%E5%88%B0%E8%BE%BE%E8%8A%82%E7%82%B9/" title="细分图的可到达节点">
-                        <span class="hidden-mobile">细分图的可到达节点</span>
+                      <a href="/2022/11/27/%E6%9C%80%E9%95%BF%E5%85%AC%E5%85%B1%E5%AD%90%E4%B8%B2/" title="最长公共子串">
+                        <span class="hidden-mobile">最长公共子串</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
