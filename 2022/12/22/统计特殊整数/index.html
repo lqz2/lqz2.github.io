@@ -16,21 +16,21 @@
   <meta name="author" content="zql">
   <meta name="keywords" content="">
   
-    <meta name="description" content="分袋子里的球  题目描述 思路 代码      分袋子里的球 原题  题目描述 给你一个整数数组 nums ，其中 nums[i] 表示第 i 个袋子里球的数目。同时给你一个整数 maxOperations 。 你可以进行如下操作至多 maxOperations 次： 选择任意一个袋子，并将袋子里的球分到 2 个新的袋子中，每个袋子里都有 正整数 个球。 比方说，一个袋子里有 5 个球，你可以">
+    <meta name="description" content="统计特殊整数  题目描述 思路 代码      统计特殊整数 原题  题目描述 如果一个正整数每一个数位都是 互不相同 的，我们称它是 特殊整数 。 给你一个 正 整数 n ，请你返回区间 [1, n] 之间特殊整数的数目。  思路 数位dp模板题，需要按位进行分情况讨论.   用dp[i][mask]记录第i位状态为mask时的数目   定义了函数f(int i,int mask,bool">
 <meta property="og:type" content="article">
-<meta property="og:title" content="分袋子里的球">
-<meta property="og:url" content="http://lqz2.github.io/2022/12/20/%E5%88%86%E8%A2%8B%E5%AD%90%E9%87%8C%E7%9A%84%E7%90%83/index.html">
+<meta property="og:title" content="统计特殊整数">
+<meta property="og:url" content="http://lqz2.github.io/2022/12/22/%E7%BB%9F%E8%AE%A1%E7%89%B9%E6%AE%8A%E6%95%B4%E6%95%B0/index.html">
 <meta property="og:site_name" content="my blogs">
-<meta property="og:description" content="分袋子里的球  题目描述 思路 代码      分袋子里的球 原题  题目描述 给你一个整数数组 nums ，其中 nums[i] 表示第 i 个袋子里球的数目。同时给你一个整数 maxOperations 。 你可以进行如下操作至多 maxOperations 次： 选择任意一个袋子，并将袋子里的球分到 2 个新的袋子中，每个袋子里都有 正整数 个球。 比方说，一个袋子里有 5 个球，你可以">
+<meta property="og:description" content="统计特殊整数  题目描述 思路 代码      统计特殊整数 原题  题目描述 如果一个正整数每一个数位都是 互不相同 的，我们称它是 特殊整数 。 给你一个 正 整数 n ，请你返回区间 [1, n] 之间特殊整数的数目。  思路 数位dp模板题，需要按位进行分情况讨论.   用dp[i][mask]记录第i位状态为mask时的数目   定义了函数f(int i,int mask,bool">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2022-12-20T01:42:23.000Z">
-<meta property="article:modified_time" content="2022-12-20T01:53:54.656Z">
+<meta property="article:published_time" content="2022-12-22T03:36:37.000Z">
+<meta property="article:modified_time" content="2022-12-22T03:45:29.290Z">
 <meta property="article:author" content="zql">
 <meta name="twitter:card" content="summary_large_image">
   
   
   
-  <title>分袋子里的球 - my blogs</title>
+  <title>统计特殊整数 - my blogs</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -195,7 +195,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="分袋子里的球"></span>
+            <span id="subtitle" data-typed-text="统计特殊整数"></span>
           
         </div>
 
@@ -206,8 +206,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2022-12-20 09:42" pubdate>
-          2022年12月20日 上午
+        <time datetime="2022-12-22 11:36" pubdate>
+          2022年12月22日 中午
         </time>
       </span>
     
@@ -218,7 +218,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          721 字
+          1.1k 字
         
       </span>
     
@@ -229,7 +229,7 @@
         
         
         
-          7 分钟
+          10 分钟
         
       </span>
     
@@ -267,14 +267,14 @@
         <div id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">分袋子里的球</h1>
+            <h1 style="display: none">统计特殊整数</h1>
             
             
               <div class="markdown-body">
                 
                 <!-- TOC -->
 <ul>
-<li><a href="#%E5%88%86%E8%A2%8B%E5%AD%90%E9%87%8C%E7%9A%84%E7%90%83">分袋子里的球</a>
+<li><a href="#%E7%BB%9F%E8%AE%A1%E7%89%B9%E6%AE%8A%E6%95%B4%E6%95%B0">统计特殊整数</a>
 <ul>
 <li><a href="#%E9%A2%98%E7%9B%AE%E6%8F%8F%E8%BF%B0">题目描述</a></li>
 <li><a href="#%E6%80%9D%E8%B7%AF">思路</a></li>
@@ -283,19 +283,27 @@
 </li>
 </ul>
 <!-- /TOC -->
-<h2 id="分袋子里的球"><a class="markdownIt-Anchor" href="#分袋子里的球"></a> 分袋子里的球</h2>
-<p><a href="">原题</a></p>
+<h2 id="统计特殊整数"><a class="markdownIt-Anchor" href="#统计特殊整数"></a> 统计特殊整数</h2>
+<p><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/count-special-integers/description/">原题</a></p>
 <h3 id="题目描述"><a class="markdownIt-Anchor" href="#题目描述"></a> 题目描述</h3>
-<p>给你一个整数数组 nums ，其中 nums[i] 表示第 i 个袋子里球的数目。同时给你一个整数 maxOperations 。</p>
-<p>你可以进行如下操作至多 maxOperations 次：</p>
-<p>选择任意一个袋子，并将袋子里的球分到 2 个新的袋子中，每个袋子里都有 正整数 个球。<br />
-比方说，一个袋子里有 5 个球，你可以把它们分到两个新袋子里，分别有 1 个和 4 个球，或者分别有 2 个和 3 个球。<br />
-你的开销是单个袋子里球数目的 最大值 ，你想要 最小化 开销。</p>
-<p>请你返回进行上述操作后的最小开销。</p>
+<p>如果一个正整数每一个数位都是 互不相同 的，我们称它是 特殊整数 。</p>
+<p>给你一个 正 整数 n ，请你返回区间 [1, n] 之间特殊整数的数目。</p>
 <h3 id="思路"><a class="markdownIt-Anchor" href="#思路"></a> 思路</h3>
-<p>用到二分的思想(<s>为什么我就想不到😢</s>)，对于二分的中间量mid，表示把当前所有数字全部分成小于等于mid的数字，统计操作次数，如果操作次数小于规定次数，r=mid-1，继续寻找更小的符合要求的mid，否则，l=mid+1,调大mid的值。</p>
+<p>数位dp模板题，需要按位进行分情况讨论.</p>
+<ul>
+<li>
+<p>用<code>dp[i][mask]</code>记录第i位状态为mask时的数目</p>
+</li>
+<li>
+<p>定义了函数<code>f(int i,int mask,bool limit,bool isnum)</code></p>
+</li>
+<li>
+<p><code>i</code>表示当前计算第<code>i</code>位，<code>mask</code>存储之前使用过得数字，<code>limit</code>表示当前位可以取的值是否受限制，<code>isnum</code>表示当前位前面是否有数字</p>
+</li>
+</ul>
+<p>具体实现看代码即可</p>
 <h3 id="代码"><a class="markdownIt-Anchor" href="#代码"></a> 代码</h3>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span> &#123;<br><span class="hljs-keyword">public</span>:<br>    <span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">minimumSize</span><span class="hljs-params">(vector&lt;<span class="hljs-type">int</span>&gt;&amp; nums, <span class="hljs-type">int</span> maxOperations)</span> </span>&#123;<br>        <span class="hljs-type">int</span> l=<span class="hljs-number">1</span>,r=*<span class="hljs-built_in">max_element</span>(nums.<span class="hljs-built_in">begin</span>(),nums.<span class="hljs-built_in">end</span>());<br>        <span class="hljs-type">int</span> ans=<span class="hljs-number">0</span>,mid;<br>        <span class="hljs-keyword">while</span>(l&lt;=r)<br>        &#123;<br>            mid=(l+r)/<span class="hljs-number">2</span>;<br>            <span class="hljs-type">long</span> <span class="hljs-type">long</span> cnt=<span class="hljs-number">0</span>;<br>            <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> x:nums)<br>                cnt+=(x<span class="hljs-number">-1</span>) / mid;<br>            <span class="hljs-keyword">if</span>(cnt&lt;=maxOperations)<br>            &#123;<br>                ans=mid;<br>                r=mid<span class="hljs-number">-1</span>;<br>            &#125;<br>            <span class="hljs-keyword">else</span><br>                l=mid+<span class="hljs-number">1</span>;<br>        &#125;<br>        <span class="hljs-keyword">return</span> ans;<br>    &#125;<br>&#125;;<br></code></pre></td></tr></table></figure>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span> &#123;<br><span class="hljs-keyword">public</span>:<br>    <span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">countSpecialNumbers</span><span class="hljs-params">(<span class="hljs-type">int</span> n)</span> </span>&#123;<br>        string s=<span class="hljs-built_in">to_string</span>(n);<br>        <span class="hljs-type">int</span> len=s.<span class="hljs-built_in">size</span>();<br>        vector&lt;vector&lt;<span class="hljs-type">int</span>&gt;&gt; <span class="hljs-built_in">dp</span>(len,<span class="hljs-built_in">vector</span>&lt;<span class="hljs-type">int</span>&gt;(<span class="hljs-number">1</span>&lt;&lt;<span class="hljs-number">10</span>,<span class="hljs-number">-1</span>));<br>        function&lt;<span class="hljs-type">int</span>(<span class="hljs-type">int</span>,<span class="hljs-type">int</span>,<span class="hljs-type">bool</span>,<span class="hljs-type">bool</span>)&gt; f=[&amp;](<span class="hljs-type">int</span> i,<span class="hljs-type">int</span> mask,<span class="hljs-type">bool</span> limit,<span class="hljs-type">bool</span> isnum)-&gt;<span class="hljs-type">int</span>&#123;<br>            <span class="hljs-keyword">if</span>(i==len)<br>                <span class="hljs-keyword">return</span> isnum;<br>            <span class="hljs-comment">//剪枝，如果当前位无limit且前面有数字，则可以利用之前计算过的结果</span><br>            <span class="hljs-keyword">if</span>(!limit&amp;&amp;isnum&amp;&amp;dp[i][mask]&gt;=<span class="hljs-number">0</span>)<br>                <span class="hljs-keyword">return</span> dp[i][mask];<br>            <span class="hljs-type">int</span> res=<span class="hljs-number">0</span>;<br>            <span class="hljs-comment">//如果当前位之前没有填数字，跳过当前位</span><br>            <span class="hljs-keyword">if</span>(!isnum)<br>                res=<span class="hljs-built_in">f</span>(i+<span class="hljs-number">1</span>,mask,<span class="hljs-literal">false</span>,<span class="hljs-literal">false</span>);<br>            <span class="hljs-type">int</span> up,down;<br>            <span class="hljs-comment">//如果有limit上界为s[i]，没有则上界为9</span><br>            up= limit ? s[i]-<span class="hljs-string">&#x27;0&#x27;</span>:<span class="hljs-number">9</span>;<br>            <span class="hljs-comment">//如果前面的位有数字，下界为0，否则下界为1</span><br>            down= isnum ? <span class="hljs-number">0</span>:<span class="hljs-number">1</span>;<br>            <br>            <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> t=down;t&lt;=up;++t)<br>            &#123;<br>                <span class="hljs-comment">//如果当前数字没用过,则继续</span><br>                <span class="hljs-keyword">if</span>((mask&gt;&gt;t&amp;<span class="hljs-number">1</span>)==<span class="hljs-number">0</span>)<br>                &#123;<br>                    res+=<span class="hljs-built_in">f</span>(i+<span class="hljs-number">1</span>,mask|<span class="hljs-number">1</span>&lt;&lt;t,limit&amp;&amp;t==up,<span class="hljs-literal">true</span>);<br>                &#125;<br>            &#125;<br>            <span class="hljs-keyword">if</span>(!limit&amp;&amp;isnum)<br>                 dp[i][mask]=res;<br>            <span class="hljs-keyword">return</span> res;<br>        &#125;;<br>        <span class="hljs-keyword">return</span> <span class="hljs-built_in">f</span>(<span class="hljs-number">0</span>,<span class="hljs-number">0</span>,<span class="hljs-literal">true</span>,<span class="hljs-literal">false</span>);<br>    &#125;<br>&#125;;<br></code></pre></td></tr></table></figure>
                 
               </div>
             
@@ -333,8 +341,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>分袋子里的球</div>
-      <div>http://lqz2.github.io/2022/12/20/分袋子里的球/</div>
+      <div>统计特殊整数</div>
+      <div>http://lqz2.github.io/2022/12/22/统计特殊整数/</div>
     </div>
     <div class="license-meta">
       
@@ -346,7 +354,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2022年12月20日</div>
+          <div>2022年12月22日</div>
         </div>
       
       
@@ -378,18 +386,12 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2022/12/22/%E7%BB%9F%E8%AE%A1%E7%89%B9%E6%AE%8A%E6%95%B4%E6%95%B0/" title="统计特殊整数">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">统计特殊整数</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2022/12/14/%E8%BE%B9%E9%95%BF%E5%BA%A6%E9%99%90%E5%88%B6%E7%9A%84%E8%B7%AF%E5%BE%84/" title="边长度限制的路径">
-                        <span class="hidden-mobile">边长度限制的路径</span>
+                      <a href="/2022/12/20/%E5%88%86%E8%A2%8B%E5%AD%90%E9%87%8C%E7%9A%84%E7%90%83/" title="分袋子里的球">
+                        <span class="hidden-mobile">分袋子里的球</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
