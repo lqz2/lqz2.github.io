@@ -4,6 +4,25 @@
   
   
   <entry>
+    <title>考场就座</title>
+    <link href="/2022/12/30/%E8%80%83%E5%9C%BA%E5%B0%B1%E5%BA%A7/"/>
+    <url>/2022/12/30/%E8%80%83%E5%9C%BA%E5%B0%B1%E5%BA%A7/</url>
+    
+    <content type="html"><![CDATA[<!-- TOC --><ul><li><a href="#%E8%80%83%E5%9C%BA%E5%B0%B1%E5%BA%A7">考场就座</a><ul><li><a href="#%E9%A2%98%E7%9B%AE%E6%8F%8F%E8%BF%B0">题目描述</a></li><li><a href="#%E6%80%9D%E8%B7%AF">思路</a></li><li><a href="#%E4%BB%A3%E7%A0%81">代码</a></li></ul></li></ul><!-- /TOC --><h2 id="考场就座"><a class="markdownIt-Anchor" href="#考场就座"></a> 考场就座</h2><p><a href="https://leetcode.cn/problems/exam-room/description/">原题</a></p><h3 id="题目描述"><a class="markdownIt-Anchor" href="#题目描述"></a> 题目描述</h3><p>在考场里，一排有 N 个座位，分别编号为 0, 1, 2, …, N-1 。</p><p>当学生进入考场后，他必须坐在能够使他与离他最近的人之间的距离达到最大化的座位上。如果有多个这样的座位，他会坐在编号最小的座位上。(另外，如果考场里没有人，那么学生就坐在 0 号座位上。)</p><p>返回 ExamRoom(int N) 类，它有两个公开的函数：其中，函数 ExamRoom.seat() 会返回一个 int （整型数据），代表学生坐的位置；函数 ExamRoom.leave(int p) 代表坐在座位 p 上的学生现在离开了考场。每次调用 ExamRoom.leave(p) 时都保证有学生坐在座位 p 上。</p><h3 id="思路"><a class="markdownIt-Anchor" href="#思路"></a> 思路</h3><p>这道题主要解决坐在哪里的问题，设置一个<code>set</code>，每次安排座位，遍历一遍<code>set</code>，找出最大位置处，在此过程中，需要一个<code>pre</code>记录上一个座位的位置，然后<code>maxd</code>记录当前最大距离，如果当前位置距离大于<code>maxd</code>,那就更新插入位置和<code>maxd</code>即可</p><h3 id="代码"><a class="markdownIt-Anchor" href="#代码"></a> 代码</h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">class</span> <span class="hljs-title class_">ExamRoom</span> &#123;<br><span class="hljs-keyword">public</span>:<br>    <span class="hljs-type">int</span> m;<br>    set&lt;<span class="hljs-type">int</span>&gt; st;<br>    <span class="hljs-built_in">ExamRoom</span>(<span class="hljs-type">int</span> n) &#123;<br>        m=n;<br>    &#125;<br>    <br>    <span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">seat</span><span class="hljs-params">()</span> </span>&#123;<br>        <span class="hljs-keyword">if</span>(st.<span class="hljs-built_in">empty</span>())<br>        &#123;<br>            st.<span class="hljs-built_in">insert</span>(<span class="hljs-number">0</span>);<br>            <span class="hljs-keyword">return</span> <span class="hljs-number">0</span>;<br>        &#125;<br>        <span class="hljs-type">int</span> pre=<span class="hljs-number">-1</span>,maxd=<span class="hljs-number">0</span>,p=<span class="hljs-number">0</span>;<br>        <span class="hljs-keyword">for</span>(<span class="hljs-keyword">auto</span>&amp; t:st)<br>        &#123;<br>            <span class="hljs-type">int</span> d=(t-pre)/<span class="hljs-number">2</span>;<br>            <span class="hljs-keyword">if</span>(d&gt;maxd)<br>            &#123;<br>                maxd=d;<br>                p= pre==<span class="hljs-number">-1</span>?<span class="hljs-number">0</span>:pre+d;<br>            &#125;<br>            pre=t;<br>        &#125;<br>        <span class="hljs-keyword">if</span>(m<span class="hljs-number">-1</span>-pre&gt;maxd)<br>            p=m<span class="hljs-number">-1</span>;<br>        st.<span class="hljs-built_in">insert</span>(p);<br>        <span class="hljs-keyword">return</span> p;<br>    &#125;<br>    <br>    <span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">leave</span><span class="hljs-params">(<span class="hljs-type">int</span> p)</span> </span>&#123;<br>        st.<span class="hljs-built_in">erase</span>(p);<br>    &#125;<br>&#125;;<br></code></pre></td></tr></table></figure>]]></content>
+    
+    
+    <categories>
+      
+      <category>机试</category>
+      
+    </categories>
+    
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>统计特殊整数</title>
     <link href="/2022/12/22/%E7%BB%9F%E8%AE%A1%E7%89%B9%E6%AE%8A%E6%95%B4%E6%95%B0/"/>
     <url>/2022/12/22/%E7%BB%9F%E8%AE%A1%E7%89%B9%E6%AE%8A%E6%95%B4%E6%95%B0/</url>
