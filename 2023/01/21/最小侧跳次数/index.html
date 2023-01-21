@@ -16,21 +16,21 @@
   <meta name="author" content="zql">
   <meta name="keywords" content="">
   
-    <meta name="description" content="最大公约数的个数 原题  题目描述 给你一个由正整数组成的数组 nums 。 数字序列的 最大公约数 定义为序列中所有整数的共有约数中的最大整数。 例如，序列 [4,6,16] 的最大公约数是 2 。 数组的一个 子序列 本质是一个序列，可以通过删除数组中的某些元素（或者不删除）得到。 例如，[2,5,10] 是 [1,2,1,2,4,1,5,10] 的一个子序列。 计算并返回 nums 的所有">
+    <meta name="description" content="最小侧跳次数  题目描述 思路 代码      最小侧跳次数 原题  题目描述 给你一个长度为 n 的 3 跑道道路 ，它总共包含 n + 1 个 点 ，编号为 0 到 n 。一只青蛙从 0 号点第二条跑道 出发 ，它想要跳到点 n 处。然而道路上可能有一些障碍。 给你一个长度为 n + 1 的数组 obstacles ，其中 obstacles[i] （取值范围从 0 到 3）表示在点 i">
 <meta property="og:type" content="article">
-<meta property="og:title" content="最大公约数的个数">
-<meta property="og:url" content="http://lqz2.github.io/2023/01/14/%E6%9C%80%E5%A4%A7%E5%85%AC%E7%BA%A6%E6%95%B0%E7%9A%84%E4%B8%AA%E6%95%B0/index.html">
+<meta property="og:title" content="最小侧跳次数">
+<meta property="og:url" content="http://lqz2.github.io/2023/01/21/%E6%9C%80%E5%B0%8F%E4%BE%A7%E8%B7%B3%E6%AC%A1%E6%95%B0/index.html">
 <meta property="og:site_name" content="my blogs">
-<meta property="og:description" content="最大公约数的个数 原题  题目描述 给你一个由正整数组成的数组 nums 。 数字序列的 最大公约数 定义为序列中所有整数的共有约数中的最大整数。 例如，序列 [4,6,16] 的最大公约数是 2 。 数组的一个 子序列 本质是一个序列，可以通过删除数组中的某些元素（或者不删除）得到。 例如，[2,5,10] 是 [1,2,1,2,4,1,5,10] 的一个子序列。 计算并返回 nums 的所有">
+<meta property="og:description" content="最小侧跳次数  题目描述 思路 代码      最小侧跳次数 原题  题目描述 给你一个长度为 n 的 3 跑道道路 ，它总共包含 n + 1 个 点 ，编号为 0 到 n 。一只青蛙从 0 号点第二条跑道 出发 ，它想要跳到点 n 处。然而道路上可能有一些障碍。 给你一个长度为 n + 1 的数组 obstacles ，其中 obstacles[i] （取值范围从 0 到 3）表示在点 i">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2023-01-14T02:19:36.000Z">
-<meta property="article:modified_time" content="2023-01-14T02:27:23.726Z">
+<meta property="article:published_time" content="2023-01-21T03:23:59.000Z">
+<meta property="article:modified_time" content="2023-01-21T03:45:38.978Z">
 <meta property="article:author" content="zql">
 <meta name="twitter:card" content="summary_large_image">
   
   
   
-  <title>最大公约数的个数 - my blogs</title>
+  <title>最小侧跳次数 - my blogs</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -195,7 +195,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="最大公约数的个数"></span>
+            <span id="subtitle" data-typed-text="最小侧跳次数"></span>
           
         </div>
 
@@ -206,8 +206,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2023-01-14 10:19" pubdate>
-          2023年1月14日 上午
+        <time datetime="2023-01-21 11:23" pubdate>
+          2023年1月21日 上午
         </time>
       </span>
     
@@ -218,7 +218,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          771 字
+          954 字
         
       </span>
     
@@ -229,7 +229,7 @@
         
         
         
-          7 分钟
+          8 分钟
         
       </span>
     
@@ -267,25 +267,35 @@
         <div id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">最大公约数的个数</h1>
+            <h1 style="display: none">最小侧跳次数</h1>
             
             
               <div class="markdown-body">
                 
-                <h2 id="最大公约数的个数"><a class="markdownIt-Anchor" href="#最大公约数的个数"></a> 最大公约数的个数</h2>
-<p><a href="">原题</a></p>
+                <!-- TOC -->
+<ul>
+<li><a href="#%E6%9C%80%E5%B0%8F%E4%BE%A7%E8%B7%B3%E6%AC%A1%E6%95%B0">最小侧跳次数</a>
+<ul>
+<li><a href="#%E9%A2%98%E7%9B%AE%E6%8F%8F%E8%BF%B0">题目描述</a></li>
+<li><a href="#%E6%80%9D%E8%B7%AF">思路</a></li>
+<li><a href="#%E4%BB%A3%E7%A0%81">代码</a></li>
+</ul>
+</li>
+</ul>
+<!-- /TOC -->
+<h2 id="最小侧跳次数"><a class="markdownIt-Anchor" href="#最小侧跳次数"></a> 最小侧跳次数</h2>
+<p><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/minimum-sideway-jumps/description/">原题</a></p>
 <h3 id="题目描述"><a class="markdownIt-Anchor" href="#题目描述"></a> 题目描述</h3>
-<p>给你一个由正整数组成的数组 nums 。</p>
-<p>数字序列的 最大公约数 定义为序列中所有整数的共有约数中的最大整数。</p>
-<p>例如，序列 [4,6,16] 的最大公约数是 2 。<br />
-数组的一个 子序列 本质是一个序列，可以通过删除数组中的某些元素（或者不删除）得到。</p>
-<p>例如，[2,5,10] 是 [1,2,1,2,4,1,5,10] 的一个子序列。<br />
-计算并返回 nums 的所有 非空 子序列中 不同 最大公约数的 数目 。</p>
-<figure class="highlight tap"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs tap">输入：nums = [6,10,3]<br>输出：5<br>解释：不同的最大公约数为<span class="hljs-number"> 6 </span>、10 、3 、2 和<span class="hljs-number"> 1 </span>。<br></code></pre></td></tr></table></figure>
+<p>给你一个长度为 n 的 3 跑道道路 ，它总共包含 n + 1 个 点 ，编号为 0 到 n 。一只青蛙从 0 号点第二条跑道 出发 ，它想要跳到点 n 处。然而道路上可能有一些障碍。</p>
+<p>给你一个长度为 n + 1 的数组 obstacles ，其中 obstacles[i] （取值范围从 0 到 3）表示在点 i 处的 obstacles[i] 跑道上有一个障碍。如果 obstacles[i] == 0 ，那么点 i 处没有障碍。任何一个点的三条跑道中 最多有一个 障碍。</p>
+<p>比方说，如果 obstacles[2] == 1 ，那么说明在点 2 处跑道 1 有障碍。<br />
+这只青蛙从点 i 跳到点 i + 1 且跑道不变的前提是点 i + 1 的同一跑道上没有障碍。为了躲避障碍，这只青蛙也可以在 同一个 点处 侧跳 到 另外一条 跑道（这两条跑道可以不相邻），但前提是跳过去的跑道该点处没有障碍。</p>
+<p>比方说，这只青蛙可以从点 3 处的跑道 3 跳到点 3 处的跑道 1 。<br />
+这只青蛙从点 0 处跑道 2 出发，并想到达点 n 处的 任一跑道 ，请你返回 最少侧跳次数 。</p>
 <h3 id="思路"><a class="markdownIt-Anchor" href="#思路"></a> 思路</h3>
-<p>参考了大佬的思路，枚举<code>1~maxval</code>之间的数作为最大公约数的倍数，例如[1,2,3,…]，[2,4,6,…]，当某个数在nums中时，更新该子序列的最大公约数，如果循环结束最大公约数等于开始时的值，则<code>++ans</code>，可以通过代码帮助理解。</p>
+<p>动态规划，用数组<code>d[j]</code>表示当前位置在j跑道上最短侧跳次数，对于每一个位置i，先找出<code>i-1</code>位置3个跑道中最小<code>d[j]</code>，记为cnt,然后用<code>d[j]=min(d[j],cnt+1)</code>进行更新即可。</p>
 <h3 id="代码"><a class="markdownIt-Anchor" href="#代码"></a> 代码</h3>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span> &#123;<br><span class="hljs-keyword">public</span>:<br>    <span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">countDifferentSubsequenceGCDs</span><span class="hljs-params">(vector&lt;<span class="hljs-type">int</span>&gt;&amp; nums)</span> </span>&#123;<br>        <span class="hljs-type">int</span> ans=<span class="hljs-number">0</span>;<br>        <span class="hljs-type">int</span> maxv=*<span class="hljs-built_in">max_element</span>(nums.<span class="hljs-built_in">begin</span>(),nums.<span class="hljs-built_in">end</span>());<br>        <span class="hljs-function">vector&lt;<span class="hljs-type">bool</span>&gt; <span class="hljs-title">vis</span><span class="hljs-params">(maxv+<span class="hljs-number">1</span>,<span class="hljs-literal">false</span>)</span></span>;<br>        <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> &amp;t:nums)<br>            vis[t]=<span class="hljs-literal">true</span>;<br>        <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i=<span class="hljs-number">1</span>;i&lt;=maxv;++i)<br>        &#123;<br>            <span class="hljs-type">int</span> t=<span class="hljs-number">0</span>;<br>            <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> j=i;j&lt;=maxv&amp;&amp;t!=i;j+=i)<br>            &#123;<br>                <span class="hljs-keyword">if</span>(vis[j]==<span class="hljs-literal">true</span>)<br>                    t=<span class="hljs-built_in">gcd</span>(t,j);<br>            &#125;<br>            <span class="hljs-keyword">if</span>(t==i)<br>                ++ans;<br>        &#125;<br>        <span class="hljs-keyword">return</span> ans;<br>    &#125;<br>&#125;;<br></code></pre></td></tr></table></figure>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><code class="hljs routeros">class Solution &#123;<br>public:<br>    int minSideJumps(vector&lt;int&gt;&amp; obstacles) &#123;<br>        int <span class="hljs-attribute">inf</span>=0x3f3f3f3f;<br>        int <span class="hljs-attribute">n</span>=obstacles.size()-1;<br>        int d[3]=&#123;1,0,1&#125;;<br>        <span class="hljs-keyword">for</span>(int <span class="hljs-attribute">i</span>=1;i&lt;=n;++i)<br>        &#123;<br>            int <span class="hljs-attribute">cnt</span>=inf;<br>            <span class="hljs-keyword">for</span>(int <span class="hljs-attribute">j</span>=0;j&lt;3;++j)<br>            &#123;<br>                <span class="hljs-keyword">if</span>(<span class="hljs-attribute">j</span>==obstacles[i]-1)<br>                    d[j]=inf;<br>                <span class="hljs-keyword">else</span><br>                    <span class="hljs-attribute">cnt</span>=min(cnt,d[j]);<br>            &#125;<br>            <span class="hljs-keyword">for</span>(int <span class="hljs-attribute">j</span>=0;j&lt;3;++j)<br>            &#123;<br>                <span class="hljs-keyword">if</span>(j!=obstacles[i]-1)<br>                    d[j]=min(cnt+1,d[j]);<br>            &#125;<br>        &#125;<br>        return *min_element(d,d+3);<br>    &#125;<br>&#125;;<br></code></pre></td></tr></table></figure>
                 
               </div>
             
@@ -323,8 +333,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>最大公约数的个数</div>
-      <div>http://lqz2.github.io/2023/01/14/最大公约数的个数/</div>
+      <div>最小侧跳次数</div>
+      <div>http://lqz2.github.io/2023/01/21/最小侧跳次数/</div>
     </div>
     <div class="license-meta">
       
@@ -336,7 +346,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2023年1月14日</div>
+          <div>2023年1月21日</div>
         </div>
       
       
@@ -368,18 +378,12 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2023/01/21/%E6%9C%80%E5%B0%8F%E4%BE%A7%E8%B7%B3%E6%AC%A1%E6%95%B0/" title="最小侧跳次数">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">最小侧跳次数</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2023/01/10/%E7%A0%B4%E8%A7%A3%E4%BF%9D%E9%99%A9%E7%AE%B1/" title="破解保险箱">
-                        <span class="hidden-mobile">破解保险箱</span>
+                      <a href="/2023/01/14/%E6%9C%80%E5%A4%A7%E5%85%AC%E7%BA%A6%E6%95%B0%E7%9A%84%E4%B8%AA%E6%95%B0/" title="最大公约数的个数">
+                        <span class="hidden-mobile">最大公约数的个数</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
