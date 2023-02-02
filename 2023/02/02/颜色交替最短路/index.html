@@ -16,21 +16,21 @@
   <meta name="author" content="zql">
   <meta name="keywords" content="">
   
-    <meta name="description" content="平衡数组方案数  题目描述 思路 代码      平衡数组方案数 原题  题目描述 给你一个整数数组 nums 。你需要选择 恰好 一个下标（下标从 0 开始）并删除对应的元素。请注意剩下元素的下标可能会因为删除操作而发生改变。 比方说，如果 nums &#x3D; [6,1,7,4,1] ，那么： 选择删除下标 1 ，剩下的数组为 nums &#x3D; [6,7,4,1] 。 选择删除下标 2 ，剩下的数组为">
+    <meta name="description" content="颜色交替的最短路  题目描述 思路 代码      颜色交替的最短路 原题  题目描述 在一个有向图中，节点分别标记为 0, 1, …, n-1。图中每条边为红色或者蓝色，且存在自环或平行边。 red_edges 中的每一个 [i, j] 对表示从节点 i 到节点 j 的红色有向边。类似地，blue_edges 中的每一个 [i, j] 对表示从节点 i 到节点 j 的蓝色有向边。 返回长度为">
 <meta property="og:type" content="article">
-<meta property="og:title" content="平衡数组方案数">
-<meta property="og:url" content="http://lqz2.github.io/2023/01/28/%E5%B9%B3%E8%A1%A1%E6%95%B0%E7%BB%84%E6%96%B9%E6%A1%88%E6%95%B0/index.html">
+<meta property="og:title" content="颜色交替最短路">
+<meta property="og:url" content="http://lqz2.github.io/2023/02/02/%E9%A2%9C%E8%89%B2%E4%BA%A4%E6%9B%BF%E6%9C%80%E7%9F%AD%E8%B7%AF/index.html">
 <meta property="og:site_name" content="my blogs">
-<meta property="og:description" content="平衡数组方案数  题目描述 思路 代码      平衡数组方案数 原题  题目描述 给你一个整数数组 nums 。你需要选择 恰好 一个下标（下标从 0 开始）并删除对应的元素。请注意剩下元素的下标可能会因为删除操作而发生改变。 比方说，如果 nums &#x3D; [6,1,7,4,1] ，那么： 选择删除下标 1 ，剩下的数组为 nums &#x3D; [6,7,4,1] 。 选择删除下标 2 ，剩下的数组为">
+<meta property="og:description" content="颜色交替的最短路  题目描述 思路 代码      颜色交替的最短路 原题  题目描述 在一个有向图中，节点分别标记为 0, 1, …, n-1。图中每条边为红色或者蓝色，且存在自环或平行边。 red_edges 中的每一个 [i, j] 对表示从节点 i 到节点 j 的红色有向边。类似地，blue_edges 中的每一个 [i, j] 对表示从节点 i 到节点 j 的蓝色有向边。 返回长度为">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2023-01-28T07:03:11.000Z">
-<meta property="article:modified_time" content="2023-01-28T07:30:11.754Z">
+<meta property="article:published_time" content="2023-02-02T02:14:32.000Z">
+<meta property="article:modified_time" content="2023-02-02T02:23:25.749Z">
 <meta property="article:author" content="zql">
 <meta name="twitter:card" content="summary_large_image">
   
   
   
-  <title>平衡数组方案数 - my blogs</title>
+  <title>颜色交替最短路 - my blogs</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -195,7 +195,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="平衡数组方案数"></span>
+            <span id="subtitle" data-typed-text="颜色交替最短路"></span>
           
         </div>
 
@@ -206,8 +206,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2023-01-28 15:03" pubdate>
-          2023年1月28日 下午
+        <time datetime="2023-02-02 10:14" pubdate>
+          2023年2月2日 上午
         </time>
       </span>
     
@@ -218,7 +218,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          1.1k 字
+          1.5k 字
         
       </span>
     
@@ -229,7 +229,7 @@
         
         
         
-          10 分钟
+          13 分钟
         
       </span>
     
@@ -267,14 +267,14 @@
         <div id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">平衡数组方案数</h1>
+            <h1 style="display: none">颜色交替最短路</h1>
             
             
               <div class="markdown-body">
                 
                 <!-- TOC -->
 <ul>
-<li><a href="#%E5%B9%B3%E8%A1%A1%E6%95%B0%E7%BB%84%E6%96%B9%E6%A1%88%E6%95%B0">平衡数组方案数</a>
+<li><a href="#%E9%A2%9C%E8%89%B2%E4%BA%A4%E6%9B%BF%E7%9A%84%E6%9C%80%E7%9F%AD%E8%B7%AF">颜色交替的最短路</a>
 <ul>
 <li><a href="#%E9%A2%98%E7%9B%AE%E6%8F%8F%E8%BF%B0">题目描述</a></li>
 <li><a href="#%E6%80%9D%E8%B7%AF">思路</a></li>
@@ -283,22 +283,19 @@
 </li>
 </ul>
 <!-- /TOC -->
-<h2 id="平衡数组方案数"><a class="markdownIt-Anchor" href="#平衡数组方案数"></a> 平衡数组方案数</h2>
-<p><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/ways-to-make-a-fair-array/description/">原题</a></p>
+<h2 id="颜色交替的最短路"><a class="markdownIt-Anchor" href="#颜色交替的最短路"></a> 颜色交替的最短路</h2>
+<p><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/shortest-path-with-alternating-colors/description/">原题</a></p>
 <h3 id="题目描述"><a class="markdownIt-Anchor" href="#题目描述"></a> 题目描述</h3>
-<p>给你一个整数数组 nums 。你需要选择 恰好 一个下标（下标从 0 开始）并删除对应的元素。请注意剩下元素的下标可能会因为删除操作而发生改变。</p>
-<p>比方说，如果 nums = [6,1,7,4,1] ，那么：</p>
-<p>选择删除下标 1 ，剩下的数组为 nums = [6,7,4,1] 。<br />
-选择删除下标 2 ，剩下的数组为 nums = [6,1,4,1] 。<br />
-选择删除下标 4 ，剩下的数组为 nums = [6,1,7,4] 。<br />
-如果一个数组满足奇数下标元素的和与偶数下标元素的和相等，该数组就是一个 平衡数组 。</p>
-<p>请你返回删除操作后，剩下的数组 nums 是 平衡数组 的 方案数 。</p>
+<p>在一个有向图中，节点分别标记为 0, 1, …, n-1。图中每条边为红色或者蓝色，且存在自环或平行边。</p>
+<p>red_edges 中的每一个 [i, j] 对表示从节点 i 到节点 j 的红色有向边。类似地，blue_edges 中的每一个 [i, j] 对表示从节点 i 到节点 j 的蓝色有向边。</p>
+<p>返回长度为 n 的数组 answer，其中 answer[X] 是从节点 0 到节点 X 的红色边和蓝色边交替出现的最短路径的长度。如果不存在这样的路径，那么 answer[x] = -1。</p>
 <p>示例</p>
-<figure class="highlight tap"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs tap">输入：nums = [2,1,6,4]<br>输出：1<br>解释：<br>删除下标<span class="hljs-number"> 0 </span>：[1,6,4] -&gt; 偶数元素下标为：1 +<span class="hljs-number"> 4 </span>=<span class="hljs-number"> 5 </span>。奇数元素下标为：6 。不平衡。<br>删除下标<span class="hljs-number"> 1 </span>：[2,6,4] -&gt; 偶数元素下标为：2 +<span class="hljs-number"> 4 </span>=<span class="hljs-number"> 6 </span>。奇数元素下标为：6 。平衡。<br>删除下标<span class="hljs-number"> 2 </span>：[2,1,4] -&gt; 偶数元素下标为：2 +<span class="hljs-number"> 4 </span>=<span class="hljs-number"> 6 </span>。奇数元素下标为：1 。不平衡。<br>删除下标<span class="hljs-number"> 3 </span>：[2,1,6] -&gt; 偶数元素下标为：2 +<span class="hljs-number"> 6 </span>=<span class="hljs-number"> 8 </span>。奇数元素下标为：1 。不平衡。<br>只有一种让剩余数组成为平衡数组的方案。<br></code></pre></td></tr></table></figure>
+<figure class="highlight lua"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs lua">输入：n = <span class="hljs-number">3</span>, red_edges = <span class="hljs-string">[[0,1]]</span>, blue_edges = <span class="hljs-string">[[2,1]]</span><br>输出：[<span class="hljs-number">0</span>,<span class="hljs-number">1</span>,<span class="hljs-number">-1</span>]<br></code></pre></td></tr></table></figure>
 <h3 id="思路"><a class="markdownIt-Anchor" href="#思路"></a> 思路</h3>
-<p>对于位置<code>i</code>来说，需要维护4个变量 <code>prej,preo,sufj,sufo</code>,分别表示位置<code>i</code>之前奇数下标的数之和，偶数下标的数之和，以及位置<code>i</code>之后奇数下标的数之和与偶数下标的数之和。当位置<code>i</code>处的数字被去掉后，只需判断<code>prej+sufo==preo+sufj</code>是否相等，若相等则符合要求。</p>
+<p>主要是bfs的思想，一开始我想的是吧红色边和蓝色边放在一个图处理，但是这样做的问题就是后面我不会处理环路的情况了，自己也晕了，参考大佬的思路后，才解决，其实红色边和蓝色边分为两个图，每个边处理后，颜色取反，然后去对应颜色的图里找下一条边即可。</p>
+<p>首先将起点 0 和起点边的颜色 0 或 1 入队，表示从起点出发，且当前是红色或蓝色边。接下来，进行 BFS 。每次从队列中取出一个节点<code>(u,clr)</code>，如果当前节点的答案还未更新，则将当前节点的答案更新为当前层数<code>d</code>，即 <code>ans[i]=d</code>。然后，我们将当前边的颜色 <code>clr</code> 取反，即如果当前边为红色，则将其变为蓝色，之后取出颜色对应的所有边，如果边的另一端节点未被搜索过，则将其入队。</p>
 <h3 id="代码"><a class="markdownIt-Anchor" href="#代码"></a> 代码</h3>
-<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br></pre></td><td class="code"><pre><code class="hljs routeros">class Solution &#123;<br>public:<br>    int waysToMakeFair(vector&lt;int&gt;&amp; nums) &#123;<br>        int <span class="hljs-attribute">n</span>=nums.size();<br>        int <span class="hljs-attribute">prej</span>=0,preo=0,sufj=0,sufo=0;<br>        <span class="hljs-keyword">for</span>(int <span class="hljs-attribute">i</span>=0;i&lt;n;++i)<br>        &#123;<br>            <span class="hljs-keyword">if</span>(i&amp;1)<br>                sufj+=nums[i];<br>            <span class="hljs-keyword">else</span><br>                sufo+=nums[i];<br>        &#125;<br>        int <span class="hljs-attribute">res</span>=0;<br>        <span class="hljs-keyword">for</span>(int <span class="hljs-attribute">i</span>=0;i&lt;n;++i)<br>        &#123;<br>            <span class="hljs-keyword">if</span>(i&amp;1)<br>                <span class="hljs-attribute">sufj-</span>=nums[i];<br>            <span class="hljs-keyword">else</span><br>                <span class="hljs-attribute">sufo-</span>=nums[i];<br>            <span class="hljs-keyword">if</span>(prej+<span class="hljs-attribute">sufo</span>==preo+sufj)<br>                ++res;<br>            <span class="hljs-keyword">if</span>(i&amp;1)<br>                prej+=nums[i];<br>            <span class="hljs-keyword">else</span><br>                preo+=nums[i];<br>        &#125;<br>        return res;<br>    &#125;<br>&#125;;<br></code></pre></td></tr></table></figure>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span> &#123;<br><span class="hljs-keyword">public</span>:<br>    queue&lt;pair&lt;<span class="hljs-type">int</span>,<span class="hljs-type">int</span>&gt;&gt; q;<br>    <span class="hljs-function">vector&lt;<span class="hljs-type">int</span>&gt; <span class="hljs-title">shortestAlternatingPaths</span><span class="hljs-params">(<span class="hljs-type">int</span> n, vector&lt;vector&lt;<span class="hljs-type">int</span>&gt;&gt;&amp; redEdges, vector&lt;vector&lt;<span class="hljs-type">int</span>&gt;&gt;&amp; blueEdges)</span> </span>&#123;<br>        vector&lt;vector&lt;vector&lt;<span class="hljs-type">int</span>&gt;&gt;&gt; <span class="hljs-built_in">edges</span>(<span class="hljs-number">2</span>, vector&lt;vector&lt;<span class="hljs-type">int</span>&gt;&gt;(n));<br>        <span class="hljs-keyword">for</span> (vector&lt;<span class="hljs-type">int</span>&gt;&amp; e : redEdges) <br>            edges[<span class="hljs-number">0</span>][e[<span class="hljs-number">0</span>]].<span class="hljs-built_in">push_back</span>(e[<span class="hljs-number">1</span>]);<br>        <span class="hljs-keyword">for</span> (vector&lt;<span class="hljs-type">int</span>&gt;&amp; e : blueEdges)<br>            edges[<span class="hljs-number">1</span>][e[<span class="hljs-number">0</span>]].<span class="hljs-built_in">push_back</span>(e[<span class="hljs-number">1</span>]);<br>        <span class="hljs-function">vector&lt;<span class="hljs-type">int</span>&gt; <span class="hljs-title">ans</span><span class="hljs-params">(n,<span class="hljs-number">-1</span>)</span></span>;<br>        vector&lt;vector&lt;<span class="hljs-type">bool</span>&gt;&gt; <span class="hljs-built_in">vis</span>(n,<span class="hljs-built_in">vector</span>&lt;<span class="hljs-type">bool</span>&gt;(<span class="hljs-number">2</span>,<span class="hljs-literal">false</span>));<br>        <span class="hljs-type">int</span> d=<span class="hljs-number">0</span>;<br>        q.<span class="hljs-built_in">emplace</span>(<span class="hljs-number">0</span>,<span class="hljs-number">0</span>);<br>        q.<span class="hljs-built_in">emplace</span>(<span class="hljs-number">0</span>,<span class="hljs-number">1</span>);<br>        <span class="hljs-keyword">while</span>(!q.<span class="hljs-built_in">empty</span>())<br>        &#123;<br>            <span class="hljs-type">int</span> sz=q.<span class="hljs-built_in">size</span>();<br>            <span class="hljs-keyword">while</span>(sz--)<br>            &#123;<br>                <span class="hljs-type">int</span> u=q.<span class="hljs-built_in">front</span>().first;<br>                <span class="hljs-type">int</span> clr=q.<span class="hljs-built_in">front</span>().second;<br>                q.<span class="hljs-built_in">pop</span>();<br>                <span class="hljs-keyword">if</span>(ans[u]==<span class="hljs-number">-1</span>)<br>                    ans[u]=d;<br>                vis[u][clr]=<span class="hljs-literal">true</span>;<br>                clr^=<span class="hljs-number">1</span>;<br>                <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span>&amp; v:edges[clr][u])<br>                &#123;<br>                    <span class="hljs-keyword">if</span>(!vis[v][clr])<br>                        q.<span class="hljs-built_in">emplace</span>(v,clr);<br>                &#125;<br>            &#125;<br>            ++d;<br>        &#125;<br>        <span class="hljs-keyword">return</span> ans;<br>    &#125;<br>&#125;;<br></code></pre></td></tr></table></figure>
                 
               </div>
             
@@ -336,8 +333,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>平衡数组方案数</div>
-      <div>http://lqz2.github.io/2023/01/28/平衡数组方案数/</div>
+      <div>颜色交替最短路</div>
+      <div>http://lqz2.github.io/2023/02/02/颜色交替最短路/</div>
     </div>
     <div class="license-meta">
       
@@ -349,7 +346,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2023年1月28日</div>
+          <div>2023年2月2日</div>
         </div>
       
       
@@ -381,18 +378,12 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2023/02/02/%E9%A2%9C%E8%89%B2%E4%BA%A4%E6%9B%BF%E6%9C%80%E7%9F%AD%E8%B7%AF/" title="颜色交替最短路">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">颜色交替最短路</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2023/01/25/%E7%9F%A9%E9%98%B5%E8%BD%AC%E6%8D%A2%E5%90%8E%E7%9A%84%E7%A7%A9/" title="矩阵转换后的秩">
-                        <span class="hidden-mobile">矩阵转换后的秩</span>
+                      <a href="/2023/01/28/%E5%B9%B3%E8%A1%A1%E6%95%B0%E7%BB%84%E6%96%B9%E6%A1%88%E6%95%B0/" title="平衡数组方案数">
+                        <span class="hidden-mobile">平衡数组方案数</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
