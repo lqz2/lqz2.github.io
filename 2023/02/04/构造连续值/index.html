@@ -16,21 +16,21 @@
   <meta name="author" content="zql">
   <meta name="keywords" content="">
   
-    <meta name="description" content="颜色交替的最短路  题目描述 思路 代码      颜色交替的最短路 原题  题目描述 在一个有向图中，节点分别标记为 0, 1, …, n-1。图中每条边为红色或者蓝色，且存在自环或平行边。 red_edges 中的每一个 [i, j] 对表示从节点 i 到节点 j 的红色有向边。类似地，blue_edges 中的每一个 [i, j] 对表示从节点 i 到节点 j 的蓝色有向边。 返回长度为">
+    <meta name="description" content="构造连续值  题目描述 思路 代码      构造连续值 原题  题目描述 给你一个长度为 n 的整数数组 coins ，它代表你拥有的 n 个硬币。第 i 个硬币的值为 coins[i] 。如果你从这些硬币中选出一部分硬币，它们的和为 x ，那么称，你可以 构造 出 x 。 请返回从 0 开始（包括 0 ），你最多能 构造 出多少个连续整数。 你可能有多个相同值的硬币。 示例: 123456">
 <meta property="og:type" content="article">
-<meta property="og:title" content="颜色交替最短路">
-<meta property="og:url" content="http://lqz2.github.io/2023/02/02/%E9%A2%9C%E8%89%B2%E4%BA%A4%E6%9B%BF%E6%9C%80%E7%9F%AD%E8%B7%AF/index.html">
+<meta property="og:title" content="构造连续值">
+<meta property="og:url" content="http://lqz2.github.io/2023/02/04/%E6%9E%84%E9%80%A0%E8%BF%9E%E7%BB%AD%E5%80%BC/index.html">
 <meta property="og:site_name" content="my blogs">
-<meta property="og:description" content="颜色交替的最短路  题目描述 思路 代码      颜色交替的最短路 原题  题目描述 在一个有向图中，节点分别标记为 0, 1, …, n-1。图中每条边为红色或者蓝色，且存在自环或平行边。 red_edges 中的每一个 [i, j] 对表示从节点 i 到节点 j 的红色有向边。类似地，blue_edges 中的每一个 [i, j] 对表示从节点 i 到节点 j 的蓝色有向边。 返回长度为">
+<meta property="og:description" content="构造连续值  题目描述 思路 代码      构造连续值 原题  题目描述 给你一个长度为 n 的整数数组 coins ，它代表你拥有的 n 个硬币。第 i 个硬币的值为 coins[i] 。如果你从这些硬币中选出一部分硬币，它们的和为 x ，那么称，你可以 构造 出 x 。 请返回从 0 开始（包括 0 ），你最多能 构造 出多少个连续整数。 你可能有多个相同值的硬币。 示例: 123456">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2023-02-02T02:14:32.000Z">
-<meta property="article:modified_time" content="2023-02-02T02:23:25.749Z">
+<meta property="article:published_time" content="2023-02-04T01:51:39.000Z">
+<meta property="article:modified_time" content="2023-02-04T02:10:04.599Z">
 <meta property="article:author" content="zql">
 <meta name="twitter:card" content="summary_large_image">
   
   
   
-  <title>颜色交替最短路 - my blogs</title>
+  <title>构造连续值 - my blogs</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -41,6 +41,8 @@
   <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/KaTeX/0.15.6/katex.min.css" />
 
 
 
@@ -195,7 +197,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="颜色交替最短路"></span>
+            <span id="subtitle" data-typed-text="构造连续值"></span>
           
         </div>
 
@@ -206,8 +208,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2023-02-02 10:14" pubdate>
-          2023年2月2日 上午
+        <time datetime="2023-02-04 09:51" pubdate>
+          2023年2月4日 上午
         </time>
       </span>
     
@@ -218,7 +220,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          1.5k 字
+          835 字
         
       </span>
     
@@ -229,7 +231,7 @@
         
         
         
-          13 分钟
+          7 分钟
         
       </span>
     
@@ -267,14 +269,14 @@
         <div id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">颜色交替最短路</h1>
+            <h1 style="display: none">构造连续值</h1>
             
             
               <div class="markdown-body">
                 
                 <!-- TOC -->
 <ul>
-<li><a href="#%E9%A2%9C%E8%89%B2%E4%BA%A4%E6%9B%BF%E7%9A%84%E6%9C%80%E7%9F%AD%E8%B7%AF">颜色交替的最短路</a>
+<li><a href="#%E6%9E%84%E9%80%A0%E8%BF%9E%E7%BB%AD%E5%80%BC">构造连续值</a>
 <ul>
 <li><a href="#%E9%A2%98%E7%9B%AE%E6%8F%8F%E8%BF%B0">题目描述</a></li>
 <li><a href="#%E6%80%9D%E8%B7%AF">思路</a></li>
@@ -283,19 +285,19 @@
 </li>
 </ul>
 <!-- /TOC -->
-<h2 id="颜色交替的最短路"><a class="markdownIt-Anchor" href="#颜色交替的最短路"></a> 颜色交替的最短路</h2>
-<p><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/shortest-path-with-alternating-colors/description/">原题</a></p>
+<h2 id="构造连续值"><a class="markdownIt-Anchor" href="#构造连续值"></a> 构造连续值</h2>
+<p><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/maximum-number-of-consecutive-values-you-can-make/description/">原题</a></p>
 <h3 id="题目描述"><a class="markdownIt-Anchor" href="#题目描述"></a> 题目描述</h3>
-<p>在一个有向图中，节点分别标记为 0, 1, …, n-1。图中每条边为红色或者蓝色，且存在自环或平行边。</p>
-<p>red_edges 中的每一个 [i, j] 对表示从节点 i 到节点 j 的红色有向边。类似地，blue_edges 中的每一个 [i, j] 对表示从节点 i 到节点 j 的蓝色有向边。</p>
-<p>返回长度为 n 的数组 answer，其中 answer[X] 是从节点 0 到节点 X 的红色边和蓝色边交替出现的最短路径的长度。如果不存在这样的路径，那么 answer[x] = -1。</p>
-<p>示例</p>
-<figure class="highlight lua"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs lua">输入：n = <span class="hljs-number">3</span>, red_edges = <span class="hljs-string">[[0,1]]</span>, blue_edges = <span class="hljs-string">[[2,1]]</span><br>输出：[<span class="hljs-number">0</span>,<span class="hljs-number">1</span>,<span class="hljs-number">-1</span>]<br></code></pre></td></tr></table></figure>
+<p>给你一个长度为 n 的整数数组 coins ，它代表你拥有的 n 个硬币。第 i 个硬币的值为 coins[i] 。如果你从这些硬币中选出一部分硬币，它们的和为 x ，那么称，你可以 构造 出 x 。</p>
+<p>请返回从 0 开始（包括 0 ），你最多能 构造 出多少个连续整数。</p>
+<p>你可能有多个相同值的硬币。</p>
+<p>示例:</p>
+<figure class="highlight inform7"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs inform7">输入：coins = <span class="hljs-comment">[1,1,1,4]</span><br>输出：8<br>解释：你可以得到以下这些值：<br>- 0：什么都不取 <span class="hljs-comment">[]</span><br>- 1：取 <span class="hljs-comment">[1]</span><br>- 2：取 <span class="hljs-comment">[1,1]</span><br>- 3：取 <span class="hljs-comment">[1,1,1]</span><br>- 4：取 <span class="hljs-comment">[4]</span><br>- 5：取 <span class="hljs-comment">[4,1]</span><br>- 6：取 <span class="hljs-comment">[4,1,1]</span><br>- 7：取 <span class="hljs-comment">[4,1,1,1]</span><br>从 0 开始，你可以构造出 8 个连续整数。<br></code></pre></td></tr></table></figure>
 <h3 id="思路"><a class="markdownIt-Anchor" href="#思路"></a> 思路</h3>
-<p>主要是bfs的思想，一开始我想的是吧红色边和蓝色边放在一个图处理，但是这样做的问题就是后面我不会处理环路的情况了，自己也晕了，参考大佬的思路后，才解决，其实红色边和蓝色边分为两个图，每个边处理后，颜色取反，然后去对应颜色的图里找下一条边即可。</p>
-<p>首先将起点 0 和起点边的颜色 0 或 1 入队，表示从起点出发，且当前是红色或蓝色边。接下来，进行 BFS 。每次从队列中取出一个节点<code>(u,clr)</code>，如果当前节点的答案还未更新，则将当前节点的答案更新为当前层数<code>d</code>，即 <code>ans[i]=d</code>。然后，我们将当前边的颜色 <code>clr</code> 取反，即如果当前边为红色，则将其变为蓝色，之后取出颜色对应的所有边，如果边的另一端节点未被搜索过，则将其入队。</p>
+<p>这道题就是构造从0开始的连续整数的个数，代码及其简单，但思路很好，第一眼看下去我想不到😢😢😢，tcl.</p>
+<p>首先思考，如果数组中的若干元素能构造<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>0</mn><mo>∼</mo><mi>x</mi></mrow><annotation encoding="application/x-tex">0 \sim x</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">0</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">∼</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathnormal">x</span></span></span></span>，那么当加入了一个元素<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>k</mi></mrow><annotation encoding="application/x-tex">k</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathnormal" style="margin-right:0.03148em;">k</span></span></span></span>,能构造的范围就变成了<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>0</mn><mo>∼</mo><mi>x</mi><mo>∪</mo><mi>k</mi><mo>∼</mo><mi>k</mi><mo>+</mo><mi>x</mi></mrow><annotation encoding="application/x-tex">0 \sim x \cup k \sim k+x</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">0</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">∼</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.55556em;vertical-align:0em;"></span><span class="mord mathnormal">x</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">∪</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.69444em;vertical-align:0em;"></span><span class="mord mathnormal" style="margin-right:0.03148em;">k</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">∼</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.77777em;vertical-align:-0.08333em;"></span><span class="mord mathnormal" style="margin-right:0.03148em;">k</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathnormal">x</span></span></span></span>，当<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>k</mi><mo>≤</mo><mi>x</mi><mo>+</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">k \le x+1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.83041em;vertical-align:-0.13597em;"></span><span class="mord mathnormal" style="margin-right:0.03148em;">k</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">≤</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.66666em;vertical-align:-0.08333em;"></span><span class="mord mathnormal">x</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">1</span></span></span></span>时，两个范围就合并为<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mn>0</mn><mo>∼</mo><mi>k</mi><mo>+</mo><mi>x</mi></mrow><annotation encoding="application/x-tex">0 \sim k+x</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">0</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span><span class="mrel">∼</span><span class="mspace" style="margin-right:0.2777777777777778em;"></span></span><span class="base"><span class="strut" style="height:0.77777em;vertical-align:-0.08333em;"></span><span class="mord mathnormal" style="margin-right:0.03148em;">k</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.43056em;vertical-align:0em;"></span><span class="mord mathnormal">x</span></span></span></span>。因此，这道题中，用res表示下一个要构造的数，先对数组排序，然后依次取数组中的元素<code>i</code>，如果<code>i&lt;=res</code>，说明可构造的范围需要扩大，下一个要构造的数变为<code>res+i</code>，直到<code>i&gt;res</code>，说明此时已经无法继续构造连续的整数。</p>
 <h3 id="代码"><a class="markdownIt-Anchor" href="#代码"></a> 代码</h3>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span> &#123;<br><span class="hljs-keyword">public</span>:<br>    queue&lt;pair&lt;<span class="hljs-type">int</span>,<span class="hljs-type">int</span>&gt;&gt; q;<br>    <span class="hljs-function">vector&lt;<span class="hljs-type">int</span>&gt; <span class="hljs-title">shortestAlternatingPaths</span><span class="hljs-params">(<span class="hljs-type">int</span> n, vector&lt;vector&lt;<span class="hljs-type">int</span>&gt;&gt;&amp; redEdges, vector&lt;vector&lt;<span class="hljs-type">int</span>&gt;&gt;&amp; blueEdges)</span> </span>&#123;<br>        vector&lt;vector&lt;vector&lt;<span class="hljs-type">int</span>&gt;&gt;&gt; <span class="hljs-built_in">edges</span>(<span class="hljs-number">2</span>, vector&lt;vector&lt;<span class="hljs-type">int</span>&gt;&gt;(n));<br>        <span class="hljs-keyword">for</span> (vector&lt;<span class="hljs-type">int</span>&gt;&amp; e : redEdges) <br>            edges[<span class="hljs-number">0</span>][e[<span class="hljs-number">0</span>]].<span class="hljs-built_in">push_back</span>(e[<span class="hljs-number">1</span>]);<br>        <span class="hljs-keyword">for</span> (vector&lt;<span class="hljs-type">int</span>&gt;&amp; e : blueEdges)<br>            edges[<span class="hljs-number">1</span>][e[<span class="hljs-number">0</span>]].<span class="hljs-built_in">push_back</span>(e[<span class="hljs-number">1</span>]);<br>        <span class="hljs-function">vector&lt;<span class="hljs-type">int</span>&gt; <span class="hljs-title">ans</span><span class="hljs-params">(n,<span class="hljs-number">-1</span>)</span></span>;<br>        vector&lt;vector&lt;<span class="hljs-type">bool</span>&gt;&gt; <span class="hljs-built_in">vis</span>(n,<span class="hljs-built_in">vector</span>&lt;<span class="hljs-type">bool</span>&gt;(<span class="hljs-number">2</span>,<span class="hljs-literal">false</span>));<br>        <span class="hljs-type">int</span> d=<span class="hljs-number">0</span>;<br>        q.<span class="hljs-built_in">emplace</span>(<span class="hljs-number">0</span>,<span class="hljs-number">0</span>);<br>        q.<span class="hljs-built_in">emplace</span>(<span class="hljs-number">0</span>,<span class="hljs-number">1</span>);<br>        <span class="hljs-keyword">while</span>(!q.<span class="hljs-built_in">empty</span>())<br>        &#123;<br>            <span class="hljs-type">int</span> sz=q.<span class="hljs-built_in">size</span>();<br>            <span class="hljs-keyword">while</span>(sz--)<br>            &#123;<br>                <span class="hljs-type">int</span> u=q.<span class="hljs-built_in">front</span>().first;<br>                <span class="hljs-type">int</span> clr=q.<span class="hljs-built_in">front</span>().second;<br>                q.<span class="hljs-built_in">pop</span>();<br>                <span class="hljs-keyword">if</span>(ans[u]==<span class="hljs-number">-1</span>)<br>                    ans[u]=d;<br>                vis[u][clr]=<span class="hljs-literal">true</span>;<br>                clr^=<span class="hljs-number">1</span>;<br>                <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span>&amp; v:edges[clr][u])<br>                &#123;<br>                    <span class="hljs-keyword">if</span>(!vis[v][clr])<br>                        q.<span class="hljs-built_in">emplace</span>(v,clr);<br>                &#125;<br>            &#125;<br>            ++d;<br>        &#125;<br>        <span class="hljs-keyword">return</span> ans;<br>    &#125;<br>&#125;;<br></code></pre></td></tr></table></figure>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span> &#123;<br><span class="hljs-keyword">public</span>:<br>    <span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">getMaximumConsecutive</span><span class="hljs-params">(vector&lt;<span class="hljs-type">int</span>&gt;&amp; coins)</span> </span>&#123;<br>        <span class="hljs-built_in">sort</span>(coins.<span class="hljs-built_in">begin</span>(),coins.<span class="hljs-built_in">end</span>());<br>        <span class="hljs-type">int</span> res=<span class="hljs-number">1</span>;<br>        <span class="hljs-keyword">for</span>( <span class="hljs-type">int</span> i:coins)<br>        &#123;<br>            <span class="hljs-keyword">if</span>(i&lt;=res)<br>                res+=i;<br>            <span class="hljs-keyword">else</span><br>                <span class="hljs-keyword">break</span>;<br>        &#125;<br>        <span class="hljs-keyword">return</span> res;<br>    &#125;<br>&#125;;<br></code></pre></td></tr></table></figure>
                 
               </div>
             
@@ -333,8 +335,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>颜色交替最短路</div>
-      <div>http://lqz2.github.io/2023/02/02/颜色交替最短路/</div>
+      <div>构造连续值</div>
+      <div>http://lqz2.github.io/2023/02/04/构造连续值/</div>
     </div>
     <div class="license-meta">
       
@@ -346,7 +348,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2023年2月2日</div>
+          <div>2023年2月4日</div>
         </div>
       
       
@@ -378,18 +380,12 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2023/02/04/%E6%9E%84%E9%80%A0%E8%BF%9E%E7%BB%AD%E5%80%BC/" title="构造连续值">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">构造连续值</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2023/01/28/%E5%B9%B3%E8%A1%A1%E6%95%B0%E7%BB%84%E6%96%B9%E6%A1%88%E6%95%B0/" title="平衡数组方案数">
-                        <span class="hidden-mobile">平衡数组方案数</span>
+                      <a href="/2023/02/02/%E9%A2%9C%E8%89%B2%E4%BA%A4%E6%9B%BF%E6%9C%80%E7%9F%AD%E8%B7%AF/" title="颜色交替最短路">
+                        <span class="hidden-mobile">颜色交替最短路</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
@@ -443,6 +439,11 @@
 
 
   
+
+
+  
+  
+
 
 
 
