@@ -4,6 +4,25 @@
   
   
   <entry>
+    <title>循环码</title>
+    <link href="/2023/02/23/%E5%BE%AA%E7%8E%AF%E7%A0%81/"/>
+    <url>/2023/02/23/%E5%BE%AA%E7%8E%AF%E7%A0%81/</url>
+    
+    <content type="html"><![CDATA[<!-- TOC --><ul><li><a href="#%E5%BE%AA%E7%8E%AF%E7%A0%81">循环码</a><ul><li><a href="#%E9%A2%98%E7%9B%AE%E6%8F%8F%E8%BF%B0">题目描述</a></li><li><a href="#%E6%80%9D%E8%B7%AF">思路</a></li><li><a href="#%E4%BB%A3%E7%A0%81">代码</a></li></ul></li></ul><!-- /TOC --><h2 id="循环码"><a class="markdownIt-Anchor" href="#循环码"></a> 循环码</h2><p><a href="https://leetcode.cn/problems/circular-permutation-in-binary-representation/description/">原题</a></p><h3 id="题目描述"><a class="markdownIt-Anchor" href="#题目描述"></a> 题目描述</h3><p>给你两个整数 n 和 start。你的任务是返回任意 (0,1,2,…,2^n-1) 的排列 p，并且满足：</p><ul><li>p[0] = start</li><li>[i] 和 p[i+1] 的二进制表示形式只有一位不同</li><li>[0] 和 p[2^n -1] 的二进制表示形式也只有一位不同</li></ul><p>示例</p><figure class="highlight dns"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs dns">输入：n = <span class="hljs-number">2</span>, start = <span class="hljs-number">3</span><br>输出：[<span class="hljs-number">3,2,0,1</span>]<br>解释：这个排列的二进制表示是 (<span class="hljs-number">11,10,00,01</span>)<br>     所有的相邻元素都有一位是不同的，另一个有效的排列是 [<span class="hljs-number">3,1,0,2</span>]<br></code></pre></td></tr></table></figure><h3 id="思路"><a class="markdownIt-Anchor" href="#思路"></a> 思路</h3><p>这道题需要用到规律：<br />对于n位数，可生成<code>1&lt;&lt;n</code>个循环码，每个循环码的表达式为: <code>res[i]=i^(i&gt;&gt;1)</code>,如果要生成从<code>start</code>开始的循环码，则表达式为<code>res[i]=i^(i&gt;&gt;1)^start</code>。</p><h3 id="代码"><a class="markdownIt-Anchor" href="#代码"></a> 代码</h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span> &#123;<br><span class="hljs-keyword">public</span>:<br>    <span class="hljs-function">vector&lt;<span class="hljs-type">int</span>&gt; <span class="hljs-title">circularPermutation</span><span class="hljs-params">(<span class="hljs-type">int</span> n, <span class="hljs-type">int</span> start)</span> </span>&#123;<br>        <span class="hljs-function">vector&lt;<span class="hljs-type">int</span>&gt; <span class="hljs-title">res</span><span class="hljs-params">(<span class="hljs-number">1</span>&lt;&lt;n)</span></span>;<br>        <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i=<span class="hljs-number">0</span>;i&lt;res.<span class="hljs-built_in">size</span>();++i)<br>            res[i]=i^(i&gt;&gt;<span class="hljs-number">1</span>)^start;<br>        <span class="hljs-keyword">return</span> res;<br>    &#125;<br>&#125;;<br></code></pre></td></tr></table></figure>]]></content>
+    
+    
+    <categories>
+      
+      <category>机试</category>
+      
+    </categories>
+    
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>灌溉花园</title>
     <link href="/2023/02/21/%E7%81%8C%E6%BA%89%E8%8A%B1%E5%9B%AD/"/>
     <url>/2023/02/21/%E7%81%8C%E6%BA%89%E8%8A%B1%E5%9B%AD/</url>
