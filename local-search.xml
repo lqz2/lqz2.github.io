@@ -4,6 +4,25 @@
   
   
   <entry>
+    <title>交换字符使字符串相同</title>
+    <link href="/2023/02/25/%E4%BA%A4%E6%8D%A2%E5%AD%97%E7%AC%A6%E4%BD%BF%E5%AD%97%E7%AC%A6%E4%B8%B2%E7%9B%B8%E5%90%8C/"/>
+    <url>/2023/02/25/%E4%BA%A4%E6%8D%A2%E5%AD%97%E7%AC%A6%E4%BD%BF%E5%AD%97%E7%AC%A6%E4%B8%B2%E7%9B%B8%E5%90%8C/</url>
+    
+    <content type="html"><![CDATA[<!-- TOC --><ul><li><a href="#%E4%BA%A4%E6%8D%A2%E5%AD%97%E7%AC%A6%E4%BD%BF%E5%AD%97%E7%AC%A6%E4%B8%B2%E7%9B%B8%E5%90%8C">交换字符使字符串相同</a><ul><li><a href="#%E9%A2%98%E7%9B%AE%E6%8F%8F%E8%BF%B0">题目描述</a></li><li><a href="#%E6%80%9D%E8%B7%AF">思路</a></li><li><a href="#%E4%BB%A3%E7%A0%81">代码</a></li></ul></li></ul><!-- /TOC --><h2 id="交换字符使字符串相同"><a class="markdownIt-Anchor" href="#交换字符使字符串相同"></a> 交换字符使字符串相同</h2><p><a href="https://leetcode.cn/problems/minimum-swaps-to-make-strings-equal/description/">原题</a></p><h3 id="题目描述"><a class="markdownIt-Anchor" href="#题目描述"></a> 题目描述</h3><p>有两个长度相同的字符串 s1 和 s2，且它们其中 只含有 字符 “x” 和 “y”，你需要通过「交换字符」的方式使这两个字符串相同。</p><p>每次「交换字符」的时候，你都可以在两个字符串中各选一个字符进行交换。</p><p>交换只能发生在两个不同的字符串之间，绝对不能发生在同一个字符串内部。也就是说，我们可以交换 s1[i] 和 s2[j]，但不能交换 s1[i] 和 s1[j]。</p><p>最后，请你返回使 s1 和 s2 相同的最小交换次数，如果没有方法能够使得这两个字符串相同，则返回 -1</p><p>示例</p><figure class="highlight armasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs armasm">输入：<span class="hljs-built_in">s1</span> = <span class="hljs-string">&quot;xx&quot;</span>, <span class="hljs-built_in">s2</span> = <span class="hljs-string">&quot;yy&quot;</span><br>输出：<span class="hljs-number">1</span><br>解释：<br>交换 <span class="hljs-built_in">s1</span>[<span class="hljs-number">0</span>] 和 <span class="hljs-built_in">s2</span>[<span class="hljs-number">1</span>]，得到 <span class="hljs-built_in">s1</span> = <span class="hljs-string">&quot;yx&quot;</span>，<span class="hljs-built_in">s2</span> = <span class="hljs-string">&quot;yx&quot;</span>。<br></code></pre></td></tr></table></figure><h3 id="思路"><a class="markdownIt-Anchor" href="#思路"></a> 思路</h3><p>用xy表示<code>s1[i]=x,s2[i]=y</code>出现的次数，yx同理，这时有两种交换情况</p><ul><li><p>交换一次,使xy或者yx的值减少2,如<code>xx,yy-&gt;yx,yx</code></p></li><li><p>交换两次，使xy和yx各减少1,如<code>xy,yx-&gt;yy,xx-&gt;xy,xy</code></p></li></ul><p>为了尽可能减少交换次数，应当尽量使用第一种方式，同时如果<code>xy+yx</code>为奇数，那么怎么交换也不能相等，因为此时s1和s2两边有奇数个x或y，无法交换使得两个字符串的x和y数量相等。</p><h3 id="代码"><a class="markdownIt-Anchor" href="#代码"></a> 代码</h3><figure class="highlight csharp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs csharp"><span class="hljs-keyword">class</span> <span class="hljs-title">Solution</span> &#123;<br><span class="hljs-keyword">public</span>:<br>    <span class="hljs-function"><span class="hljs-built_in">int</span> <span class="hljs-title">minimumSwap</span>(<span class="hljs-params"><span class="hljs-built_in">string</span> s1, <span class="hljs-built_in">string</span> s2</span>)</span> &#123;<br>        <span class="hljs-built_in">int</span> n=s1.size();<br>        <span class="hljs-built_in">int</span> xy=<span class="hljs-number">0</span>,yx=<span class="hljs-number">0</span>;<br>        <span class="hljs-keyword">for</span>(<span class="hljs-built_in">int</span> i=<span class="hljs-number">0</span>;i&lt;n;++i)<br>        &#123;<br>            <span class="hljs-keyword">if</span>(s1[i]==<span class="hljs-string">&#x27;x&#x27;</span>&amp;&amp;s2[i]==<span class="hljs-string">&#x27;y&#x27;</span>)<br>                ++xy;<br>            <span class="hljs-keyword">if</span>(s1[i]==<span class="hljs-string">&#x27;y&#x27;</span>&amp;&amp;s2[i]==<span class="hljs-string">&#x27;x&#x27;</span>)<br>                ++yx;<br>        &#125;<br>        <span class="hljs-keyword">if</span>((xy+yx)&amp;<span class="hljs-number">1</span>)<br>            <span class="hljs-keyword">return</span> <span class="hljs-number">-1</span>;<br>        <span class="hljs-keyword">return</span> xy/<span class="hljs-number">2</span>+yx/<span class="hljs-number">2</span>+(xy%<span class="hljs-number">2</span>)*<span class="hljs-number">2</span>;<br>    &#125;<br>&#125;;<br></code></pre></td></tr></table></figure>]]></content>
+    
+    
+    <categories>
+      
+      <category>交换字符使字符串相同</category>
+      
+    </categories>
+    
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>循环码</title>
     <link href="/2023/02/23/%E5%BE%AA%E7%8E%AF%E7%A0%81/"/>
     <url>/2023/02/23/%E5%BE%AA%E7%8E%AF%E7%A0%81/</url>
