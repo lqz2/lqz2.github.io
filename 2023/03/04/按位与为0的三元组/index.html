@@ -16,21 +16,21 @@
   <meta name="author" content="zql">
   <meta name="keywords" content="">
   
-    <meta name="description" content="得分最高单词集合  题目描述 思路 代码      得分最高单词集合 原题  题目描述 你将会得到一份单词表 words，一个字母表 letters （可能会有重复字母），以及每个字母对应的得分情况表 score。 请你帮忙计算玩家在单词拼写游戏中所能获得的「最高得分」：能够由 letters 里的字母拼写出的 任意 属于 words 单词子集中，分数最高的单词集合的得分。 单词拼写游戏的规则">
+    <meta name="description" content="按位与为0的三元组  题目描述 思路 代码      按位与为0的三元组 原题  题目描述 给你一个整数数组 nums ，返回其中 按位与三元组 的数目。 按位与三元组 是由下标 (i, j, k) 组成的三元组，并满足下述全部条件： 0 &lt;&#x3D; i &lt; nums.length 0 &lt;&#x3D; j &lt; nums.length 0 &lt;&#x3D; k &lt; nums.length">
 <meta property="og:type" content="article">
-<meta property="og:title" content="得分最高单词集合">
-<meta property="og:url" content="http://lqz2.github.io/2023/02/26/%E5%BE%97%E5%88%86%E6%9C%80%E9%AB%98%E5%8D%95%E8%AF%8D%E9%9B%86%E5%90%88/index.html">
+<meta property="og:title" content="按位与为0的三元组">
+<meta property="og:url" content="http://lqz2.github.io/2023/03/04/%E6%8C%89%E4%BD%8D%E4%B8%8E%E4%B8%BA0%E7%9A%84%E4%B8%89%E5%85%83%E7%BB%84/index.html">
 <meta property="og:site_name" content="my blogs">
-<meta property="og:description" content="得分最高单词集合  题目描述 思路 代码      得分最高单词集合 原题  题目描述 你将会得到一份单词表 words，一个字母表 letters （可能会有重复字母），以及每个字母对应的得分情况表 score。 请你帮忙计算玩家在单词拼写游戏中所能获得的「最高得分」：能够由 letters 里的字母拼写出的 任意 属于 words 单词子集中，分数最高的单词集合的得分。 单词拼写游戏的规则">
+<meta property="og:description" content="按位与为0的三元组  题目描述 思路 代码      按位与为0的三元组 原题  题目描述 给你一个整数数组 nums ，返回其中 按位与三元组 的数目。 按位与三元组 是由下标 (i, j, k) 组成的三元组，并满足下述全部条件： 0 &lt;&#x3D; i &lt; nums.length 0 &lt;&#x3D; j &lt; nums.length 0 &lt;&#x3D; k &lt; nums.length">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2023-02-26T00:19:20.000Z">
-<meta property="article:modified_time" content="2023-02-26T00:33:21.696Z">
+<meta property="article:published_time" content="2023-03-04T00:08:15.000Z">
+<meta property="article:modified_time" content="2023-03-04T00:17:09.026Z">
 <meta property="article:author" content="zql">
 <meta name="twitter:card" content="summary_large_image">
   
   
   
-  <title>得分最高单词集合 - my blogs</title>
+  <title>按位与为0的三元组 - my blogs</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -195,7 +195,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="得分最高单词集合"></span>
+            <span id="subtitle" data-typed-text="按位与为0的三元组"></span>
           
         </div>
 
@@ -206,8 +206,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2023-02-26 08:19" pubdate>
-          2023年2月26日 早上
+        <time datetime="2023-03-04 08:08" pubdate>
+          2023年3月4日 早上
         </time>
       </span>
     
@@ -218,7 +218,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          1.7k 字
+          1k 字
         
       </span>
     
@@ -229,7 +229,7 @@
         
         
         
-          14 分钟
+          9 分钟
         
       </span>
     
@@ -267,14 +267,14 @@
         <div id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">得分最高单词集合</h1>
+            <h1 style="display: none">按位与为0的三元组</h1>
             
             
               <div class="markdown-body">
                 
                 <!-- TOC -->
 <ul>
-<li><a href="#%E5%BE%97%E5%88%86%E6%9C%80%E9%AB%98%E5%8D%95%E8%AF%8D%E9%9B%86%E5%90%88">得分最高单词集合</a>
+<li><a href="#%E6%8C%89%E4%BD%8D%E4%B8%8E%E4%B8%BA0%E7%9A%84%E4%B8%89%E5%85%83%E7%BB%84">按位与为0的三元组</a>
 <ul>
 <li><a href="#%E9%A2%98%E7%9B%AE%E6%8F%8F%E8%BF%B0">题目描述</a></li>
 <li><a href="#%E6%80%9D%E8%B7%AF">思路</a></li>
@@ -283,23 +283,21 @@
 </li>
 </ul>
 <!-- /TOC -->
-<h2 id="得分最高单词集合"><a class="markdownIt-Anchor" href="#得分最高单词集合"></a> 得分最高单词集合</h2>
-<p><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/maximum-score-words-formed-by-letters/description/">原题</a></p>
+<h2 id="按位与为0的三元组"><a class="markdownIt-Anchor" href="#按位与为0的三元组"></a> 按位与为0的三元组</h2>
+<p><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/triples-with-bitwise-and-equal-to-zero/description/">原题</a></p>
 <h3 id="题目描述"><a class="markdownIt-Anchor" href="#题目描述"></a> 题目描述</h3>
-<p>你将会得到一份单词表 words，一个字母表 letters （可能会有重复字母），以及每个字母对应的得分情况表 score。</p>
-<p>请你帮忙计算玩家在单词拼写游戏中所能获得的「最高得分」：能够由 letters 里的字母拼写出的 任意 属于 words 单词子集中，分数最高的单词集合的得分。</p>
-<p>单词拼写游戏的规则概述如下：</p>
-<p>玩家需要用字母表 letters 里的字母来拼写单词表 words 中的单词。<br />
-可以只使用字母表 letters 中的部分字母，但是每个字母最多被使用一次。<br />
-单词表 words 中每个单词只能计分（使用）一次。<br />
-根据字母得分情况表score，字母 ‘a’, ‘b’, ‘c’, … , ‘z’ 对应的得分分别为 score[0], score[1], …, score[25]。<br />
-本场游戏的「得分」是指：玩家所拼写出的单词集合里包含的所有字母的得分之和。</p>
+<p>给你一个整数数组 nums ，返回其中 按位与三元组 的数目。</p>
+<p>按位与三元组 是由下标 (i, j, k) 组成的三元组，并满足下述全部条件：</p>
+<p>0 &lt;= i &lt; nums.length<br />
+0 &lt;= j &lt; nums.length<br />
+0 &lt;= k &lt; nums.length<br />
+nums[i] &amp; nums[j] &amp; nums[k] == 0 ，其中 &amp; 表示按位与运算符。</p>
 <p>e.g.</p>
-<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs routeros">输入：words = [<span class="hljs-string">&quot;dog&quot;</span>,<span class="hljs-string">&quot;cat&quot;</span>,<span class="hljs-string">&quot;dad&quot;</span>,<span class="hljs-string">&quot;good&quot;</span>], letters = [<span class="hljs-string">&quot;a&quot;</span>,<span class="hljs-string">&quot;a&quot;</span>,<span class="hljs-string">&quot;c&quot;</span>,<span class="hljs-string">&quot;d&quot;</span>,<span class="hljs-string">&quot;d&quot;</span>,<span class="hljs-string">&quot;d&quot;</span>,<span class="hljs-string">&quot;g&quot;</span>,<span class="hljs-string">&quot;o&quot;</span>,<span class="hljs-string">&quot;o&quot;</span>], score = [1,0,9,5,0,0,3,0,0,0,0,0,0,0,2,0,0,0,0,0,0,0,0,0,0,0]<br>输出：23<br>解释：<br>字母得分为  <span class="hljs-attribute">a</span>=1, <span class="hljs-attribute">c</span>=9, <span class="hljs-attribute">d</span>=5, <span class="hljs-attribute">g</span>=3, <span class="hljs-attribute">o</span>=2<br>使用给定的字母表 letters，我们可以拼写单词 <span class="hljs-string">&quot;dad&quot;</span> (5+1+5)和 <span class="hljs-string">&quot;good&quot;</span> (3+2+2+5)，得分为 23 。<br>而单词 <span class="hljs-string">&quot;dad&quot;</span> 和 <span class="hljs-string">&quot;dog&quot;</span> 只能得到 21 分。<br></code></pre></td></tr></table></figure>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs routeros">输入：nums = [2,1,3]<br>输出：12<br>解释：可以选出如下 i, j, k 三元组：<br>(<span class="hljs-attribute">i</span>=0, <span class="hljs-attribute">j</span>=0, <span class="hljs-attribute">k</span>=1) : 2 &amp; 2 &amp; 1<br>(<span class="hljs-attribute">i</span>=0, <span class="hljs-attribute">j</span>=1, <span class="hljs-attribute">k</span>=0) : 2 &amp; 1 &amp; 2<br>(<span class="hljs-attribute">i</span>=0, <span class="hljs-attribute">j</span>=1, <span class="hljs-attribute">k</span>=1) : 2 &amp; 1 &amp; 1<br>(<span class="hljs-attribute">i</span>=0, <span class="hljs-attribute">j</span>=1, <span class="hljs-attribute">k</span>=2) : 2 &amp; 1 &amp; 3<br>(<span class="hljs-attribute">i</span>=0, <span class="hljs-attribute">j</span>=2, <span class="hljs-attribute">k</span>=1) : 2 &amp; 3 &amp; 1<br>(<span class="hljs-attribute">i</span>=1, <span class="hljs-attribute">j</span>=0, <span class="hljs-attribute">k</span>=0) : 1 &amp; 2 &amp; 2<br>(<span class="hljs-attribute">i</span>=1, <span class="hljs-attribute">j</span>=0, <span class="hljs-attribute">k</span>=1) : 1 &amp; 2 &amp; 1<br>(<span class="hljs-attribute">i</span>=1, <span class="hljs-attribute">j</span>=0, <span class="hljs-attribute">k</span>=2) : 1 &amp; 2 &amp; 3<br>(<span class="hljs-attribute">i</span>=1, <span class="hljs-attribute">j</span>=1, <span class="hljs-attribute">k</span>=0) : 1 &amp; 1 &amp; 2<br>(<span class="hljs-attribute">i</span>=1, <span class="hljs-attribute">j</span>=2, <span class="hljs-attribute">k</span>=0) : 1 &amp; 3 &amp; 2<br>(<span class="hljs-attribute">i</span>=2, <span class="hljs-attribute">j</span>=0, <span class="hljs-attribute">k</span>=1) : 3 &amp; 2 &amp; 1<br>(<span class="hljs-attribute">i</span>=2, <span class="hljs-attribute">j</span>=1, <span class="hljs-attribute">k</span>=0) : 3 &amp; 1 &amp; 2<br></code></pre></td></tr></table></figure>
 <h3 id="思路"><a class="markdownIt-Anchor" href="#思路"></a> 思路</h3>
-<p>这道题主要用到状态压缩的思想，对于words中的每个单词，都可以用<code>0/1</code>来表示他是否被使用，比如’<code>110</code>可以表示使用了第二个和第三个单词，假设words中共有<code>n</code>个单词，那么一共有<code>1&lt;&lt;n</code>种状态，需要遍历所有状态。每次遍历时，以此遍历words中的单词，判断是否在当前状态里，如果在的话，统计各个字母出现的次数，每遍历完一个状态，计算一次得分，并更新最高分数即可。</p>
+<p>这道题直接枚举的话时间复杂度太高，会超时，因此可以用一个数组记录两个数字相与结果出现的频率，然后遍历第三个数与其相与，如果结果为<code>0</code>，则统计到结果中，具体代码如下。</p>
 <h3 id="代码"><a class="markdownIt-Anchor" href="#代码"></a> 代码</h3>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span> &#123;<br><span class="hljs-keyword">public</span>:<br>    <span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">maxScoreWords</span><span class="hljs-params">(vector&lt;string&gt;&amp; words, vector&lt;<span class="hljs-type">char</span>&gt;&amp; letters, vector&lt;<span class="hljs-type">int</span>&gt;&amp; score)</span> </span>&#123;<br>        <span class="hljs-type">int</span> n=words.<span class="hljs-built_in">size</span>();<br>        <span class="hljs-function">vector&lt;<span class="hljs-type">int</span>&gt; <span class="hljs-title">cnt</span><span class="hljs-params">(<span class="hljs-number">26</span>)</span></span>;<br>        <span class="hljs-keyword">for</span>(<span class="hljs-type">char</span> &amp; c:letters)<br>            ++cnt[c-<span class="hljs-string">&#x27;a&#x27;</span>];<br>        <span class="hljs-type">int</span> num=<span class="hljs-number">1</span>&lt;&lt;n;<br>        <span class="hljs-type">int</span> ans=<span class="hljs-number">0</span>;<br>        <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i=<span class="hljs-number">1</span>;i&lt;num;++i)<br>        &#123;<br>            <span class="hljs-function">vector&lt;<span class="hljs-type">int</span>&gt; <span class="hljs-title">t</span><span class="hljs-params">(<span class="hljs-number">26</span>)</span></span>;<br>            <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> j=<span class="hljs-number">0</span>;j&lt;n;++j)<br>            &#123;<br>                <span class="hljs-keyword">if</span>((<span class="hljs-number">1</span>&lt;&lt;j)&amp;i)<br>                &#123;<br>                    <span class="hljs-keyword">for</span>(<span class="hljs-type">char</span>&amp;c:words[j])<br>                        ++t[c-<span class="hljs-string">&#x27;a&#x27;</span>];<br>                &#125;<br>            &#125;<br>            <span class="hljs-type">bool</span> flag=<span class="hljs-literal">true</span>;<br>            <span class="hljs-type">int</span> sum=<span class="hljs-number">0</span>;<br>            <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> k=<span class="hljs-number">0</span>;k&lt;<span class="hljs-number">26</span>;++k)<br>            &#123;<br>                sum+=score[k]*t[k];<br>                <span class="hljs-keyword">if</span>(t[k]&gt;cnt[k])<br>                &#123;<br>                    flag=<span class="hljs-literal">false</span>;<br>                    <span class="hljs-keyword">break</span>;<br>                &#125;<br>            &#125;<br>            <span class="hljs-keyword">if</span>(flag)<br>                ans=<span class="hljs-built_in">max</span>(ans,sum);<br>        &#125;<br>        <span class="hljs-keyword">return</span> ans;<br>    &#125;<br>&#125;;<br></code></pre></td></tr></table></figure>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span> &#123;<br><span class="hljs-keyword">public</span>:<br>    <span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">countTriplets</span><span class="hljs-params">(vector&lt;<span class="hljs-type">int</span>&gt;&amp; nums)</span> </span>&#123;<br>        <span class="hljs-type">int</span> n=<span class="hljs-number">1</span>&lt;&lt;<span class="hljs-number">16</span>;<br>        <span class="hljs-function">vector&lt;<span class="hljs-type">int</span>&gt; <span class="hljs-title">v</span><span class="hljs-params">(n)</span></span>;<br>        <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> a:nums)<br>        &#123;<br>            <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> b:nums)<br>                ++v[a&amp;b];<br>        &#125;<br>        <span class="hljs-type">int</span> ans=<span class="hljs-number">0</span>;<br>        <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> x:nums)<br>        &#123;<br>            <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> k=<span class="hljs-number">0</span>;k&lt;n;++k)<br>            &#123;<br>                <span class="hljs-keyword">if</span>(v[k]&amp;&amp;(x&amp;k)==<span class="hljs-number">0</span>)<br>                    ans+=v[k];<br>            &#125;<br>        &#125;<br>        <span class="hljs-keyword">return</span> ans;<br>    &#125;<br>&#125;;<br></code></pre></td></tr></table></figure>
                 
               </div>
             
@@ -337,8 +335,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>得分最高单词集合</div>
-      <div>http://lqz2.github.io/2023/02/26/得分最高单词集合/</div>
+      <div>按位与为0的三元组</div>
+      <div>http://lqz2.github.io/2023/03/04/按位与为0的三元组/</div>
     </div>
     <div class="license-meta">
       
@@ -350,7 +348,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2023年2月26日</div>
+          <div>2023年3月4日</div>
         </div>
       
       
@@ -382,18 +380,12 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2023/03/04/%E6%8C%89%E4%BD%8D%E4%B8%8E%E4%B8%BA0%E7%9A%84%E4%B8%89%E5%85%83%E7%BB%84/" title="按位与为0的三元组">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">按位与为0的三元组</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2023/02/25/%E4%BA%A4%E6%8D%A2%E5%AD%97%E7%AC%A6%E4%BD%BF%E5%AD%97%E7%AC%A6%E4%B8%B2%E7%9B%B8%E5%90%8C/" title="交换字符使字符串相同">
-                        <span class="hidden-mobile">交换字符使字符串相同</span>
+                      <a href="/2023/02/26/%E5%BE%97%E5%88%86%E6%9C%80%E9%AB%98%E5%8D%95%E8%AF%8D%E9%9B%86%E5%90%88/" title="得分最高单词集合">
+                        <span class="hidden-mobile">得分最高单词集合</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
