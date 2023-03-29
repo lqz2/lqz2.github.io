@@ -4,6 +4,25 @@
   
   
   <entry>
+    <title>统计字典序元音字符串的数目</title>
+    <link href="/2023/03/29/%E7%BB%9F%E8%AE%A1%E5%AD%97%E5%85%B8%E5%BA%8F%E5%85%83%E9%9F%B3%E5%AD%97%E7%AC%A6%E4%B8%B2%E7%9A%84%E6%95%B0%E7%9B%AE/"/>
+    <url>/2023/03/29/%E7%BB%9F%E8%AE%A1%E5%AD%97%E5%85%B8%E5%BA%8F%E5%85%83%E9%9F%B3%E5%AD%97%E7%AC%A6%E4%B8%B2%E7%9A%84%E6%95%B0%E7%9B%AE/</url>
+    
+    <content type="html"><![CDATA[<!-- TOC --><ul><li><a href="#%E7%BB%9F%E8%AE%A1%E5%AD%97%E5%85%B8%E5%BA%8F%E5%85%83%E9%9F%B3%E5%AD%97%E7%AC%A6%E4%B8%B2%E7%9A%84%E6%95%B0%E7%9B%AE">统计字典序元音字符串的数目</a></li><li><a href="#%E9%A2%98%E7%9B%AE%E6%8F%8F%E8%BF%B0">题目描述</a></li><li><a href="#%E6%80%9D%E8%B7%AF">思路</a></li><li><a href="#%E4%BB%A3%E7%A0%81">代码</a></li></ul><!-- /TOC --><h2 id="统计字典序元音字符串的数目"><a class="markdownIt-Anchor" href="#统计字典序元音字符串的数目"></a> 统计字典序元音字符串的数目</h2><p><a href="https://leetcode.cn/problems/count-sorted-vowel-strings/description/">原题</a></p><h2 id="题目描述"><a class="markdownIt-Anchor" href="#题目描述"></a> 题目描述</h2><p>给你一个整数 n，请返回长度为 n 、仅由元音 (a, e, i, o, u) 组成且按 字典序排列 的字符串数量。</p><p>字符串 s 按 字典序排列 需要满足：对于所有有效的 i，s[i] 在字母表中的位置总是与 s[i+1] 相同或在 s[i+1] 之前。</p><p>e.g.</p><figure class="highlight prolog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs prolog">输入：n = <span class="hljs-number">2</span><br>输出：<span class="hljs-number">15</span><br>解释：仅由元音组成的 <span class="hljs-number">15</span> 个字典序字符串为<br>[<span class="hljs-string">&quot;aa&quot;</span>,<span class="hljs-string">&quot;ae&quot;</span>,<span class="hljs-string">&quot;ai&quot;</span>,<span class="hljs-string">&quot;ao&quot;</span>,<span class="hljs-string">&quot;au&quot;</span>,<span class="hljs-string">&quot;ee&quot;</span>,<span class="hljs-string">&quot;ei&quot;</span>,<span class="hljs-string">&quot;eo&quot;</span>,<span class="hljs-string">&quot;eu&quot;</span>,<span class="hljs-string">&quot;ii&quot;</span>,<span class="hljs-string">&quot;io&quot;</span>,<span class="hljs-string">&quot;iu&quot;</span>,<span class="hljs-string">&quot;oo&quot;</span>,<span class="hljs-string">&quot;ou&quot;</span>,<span class="hljs-string">&quot;uu&quot;</span>]<br>注意，<span class="hljs-string">&quot;ea&quot;</span> 不是符合题意的字符串，因为 <span class="hljs-string">&#x27;e&#x27;</span> 在字母表中的位置比 <span class="hljs-string">&#x27;a&#x27;</span> 靠后<br></code></pre></td></tr></table></figure><h2 id="思路"><a class="markdownIt-Anchor" href="#思路"></a> 思路</h2><p>看到了一个很简洁的思路，😢，主要需要考虑分别以5个字母结尾的个数，对于长度为n的字符串，如果要满足按字典序排列，以a结尾的个数只有1个，而以e结尾的个数等于前一位以a结尾的数目加上以e结尾的数目，即<code>e=a+e</code>，以此类推。。。</p><h2 id="代码"><a class="markdownIt-Anchor" href="#代码"></a> 代码</h2><figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs routeros">class Solution &#123;<br>public:<br>    int countVowelStrings(int n) &#123;<br>        int <span class="hljs-attribute">a</span>=1,e=1,i=1,o=1,u=1;<br>        <span class="hljs-keyword">for</span>(int <span class="hljs-attribute">k</span>=1;k&lt;n;++k)<br>        &#123;<br>            <span class="hljs-attribute">e</span>=a+e;<br>            <span class="hljs-attribute">i</span>=e+i;<br>            <span class="hljs-attribute">o</span>=i+o;<br>            <span class="hljs-attribute">u</span>=o+u;<br>        &#125;<br>        return a+e+i+o+u;<br>    &#125;<br>&#125;;<br></code></pre></td></tr></table></figure>]]></content>
+    
+    
+    <categories>
+      
+      <category>机试</category>
+      
+    </categories>
+    
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>最短公共超序列</title>
     <link href="/2023/03/28/%E6%9C%80%E7%9F%AD%E5%85%AC%E5%85%B1%E8%B6%85%E5%BA%8F%E5%88%97/"/>
     <url>/2023/03/28/%E6%9C%80%E7%9F%AD%E5%85%AC%E5%85%B1%E8%B6%85%E5%BA%8F%E5%88%97/</url>
