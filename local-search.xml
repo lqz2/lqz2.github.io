@@ -4,6 +4,25 @@
   
   
   <entry>
+    <title>段式回文</title>
+    <link href="/2023/04/12/%E6%AE%B5%E5%BC%8F%E5%9B%9E%E6%96%87/"/>
+    <url>/2023/04/12/%E6%AE%B5%E5%BC%8F%E5%9B%9E%E6%96%87/</url>
+    
+    <content type="html"><![CDATA[<!-- TOC --><ul><li><a href="#%E6%AE%B5%E5%BC%8F%E5%9B%9E%E6%96%87">段式回文</a><ul><li><a href="#%E9%A2%98%E7%9B%AE%E6%8F%8F%E8%BF%B0">题目描述</a></li><li><a href="#%E6%80%9D%E8%B7%AF">思路</a></li><li><a href="#%E4%BB%A3%E7%A0%81">代码</a></li></ul></li></ul><!-- /TOC --><h2 id="段式回文"><a class="markdownIt-Anchor" href="#段式回文"></a> 段式回文</h2><p><a href="https://leetcode.cn/problems/longest-chunked-palindrome-decomposition/description/">原题</a></p><h3 id="题目描述"><a class="markdownIt-Anchor" href="#题目描述"></a> 题目描述</h3><p>你会得到一个字符串 text 。你应该把它分成 k 个子字符串 (subtext1, subtext2，…， subtextk) ，要求满足:</p><ul><li>subtexti 是 非空 字符串</li><li>所有子字符串的连接等于 text ( 即subtext1 + subtext2 + … + subtextk == text )</li><li>对于所有 i 的有效值( 即 1 &lt;= i &lt;= k ) ，subtexti == subtextk - i + 1 均成立<br />返回k可能最大值。</li></ul><p>e.g.</p><figure class="highlight abnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs abnf">输入：text <span class="hljs-operator">=</span> <span class="hljs-string">&quot;ghiabcdefhelloadamhelloabcdefghi&quot;</span><br>输出：<span class="hljs-number">7</span><br>解释：我们可以把字符串拆分成 <span class="hljs-string">&quot;(ghi)(abcdef)(hello)(adam)(hello)(abcdef)(ghi)&quot;</span>。<br></code></pre></td></tr></table></figure><h3 id="思路"><a class="markdownIt-Anchor" href="#思路"></a> 思路</h3><p>枚举子串的长度<code>i</code>，分别截取前后长度为<code>i</code>的子串，如果相等，答案加2，否则继续枚举，当<code>i&gt;text.length/2</code>时，说明已经不可再分，答案加1</p><h3 id="代码"><a class="markdownIt-Anchor" href="#代码"></a> 代码</h3><figure class="highlight arduino"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><code class="hljs arduino"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span> &#123;<br><span class="hljs-keyword">public</span>:<br>    <span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">longestDecomposition</span><span class="hljs-params">(string text)</span> </span>&#123;<br>        <span class="hljs-type">int</span> ans=<span class="hljs-number">0</span>;<br>        <span class="hljs-keyword">while</span>(!text.<span class="hljs-built_in">empty</span>())<br>        &#123;<br>            <span class="hljs-type">int</span> i=<span class="hljs-number">1</span>,n=text.<span class="hljs-built_in">length</span>();<br>            <span class="hljs-keyword">while</span>(i&lt;=n/<span class="hljs-number">2</span>&amp;&amp;text.<span class="hljs-built_in">substr</span>(<span class="hljs-number">0</span>,i)!=text.<span class="hljs-built_in">substr</span>(n-i))<br>                ++i;<br>            <span class="hljs-keyword">if</span>(i&gt;n/<span class="hljs-number">2</span>)<br>            &#123;<br>                ++ans;<br>                <span class="hljs-keyword">break</span>;<br>            &#125;<br>            ans+=<span class="hljs-number">2</span>;<br>            text=text.<span class="hljs-built_in">substr</span>(i,n-i*<span class="hljs-number">2</span>);<br>        &#125;<br>        <span class="hljs-keyword">return</span> ans;<br>    &#125;<br>&#125;;<br></code></pre></td></tr></table></figure>]]></content>
+    
+    
+    <categories>
+      
+      <category>机试</category>
+      
+    </categories>
+    
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>合并石头的最低成本</title>
     <link href="/2023/04/04/%E5%90%88%E5%B9%B6%E7%9F%B3%E5%A4%B4%E7%9A%84%E6%9C%80%E4%BD%8E%E6%88%90%E6%9C%AC/"/>
     <url>/2023/04/04/%E5%90%88%E5%B9%B6%E7%9F%B3%E5%A4%B4%E7%9A%84%E6%9C%80%E4%BD%8E%E6%88%90%E6%9C%AC/</url>

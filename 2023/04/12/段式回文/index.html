@@ -16,21 +16,21 @@
   <meta name="author" content="zql">
   <meta name="keywords" content="">
   
-    <meta name="description" content="合并石头的最低成本  题目描述 思路 代码      合并石头的最低成本 原题  题目描述 有 N 堆石头排成一排，第 i 堆中有 stones[i] 块石头。 每次移动（move）需要将连续的 K 堆石头合并为一堆，而这个移动的成本为这 K 堆石头的总数。 找出把所有石头合并成一堆的最低成本。如果不可能，返回 -1 。 e.g. 12345678输入：stones &#x3D; [3,2,4,1],">
+    <meta name="description" content="段式回文  题目描述 思路 代码      段式回文 原题  题目描述 你会得到一个字符串 text 。你应该把它分成 k 个子字符串 (subtext1, subtext2，…， subtextk) ，要求满足:  subtexti 是 非空 字符串 所有子字符串的连接等于 text ( 即subtext1 + subtext2 + … + subtextk &#x3D;&#x3D; text ) 对于所有 i">
 <meta property="og:type" content="article">
-<meta property="og:title" content="合并石头的最低成本">
-<meta property="og:url" content="http://lqz2.github.io/2023/04/04/%E5%90%88%E5%B9%B6%E7%9F%B3%E5%A4%B4%E7%9A%84%E6%9C%80%E4%BD%8E%E6%88%90%E6%9C%AC/index.html">
+<meta property="og:title" content="段式回文">
+<meta property="og:url" content="http://lqz2.github.io/2023/04/12/%E6%AE%B5%E5%BC%8F%E5%9B%9E%E6%96%87/index.html">
 <meta property="og:site_name" content="my blogs">
-<meta property="og:description" content="合并石头的最低成本  题目描述 思路 代码      合并石头的最低成本 原题  题目描述 有 N 堆石头排成一排，第 i 堆中有 stones[i] 块石头。 每次移动（move）需要将连续的 K 堆石头合并为一堆，而这个移动的成本为这 K 堆石头的总数。 找出把所有石头合并成一堆的最低成本。如果不可能，返回 -1 。 e.g. 12345678输入：stones &#x3D; [3,2,4,1],">
+<meta property="og:description" content="段式回文  题目描述 思路 代码      段式回文 原题  题目描述 你会得到一个字符串 text 。你应该把它分成 k 个子字符串 (subtext1, subtext2，…， subtextk) ，要求满足:  subtexti 是 非空 字符串 所有子字符串的连接等于 text ( 即subtext1 + subtext2 + … + subtextk &#x3D;&#x3D; text ) 对于所有 i">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2023-04-04T01:08:08.000Z">
-<meta property="article:modified_time" content="2023-04-04T01:23:17.372Z">
+<meta property="article:published_time" content="2023-04-12T00:16:06.000Z">
+<meta property="article:modified_time" content="2023-04-12T00:23:56.941Z">
 <meta property="article:author" content="zql">
 <meta name="twitter:card" content="summary_large_image">
   
   
   
-  <title>合并石头的最低成本 - my blogs</title>
+  <title>段式回文 - my blogs</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -195,7 +195,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="合并石头的最低成本"></span>
+            <span id="subtitle" data-typed-text="段式回文"></span>
           
         </div>
 
@@ -206,8 +206,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2023-04-04 09:08" pubdate>
-          2023年4月4日 上午
+        <time datetime="2023-04-12 08:16" pubdate>
+          2023年4月12日 早上
         </time>
       </span>
     
@@ -218,7 +218,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          1.1k 字
+          743 字
         
       </span>
     
@@ -229,7 +229,7 @@
         
         
         
-          10 分钟
+          7 分钟
         
       </span>
     
@@ -267,14 +267,14 @@
         <div id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">合并石头的最低成本</h1>
+            <h1 style="display: none">段式回文</h1>
             
             
               <div class="markdown-body">
                 
                 <!-- TOC -->
 <ul>
-<li><a href="#%E5%90%88%E5%B9%B6%E7%9F%B3%E5%A4%B4%E7%9A%84%E6%9C%80%E4%BD%8E%E6%88%90%E6%9C%AC">合并石头的最低成本</a>
+<li><a href="#%E6%AE%B5%E5%BC%8F%E5%9B%9E%E6%96%87">段式回文</a>
 <ul>
 <li><a href="#%E9%A2%98%E7%9B%AE%E6%8F%8F%E8%BF%B0">题目描述</a></li>
 <li><a href="#%E6%80%9D%E8%B7%AF">思路</a></li>
@@ -283,18 +283,22 @@
 </li>
 </ul>
 <!-- /TOC -->
-<h2 id="合并石头的最低成本"><a class="markdownIt-Anchor" href="#合并石头的最低成本"></a> 合并石头的最低成本</h2>
-<p><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/minimum-cost-to-merge-stones/description/">原题</a></p>
+<h2 id="段式回文"><a class="markdownIt-Anchor" href="#段式回文"></a> 段式回文</h2>
+<p><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/longest-chunked-palindrome-decomposition/description/">原题</a></p>
 <h3 id="题目描述"><a class="markdownIt-Anchor" href="#题目描述"></a> 题目描述</h3>
-<p>有 N 堆石头排成一排，第 i 堆中有 stones[i] 块石头。</p>
-<p>每次移动（move）需要将连续的 K 堆石头合并为一堆，而这个移动的成本为这 K 堆石头的总数。</p>
-<p>找出把所有石头合并成一堆的最低成本。如果不可能，返回 -1 。<br />
-e.g.</p>
-<figure class="highlight inform7"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs inform7">输入：stones = <span class="hljs-comment">[3,2,4,1]</span>, K = 2<br>输出：20<br>解释：<br>从 <span class="hljs-comment">[3, 2, 4, 1]</span> 开始。<br>合并 <span class="hljs-comment">[3, 2]</span>，成本为 5，剩下 <span class="hljs-comment">[5, 4, 1]</span>。<br>合并 <span class="hljs-comment">[4, 1]</span>，成本为 5，剩下 <span class="hljs-comment">[5, 5]</span>。<br>合并 <span class="hljs-comment">[5, 5]</span>，成本为 10，剩下 <span class="hljs-comment">[10]</span>。<br>总成本 20，这是可能的最小值。<br></code></pre></td></tr></table></figure>
+<p>你会得到一个字符串 text 。你应该把它分成 k 个子字符串 (subtext1, subtext2，…， subtextk) ，要求满足:</p>
+<ul>
+<li>subtexti 是 非空 字符串</li>
+<li>所有子字符串的连接等于 text ( 即subtext1 + subtext2 + … + subtextk == text )</li>
+<li>对于所有 i 的有效值( 即 1 &lt;= i &lt;= k ) ，subtexti == subtextk - i + 1 均成立<br />
+返回k可能最大值。</li>
+</ul>
+<p>e.g.</p>
+<figure class="highlight abnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs abnf">输入：text <span class="hljs-operator">=</span> <span class="hljs-string">&quot;ghiabcdefhelloadamhelloabcdefghi&quot;</span><br>输出：<span class="hljs-number">7</span><br>解释：我们可以把字符串拆分成 <span class="hljs-string">&quot;(ghi)(abcdef)(hello)(adam)(hello)(abcdef)(ghi)&quot;</span>。<br></code></pre></td></tr></table></figure>
 <h3 id="思路"><a class="markdownIt-Anchor" href="#思路"></a> 思路</h3>
-<p>用<code>dfs(i,j,p)</code>表示把第i堆到第j堆合并成p堆需要的最小成本，然后将原问题划分成子问题。比如有7堆石子，k=3，实际上要求的就是<code>dfs(0,6,1)</code>，而它又可以划分为<code>dfs(0,6,3)+0到6所有堆之和</code>，对于<code>dfs(0,6,3)</code>，按第一堆的合并方式也分为几种情况，比如<code>dfs(0,0,1)+dfs(1,6,2)</code>，<code>dfs(0,2,1)+dfs(3,6,2)</code>，<code>dfs(0,4,1)+dfs(5,6,2)</code>，取这些情况中最小的即可。</p>
+<p>枚举子串的长度<code>i</code>，分别截取前后长度为<code>i</code>的子串，如果相等，答案加2，否则继续枚举，当<code>i&gt;text.length/2</code>时，说明已经不可再分，答案加1</p>
 <h3 id="代码"><a class="markdownIt-Anchor" href="#代码"></a> 代码</h3>
-<figure class="highlight excel"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br></pre></td><td class="code"><pre><code class="hljs excel">class Solution &#123;<br>publ<span class="hljs-symbol">ic:</span><br>    <span class="hljs-built_in">int</span> mergeStones(vector&lt;<span class="hljs-built_in">int</span>&gt;&amp; stones, <span class="hljs-built_in">int</span> k) &#123;<br>        <span class="hljs-built_in">int</span> <span class="hljs-built_in">n</span>=stones.size();<br>        <span class="hljs-built_in">if</span>((<span class="hljs-built_in">n</span>-<span class="hljs-number">1</span>)%(k-<span class="hljs-number">1</span>))<br>            return -<span class="hljs-number">1</span>;<br>        vector&lt;<span class="hljs-built_in">int</span>&gt; <span class="hljs-built_in">sum</span>(<span class="hljs-built_in">n</span>+<span class="hljs-number">1</span>);<br>        for(<span class="hljs-built_in">int</span> i=<span class="hljs-number">0</span>;i&lt;<span class="hljs-built_in">n</span>;++i)<br>            <span class="hljs-built_in">sum</span>[i+<span class="hljs-number">1</span>]=<span class="hljs-built_in">sum</span>[i]+stones[i];<br>        <span class="hljs-built_in">int</span> m[<span class="hljs-built_in">n</span>][<span class="hljs-built_in">n</span>][k+<span class="hljs-number">1</span>];<br>        memset(m,-<span class="hljs-number">1</span>,sizeof(m));<br>        function&lt;<span class="hljs-built_in">int</span>(<span class="hljs-built_in">int</span>,<span class="hljs-built_in">int</span>,<span class="hljs-built_in">int</span>)&gt; dfs=[&amp;](<span class="hljs-built_in">int</span> i,<span class="hljs-built_in">int</span> j,<span class="hljs-built_in">int</span> p)-&gt;<span class="hljs-built_in">int</span><br>        &#123;<br>            <span class="hljs-built_in">if</span>(m[i][j][p]!=-<span class="hljs-number">1</span>)<br>                return m[i][j][p];<br>            <span class="hljs-built_in">if</span>(p==<span class="hljs-number">1</span>)<br>            &#123;<br>                <span class="hljs-built_in">if</span>(i==j)<br>                    return <span class="hljs-number">0</span>;<br>                else<br>                    return dfs(i,j,k)+<span class="hljs-built_in">sum</span>[j+<span class="hljs-number">1</span>]-<span class="hljs-built_in">sum</span>[i];<br>            &#125;<br>            <span class="hljs-built_in">int</span> res=INT_MAX;<br>            for(<span class="hljs-built_in">int</span> <span class="hljs-built_in">t</span>=i;<span class="hljs-built_in">t</span>&lt;j;<span class="hljs-built_in">t</span>+=k-<span class="hljs-number">1</span>)<br>            &#123;<br>                res=<span class="hljs-built_in">min</span>(res,dfs(i,<span class="hljs-built_in">t</span>,<span class="hljs-number">1</span>)+dfs(<span class="hljs-built_in">t</span>+<span class="hljs-number">1</span>,j,p-<span class="hljs-number">1</span>));<br>            &#125;<br>            m[i][j][p]=res;<br>            return res;<br>        &#125;;<br>        return dfs(<span class="hljs-number">0</span>,<span class="hljs-built_in">n</span>-<span class="hljs-number">1</span>,<span class="hljs-number">1</span>);<br>    &#125;<br>&#125;;<br></code></pre></td></tr></table></figure>
+<figure class="highlight arduino"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><code class="hljs arduino"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span> &#123;<br><span class="hljs-keyword">public</span>:<br>    <span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">longestDecomposition</span><span class="hljs-params">(string text)</span> </span>&#123;<br>        <span class="hljs-type">int</span> ans=<span class="hljs-number">0</span>;<br>        <span class="hljs-keyword">while</span>(!text.<span class="hljs-built_in">empty</span>())<br>        &#123;<br>            <span class="hljs-type">int</span> i=<span class="hljs-number">1</span>,n=text.<span class="hljs-built_in">length</span>();<br>            <span class="hljs-keyword">while</span>(i&lt;=n/<span class="hljs-number">2</span>&amp;&amp;text.<span class="hljs-built_in">substr</span>(<span class="hljs-number">0</span>,i)!=text.<span class="hljs-built_in">substr</span>(n-i))<br>                ++i;<br>            <span class="hljs-keyword">if</span>(i&gt;n/<span class="hljs-number">2</span>)<br>            &#123;<br>                ++ans;<br>                <span class="hljs-keyword">break</span>;<br>            &#125;<br>            ans+=<span class="hljs-number">2</span>;<br>            text=text.<span class="hljs-built_in">substr</span>(i,n-i*<span class="hljs-number">2</span>);<br>        &#125;<br>        <span class="hljs-keyword">return</span> ans;<br>    &#125;<br>&#125;;<br></code></pre></td></tr></table></figure>
                 
               </div>
             
@@ -332,8 +336,8 @@ e.g.</p>
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>合并石头的最低成本</div>
-      <div>http://lqz2.github.io/2023/04/04/合并石头的最低成本/</div>
+      <div>段式回文</div>
+      <div>http://lqz2.github.io/2023/04/12/段式回文/</div>
     </div>
     <div class="license-meta">
       
@@ -345,7 +349,7 @@ e.g.</p>
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2023年4月4日</div>
+          <div>2023年4月12日</div>
         </div>
       
       
@@ -377,18 +381,12 @@ e.g.</p>
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2023/04/12/%E6%AE%B5%E5%BC%8F%E5%9B%9E%E6%96%87/" title="段式回文">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">段式回文</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2023/04/03/%E4%BA%A4%E6%8D%A2%E4%B8%80%E6%AC%A1%E7%9A%84%E5%85%88%E5%89%8D%E6%8E%92%E5%88%97/" title="交换一次的先前排列">
-                        <span class="hidden-mobile">交换一次的先前排列</span>
+                      <a href="/2023/04/04/%E5%90%88%E5%B9%B6%E7%9F%B3%E5%A4%B4%E7%9A%84%E6%9C%80%E4%BD%8E%E6%88%90%E6%9C%AC/" title="合并石头的最低成本">
+                        <span class="hidden-mobile">合并石头的最低成本</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
