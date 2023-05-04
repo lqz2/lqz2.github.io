@@ -16,21 +16,21 @@
   <meta name="author" content="zql">
   <meta name="keywords" content="">
   
-    <meta name="description" content="检查替换后的词是否有效  题目描述 思路 代码      检查替换后的词是否有效 原题  题目描述 给你一个字符串 s ，请你判断它是否 有效 。 字符串 s 有效 需要满足：假设开始有一个空字符串 t &#x3D; “” ，你可以执行 任意次 下述操作将 t 转换为 s ： 将字符串 “abc” 插入到 t 中的任意位置。形式上，t 变为 tleft + “abc” + tright，其中 t &#x3D;&#x3D;">
+    <meta name="description" content="摘水果  题目描述 思路 代码      摘水果 原题  题目描述 在一个无限的 x 坐标轴上，有许多水果分布在其中某些位置。给你一个二维整数数组 fruits ，其中 fruits[i] &#x3D; [positioni, amounti] 表示共有 amounti 个水果放置在 positioni 上。fruits 已经按 positioni 升序排列 ，每个 positioni 互不相同 。 另">
 <meta property="og:type" content="article">
-<meta property="og:title" content="检查替换后的词是否有效">
-<meta property="og:url" content="http://lqz2.github.io/2023/05/03/%E6%A3%80%E6%9F%A5%E6%9B%BF%E6%8D%A2%E5%90%8E%E7%9A%84%E8%AF%8D%E6%98%AF%E5%90%A6%E6%9C%89%E6%95%88/index.html">
+<meta property="og:title" content="摘水果">
+<meta property="og:url" content="http://lqz2.github.io/2023/05/04/%E6%91%98%E6%B0%B4%E6%9E%9C/index.html">
 <meta property="og:site_name" content="my blogs">
-<meta property="og:description" content="检查替换后的词是否有效  题目描述 思路 代码      检查替换后的词是否有效 原题  题目描述 给你一个字符串 s ，请你判断它是否 有效 。 字符串 s 有效 需要满足：假设开始有一个空字符串 t &#x3D; “” ，你可以执行 任意次 下述操作将 t 转换为 s ： 将字符串 “abc” 插入到 t 中的任意位置。形式上，t 变为 tleft + “abc” + tright，其中 t &#x3D;&#x3D;">
+<meta property="og:description" content="摘水果  题目描述 思路 代码      摘水果 原题  题目描述 在一个无限的 x 坐标轴上，有许多水果分布在其中某些位置。给你一个二维整数数组 fruits ，其中 fruits[i] &#x3D; [positioni, amounti] 表示共有 amounti 个水果放置在 positioni 上。fruits 已经按 positioni 升序排列 ，每个 positioni 互不相同 。 另">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2023-05-03T00:00:13.000Z">
-<meta property="article:modified_time" content="2023-05-03T00:05:17.010Z">
+<meta property="article:published_time" content="2023-05-04T09:58:21.000Z">
+<meta property="article:modified_time" content="2023-05-04T10:42:32.538Z">
 <meta property="article:author" content="zql">
 <meta name="twitter:card" content="summary_large_image">
   
   
   
-  <title>检查替换后的词是否有效 - my blogs</title>
+  <title>摘水果 - my blogs</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -195,7 +195,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="检查替换后的词是否有效"></span>
+            <span id="subtitle" data-typed-text="摘水果"></span>
           
         </div>
 
@@ -206,8 +206,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2023-05-03 08:00" pubdate>
-          2023年5月3日 早上
+        <time datetime="2023-05-04 17:58" pubdate>
+          2023年5月4日 下午
         </time>
       </span>
     
@@ -218,7 +218,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          925 字
+          1.3k 字
         
       </span>
     
@@ -229,7 +229,7 @@
         
         
         
-          8 分钟
+          11 分钟
         
       </span>
     
@@ -267,14 +267,14 @@
         <div id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">检查替换后的词是否有效</h1>
+            <h1 style="display: none">摘水果</h1>
             
             
               <div class="markdown-body">
                 
                 <!-- TOC -->
 <ul>
-<li><a href="#%E6%A3%80%E6%9F%A5%E6%9B%BF%E6%8D%A2%E5%90%8E%E7%9A%84%E8%AF%8D%E6%98%AF%E5%90%A6%E6%9C%89%E6%95%88">检查替换后的词是否有效</a>
+<li><a href="#%E6%91%98%E6%B0%B4%E6%9E%9C">摘水果</a>
 <ul>
 <li><a href="#%E9%A2%98%E7%9B%AE%E6%8F%8F%E8%BF%B0">题目描述</a></li>
 <li><a href="#%E6%80%9D%E8%B7%AF">思路</a></li>
@@ -283,19 +283,18 @@
 </li>
 </ul>
 <!-- /TOC -->
-<h2 id="检查替换后的词是否有效"><a class="markdownIt-Anchor" href="#检查替换后的词是否有效"></a> 检查替换后的词是否有效</h2>
-<p><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/check-if-word-is-valid-after-substitutions/description/">原题</a></p>
+<h2 id="摘水果"><a class="markdownIt-Anchor" href="#摘水果"></a> 摘水果</h2>
+<p><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/maximum-fruits-harvested-after-at-most-k-steps/description/">原题</a></p>
 <h3 id="题目描述"><a class="markdownIt-Anchor" href="#题目描述"></a> 题目描述</h3>
-<p>给你一个字符串 s ，请你判断它是否 有效 。<br />
-字符串 s 有效 需要满足：假设开始有一个空字符串 t = “” ，你可以执行 任意次 下述操作将 t 转换为 s ：</p>
-<p>将字符串 “abc” 插入到 t 中的任意位置。形式上，t 变为 tleft + “abc” + tright，其中 t == tleft + tright 。注意，tleft 和 tright 可能为 空 。<br />
-如果字符串 s 有效，则返回 true；否则，返回 false。</p>
-<p>e.g.</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs 输入：s">输出：true<br>解释：<br>&quot;&quot; -&gt; &quot;abc&quot; -&gt; &quot;aabcbc&quot;<br>因此，&quot;aabcbc&quot; 有效。<br></code></pre></td></tr></table></figure>
+<p>在一个无限的 x 坐标轴上，有许多水果分布在其中某些位置。给你一个二维整数数组 fruits ，其中 fruits[i] = [positioni, amounti] 表示共有 amounti 个水果放置在 positioni 上。fruits 已经按 positioni 升序排列 ，每个 positioni 互不相同 。</p>
+<p>另给你两个整数 startPos 和 k 。最初，你位于 startPos 。从任何位置，你可以选择 向左或者向右 走。在 x 轴上每移动 一个单位 ，就记作 一步 。你总共可以走 最多 k 步。你每达到一个位置，都会摘掉全部的水果，水果也将从该位置消失（不会再生）。</p>
+<p>返回你可以摘到水果的 最大总数 。<br />
+e.g.</p>
+<figure class="highlight tap"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs tap">输入：fruits = [[2,8],[6,3],[8,6]], startPos = 5, k = 4<br>输出：9<br>解释：<br>最佳路线为：<br>- 向右移动到位置<span class="hljs-number"> 6 </span>，摘到<span class="hljs-number"> 3 </span>个水果<br>- 向右移动到位置<span class="hljs-number"> 8 </span>，摘到<span class="hljs-number"> 6 </span>个水果<br>移动<span class="hljs-number"> 3 </span>步，共摘到<span class="hljs-number"> 3 </span>+<span class="hljs-number"> 6 </span>=<span class="hljs-number"> 9 </span>个水果<br></code></pre></td></tr></table></figure>
 <h3 id="思路"><a class="markdownIt-Anchor" href="#思路"></a> 思路</h3>
-<p>创建一个栈,然后遍历字符串s，如果遇到a，就加入栈，遇到b，检查一下栈顶是否为a，是的话把b入栈，否则返回false，遇到c，依次检查栈顶是否是ba，是则弹出栈顶两个元素，否则返回false。最后如果栈非空，返回false。</p>
+<p>枚举移动的区间<code>[left,right]</code>，用二分查找来确定移动区间，实际移动时，要么先向左移动<code>x</code>步，再向右移动<code>k-x</code>，要么先向右移动<code>x</code>步，再向左移动<code>k-x</code>步，通过前缀和来快速计算区间的水果数量，通过二分查找枚举移动区间的时候，要注意边界，最后更新最大值即可。</p>
 <h3 id="代码"><a class="markdownIt-Anchor" href="#代码"></a> 代码</h3>
-<figure class="highlight zephir"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br></pre></td><td class="code"><pre><code class="hljs zephir"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">Solution</span> </span>&#123;<br><span class="hljs-keyword">public</span>:<br>    <span class="hljs-keyword">bool</span> isValid(<span class="hljs-keyword">string</span> s) &#123;<br>        stack&lt;<span class="hljs-keyword">char</span>&gt; st;<br>        <span class="hljs-keyword">for</span>(<span class="hljs-keyword">char</span> c:s)<br>        &#123;<br>            <span class="hljs-keyword">if</span>(c==<span class="hljs-string">&#x27;a&#x27;</span>)<br>                st.push(c);<br>            <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span>(c==<span class="hljs-string">&#x27;b&#x27;</span>&amp;&amp;!st.<span class="hljs-keyword">empty</span>()&amp;&amp;st.top()==<span class="hljs-string">&#x27;a&#x27;</span>)<br>                st.push(c);<br>            <span class="hljs-keyword">else</span> <span class="hljs-keyword">if</span>(c==<span class="hljs-string">&#x27;c&#x27;</span>&amp;&amp;!st.<span class="hljs-keyword">empty</span>()&amp;&amp;st.top()==<span class="hljs-string">&#x27;b&#x27;</span>)<br>            &#123;<br>                st.pop();<br>                <span class="hljs-keyword">if</span>(!st.<span class="hljs-keyword">empty</span>()&amp;&amp;st.top()==<span class="hljs-string">&#x27;a&#x27;</span>)<br>                    st.pop();<br>                <span class="hljs-keyword">else</span><br>                    <span class="hljs-keyword">return</span> <span class="hljs-keyword">false</span>;<br>            &#125;<br>            <span class="hljs-keyword">else</span><br>                <span class="hljs-keyword">return</span> <span class="hljs-keyword">false</span>;<br>        &#125;<br>        <span class="hljs-keyword">if</span>(!st.<span class="hljs-keyword">empty</span>())<br>            <span class="hljs-keyword">return</span> <span class="hljs-keyword">false</span>;<br>        <span class="hljs-keyword">return</span> <span class="hljs-keyword">true</span>;;<br>    &#125;<br>&#125;;<br></code></pre></td></tr></table></figure>
+<figure class="highlight reasonml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><code class="hljs reasonml"><span class="hljs-keyword">class</span> Solution &#123;<br>public:<br>    <span class="hljs-built_in">int</span> max<span class="hljs-constructor">TotalFruits(<span class="hljs-params">vector</span>&lt;<span class="hljs-params">vector</span>&lt;<span class="hljs-params">int</span>&gt;&gt;&amp; <span class="hljs-params">fruits</span>, <span class="hljs-params">int</span> <span class="hljs-params">startPos</span>, <span class="hljs-params">int</span> <span class="hljs-params">k</span>)</span> &#123;<br>        <span class="hljs-built_in">int</span> n=fruits.size<span class="hljs-literal">()</span>;<br>        vector&lt;<span class="hljs-built_in">int</span>&gt; sum(n+<span class="hljs-number">1</span>);<br>        vector&lt;<span class="hljs-built_in">int</span>&gt; idx(n);<br>        <span class="hljs-keyword">for</span>(<span class="hljs-built_in">int</span> i=<span class="hljs-number">0</span>;i&lt;n;++i)<br>        &#123;<br>            sum<span class="hljs-literal">[<span class="hljs-identifier">i</span>+<span class="hljs-number">1</span>]</span>=sum<span class="hljs-literal">[<span class="hljs-identifier">i</span>]</span>+fruits<span class="hljs-literal">[<span class="hljs-identifier">i</span>]</span><span class="hljs-literal">[<span class="hljs-number">1</span>]</span>;<br>            idx<span class="hljs-literal">[<span class="hljs-identifier">i</span>]</span>=fruits<span class="hljs-literal">[<span class="hljs-identifier">i</span>]</span><span class="hljs-literal">[<span class="hljs-number">0</span>]</span>;<br>        &#125;<br>        <span class="hljs-built_in">int</span> res=<span class="hljs-number">0</span>;<br>        <span class="hljs-built_in">int</span> t=k/<span class="hljs-number">2</span>;<br>        <span class="hljs-keyword">for</span>(<span class="hljs-built_in">int</span> x=<span class="hljs-number">0</span>;x&lt;=t;++x)<br>        &#123;<br>            <span class="hljs-built_in">int</span> offset=k-<span class="hljs-number">2</span>*x;<br>            <span class="hljs-built_in">int</span> left=startPos-x;<br>            <span class="hljs-built_in">int</span> right=startPos+offset;<br>            <span class="hljs-built_in">int</span> l=lower<span class="hljs-constructor">_bound(<span class="hljs-params">idx</span>.<span class="hljs-params">begin</span>()</span>,idx.<span class="hljs-keyword">end</span><span class="hljs-literal">()</span>,left)-idx.<span class="hljs-keyword">begin</span><span class="hljs-literal">()</span>;<br>            <span class="hljs-built_in">int</span> r=upper<span class="hljs-constructor">_bound(<span class="hljs-params">idx</span>.<span class="hljs-params">begin</span>()</span>,idx.<span class="hljs-keyword">end</span><span class="hljs-literal">()</span>,right)-idx.<span class="hljs-keyword">begin</span><span class="hljs-literal">()</span>;<br>            res=max(res,sum<span class="hljs-literal">[<span class="hljs-identifier">r</span>]</span>-sum<span class="hljs-literal">[<span class="hljs-identifier">l</span>]</span>);<br>            right=startPos+x;<br>            left=startPos-offset;<br>            l=lower<span class="hljs-constructor">_bound(<span class="hljs-params">idx</span>.<span class="hljs-params">begin</span>()</span>,idx.<span class="hljs-keyword">end</span><span class="hljs-literal">()</span>,left)-idx.<span class="hljs-keyword">begin</span><span class="hljs-literal">()</span>;<br>            r=upper<span class="hljs-constructor">_bound(<span class="hljs-params">idx</span>.<span class="hljs-params">begin</span>()</span>,idx.<span class="hljs-keyword">end</span><span class="hljs-literal">()</span>,right)-idx.<span class="hljs-keyword">begin</span><span class="hljs-literal">()</span>;<br>            res=max(res,sum<span class="hljs-literal">[<span class="hljs-identifier">r</span>]</span>-sum<span class="hljs-literal">[<span class="hljs-identifier">l</span>]</span>);<br>        &#125;<br>        return res;<br>    &#125;<br>&#125;;<br></code></pre></td></tr></table></figure>
                 
               </div>
             
@@ -333,8 +332,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>检查替换后的词是否有效</div>
-      <div>http://lqz2.github.io/2023/05/03/检查替换后的词是否有效/</div>
+      <div>摘水果</div>
+      <div>http://lqz2.github.io/2023/05/04/摘水果/</div>
     </div>
     <div class="license-meta">
       
@@ -346,7 +345,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2023年5月3日</div>
+          <div>2023年5月4日</div>
         </div>
       
       
@@ -378,18 +377,12 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2023/05/04/%E6%91%98%E6%B0%B4%E6%9E%9C/" title="摘水果">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">摘水果</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2023/04/22/%E6%9C%80%E9%95%BF%E7%AD%89%E5%B7%AE%E6%95%B0%E5%88%97/" title="最长等差数列">
-                        <span class="hidden-mobile">最长等差数列</span>
+                      <a href="/2023/05/03/%E6%A3%80%E6%9F%A5%E6%9B%BF%E6%8D%A2%E5%90%8E%E7%9A%84%E8%AF%8D%E6%98%AF%E5%90%A6%E6%9C%89%E6%95%88/" title="检查替换后的词是否有效">
+                        <span class="hidden-mobile">检查替换后的词是否有效</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
