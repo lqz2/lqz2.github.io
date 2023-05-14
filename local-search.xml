@@ -4,6 +4,25 @@
   
   
   <entry>
+    <title>按列翻转得到最大值等行数</title>
+    <link href="/2023/05/15/%E6%8C%89%E5%88%97%E7%BF%BB%E8%BD%AC%E5%BE%97%E5%88%B0%E6%9C%80%E5%A4%A7%E5%80%BC%E7%AD%89%E8%A1%8C%E6%95%B0/"/>
+    <url>/2023/05/15/%E6%8C%89%E5%88%97%E7%BF%BB%E8%BD%AC%E5%BE%97%E5%88%B0%E6%9C%80%E5%A4%A7%E5%80%BC%E7%AD%89%E8%A1%8C%E6%95%B0/</url>
+    
+    <content type="html"><![CDATA[<!-- TOC --><ul><li><a href="#%E6%8C%89%E5%88%97%E7%BF%BB%E8%BD%AC%E5%BE%97%E5%88%B0%E6%9C%80%E5%A4%A7%E5%80%BC%E7%AD%89%E8%A1%8C%E6%95%B0">按列翻转得到最大值等行数</a><ul><li><a href="#%E9%A2%98%E7%9B%AE%E6%8F%8F%E8%BF%B0">题目描述</a></li><li><a href="#%E6%80%9D%E8%B7%AF">思路</a></li><li><a href="#%E4%BB%A3%E7%A0%81">代码</a></li></ul></li></ul><!-- /TOC --><h2 id="按列翻转得到最大值等行数"><a class="markdownIt-Anchor" href="#按列翻转得到最大值等行数"></a> 按列翻转得到最大值等行数</h2><p><a href="https://leetcode.cn/problems/flip-columns-for-maximum-number-of-equal-rows/description/">原题</a></p><h3 id="题目描述"><a class="markdownIt-Anchor" href="#题目描述"></a> 题目描述</h3><p>给定 m x n 矩阵 matrix 。</p><p>你可以从中选出任意数量的列并翻转其上的 每个 单元格。（即翻转后，单元格的值从 0 变成 1，或者从 1 变为 0 。）</p><p>返回 经过一些翻转后，行与行之间所有值都相等的最大行数 。</p><p>e.g.</p><figure class="highlight lua"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs lua">输入：matrix = <span class="hljs-string">[[0,1],[1,1]]</span><br>输出：<span class="hljs-number">1</span><br>解释：不进行翻转，有 <span class="hljs-number">1</span> 行所有值都相等。<br></code></pre></td></tr></table></figure><h3 id="思路"><a class="markdownIt-Anchor" href="#思路"></a> 思路</h3><p>因为最终统计的行都是全0或者全1，所以这道题的最终目的是找到互补的行数，所以对各行中首个元素为1的行取反，然后将每行转换成字符串，用哈系表统计相同行的最大数量即可。</p><h3 id="代码"><a class="markdownIt-Anchor" href="#代码"></a> 代码</h3><figure class="highlight mel"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs mel">class Solution &#123;<br>public:<br>    <span class="hljs-keyword">int</span> maxEqualRowsAfterFlips(<span class="hljs-keyword">vector</span>&lt;<span class="hljs-keyword">vector</span>&lt;<span class="hljs-keyword">int</span>&gt;&gt;&amp; <span class="hljs-keyword">matrix</span>) &#123;<br>        <span class="hljs-keyword">int</span> n=<span class="hljs-keyword">matrix</span>[<span class="hljs-number">0</span>].<span class="hljs-keyword">size</span>();<br>        <span class="hljs-keyword">int</span> ans=<span class="hljs-number">0</span>;<br>        unordered_map&lt;<span class="hljs-keyword">string</span>,<span class="hljs-keyword">int</span>&gt; mp;<br>        <span class="hljs-keyword">for</span>(<span class="hljs-keyword">vector</span>&lt;<span class="hljs-keyword">int</span>&gt;&amp; t:<span class="hljs-keyword">matrix</span>)<br>        &#123;<br>            <span class="hljs-keyword">string</span> s(n,<span class="hljs-number">0</span>);<br>            <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> i=<span class="hljs-number">0</span>;i&lt;n;++i)<br>                s[i]=t[i]^t[<span class="hljs-number">0</span>];<br>            ++mp[s];<br>            ans=<span class="hljs-keyword">max</span>(ans,mp[s]);<br>        &#125;<br>        <span class="hljs-keyword">return</span> ans;<br>    &#125;<br>&#125;;<br></code></pre></td></tr></table></figure>]]></content>
+    
+    
+    <categories>
+      
+      <category>机试</category>
+      
+    </categories>
+    
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>推箱子</title>
     <link href="/2023/05/08/%E6%8E%A8%E7%AE%B1%E5%AD%90/"/>
     <url>/2023/05/08/%E6%8E%A8%E7%AE%B1%E5%AD%90/</url>

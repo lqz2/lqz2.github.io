@@ -16,21 +16,21 @@
   <meta name="author" content="zql">
   <meta name="keywords" content="">
   
-    <meta name="description" content="推箱子  题目描述 思路 代码      推箱子 原题  题目描述 推箱子」是一款风靡全球的益智小游戏，玩家需要将箱子推到仓库中的目标位置。 游戏地图用大小为 m x n 的网格 grid 表示，其中每个元素可以是墙、地板或者是箱子。 现在你将作为玩家参与游戏，按规则将箱子 ‘B’ 移动到目标位置 ‘T’ ： 玩家用字符 ‘S’ 表示，只要他在地板上，就可以在网格中向上、下、左、右四个方向移动">
+    <meta name="description" content="按列翻转得到最大值等行数  题目描述 思路 代码      按列翻转得到最大值等行数 原题  题目描述 给定 m x n 矩阵 matrix 。 你可以从中选出任意数量的列并翻转其上的 每个 单元格。（即翻转后，单元格的值从 0 变成 1，或者从 1 变为 0 。） 返回 经过一些翻转后，行与行之间所有值都相等的最大行数 。 e.g. 123输入：matrix &#x3D; [[0,1],[1,1]]输">
 <meta property="og:type" content="article">
-<meta property="og:title" content="推箱子">
-<meta property="og:url" content="http://lqz2.github.io/2023/05/08/%E6%8E%A8%E7%AE%B1%E5%AD%90/index.html">
+<meta property="og:title" content="按列翻转得到最大值等行数">
+<meta property="og:url" content="http://lqz2.github.io/2023/05/15/%E6%8C%89%E5%88%97%E7%BF%BB%E8%BD%AC%E5%BE%97%E5%88%B0%E6%9C%80%E5%A4%A7%E5%80%BC%E7%AD%89%E8%A1%8C%E6%95%B0/index.html">
 <meta property="og:site_name" content="my blogs">
-<meta property="og:description" content="推箱子  题目描述 思路 代码      推箱子 原题  题目描述 推箱子」是一款风靡全球的益智小游戏，玩家需要将箱子推到仓库中的目标位置。 游戏地图用大小为 m x n 的网格 grid 表示，其中每个元素可以是墙、地板或者是箱子。 现在你将作为玩家参与游戏，按规则将箱子 ‘B’ 移动到目标位置 ‘T’ ： 玩家用字符 ‘S’ 表示，只要他在地板上，就可以在网格中向上、下、左、右四个方向移动">
+<meta property="og:description" content="按列翻转得到最大值等行数  题目描述 思路 代码      按列翻转得到最大值等行数 原题  题目描述 给定 m x n 矩阵 matrix 。 你可以从中选出任意数量的列并翻转其上的 每个 单元格。（即翻转后，单元格的值从 0 变成 1，或者从 1 变为 0 。） 返回 经过一些翻转后，行与行之间所有值都相等的最大行数 。 e.g. 123输入：matrix &#x3D; [[0,1],[1,1]]输">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2023-05-08T00:16:56.000Z">
-<meta property="article:modified_time" content="2023-05-08T00:26:12.980Z">
+<meta property="article:published_time" content="2023-05-14T23:30:29.000Z">
+<meta property="article:modified_time" content="2023-05-14T23:37:05.562Z">
 <meta property="article:author" content="zql">
 <meta name="twitter:card" content="summary_large_image">
   
   
   
-  <title>推箱子 - my blogs</title>
+  <title>按列翻转得到最大值等行数 - my blogs</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -195,7 +195,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="推箱子"></span>
+            <span id="subtitle" data-typed-text="按列翻转得到最大值等行数"></span>
           
         </div>
 
@@ -206,8 +206,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2023-05-08 08:16" pubdate>
-          2023年5月8日 早上
+        <time datetime="2023-05-15 07:30" pubdate>
+          2023年5月15日 早上
         </time>
       </span>
     
@@ -218,7 +218,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          2.6k 字
+          607 字
         
       </span>
     
@@ -229,7 +229,7 @@
         
         
         
-          22 分钟
+          6 分钟
         
       </span>
     
@@ -267,14 +267,14 @@
         <div id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">推箱子</h1>
+            <h1 style="display: none">按列翻转得到最大值等行数</h1>
             
             
               <div class="markdown-body">
                 
                 <!-- TOC -->
 <ul>
-<li><a href="#%E6%8E%A8%E7%AE%B1%E5%AD%90">推箱子</a>
+<li><a href="#%E6%8C%89%E5%88%97%E7%BF%BB%E8%BD%AC%E5%BE%97%E5%88%B0%E6%9C%80%E5%A4%A7%E5%80%BC%E7%AD%89%E8%A1%8C%E6%95%B0">按列翻转得到最大值等行数</a>
 <ul>
 <li><a href="#%E9%A2%98%E7%9B%AE%E6%8F%8F%E8%BF%B0">题目描述</a></li>
 <li><a href="#%E6%80%9D%E8%B7%AF">思路</a></li>
@@ -283,25 +283,18 @@
 </li>
 </ul>
 <!-- /TOC -->
-<h2 id="推箱子"><a class="markdownIt-Anchor" href="#推箱子"></a> 推箱子</h2>
-<p><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/minimum-moves-to-move-a-box-to-their-target-location/description/">原题</a></p>
+<h2 id="按列翻转得到最大值等行数"><a class="markdownIt-Anchor" href="#按列翻转得到最大值等行数"></a> 按列翻转得到最大值等行数</h2>
+<p><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/flip-columns-for-maximum-number-of-equal-rows/description/">原题</a></p>
 <h3 id="题目描述"><a class="markdownIt-Anchor" href="#题目描述"></a> 题目描述</h3>
-<p>推箱子」是一款风靡全球的益智小游戏，玩家需要将箱子推到仓库中的目标位置。</p>
-<p>游戏地图用大小为 m x n 的网格 grid 表示，其中每个元素可以是墙、地板或者是箱子。</p>
-<p>现在你将作为玩家参与游戏，按规则将箱子 ‘B’ 移动到目标位置 ‘T’ ：</p>
-<p>玩家用字符 ‘S’ 表示，只要他在地板上，就可以在网格中向上、下、左、右四个方向移动。<br />
-地板用字符 ‘.’ 表示，意味着可以自由行走。<br />
-墙用字符 ‘#’ 表示，意味着障碍物，不能通行。<br />
-箱子仅有一个，用字符 ‘B’ 表示。相应地，网格上有一个目标位置 ‘T’。<br />
-玩家需要站在箱子旁边，然后沿着箱子的方向进行移动，此时箱子会被移动到相邻的地板单元格。记作一次「推动」。<br />
-玩家无法越过箱子。<br />
-返回将箱子推到目标位置的最小 推动 次数，如果无法做到，请返回 -1。</p>
+<p>给定 m x n 矩阵 matrix 。</p>
+<p>你可以从中选出任意数量的列并翻转其上的 每个 单元格。（即翻转后，单元格的值从 0 变成 1，或者从 1 变为 0 。）</p>
+<p>返回 经过一些翻转后，行与行之间所有值都相等的最大行数 。</p>
 <p>e.g.</p>
-<figure class="highlight prolog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs prolog">输入：grid = [[<span class="hljs-string">&quot;#&quot;</span>,<span class="hljs-string">&quot;#&quot;</span>,<span class="hljs-string">&quot;#&quot;</span>,<span class="hljs-string">&quot;#&quot;</span>,<span class="hljs-string">&quot;#&quot;</span>,<span class="hljs-string">&quot;#&quot;</span>],<br>             [<span class="hljs-string">&quot;#&quot;</span>,<span class="hljs-string">&quot;T&quot;</span>,<span class="hljs-string">&quot;#&quot;</span>,<span class="hljs-string">&quot;#&quot;</span>,<span class="hljs-string">&quot;#&quot;</span>,<span class="hljs-string">&quot;#&quot;</span>],<br>             [<span class="hljs-string">&quot;#&quot;</span>,<span class="hljs-string">&quot;.&quot;</span>,<span class="hljs-string">&quot;.&quot;</span>,<span class="hljs-string">&quot;B&quot;</span>,<span class="hljs-string">&quot;.&quot;</span>,<span class="hljs-string">&quot;#&quot;</span>],<br>             [<span class="hljs-string">&quot;#&quot;</span>,<span class="hljs-string">&quot;.&quot;</span>,<span class="hljs-string">&quot;#&quot;</span>,<span class="hljs-string">&quot;#&quot;</span>,<span class="hljs-string">&quot;.&quot;</span>,<span class="hljs-string">&quot;#&quot;</span>],<br>             [<span class="hljs-string">&quot;#&quot;</span>,<span class="hljs-string">&quot;.&quot;</span>,<span class="hljs-string">&quot;.&quot;</span>,<span class="hljs-string">&quot;.&quot;</span>,<span class="hljs-string">&quot;S&quot;</span>,<span class="hljs-string">&quot;#&quot;</span>],<br>             [<span class="hljs-string">&quot;#&quot;</span>,<span class="hljs-string">&quot;#&quot;</span>,<span class="hljs-string">&quot;#&quot;</span>,<span class="hljs-string">&quot;#&quot;</span>,<span class="hljs-string">&quot;#&quot;</span>,<span class="hljs-string">&quot;#&quot;</span>]]<br>输出：<span class="hljs-number">3</span><br>解释：我们只需要返回推箱子的次数。<br></code></pre></td></tr></table></figure>
+<figure class="highlight lua"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs lua">输入：matrix = <span class="hljs-string">[[0,1],[1,1]]</span><br>输出：<span class="hljs-number">1</span><br>解释：不进行翻转，有 <span class="hljs-number">1</span> 行所有值都相等。<br></code></pre></td></tr></table></figure>
 <h3 id="思路"><a class="markdownIt-Anchor" href="#思路"></a> 思路</h3>
-<p>深度优先搜索(BFS)，通过<code>vis[px][py][bx][by]</code>记录当前箱子和人的位置是否被访问过，然后定义一个双端队列<code>deque&lt;tuple&lt;int,int,int,int&gt;&gt;</code>，每个元素记录人的位置、箱子的位置和当前推动距离，然后进行bfs，每次取出队首元素，如果箱子到达目的地则返回推动距离，否则先让人移动，当人移动到箱子位置时推动箱子(更新箱子位置)，如果推动后人和箱子当前位置未被访问，则将该状态加入队尾，如果人未移动到箱子位置并且当前二者位置未被访问，则将当前状态加入队首，重复上述步骤知道队列为空为止。</p>
+<p>因为最终统计的行都是全0或者全1，所以这道题的最终目的是找到互补的行数，所以对各行中首个元素为1的行取反，然后将每行转换成字符串，用哈系表统计相同行的最大数量即可。</p>
 <h3 id="代码"><a class="markdownIt-Anchor" href="#代码"></a> 代码</h3>
-<figure class="highlight prolog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br></pre></td><td class="code"><pre><code class="hljs prolog">class <span class="hljs-symbol">Solution</span> &#123;<br>int dir[<span class="hljs-number">4</span>][<span class="hljs-number">2</span>]=&#123;&#123;<span class="hljs-number">1</span>,<span class="hljs-number">0</span>&#125;,&#123;<span class="hljs-number">0</span>,<span class="hljs-number">1</span>&#125;,&#123;<span class="hljs-number">-1</span>,<span class="hljs-number">0</span>&#125;,&#123;<span class="hljs-number">0</span>,<span class="hljs-number">-1</span>&#125;&#125;;<br>bool vis[<span class="hljs-number">20</span>][<span class="hljs-number">20</span>][<span class="hljs-number">20</span>][<span class="hljs-number">20</span>]=&#123;<span class="hljs-number">0</span>&#125;;<br>public:<br>    int minPushBox(vector&lt;vector&lt;char&gt;&gt;&amp; grid) &#123;<br>        int m=grid.size(),n=grid[<span class="hljs-number">0</span>].size();<br>        auto isvalid=[&amp;](int x,int y)-&gt;bool&#123;<br>            return x&gt;=<span class="hljs-number">0</span>&amp;&amp;x&lt;m&amp;&amp;y&gt;=<span class="hljs-number">0</span>&amp;&amp;y&lt;n&amp;&amp;grid[x][y]!=<span class="hljs-string">&#x27;#&#x27;</span>;<br>        &#125;;<br>        int startx,starty,boxx,boxy,endx,endy;<br>        for(int i=<span class="hljs-number">0</span>;i&lt;m;++i)<br>        &#123;<br>            for(int j=<span class="hljs-number">0</span>;j&lt;n;++j)<br>            &#123;<br>                if(grid[i][j]==<span class="hljs-string">&#x27;S&#x27;</span>)<br>                &#123;<br>                    startx=i;starty=j;<br>                &#125;<br>                else if(grid[i][j]==<span class="hljs-string">&#x27;B&#x27;</span>)<br>                &#123;<br>                    boxx=i;boxy=j;<br>                &#125;<br>                else if(grid[i][j]==<span class="hljs-string">&#x27;T&#x27;</span>)<br>                &#123;<br>                    endx=i;endy=j;<br>                &#125;<br>            &#125;<br>        &#125;<br>        deque&lt;tuple&lt;int,int,int,int,int&gt;&gt; q;<br>        q.emplace_front(startx,starty,boxx,boxy,<span class="hljs-number">0</span>);<br>        vis[startx][starty][boxx][boxy]=true;<br>        while(!q.empty())<br>        &#123;<br>            auto [px,py,bx,by,d]=q.front();<br>            q.pop_front();<br>            if(bx==endx&amp;&amp;by==endy)<br>                return d;<br>            for(auto [dx,dy]:dir)<br>            &#123;<br>                int npx=px+dx,npy=py+dy;<br>                if(!isvalid(npx,npy))<br>                    continue;<br>                if(npx==bx&amp;&amp;npy==by)<br>                &#123;<br>                    int nbx=bx+dx,nby=by+dy;<br>                    if(!isvalid(nbx,nby)||vis[npx][npy][nbx][nby])<br>                        continue;<br>                    q.emplace_back(npx,npy,nbx,nby,d+<span class="hljs-number">1</span>);<br>                    vis[npx][npy][nbx][nby]=true;<br>                &#125;<br>                else if(!vis[npx][npy][bx][by])<br>                &#123;<br>                    q.emplace_front(npx,npy,bx,by,d);<br>                    vis[npx][npy][bx][by]=true;<br>                &#125;  <br>            &#125;<br>        &#125;<br>        return <span class="hljs-number">-1</span>;<br>    &#125;<br>&#125;;<br></code></pre></td></tr></table></figure>
+<figure class="highlight mel"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs mel">class Solution &#123;<br>public:<br>    <span class="hljs-keyword">int</span> maxEqualRowsAfterFlips(<span class="hljs-keyword">vector</span>&lt;<span class="hljs-keyword">vector</span>&lt;<span class="hljs-keyword">int</span>&gt;&gt;&amp; <span class="hljs-keyword">matrix</span>) &#123;<br>        <span class="hljs-keyword">int</span> n=<span class="hljs-keyword">matrix</span>[<span class="hljs-number">0</span>].<span class="hljs-keyword">size</span>();<br>        <span class="hljs-keyword">int</span> ans=<span class="hljs-number">0</span>;<br>        unordered_map&lt;<span class="hljs-keyword">string</span>,<span class="hljs-keyword">int</span>&gt; mp;<br>        <span class="hljs-keyword">for</span>(<span class="hljs-keyword">vector</span>&lt;<span class="hljs-keyword">int</span>&gt;&amp; t:<span class="hljs-keyword">matrix</span>)<br>        &#123;<br>            <span class="hljs-keyword">string</span> s(n,<span class="hljs-number">0</span>);<br>            <span class="hljs-keyword">for</span>(<span class="hljs-keyword">int</span> i=<span class="hljs-number">0</span>;i&lt;n;++i)<br>                s[i]=t[i]^t[<span class="hljs-number">0</span>];<br>            ++mp[s];<br>            ans=<span class="hljs-keyword">max</span>(ans,mp[s]);<br>        &#125;<br>        <span class="hljs-keyword">return</span> ans;<br>    &#125;<br>&#125;;<br></code></pre></td></tr></table></figure>
                 
               </div>
             
@@ -339,8 +332,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>推箱子</div>
-      <div>http://lqz2.github.io/2023/05/08/推箱子/</div>
+      <div>按列翻转得到最大值等行数</div>
+      <div>http://lqz2.github.io/2023/05/15/按列翻转得到最大值等行数/</div>
     </div>
     <div class="license-meta">
       
@@ -352,7 +345,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2023年5月8日</div>
+          <div>2023年5月15日</div>
         </div>
       
       
@@ -384,18 +377,12 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2023/05/15/%E6%8C%89%E5%88%97%E7%BF%BB%E8%BD%AC%E5%BE%97%E5%88%B0%E6%9C%80%E5%A4%A7%E5%80%BC%E7%AD%89%E8%A1%8C%E6%95%B0/" title="按列翻转得到最大值等行数">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">按列翻转得到最大值等行数</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2023/05/04/%E6%91%98%E6%B0%B4%E6%9E%9C/" title="摘水果">
-                        <span class="hidden-mobile">摘水果</span>
+                      <a href="/2023/05/08/%E6%8E%A8%E7%AE%B1%E5%AD%90/" title="推箱子">
+                        <span class="hidden-mobile">推箱子</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
