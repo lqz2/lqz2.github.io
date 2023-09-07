@@ -24,7 +24,7 @@
 <meta property="og:description" content="一些有价值的参考资料（持续更新!）🌈🌈🌈  第1周🌈 第2周🌈 第3周🌈      一些有价值的参考资料（持续更新!）🌈🌈🌈  第1周🌈  了解了在线深度学习可视化辅助工具wandb 关于结构性相似度（SSIM）的论文，《Image quality assessment: from error visibility to structural similarity》 在Ta">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2023-08-11T09:28:17.000Z">
-<meta property="article:modified_time" content="2023-09-05T09:27:33.336Z">
+<meta property="article:modified_time" content="2023-09-07T11:36:20.187Z">
 <meta property="article:author" content="zql">
 <meta name="twitter:card" content="summary_large_image">
   
@@ -219,7 +219,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          3.2k 字
+          3.4k 字
         
       </span>
     
@@ -230,7 +230,7 @@
         
         
         
-          27 分钟
+          29 分钟
         
       </span>
     
@@ -328,7 +328,11 @@
 <li>关于使用np.percentile计算百分位数的用法，参考<a target="_blank" rel="noopener" href="https://blog.csdn.net/yxf771hotmail/article/details/131849484?csdn_share_tail=%7B%22type%22%3A%22blog%22%2C%22rType%22%3A%22article%22%2C%22rId%22%3A%22131849484%22%2C%22source%22%3A%22qq_45909764%22%7D&amp;fromshare=blogdetail">1</a></li>
 <li>python导入上级目录. 同级目录. 下级目录的包，参考<a target="_blank" rel="noopener" href="https://blog.csdn.net/gaifuxi9518/article/details/81038818?ops_request_misc=%7B%22request%5Fid%22%3A%22169382667516800197050835%22%2C%22scm%22%3A%2220140713.130102334..%22%7D&amp;request_id=169382667516800197050835&amp;biz_id=0&amp;utm_medium=distribute.pc_search_result.none-task-blog-2~all~top_positive~default-2-81038818-null-null.142%5Ev93%5Econtrol&amp;utm_term=python%E5%AF%BC%E5%85%A5%E5%8C%85%E7%9A%84%E5%8E%9F%E7%90%86&amp;spm=1018.2226.3001.4187">1</a>，<a target="_blank" rel="noopener" href="https://blog.csdn.net/anshiquanshu/article/details/116174774?ops_request_misc=%7B%22request%5Fid%22%3A%22169381126916800225545986%22%2C%22scm%22%3A%2220140713.130102334.pc%5Fall.%22%7D&amp;request_id=169381126916800225545986&amp;biz_id=0&amp;utm_medium=distribute.pc_search_result.none-task-blog-2~all~first_rank_ecpm_v1~rank_v31_ecpm-5-116174774-null-null.142%5Ev93%5Econtrol&amp;utm_term=python%E6%89%BE%E4%B8%8D%E5%88%B0%E4%B8%8A%E7%BA%A7%E7%9B%AE%E5%BD%95%E7%9A%84%E6%96%87%E4%BB%B6%E5%A4%B9&amp;spm=1018.2226.3001.4187">2</a>，为了减少导入包时候的错误，导入同一包(目录)中的模块应使用相对导入(.)，导入其他包中模块应使用绝对导入。</li>
 <li>关于python中的解包和打包，<em>通常用于解包，如<code>a=[[1,2],[3,4]]</code>，则使用</em>a返回两个List，<code>[1,2]</code>和<code>[3,4]</code>，使用zip进行打包，它会将两个可迭代对象相同位置的元素打包成一个元组，然后返回一个迭代器，例如<code>a=[1,2]</code>，<code>b=[3,4]</code>，zip(a,b)会得到两个元组<code>(1,3)，(2,4)</code>，可以用for来进行迭代。通常在__collate_fn__中，使用zip(*batch)重新组织一批数据，例如get_item函数返回了两个列表a,b，假设batchsize为8，传入到__collate_fn__中的batch是一个包含8个元素的list，其中每个元素都为元组(a,b)，*batch会将list解包，然后zip会将8个元组中的a打包成一个新的元组，然后将8个元组中的b打包成一个新的元组，也就是说得到了两个新元组x(由8个a组成)和y(由8个b组成)，然后分别返回x，y即可。</li>
-<li>关于params_group，以及如何为不同层设置不同学习率，参考<a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_45464524/article/details/130456843?ops_request_misc=%7B%22request%5Fid%22%3A%22169390449016800192272047%22%2C%22scm%22%3A%2220140713.130102334.pc%5Fall.%22%7D&amp;request_id=169390449016800192272047&amp;biz_id=0&amp;utm_medium=distribute.pc_search_result.none-task-blog-2~all~first_rank_ecpm_v1~times_rank-2-130456843-null-null.142%5Ev93%5Econtrol&amp;utm_term=pytorch%E7%9A%84params_group&amp;spm=1018.2226.3001.4187">1</a></li>
+<li>关于params_group，以及如何为不同层设置不同学习率，参考<a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_45464524/article/details/130456843?ops_request_misc=%7B%22request%5Fid%22%3A%22169390449016800192272047%22%2C%22scm%22%3A%2220140713.130102334.pc%5Fall.%22%7D&amp;request_id=169390449016800192272047&amp;biz_id=0&amp;utm_medium=distribute.pc_search_result.none-task-blog-2~all~first_rank_ecpm_v1~times_rank-2-130456843-null-null.142%5Ev93%5Econtrol&amp;utm_term=pytorch%E7%9A%84params_group&amp;spm=1018.2226.3001.4187">1</a>，<a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/347929433">2</a>，<a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_45464524/article/details/130477798?ops_request_misc=%7B%22request%5Fid%22%3A%22169407405916800184146887%22%2C%22scm%22%3A%2220140713.130102334.pc%5Fall.%22%7D&amp;request_id=169407405916800184146887&amp;biz_id=0&amp;utm_medium=distribute.pc_search_result.none-task-blog-2~all~first_rank_ecpm_v1~rank_v31_ecpm-1-130477798-null-null.142%5Ev93%5Econtrol&amp;utm_term=%E4%BD%BF%E7%94%A8params_group%E5%AF%B9%E4%B8%8D%E5%90%8C%E7%B1%BB%E5%9E%8B%E5%8F%82%E6%95%B0%E8%AE%BE%E7%BD%AE%E4%B8%8D%E5%90%8C%E5%AD%A6%E4%B9%A0%E7%8E%87&amp;spm=1018.2226.3001.4187">3</a>。</li>
+<li>关于python中矩阵乘法multiply(). dot().  matmul(). ’ * '. '@'的区别，参考:<a target="_blank" rel="noopener" href="https://blog.csdn.net/u011851421/article/details/83783826?ops_request_misc=&amp;request_id=&amp;biz_id=102&amp;utm_term=@,dot,multiply%E7%9A%84%E5%8C%BA%E5%88%AB&amp;utm_medium=distribute.pc_search_result.none-task-blog-2~all~sobaiduweb~default-3-83783826.142%5Ev93%5Econtrol&amp;spm=1018.2226.3001.4187">1</a></li>
+<li>optimizer.zero_grad和model.zero_grad的区别，参考<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_32614873/article/details/128626028?ops_request_misc=%7B%22request%5Fid%22%3A%22169400319916777224491083%22%2C%22scm%22%3A%2220140713.130102334..%22%7D&amp;request_id=169400319916777224491083&amp;biz_id=0&amp;utm_medium=distribute.pc_search_result.none-task-blog-2~all~sobaiduend~default-2-128626028-null-null.142%5Ev93%5Econtrol&amp;utm_term=model.zero_grad()%E5%92%8Coptimizer.zero_grad()&amp;spm=1018.2226.3001.4187">1</a>。</li>
+<li>pytorch的显存分配机制，参考(<a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/424512257">https://zhuanlan.zhihu.com/p/424512257</a>)</li>
+<li>哪些部分需要to(device)? 损失函数需不需要to(device)? 参考<a target="_blank" rel="noopener" href="https://blog.csdn.net/virus111222/article/details/129773728?ops_request_misc=&amp;request_id=&amp;biz_id=102&amp;utm_term=pytorch%E5%93%AA%E4%BA%9B%E9%9C%80%E8%A6%81to(device)&amp;utm_medium=distribute.pc_search_result.none-task-blog-2~all~sobaiduweb~default-3-129773728.142%5Ev93%5Econtrol&amp;spm=1018.2226.3001.4187">1</a></li>
 </ol>
 
                 
