@@ -16,15 +16,15 @@
   <meta name="author" content="zql">
   <meta name="keywords" content="">
   
-    <meta name="description" content="遇到的一些问题和解决方法（持续更新！）🌈🌈🌈  第1周🌈 第2周🌈 第3周🌈      遇到的一些问题和解决方法（持续更新！）🌈🌈🌈  第1周🌈  windows环境下安装pycocotools报错：ERROR: Could not build wheels for pycocotools, which is required to install pyproject.to">
+    <meta name="description" content="遇到的一些问题和解决方法（持续更新！）🌈🌈🌈  第1周🌈 第2周🌈 第3周🌈 第4周🌈      遇到的一些问题和解决方法（持续更新！）🌈🌈🌈  第1周🌈  windows环境下安装pycocotools报错：ERROR: Could not build wheels for pycocotools, which is required to install pyproj">
 <meta property="og:type" content="article">
 <meta property="og:title" content="相关问题及解决方法">
 <meta property="og:url" content="http://lqz2.github.io/2023/08/11/%E7%9B%B8%E5%85%B3%E9%97%AE%E9%A2%98%E5%8F%8A%E8%A7%A3%E5%86%B3%E6%96%B9%E6%B3%95/index.html">
 <meta property="og:site_name" content="my blogs">
-<meta property="og:description" content="遇到的一些问题和解决方法（持续更新！）🌈🌈🌈  第1周🌈 第2周🌈 第3周🌈      遇到的一些问题和解决方法（持续更新！）🌈🌈🌈  第1周🌈  windows环境下安装pycocotools报错：ERROR: Could not build wheels for pycocotools, which is required to install pyproject.to">
+<meta property="og:description" content="遇到的一些问题和解决方法（持续更新！）🌈🌈🌈  第1周🌈 第2周🌈 第3周🌈 第4周🌈      遇到的一些问题和解决方法（持续更新！）🌈🌈🌈  第1周🌈  windows环境下安装pycocotools报错：ERROR: Could not build wheels for pycocotools, which is required to install pyproj">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2023-08-11T09:58:23.000Z">
-<meta property="article:modified_time" content="2023-09-14T12:46:31.480Z">
+<meta property="article:modified_time" content="2023-09-25T05:21:32.550Z">
 <meta property="article:author" content="zql">
 <meta name="twitter:card" content="summary_large_image">
   
@@ -219,7 +219,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          3.1k 字
+          3.9k 字
         
       </span>
     
@@ -230,7 +230,7 @@
         
         
         
-          26 分钟
+          33 分钟
         
       </span>
     
@@ -280,6 +280,7 @@
 <li><a href="#%E7%AC%AC1%E5%91%A8rainbow">第1周🌈</a></li>
 <li><a href="#%E7%AC%AC2%E5%91%A8rainbow">第2周🌈</a></li>
 <li><a href="#%E7%AC%AC3%E5%91%A8rainbow">第3周🌈</a></li>
+<li><a href="#%E7%AC%AC4%E5%91%A8rainbow">第4周🌈</a></li>
 </ul>
 </li>
 </ul>
@@ -318,6 +319,12 @@
 <li>在使用FFT计算频谱的时候，使用torch.fft.ifftn将频谱逆变换回来，然后保存为图像时报错。解决办法：图像的数据需要转换为np.uint8类型，所以逆变换后需要将数据转换成np.uint8才能正常保存。</li>
 <li>将频域信息输入到卷积层时报错。解决方法：nn.Linear，nn.Conv2d等默认输入数据类型是torch.float32，频域数据是复数，所以需要将dtype改成torch.complex64即可解决。</li>
 <li>使用切片操作得到预测的滤波器时报错：RuntimeError: “div_floor_cuda” not implemented for ‘ComplexFloat’。解决方法：该错误和数据类型有关，需要使用torch.abs将数据类型为torch.complex的数据转换一下。</li>
+</ol>
+<h3 id="第4周"><a class="markdownIt-Anchor" href="#第4周"></a> 第4周🌈</h3>
+<ol>
+<li>自己搭建的融合网络进行推理测试时报错：IndexError: invalid index of a 0-dim tensor. Use <code>tensor.item()</code> in Python or <code>tensor.item&lt;T&gt;()</code> in C++ to convert a 0-dim tensor to a number。解决方法：因为在推理时，batchsize为1，所以计算时出现了维度错误，将相应的和batch有关的计算进行更改即可。</li>
+<li>将ycbcr进行拼接转为rgb图像时，图像显示时色彩异常。解决方法：出现此情况的原因时读取ycbcr图像时，先分别读取出y，cbcr，然后在分别进行归一化，因为rgb2ycbcr的过程中涉及其他计算，所以应当先对整张图像归一化，再分别读取出y，cbcr。</li>
+<li>推理时报错TypeError: conv2d() received an invalid combination of arguments - got (tuple, Parameter, NoneType, tuple, tuple, tuple, int), but expected one of: * (Tensor input, Tensor weight, Tensor bias, tuple of ints stride, tuple of ints padding, tuple of ints dilation, int groups)didn’t match because some of the arguments have invalid types: (tuple of (Tensor, Tensor), Parameter, NoneType, tuple of (int, int), tuple of (int, int), tuple of (int, int), int)。解决方法：原因是输入模型的数据有误，误把某个tuple类型的数据输入到一个本该为tensor的数据中。</li>
 </ol>
 
                 
