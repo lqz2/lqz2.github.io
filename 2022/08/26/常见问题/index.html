@@ -16,15 +16,15 @@
   <meta name="author" content="zql">
   <meta name="keywords" content="">
   
-    <meta name="description" content="c++中的static关键字 c++模板 c++深拷贝和浅拷贝的区别 c++多态 c++智能指针 判别模型和生成模型 python的垃圾回收机制 转置卷积 数据集不平衡的处理方式 tensorflow和pytorch的区别 图像分类 目标检测    c++中的static关键字 加载顺序（面向对象）  静态-&gt;非静态-&gt;构造方法 父类静态-子类静态-父类非静态-父类构造-子类非静态">
+    <meta name="description" content="C++  c++中的static关键字 c++模板 c++深拷贝和浅拷贝的区别 c++多态 c++智能指针   python  python的垃圾回收机制   deep learning  判别模型和生成模型 转置卷积 数据集不平衡的处理方式 tensorflow和pytorch的区别      C++  c++中的static关键字 加载顺序（面向对象）  静态-&gt;非静态-&gt;构造">
 <meta property="og:type" content="article">
 <meta property="og:title" content="常见问题">
 <meta property="og:url" content="http://lqz2.github.io/2022/08/26/%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98/index.html">
 <meta property="og:site_name" content="my blogs">
-<meta property="og:description" content="c++中的static关键字 c++模板 c++深拷贝和浅拷贝的区别 c++多态 c++智能指针 判别模型和生成模型 python的垃圾回收机制 转置卷积 数据集不平衡的处理方式 tensorflow和pytorch的区别 图像分类 目标检测    c++中的static关键字 加载顺序（面向对象）  静态-&gt;非静态-&gt;构造方法 父类静态-子类静态-父类非静态-父类构造-子类非静态">
+<meta property="og:description" content="C++  c++中的static关键字 c++模板 c++深拷贝和浅拷贝的区别 c++多态 c++智能指针   python  python的垃圾回收机制   deep learning  判别模型和生成模型 转置卷积 数据集不平衡的处理方式 tensorflow和pytorch的区别      C++  c++中的static关键字 加载顺序（面向对象）  静态-&gt;非静态-&gt;构造">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2022-08-26T13:10:10.000Z">
-<meta property="article:modified_time" content="2022-09-24T01:24:03.070Z">
+<meta property="article:modified_time" content="2023-10-12T05:11:09.997Z">
 <meta property="article:author" content="zql">
 <meta name="twitter:card" content="summary_large_image">
   
@@ -221,7 +221,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          4.9k 字
+          4.6k 字
         
       </span>
     
@@ -232,7 +232,7 @@
         
         
         
-          41 分钟
+          39 分钟
         
       </span>
     
@@ -277,20 +277,31 @@
                 
                 <!-- TOC -->
 <ul>
+<li><a href="#c">C++</a>
+<ul>
 <li><a href="#c%E4%B8%AD%E7%9A%84static%E5%85%B3%E9%94%AE%E5%AD%97">c++中的static关键字</a></li>
 <li><a href="#c%E6%A8%A1%E6%9D%BF">c++模板</a></li>
 <li><a href="#c%E6%B7%B1%E6%8B%B7%E8%B4%9D%E5%92%8C%E6%B5%85%E6%8B%B7%E8%B4%9D%E7%9A%84%E5%8C%BA%E5%88%AB">c++深拷贝和浅拷贝的区别</a></li>
 <li><a href="#c%E5%A4%9A%E6%80%81">c++多态</a></li>
 <li><a href="#c%E6%99%BA%E8%83%BD%E6%8C%87%E9%92%88">c++智能指针</a></li>
-<li><a href="#%E5%88%A4%E5%88%AB%E6%A8%A1%E5%9E%8B%E5%92%8C%E7%94%9F%E6%88%90%E6%A8%A1%E5%9E%8B">判别模型和生成模型</a></li>
+</ul>
+</li>
+<li><a href="#python">python</a>
+<ul>
 <li><a href="#python%E7%9A%84%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6%E6%9C%BA%E5%88%B6">python的垃圾回收机制</a></li>
+</ul>
+</li>
+<li><a href="#deep-learning">deep learning</a>
+<ul>
+<li><a href="#%E5%88%A4%E5%88%AB%E6%A8%A1%E5%9E%8B%E5%92%8C%E7%94%9F%E6%88%90%E6%A8%A1%E5%9E%8B">判别模型和生成模型</a></li>
 <li><a href="#%E8%BD%AC%E7%BD%AE%E5%8D%B7%E7%A7%AF">转置卷积</a></li>
 <li><a href="#%E6%95%B0%E6%8D%AE%E9%9B%86%E4%B8%8D%E5%B9%B3%E8%A1%A1%E7%9A%84%E5%A4%84%E7%90%86%E6%96%B9%E5%BC%8F">数据集不平衡的处理方式</a></li>
 <li><a href="#tensorflow%E5%92%8Cpytorch%E7%9A%84%E5%8C%BA%E5%88%AB">tensorflow和pytorch的区别</a></li>
-<li><a href="#%E5%9B%BE%E5%83%8F%E5%88%86%E7%B1%BB">图像分类</a></li>
-<li><a href="#%E7%9B%AE%E6%A0%87%E6%A3%80%E6%B5%8B">目标检测</a></li>
+</ul>
+</li>
 </ul>
 <!-- /TOC -->
+<h1 id="c"><a class="markdownIt-Anchor" href="#c"></a> C++</h1>
 <h2 id="c中的static关键字"><a class="markdownIt-Anchor" href="#c中的static关键字"></a> c++中的static关键字</h2>
 <p>加载顺序（面向对象）</p>
 <ul>
@@ -364,8 +375,18 @@
 </ul>
 <hr />
 <h2 id="c多态"><a class="markdownIt-Anchor" href="#c多态"></a> c++多态</h2>
-<p>编译时多态：在编译期间就确定了程序的行为，比如函数重载</p>
-<p>运行时多态：指的是在不同继承关系的类对象去调用同一函数，产生了不同的行为</p>
+<p>编译时多态：</p>
+<ul>
+<li>编译器多态是通过函数重载和模板实现的。在编译时，根据函数的参数类型或模板参数类型，编译器会选择合适的函数或模板实例化。</li>
+<li>编译器多态是在编译时确定函数调用，因此它的性能较高。</li>
+<li>编译器多态不需要使用虚函数和基类指针或引用，可以直接根据函数的参数类型或模板参数类型来确定函数调用。</li>
+</ul>
+<p>运行时多态：</p>
+<ul>
+<li>运行时多态是通过继承和虚函数实现的。当基类的指针或引用指向派生类对象时，通过虚函数的动态绑定，可以在运行时确定要调用的函数实现。</li>
+<li>运行时多态需要使用虚函数和基类指针或引用来实现，这样可以在运行时根据实际对象的类型来确定调用哪个函数。</li>
+<li>运行时多态在运行时才能确定具体的函数调用，因此它的性能相对较低。</li>
+</ul>
 <p><em><strong>override</strong></em></p>
 <p>override是用来检查函数是否重写</p>
 <p><em><strong>final</strong></em></p>
@@ -424,26 +445,7 @@
 <p>专门为了解决上面的<strong>shared_ptr</strong>的问题，不支持RALL，不释放资源，不增加或减少引用计数</p>
 <p>具体参考<a target="_blank" rel="noopener" href="https://blog.csdn.net/cpp_learner/article/details/118912592?ops_request_misc=%257B%2522request%255Fid%2522%253A%2522166191088916782414982504%2522%252C%2522scm%2522%253A%252220140713.130102334..%2522%257D&amp;request_id=166191088916782414982504&amp;biz_id=0&amp;utm_medium=distribute.pc_search_result.none-task-blog-2~all~top_positive~default-1-118912592-null-null.142%5Ev42%5Epc_rank_34,185%5Ev2%5Econtrol&amp;utm_term=c%2B%2B%E6%99%BA%E8%83%BD%E6%8C%87%E9%92%88&amp;spm=1018.2226.3001.4187">相关链接</a></p>
 <hr />
-<h2 id="判别模型和生成模型"><a class="markdownIt-Anchor" href="#判别模型和生成模型"></a> 判别模型和生成模型</h2>
-<p>判别模型：直接学习条件概率<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>P</mi><mo stretchy="false">(</mo><mi>y</mi><mi mathvariant="normal">∣</mi><mi>x</mi><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">P(y|x)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.13889em;">P</span><span class="mopen">(</span><span class="mord mathnormal" style="margin-right:0.03588em;">y</span><span class="mord">∣</span><span class="mord mathnormal">x</span><span class="mclose">)</span></span></span></span><br />
-生成模型：学习联合概率<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>P</mi><mo stretchy="false">(</mo><mi>x</mi><mo separator="true">,</mo><mi>y</mi><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">P(x,y)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.13889em;">P</span><span class="mopen">(</span><span class="mord mathnormal">x</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathnormal" style="margin-right:0.03588em;">y</span><span class="mclose">)</span></span></span></span>，然后可以计算条件概率<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>P</mi><mo stretchy="false">(</mo><mi>y</mi><mi mathvariant="normal">∣</mi><mi>x</mi><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">P(y|x)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.13889em;">P</span><span class="mopen">(</span><span class="mord mathnormal" style="margin-right:0.03588em;">y</span><span class="mord">∣</span><span class="mord mathnormal">x</span><span class="mclose">)</span></span></span></span>以及其他信息，需要的数据量较大</p>
-<p>简单说，要判断一个苹果是好是坏，判别模型会直接给出是好的概率和是坏的概率，而生成模型分别学习出两种苹果各自对应的模型，然后将要预测的苹果的特征分别输入不同模型，然后比较两个模型输出概率的大小，选出合适的类别</p>
-<p>判别模型：</p>
-<ul>
-<li>感知机</li>
-<li>k近邻</li>
-<li>决策树</li>
-<li>逻辑思蒂回归</li>
-<li>svm</li>
-<li>boosting</li>
-<li>最大熵模型</li>
-</ul>
-<p>生成模型：</p>
-<ul>
-<li>朴素贝叶斯</li>
-<li>混合高斯模型</li>
-<li>隐马尔可夫模型</li>
-</ul>
+<h1 id="python"><a class="markdownIt-Anchor" href="#python"></a> python</h1>
 <h2 id="python的垃圾回收机制"><a class="markdownIt-Anchor" href="#python的垃圾回收机制"></a> python的垃圾回收机制</h2>
 <blockquote>
 <p>python采用的是<strong>引用计数</strong>为主，<strong>标记—清除</strong>和<strong>分代收集</strong>为辅的策略。</p>
@@ -486,6 +488,27 @@
 </ol>
 <p><strong>如何判断哪些是活动对象，哪些是非活动对象？</strong></p>
 <p>对象之间通过引用（指针）连在一起，构成一个有向图，对象构成这个有向图的节点，而引用关系构成这个有向图的边。从跟对象（root object）出发，沿着有向边遍历对象，可达的（reachable）对象标记为活动对象，不可达的对象就是要被清除的非活动对象。</p>
+<h1 id="deep-learning"><a class="markdownIt-Anchor" href="#deep-learning"></a> deep learning</h1>
+<h2 id="判别模型和生成模型"><a class="markdownIt-Anchor" href="#判别模型和生成模型"></a> 判别模型和生成模型</h2>
+<p>判别模型：直接学习条件概率<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>P</mi><mo stretchy="false">(</mo><mi>y</mi><mi mathvariant="normal">∣</mi><mi>x</mi><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">P(y|x)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.13889em;">P</span><span class="mopen">(</span><span class="mord mathnormal" style="margin-right:0.03588em;">y</span><span class="mord">∣</span><span class="mord mathnormal">x</span><span class="mclose">)</span></span></span></span><br />
+生成模型：学习联合概率<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>P</mi><mo stretchy="false">(</mo><mi>x</mi><mo separator="true">,</mo><mi>y</mi><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">P(x,y)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.13889em;">P</span><span class="mopen">(</span><span class="mord mathnormal">x</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathnormal" style="margin-right:0.03588em;">y</span><span class="mclose">)</span></span></span></span>，然后可以计算条件概率<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>P</mi><mo stretchy="false">(</mo><mi>y</mi><mi mathvariant="normal">∣</mi><mi>x</mi><mo stretchy="false">)</mo></mrow><annotation encoding="application/x-tex">P(y|x)</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:1em;vertical-align:-0.25em;"></span><span class="mord mathnormal" style="margin-right:0.13889em;">P</span><span class="mopen">(</span><span class="mord mathnormal" style="margin-right:0.03588em;">y</span><span class="mord">∣</span><span class="mord mathnormal">x</span><span class="mclose">)</span></span></span></span>以及其他信息，需要的数据量较大</p>
+<p>简单说，要判断一个苹果是好是坏，判别模型会直接给出是好的概率和是坏的概率，而生成模型分别学习出两种苹果各自对应的模型，然后将要预测的苹果的特征分别输入不同模型，然后比较两个模型输出概率的大小，选出合适的类别</p>
+<p>判别模型：</p>
+<ul>
+<li>感知机</li>
+<li>k近邻</li>
+<li>决策树</li>
+<li>逻辑思蒂回归</li>
+<li>svm</li>
+<li>boosting</li>
+<li>最大熵模型</li>
+</ul>
+<p>生成模型：</p>
+<ul>
+<li>朴素贝叶斯</li>
+<li>混合高斯模型</li>
+<li>隐马尔可夫模型</li>
+</ul>
 <h2 id="转置卷积"><a class="markdownIt-Anchor" href="#转置卷积"></a> 转置卷积</h2>
 <blockquote>
 <p>在语义分割中，会使用卷积层进行特征提取，然后通过转置卷积做上采样，恢复为原先的尺寸，这样才可以对原来的图像中每个像素都进行分类。<strong>转置卷积不是卷积的逆运算</strong></p>
@@ -516,44 +539,6 @@
 <li>tf的api更详细更丰富，pytorch的代码更简洁</li>
 <li>tf有tensorboard这样的可视化工具，但实际上现在pytorch也能使用tensorboard</li>
 </ol>
-<h2 id="图像分类"><a class="markdownIt-Anchor" href="#图像分类"></a> 图像分类</h2>
-<h2 id="目标检测"><a class="markdownIt-Anchor" href="#目标检测"></a> 目标检测</h2>
-<p><strong>一阶段方法</strong></p>
-<blockquote>
-<p>对于输入图像，通过网络直接回归出目标大小、位置和类别。如SSD、YOLO系列</p>
-</blockquote>
-<p><strong>二阶段方法</strong></p>
-<blockquote>
-<p>先成可能的候选框，然后进行分类，进一步校正候选框，如RCNN，FAST-RCNN，FASTER-RCNN，MASK-RCNN等</p>
-</blockquote>
-<p><strong>selective search</strong></p>
-<blockquote>
-<p>主要是将较为相似的小区域合并，并生成这些区域的边界框</p>
-</blockquote>
-<p><strong>RCNN</strong></p>
-<ul>
-<li>通过selective search生成RP(region proposal)</li>
-<li>通过cnn对每个RP提取特征</li>
-<li>通过svm进行分类</li>
-<li>对完成分类的候选框进行更精确的定位，确定最终的候选框</li>
-</ul>
-<p><strong>Fast RCNN</strong></p>
-<ul>
-<li>对整张图像提取特征，不用每个候选框都提取</li>
-<li>通过selective search 生成候选框映射到featuremap中</li>
-<li>通过roi pooling生成固定尺寸的featuremap</li>
-<li>通过softmax进行分类</li>
-<li>通过NMS校正候选框</li>
-</ul>
-<p><strong>Faster Rcnn</strong></p>
-<ul>
-<li>使用RPN替代了selective research,提高了速度</li>
-<li>RPN过程中，每个像素生成若干个锚框，然后生成稍微准确一些的候选框</li>
-<li>将这些候选框映射到featuremap中</li>
-<li>后续步骤与fast rcnn相同</li>
-</ul>
-<p><strong>mask rcnn</strong></p>
-<p><strong>SSD</strong></p>
 
                 
               </div>
