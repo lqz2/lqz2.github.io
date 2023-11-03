@@ -16,15 +16,15 @@
   <meta name="author" content="zql">
   <meta name="keywords" content="">
   
-    <meta name="description" content="一些有价值的参考资料（持续更新!）🌈🌈🌈  第1周🌈 第2周🌈 第3周🌈 第4周🌈 第5周🌈      一些有价值的参考资料（持续更新!）🌈🌈🌈  第1周🌈  了解了在线深度学习可视化辅助工具wandb 关于结构性相似度（SSIM）的论文，《Image quality assessment: from error visibility to structural sim">
+    <meta name="description" content="一些有价值的参考资料（持续更新!）🌈🌈🌈  第1周🌈 第2周🌈 第3周🌈 第4周🌈 第5周🌈 第六周🌈      一些有价值的参考资料（持续更新!）🌈🌈🌈  第1周🌈  了解了在线深度学习可视化辅助工具wandb 关于结构性相似度（SSIM）的论文，《Image quality assessment: from error visibility to structur">
 <meta property="og:type" content="article">
 <meta property="og:title" content="参考资料合集">
 <meta property="og:url" content="http://lqz2.github.io/2023/08/11/%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99%E5%90%88%E9%9B%86/index.html">
 <meta property="og:site_name" content="my blogs">
-<meta property="og:description" content="一些有价值的参考资料（持续更新!）🌈🌈🌈  第1周🌈 第2周🌈 第3周🌈 第4周🌈 第5周🌈      一些有价值的参考资料（持续更新!）🌈🌈🌈  第1周🌈  了解了在线深度学习可视化辅助工具wandb 关于结构性相似度（SSIM）的论文，《Image quality assessment: from error visibility to structural sim">
+<meta property="og:description" content="一些有价值的参考资料（持续更新!）🌈🌈🌈  第1周🌈 第2周🌈 第3周🌈 第4周🌈 第5周🌈 第六周🌈      一些有价值的参考资料（持续更新!）🌈🌈🌈  第1周🌈  了解了在线深度学习可视化辅助工具wandb 关于结构性相似度（SSIM）的论文，《Image quality assessment: from error visibility to structur">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2023-08-11T09:28:17.000Z">
-<meta property="article:modified_time" content="2023-10-18T12:52:16.072Z">
+<meta property="article:modified_time" content="2023-11-03T01:27:02.466Z">
 <meta property="article:author" content="zql">
 <meta name="twitter:card" content="summary_large_image">
   
@@ -219,7 +219,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          4.9k 字
+          5.3k 字
         
       </span>
     
@@ -230,7 +230,7 @@
         
         
         
-          41 分钟
+          45 分钟
         
       </span>
     
@@ -282,6 +282,7 @@
 <li><a href="#%E7%AC%AC3%E5%91%A8rainbow">第3周🌈</a></li>
 <li><a href="#%E7%AC%AC4%E5%91%A8rainbow">第4周🌈</a></li>
 <li><a href="#%E7%AC%AC5%E5%91%A8rainbow">第5周🌈</a></li>
+<li><a href="#%E7%AC%AC%E5%85%AD%E5%91%A8rainbow">第六周🌈</a></li>
 </ul>
 </li>
 </ul>
@@ -354,9 +355,18 @@
 <li>使用algorithmic宏包编写伪代码时的分页问题，参考(<a target="_blank" rel="noopener" href="https://blog.csdn.net/Yiigel/article/details/53840888">https://blog.csdn.net/Yiigel/article/details/53840888</a>)</li>
 <li>cv中的绝对位置编码和相对位置编码，绝对位置编码：一般是可学习的，实现非常简洁，初始化一个形状和经过patch_embedding后的输出x相同的参数，然后直接加到x上，在训练阶段一起训练，有点像加了一个可学习的bias，VIT中使用的就是这种方式。对于相对位置编码：绝对位置编码是在patch_embedding之后，计算自注意力(Q,K,V)之前，而相对位置编码是在计算自注意力的时候加入的，在swin transformer中，将二维位置信息转换为一维位置信息，然后去根据相对位置偏移表查询具体的值，位置偏移表的值是训练出来的，在文章中，相对位置编码效果好于绝对位置编码。具体参考<a target="_blank" rel="noopener" href="https://blog.csdn.net/qq_43733107/article/details/127077056">这里</a>。</li>
 <li>dense block，每一层将之前所有层的输入进行拼接，之后将输出的特征图传递给之后的所有层，可以可以减轻梯度消失现象，加强特征的融合。参考(<a target="_blank" rel="noopener" href="https://www.jianshu.com/p/0b8fc900abef">https://www.jianshu.com/p/0b8fc900abef</a>)</li>
-<li>关于变异系数CV(coefficient of variation)，需要比较两组数据离散程度大小的时候，如果两组数据的测量尺度相差太大，或者数据量纲的不同，直接使用标准差来进行比较不合适，此时就应当消除测量尺度和量纲的影响，而变异系数可以做到这一点，它是原始数据标准差与原始数据平均数的比。CV没有量纲，这样就可以进行客观比较了。事实上，可以认为变异系数和极差、标准差和方差一样，都是反映数据离散程度的绝对值。其数据大小不仅受变量值离散程度的影响，而且还受变量值平均水平大小的影响。参考<a target="_blank" rel="noopener" href="https://blog.csdn.net/m0_64799907/article/details/130041485?ops_request_misc=%7B%22request%5Fid%22%3A%22169745656316800225536260%22%2C%22scm%22%3A%2220140713.130102334..%22%7D&amp;request_id=169745656316800225536260&amp;biz_id=0&amp;utm_medium=distribute.pc_search_result.none-task-blog-2~all~sobaiduend~default-1-130041485-null-null.142%5Ev96%5Econtrol&amp;utm_term=coefficientofvariation&amp;spm=1018.2226.3001.4187">1</a></li>
+<li>关于变异系数CV(coefficient of variation)，需要比较两组数据离散程度大小的时候，如果两组数据的测量尺度相差太大，或者数据量纲的不同，直接使用标准差来进行比较不合适，此时就应当消除测量尺度和量纲的影响，而变异系数可以做到这一点，它是原始数据标准差与原始数据平均数的比。CV没有量纲，这样就可以进行客观比较了。事实上，可以认为变异系数和极差. 标准差和方差一样，都是反映数据离散程度的绝对值。其数据大小不仅受变量值离散程度的影响，而且还受变量值平均水平大小的影响。参考<a target="_blank" rel="noopener" href="https://blog.csdn.net/m0_64799907/article/details/130041485?ops_request_misc=%7B%22request%5Fid%22%3A%22169745656316800225536260%22%2C%22scm%22%3A%2220140713.130102334..%22%7D&amp;request_id=169745656316800225536260&amp;biz_id=0&amp;utm_medium=distribute.pc_search_result.none-task-blog-2~all~sobaiduend~default-1-130041485-null-null.142%5Ev96%5Econtrol&amp;utm_term=coefficientofvariation&amp;spm=1018.2226.3001.4187">1</a></li>
 <li>git fetch 和git pull的区别，git fetch是将远程主机的最新内容拉到本地，用户在检查了以后决定是否合并到工作本机分支中。而git pull 则是将远程主机的最新内容拉下来后直接合并，即：git pull = git fetch + git merge，这样可能会产生冲突，需要手动解决。</li>
 <li>转置卷积的计算详解，参考<a target="_blank" rel="noopener" href="https://blog.csdn.net/ZhaoDongyu_AK47/article/details/130602195">1</a></li>
+</ol>
+<h3 id="第六周"><a class="markdownIt-Anchor" href="#第六周"></a> 第六周🌈</h3>
+<ol>
+<li>新设备配置git时，验证是否成功ssh -T <a href="mailto:git@github.com">git@github.com</a>，启智平台同理，参考<a target="_blank" rel="noopener" href="https://blog.csdn.net/m0_72983118/article/details/130546429">1</a></li>
+<li>vbox的虚拟环境的复制，只需要复制.vbox, .vdi, vbox-prev文件到相同路径，然后在vbox中注册即可</li>
+<li>vscode终端支持conda命令，参考<a target="_blank" rel="noopener" href="https://blog.csdn.net/takedachia/article/details/124694616">1</a></li>
+<li>list的extend和append的区别：append（）用于在列表末尾添加新的对象，输入参数为对象；extend（）用于在列表末尾追加另一个序列中的多个值，输入对象为元素队列；</li>
+<li>numpy的ravel和flatten函数的区别：参考<a target="_blank" rel="noopener" href="https://blog.csdn.net/liuweiyuxiang/article/details/78220080?ops_request_misc=%7B%22request%5Fid%22%3A%22169830186016800186578235%22%2C%22scm%22%3A%2220140713.130102334..%22%7D&amp;request_id=169830186016800186578235&amp;biz_id=0&amp;utm_medium=distribute.pc_search_result.none-task-blog-2~all~top_positive~default-1-78220080-null-null.142%5Ev96%5Epc_search_result_base5&amp;utm_term=ravel%E5%87%BD%E6%95%B0&amp;spm=1018.2226.3001.4187">1</a></li>
+<li>delctype和auto的区别，二者都用于自动推导类型，但delctype更为灵活，auto所修饰的变量必须被初始化，编译器需要通过初始化来确定auto所代表的类型，即必须要定义变量。若仅希望得到类型，则可以用delctype，如一些排序规则需要使用仿函数，可以用lambda表达式定义比较函数，然后用decltype自动推导。参考(<a target="_blank" rel="noopener" href="https://zhuanlan.zhihu.com/p/152154499">https://zhuanlan.zhihu.com/p/152154499</a>)</li>
 </ol>
 
                 
