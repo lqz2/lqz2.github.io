@@ -16,15 +16,15 @@
   <meta name="author" content="zql">
   <meta name="keywords" content="">
   
-    <meta name="description" content="遇到的一些问题和解决方法（持续更新！）🌈🌈🌈  第1周🌈 第2周🌈 第3周🌈 第4周🌈      遇到的一些问题和解决方法（持续更新！）🌈🌈🌈  第1周🌈  windows环境下安装pycocotools报错：ERROR: Could not build wheels for pycocotools, which is required to install pyproj">
+    <meta name="description" content="遇到的一些问题和解决方法（持续更新！）🌈🌈🌈  第1周🌈 第2周🌈 第3周🌈 第4周🌈 第5周🌈      遇到的一些问题和解决方法（持续更新！）🌈🌈🌈  第1周🌈  windows环境下安装pycocotools报错：ERROR: Could not build wheels for pycocotools, which is required to install">
 <meta property="og:type" content="article">
 <meta property="og:title" content="相关问题及解决方法">
 <meta property="og:url" content="http://lqz2.github.io/2023/08/11/%E7%9B%B8%E5%85%B3%E9%97%AE%E9%A2%98%E5%8F%8A%E8%A7%A3%E5%86%B3%E6%96%B9%E6%B3%95/index.html">
 <meta property="og:site_name" content="my blogs">
-<meta property="og:description" content="遇到的一些问题和解决方法（持续更新！）🌈🌈🌈  第1周🌈 第2周🌈 第3周🌈 第4周🌈      遇到的一些问题和解决方法（持续更新！）🌈🌈🌈  第1周🌈  windows环境下安装pycocotools报错：ERROR: Could not build wheels for pycocotools, which is required to install pyproj">
+<meta property="og:description" content="遇到的一些问题和解决方法（持续更新！）🌈🌈🌈  第1周🌈 第2周🌈 第3周🌈 第4周🌈 第5周🌈      遇到的一些问题和解决方法（持续更新！）🌈🌈🌈  第1周🌈  windows环境下安装pycocotools报错：ERROR: Could not build wheels for pycocotools, which is required to install">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2023-08-11T09:58:23.000Z">
-<meta property="article:modified_time" content="2023-09-25T05:21:32.550Z">
+<meta property="article:modified_time" content="2023-11-19T02:41:05.976Z">
 <meta property="article:author" content="zql">
 <meta name="twitter:card" content="summary_large_image">
   
@@ -219,7 +219,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          3.9k 字
+          4.6k 字
         
       </span>
     
@@ -230,7 +230,7 @@
         
         
         
-          33 分钟
+          39 分钟
         
       </span>
     
@@ -281,6 +281,7 @@
 <li><a href="#%E7%AC%AC2%E5%91%A8rainbow">第2周🌈</a></li>
 <li><a href="#%E7%AC%AC3%E5%91%A8rainbow">第3周🌈</a></li>
 <li><a href="#%E7%AC%AC4%E5%91%A8rainbow">第4周🌈</a></li>
+<li><a href="#%E7%AC%AC5%E5%91%A8rainbow">第5周🌈</a></li>
 </ul>
 </li>
 </ul>
@@ -325,6 +326,17 @@
 <li>自己搭建的融合网络进行推理测试时报错：IndexError: invalid index of a 0-dim tensor. Use <code>tensor.item()</code> in Python or <code>tensor.item&lt;T&gt;()</code> in C++ to convert a 0-dim tensor to a number。解决方法：因为在推理时，batchsize为1，所以计算时出现了维度错误，将相应的和batch有关的计算进行更改即可。</li>
 <li>将ycbcr进行拼接转为rgb图像时，图像显示时色彩异常。解决方法：出现此情况的原因时读取ycbcr图像时，先分别读取出y，cbcr，然后在分别进行归一化，因为rgb2ycbcr的过程中涉及其他计算，所以应当先对整张图像归一化，再分别读取出y，cbcr。</li>
 <li>推理时报错TypeError: conv2d() received an invalid combination of arguments - got (tuple, Parameter, NoneType, tuple, tuple, tuple, int), but expected one of: * (Tensor input, Tensor weight, Tensor bias, tuple of ints stride, tuple of ints padding, tuple of ints dilation, int groups)didn’t match because some of the arguments have invalid types: (tuple of (Tensor, Tensor), Parameter, NoneType, tuple of (int, int), tuple of (int, int), tuple of (int, int), int)。解决方法：原因是输入模型的数据有误，误把某个tuple类型的数据输入到一个本该为tensor的数据中。</li>
+</ol>
+<h3 id="第5周"><a class="markdownIt-Anchor" href="#第5周"></a> 第5周🌈</h3>
+<ol>
+<li>使用git push出现<br />
+error: 对象文件 .git/objects/f2/22d3b7ccb69f6a75af88129fa8ebc652a6d349 为空<br />
+error: 对象文件 .git/objects/f2/22d3b7ccb69f6a75af88129fa8ebc652a6d349 为空<br />
+fatal: 松散对象 f222d3b7ccb69f6a75af88129fa8ebc652a6d349（保存在 .git/objects/f2/22d3b7ccb69f6a75af88129fa8ebc652a6d349）已损坏<br />
+解决方法：是因为虚拟机强制退出引起的，按照网上的方法要find .git/objects/ -size 0 -exec rm -f {} ;<br />
+git fetch origin，但没有解决，应该将备份分支的.git文件夹复制到主目录，部署分支的.git放在.deploy_git</li>
+<li>error: 源引用规格 main 没有匹配，解决方法，本地分支与远程分支名称不匹配，指定推送的远程分支名称即可。</li>
+<li>vscode终端运行c++文件输出中文乱码，解决方法：原因是vscode文件编码为utf8而终端编码为gbk，因此需要把终端编码改为utf8，对于powershell，需要按ctrl+,然后在命令行后面加powershell.exe -NoExit chcp 65001，对于cmd，需要在注册表HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Command Processor新建字符串值，然后输入chcp 65001。或者在代码中，包含#include &lt;windows.h&gt;，然后在输出前加一行SetConsoleOutputCP(CP_UTF8);这样就可以正常输出中文了。</li>
 </ol>
 
                 
