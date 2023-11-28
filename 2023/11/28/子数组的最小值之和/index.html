@@ -16,21 +16,21 @@
   <meta name="author" content="zql">
   <meta name="keywords" content="">
   
-    <meta name="description" content="交换得到字典序最小的数组  题目描述 思路 代码      交换得到字典序最小的数组 原题  题目描述 给你一个下标从 0 开始的 正整数 数组 nums 和一个 正整数 limit 。 在一次操作中，你可以选择任意两个下标 i 和 j，如果 满足 |nums[i] - nums[j]| &lt;&#x3D; limit ，则交换 nums[i] 和 nums[j] 。 返回执行任意次操作后能得到的 字">
+    <meta name="description" content="子数组的最小值之和  题目描述 思路 代码      子数组的最小值之和 原题  题目描述 给定一个整数数组 arr，找到 min(b) 的总和，其中 b 的范围为 arr 的每个（连续）子数组。 由于答案可能很大，因此 返回答案模 10^9 + 7 。 e.g. 12345输入：arr &#x3D; [3,1,2,4]输出：17解释：子数组为 [3]，[1]，[2]，[4]，[3,1]，[1,2]，[">
 <meta property="og:type" content="article">
-<meta property="og:title" content="交换得到字典序最小的数组">
-<meta property="og:url" content="http://lqz2.github.io/2023/11/26/%E4%BA%A4%E6%8D%A2%E5%BE%97%E5%88%B0%E5%AD%97%E5%85%B8%E5%BA%8F%E6%9C%80%E5%B0%8F%E7%9A%84%E6%95%B0%E7%BB%84/index.html">
+<meta property="og:title" content="子数组的最小值之和">
+<meta property="og:url" content="http://lqz2.github.io/2023/11/28/%E5%AD%90%E6%95%B0%E7%BB%84%E7%9A%84%E6%9C%80%E5%B0%8F%E5%80%BC%E4%B9%8B%E5%92%8C/index.html">
 <meta property="og:site_name" content="my blogs">
-<meta property="og:description" content="交换得到字典序最小的数组  题目描述 思路 代码      交换得到字典序最小的数组 原题  题目描述 给你一个下标从 0 开始的 正整数 数组 nums 和一个 正整数 limit 。 在一次操作中，你可以选择任意两个下标 i 和 j，如果 满足 |nums[i] - nums[j]| &lt;&#x3D; limit ，则交换 nums[i] 和 nums[j] 。 返回执行任意次操作后能得到的 字">
+<meta property="og:description" content="子数组的最小值之和  题目描述 思路 代码      子数组的最小值之和 原题  题目描述 给定一个整数数组 arr，找到 min(b) 的总和，其中 b 的范围为 arr 的每个（连续）子数组。 由于答案可能很大，因此 返回答案模 10^9 + 7 。 e.g. 12345输入：arr &#x3D; [3,1,2,4]输出：17解释：子数组为 [3]，[1]，[2]，[4]，[3,1]，[1,2]，[">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2023-11-26T10:34:51.000Z">
-<meta property="article:modified_time" content="2023-11-26T10:51:03.668Z">
+<meta property="article:published_time" content="2023-11-28T12:18:46.000Z">
+<meta property="article:modified_time" content="2023-11-28T12:35:13.364Z">
 <meta property="article:author" content="zql">
 <meta name="twitter:card" content="summary_large_image">
   
   
   
-  <title>交换得到字典序最小的数组 - my blogs</title>
+  <title>子数组的最小值之和 - my blogs</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -41,6 +41,8 @@
   <link  rel="stylesheet" href="https://lib.baomitu.com/hint.css/2.7.0/hint.min.css" />
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/fancybox/3.5.7/jquery.fancybox.min.css" />
+
+  <link  rel="stylesheet" href="https://lib.baomitu.com/KaTeX/0.15.6/katex.min.css" />
 
 
 
@@ -196,7 +198,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="交换得到字典序最小的数组"></span>
+            <span id="subtitle" data-typed-text="子数组的最小值之和"></span>
           
         </div>
 
@@ -207,8 +209,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2023-11-26 18:34" pubdate>
-          2023年11月26日 晚上
+        <time datetime="2023-11-28 20:18" pubdate>
+          2023年11月28日 晚上
         </time>
       </span>
     
@@ -219,7 +221,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          1.4k 字
+          1.2k 字
         
       </span>
     
@@ -230,7 +232,7 @@
         
         
         
-          12 分钟
+          11 分钟
         
       </span>
     
@@ -268,14 +270,14 @@
         <div id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">交换得到字典序最小的数组</h1>
+            <h1 style="display: none">子数组的最小值之和</h1>
             
             
               <div class="markdown-body">
                 
                 <!-- TOC -->
 <ul>
-<li><a href="#%E4%BA%A4%E6%8D%A2%E5%BE%97%E5%88%B0%E5%AD%97%E5%85%B8%E5%BA%8F%E6%9C%80%E5%B0%8F%E7%9A%84%E6%95%B0%E7%BB%84">交换得到字典序最小的数组</a>
+<li><a href="#%E5%AD%90%E6%95%B0%E7%BB%84%E7%9A%84%E6%9C%80%E5%B0%8F%E5%80%BC%E4%B9%8B%E5%92%8C">子数组的最小值之和</a>
 <ul>
 <li><a href="#%E9%A2%98%E7%9B%AE%E6%8F%8F%E8%BF%B0">题目描述</a></li>
 <li><a href="#%E6%80%9D%E8%B7%AF">思路</a></li>
@@ -284,19 +286,19 @@
 </li>
 </ul>
 <!-- /TOC -->
-<h2 id="交换得到字典序最小的数组"><a class="markdownIt-Anchor" href="#交换得到字典序最小的数组"></a> 交换得到字典序最小的数组</h2>
-<p><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/make-lexicographically-smallest-array-by-swapping-elements/description/">原题</a></p>
+<h2 id="子数组的最小值之和"><a class="markdownIt-Anchor" href="#子数组的最小值之和"></a> 子数组的最小值之和</h2>
+<p><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/sum-of-subarray-minimums/description/">原题</a></p>
 <h3 id="题目描述"><a class="markdownIt-Anchor" href="#题目描述"></a> 题目描述</h3>
-<p>给你一个下标从 0 开始的 正整数 数组 nums 和一个 正整数 limit 。</p>
-<p>在一次操作中，你可以选择任意两个下标 i 和 j，如果 满足 |nums[i] - nums[j]| &lt;= limit ，则交换 nums[i] 和 nums[j] 。</p>
-<p>返回执行任意次操作后能得到的 字典序最小的数组 。</p>
-<p>如果在数组 a 和数组 b 第一个不同的位置上，数组 a 中的对应字符比数组 b 中的对应字符的字典序更小，则认为数组 a 就比数组 b 字典序更小。例如，数组 [2,10,3] 比数组 [10,2,3] 字典序更小，下标 0 处是两个数组第一个不同的位置，且 2 &lt; 10 。</p>
+<p>给定一个整数数组 arr，找到 min(b) 的总和，其中 b 的范围为 arr 的每个（连续）子数组。</p>
+<p>由于答案可能很大，因此 返回答案模 10^9 + 7 。</p>
 <p>e.g.</p>
-<figure class="highlight inform7"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><code class="hljs inform7">输入：nums = <span class="hljs-comment">[1,5,3,9,8]</span>, limit = 2<br>输出：<span class="hljs-comment">[1,3,5,8,9]</span><br>解释：执行 2 次操作：<br>- 交换 nums<span class="hljs-comment">[1]</span> 和 nums<span class="hljs-comment">[2]</span> 。数组变为 <span class="hljs-comment">[1,3,5,9,8]</span> 。<br>- 交换 nums<span class="hljs-comment">[3]</span> 和 nums<span class="hljs-comment">[4]</span> 。数组变为 <span class="hljs-comment">[1,3,5,8,9]</span> 。<br>即便执行更多次操作，也无法得到字典序更小的数组。<br>注意，执行不同的操作也可能会得到相同的结果。<br></code></pre></td></tr></table></figure>
+<figure class="highlight inform7"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs inform7">输入：arr = <span class="hljs-comment">[3,1,2,4]</span><br>输出：17<br>解释：<br>子数组为 <span class="hljs-comment">[3]</span>，<span class="hljs-comment">[1]</span>，<span class="hljs-comment">[2]</span>，<span class="hljs-comment">[4]</span>，<span class="hljs-comment">[3,1]</span>，<span class="hljs-comment">[1,2]</span>，<span class="hljs-comment">[2,4]</span>，<span class="hljs-comment">[3,1,2]</span>，<span class="hljs-comment">[1,2,4]</span>，<span class="hljs-comment">[3,1,2,4]</span>。 <br>最小值为 3，1，2，4，1，1，2，1，1，1，和为 17。<br></code></pre></td></tr></table></figure>
 <h3 id="思路"><a class="markdownIt-Anchor" href="#思路"></a> 思路</h3>
-<p>主要思路是分组排序和二分。首先需要对数组进行排序，接下来将他们分组，分组的原则是组内升序且各个组之间，不存在任何一对可以交换的元素<code>(tmp[j]-tmp[i]&gt;limit,j&gt;i)</code>，然后用数组idx[]记录每个组的第一个元素在有序数组中的下标，offset[]记录偏移量。接下来遍历nums数组，每个元素先二分查找在有序数组中的下标j，然后再二分查找j属于哪个组，然后根据组内起始下标和组内偏移确定在有序数组中的下标，然后添加到ans中。总的来说，每次遍历元素放置的是元素所在组内能交换的较小值，因此保证了字典序较小。</p>
+<p>这道题主要还是用到单调栈的思想。我们需要计算每个以arr[i]为最小值的子数组最小值之和，例如 arr=[1,4,2,3,1]，其中2是子数组[2],[4,2],[2,3],[4,2,3]的最小值，那么2对答案的贡献就是8。因此，需要利用单调栈找到arr[i]左边第一个比他小的数的下标L，和右边第一个比他小的数的下标R，因为子数组要包括arr[i]，因此左端点可以是<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>L</mi><mo>+</mo><mn>1</mn><mo separator="true">,</mo><mi>L</mi><mo>+</mo><mn>2</mn><mo separator="true">,</mo><mi mathvariant="normal">.</mi><mi mathvariant="normal">.</mi><mi mathvariant="normal">.</mi><mi>i</mi></mrow><annotation encoding="application/x-tex">L+1, L+2, ... i</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.76666em;vertical-align:-0.08333em;"></span><span class="mord mathnormal">L</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.8777699999999999em;vertical-align:-0.19444em;"></span><span class="mord">1</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathnormal">L</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.85396em;vertical-align:-0.19444em;"></span><span class="mord">2</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord">.</span><span class="mord">.</span><span class="mord">.</span><span class="mord mathnormal">i</span></span></span></span>共i-L个，右端点可以是<span class="katex"><span class="katex-mathml"><math xmlns="http://www.w3.org/1998/Math/MathML"><semantics><mrow><mi>i</mi><mtext>，</mtext><mi>i</mi><mo>+</mo><mn>1</mn><mo separator="true">,</mo><mi>L</mi><mo>+</mo><mn>2</mn><mtext>，</mtext><mi mathvariant="normal">.</mi><mi mathvariant="normal">.</mi><mi mathvariant="normal">.</mi><mi>R</mi><mo>−</mo><mn>1</mn></mrow><annotation encoding="application/x-tex">i，i+1, L+2，... R-1</annotation></semantics></math></span><span class="katex-html" aria-hidden="true"><span class="base"><span class="strut" style="height:0.76666em;vertical-align:-0.08333em;"></span><span class="mord mathnormal">i</span><span class="mord cjk_fallback">，</span><span class="mord mathnormal">i</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.8777699999999999em;vertical-align:-0.19444em;"></span><span class="mord">1</span><span class="mpunct">,</span><span class="mspace" style="margin-right:0.16666666666666666em;"></span><span class="mord mathnormal">L</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">+</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.76666em;vertical-align:-0.08333em;"></span><span class="mord">2</span><span class="mord cjk_fallback">，</span><span class="mord">.</span><span class="mord">.</span><span class="mord">.</span><span class="mord mathnormal" style="margin-right:0.00773em;">R</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span><span class="mbin">−</span><span class="mspace" style="margin-right:0.2222222222222222em;"></span></span><span class="base"><span class="strut" style="height:0.64444em;vertical-align:0em;"></span><span class="mord">1</span></span></span></span>共R-i个，因此以arr[i]为最小值的子数组对答案的贡献为(i-L)*(R-i)*arr[i]。</p>
+<p>要注意的是，由于可能存在重复的数，因此每个arr[i]对应的左右边界不能重叠，否则会导致重复计算，所以左右边界要满足<strong>左闭右开（左开右闭）</strong></p>
 <h3 id="代码"><a class="markdownIt-Anchor" href="#代码"></a> 代码</h3>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span> &#123;<br><span class="hljs-keyword">public</span>:<br>    <span class="hljs-function">vector&lt;<span class="hljs-type">int</span>&gt; <span class="hljs-title">lexicographicallySmallestArray</span><span class="hljs-params">(vector&lt;<span class="hljs-type">int</span>&gt;&amp; nums, <span class="hljs-type">int</span> limit)</span> </span>&#123;<br>        <span class="hljs-type">int</span> n=nums.<span class="hljs-built_in">size</span>();<br>        vector&lt;<span class="hljs-type">int</span>&gt; tmp=nums;<br>        <span class="hljs-built_in">sort</span>(tmp.<span class="hljs-built_in">begin</span>(),tmp.<span class="hljs-built_in">end</span>());<br>        vector&lt;<span class="hljs-type">int</span>&gt; idx;<br>        idx.<span class="hljs-built_in">push_back</span>(<span class="hljs-number">0</span>);<br>        <span class="hljs-type">int</span> t=<span class="hljs-number">0</span>;<br>        <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i=<span class="hljs-number">1</span>;i&lt;n;++i)<br>        &#123;<br>            <span class="hljs-keyword">if</span>(tmp[i]-tmp[t]&gt;limit)<br>            &#123;<br>                idx.<span class="hljs-built_in">push_back</span>(i);<br>                t=i;<br>            &#125;<br>        &#125;<br>        <span class="hljs-type">int</span> m=idx.<span class="hljs-built_in">size</span>();<br>        <span class="hljs-function">vector&lt;<span class="hljs-type">int</span>&gt; <span class="hljs-title">offset</span><span class="hljs-params">(m)</span></span>;<br>        <span class="hljs-function">vector&lt;<span class="hljs-type">int</span>&gt; <span class="hljs-title">ans</span><span class="hljs-params">(n)</span></span>;<br>        <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i=<span class="hljs-number">0</span>;i&lt;n;++i)<br>        &#123;<br>            <span class="hljs-type">int</span> j=<span class="hljs-built_in">upper_bound</span>(tmp.<span class="hljs-built_in">begin</span>(),tmp.<span class="hljs-built_in">end</span>(),nums[i])-tmp.<span class="hljs-built_in">begin</span>();<br>            <span class="hljs-type">int</span> k=<span class="hljs-built_in">lower_bound</span>(idx.<span class="hljs-built_in">begin</span>(),idx.<span class="hljs-built_in">end</span>(),j)-idx.<span class="hljs-built_in">begin</span>();<br>            ans[i]=tmp[idx[k<span class="hljs-number">-1</span>]+offset[k<span class="hljs-number">-1</span>]];<br>            ++offset[k<span class="hljs-number">-1</span>];<br>        &#125;<br>        <span class="hljs-keyword">return</span> ans;<br>    &#125;<br>&#125;;<br></code></pre></td></tr></table></figure>
+<figure class="highlight haskell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><code class="hljs haskell"><span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-type">Solution</span> &#123;</span><br><span class="hljs-class">public:</span><br><span class="hljs-class">    int sumSubarrayMins(<span class="hljs-title">vector</span>&lt;<span class="hljs-title">int</span>&gt;&amp; <span class="hljs-title">arr</span>) &#123;</span><br><span class="hljs-class">        int n=arr.size();</span><br><span class="hljs-class">        stack&lt;int&gt; ls,rs;</span><br><span class="hljs-class">        vector&lt;int&gt; left(<span class="hljs-title">n</span>),right(<span class="hljs-title">n</span>);</span><br><span class="hljs-class">        for(<span class="hljs-title">int</span> <span class="hljs-title">i</span>=0;<span class="hljs-title">i</span>&lt;<span class="hljs-title">n</span>;++<span class="hljs-title">i</span>)</span><br><span class="hljs-class">        &#123;</span><br><span class="hljs-class">            while(!<span class="hljs-title">ls</span>.<span class="hljs-title">empty</span>()&amp;&amp;arr[ls.top()]&gt;=arr[i])</span><br><span class="hljs-class">                ls.pop();</span><br><span class="hljs-class">            left[i]=ls.empty() ? -1:ls.top();</span><br><span class="hljs-class">            ls.push(<span class="hljs-title">i</span>);</span><br><span class="hljs-class">        &#125;</span><br><span class="hljs-class">        for(<span class="hljs-title">int</span> <span class="hljs-title">i</span>=<span class="hljs-title">n</span>-1;<span class="hljs-title">i</span>&gt;=0;<span class="hljs-comment">--i)</span></span><br><span class="hljs-class">        &#123;</span><br><span class="hljs-class">            <span class="hljs-title">while</span>(!<span class="hljs-title">rs</span>.<span class="hljs-title">empty</span>()&amp;&amp;arr[rs.top()]&gt;arr[i])</span><br><span class="hljs-class">                rs.pop();</span><br><span class="hljs-class">            right[i]=rs.empty() ? n:rs.top();</span><br><span class="hljs-class">            rs.push(<span class="hljs-title">i</span>);</span><br><span class="hljs-class">        &#125;</span><br><span class="hljs-class">        int mod=1e9+7;</span><br><span class="hljs-class">        long long ans=0;</span><br><span class="hljs-class">        for(<span class="hljs-title">int</span> <span class="hljs-title">i</span>=0;<span class="hljs-title">i</span>&lt;<span class="hljs-title">n</span>;++<span class="hljs-title">i</span>)</span><br><span class="hljs-class">            ans+=((<span class="hljs-title">long</span> <span class="hljs-title">long</span>)(<span class="hljs-title">i</span>-<span class="hljs-title">left</span>[<span class="hljs-title">i</span>])*(<span class="hljs-title">right</span>[<span class="hljs-title">i</span>]-<span class="hljs-title">i</span>)*arr[i])%mod;</span><br><span class="hljs-class">        return ans%mod;</span><br><span class="hljs-class">    &#125;</span><br><span class="hljs-class">&#125;;</span><br></code></pre></td></tr></table></figure>
+
                 
               </div>
             
@@ -334,8 +336,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>交换得到字典序最小的数组</div>
-      <div>http://lqz2.github.io/2023/11/26/交换得到字典序最小的数组/</div>
+      <div>子数组的最小值之和</div>
+      <div>http://lqz2.github.io/2023/11/28/子数组的最小值之和/</div>
     </div>
     <div class="license-meta">
       
@@ -347,7 +349,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2023年11月26日</div>
+          <div>2023年11月28日</div>
         </div>
       
       
@@ -379,18 +381,12 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2023/11/28/%E5%AD%90%E6%95%B0%E7%BB%84%E7%9A%84%E6%9C%80%E5%B0%8F%E5%80%BC%E4%B9%8B%E5%92%8C/" title="子数组的最小值之和">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">子数组的最小值之和</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2023/11/22/%E7%BD%91%E6%A0%BC%E4%B8%AD%E6%9C%80%E5%B0%8F%E8%B7%AF%E5%BE%84%E4%BB%A3%E4%BB%B7/" title="网格中最小路径代价">
-                        <span class="hidden-mobile">网格中最小路径代价</span>
+                      <a href="/2023/11/26/%E4%BA%A4%E6%8D%A2%E5%BE%97%E5%88%B0%E5%AD%97%E5%85%B8%E5%BA%8F%E6%9C%80%E5%B0%8F%E7%9A%84%E6%95%B0%E7%BB%84/" title="交换得到字典序最小的数组">
+                        <span class="hidden-mobile">交换得到字典序最小的数组</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
@@ -447,6 +443,11 @@
 
 
   
+
+
+  
+  
+
 
 
 
