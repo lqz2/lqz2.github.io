@@ -16,15 +16,15 @@
   <meta name="author" content="zql">
   <meta name="keywords" content="">
   
-    <meta name="description" content="一些有价值的参考资料（持续更新!）🌈🌈🌈  第1周🌈 第2周🌈 第3周🌈 第4周🌈 第5周🌈 第6周🌈 第7周🌈      一些有价值的参考资料（持续更新!）🌈🌈🌈  第1周🌈  了解了在线深度学习可视化辅助工具wandb 关于结构性相似度（SSIM）的论文，《Image quality assessment: from error visibility to st">
+    <meta name="description" content="一些有价值的参考资料（持续更新!）🌈🌈🌈  第1周🌈 第2周🌈 第3周🌈 第4周🌈 第5周🌈 第6周🌈 第7周🌈 第8周🌈      一些有价值的参考资料（持续更新!）🌈🌈🌈  第1周🌈  了解了在线深度学习可视化辅助工具wandb 关于结构性相似度（SSIM）的论文，《Image quality assessment: from error visibility">
 <meta property="og:type" content="article">
 <meta property="og:title" content="参考资料合集">
 <meta property="og:url" content="http://lqz2.github.io/2023/08/11/%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99%E5%90%88%E9%9B%86/index.html">
 <meta property="og:site_name" content="my blogs">
-<meta property="og:description" content="一些有价值的参考资料（持续更新!）🌈🌈🌈  第1周🌈 第2周🌈 第3周🌈 第4周🌈 第5周🌈 第6周🌈 第7周🌈      一些有价值的参考资料（持续更新!）🌈🌈🌈  第1周🌈  了解了在线深度学习可视化辅助工具wandb 关于结构性相似度（SSIM）的论文，《Image quality assessment: from error visibility to st">
+<meta property="og:description" content="一些有价值的参考资料（持续更新!）🌈🌈🌈  第1周🌈 第2周🌈 第3周🌈 第4周🌈 第5周🌈 第6周🌈 第7周🌈 第8周🌈      一些有价值的参考资料（持续更新!）🌈🌈🌈  第1周🌈  了解了在线深度学习可视化辅助工具wandb 关于结构性相似度（SSIM）的论文，《Image quality assessment: from error visibility">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2023-08-11T09:28:17.000Z">
-<meta property="article:modified_time" content="2023-11-19T02:38:48.760Z">
+<meta property="article:modified_time" content="2023-11-30T10:28:46.322Z">
 <meta property="article:author" content="zql">
 <meta name="twitter:card" content="summary_large_image">
   
@@ -219,7 +219,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          6.1k 字
+          7.1k 字
         
       </span>
     
@@ -230,7 +230,7 @@
         
         
         
-          51 分钟
+          59 分钟
         
       </span>
     
@@ -284,6 +284,7 @@
 <li><a href="#%E7%AC%AC5%E5%91%A8rainbow">第5周🌈</a></li>
 <li><a href="#%E7%AC%AC6%E5%91%A8rainbow">第6周🌈</a></li>
 <li><a href="#%E7%AC%AC7%E5%91%A8rainbow">第7周🌈</a></li>
+<li><a href="#%E7%AC%AC8%E5%91%A8rainbow">第8周🌈</a></li>
 </ul>
 </li>
 </ul>
@@ -376,6 +377,16 @@
 <li>余弦退火调整学习率，一般训练时梯度下降算法可能陷入局部最小值，此时可以通过突然提高学习率，来“跳出”局部最小值并找到通向全局最小值的路径。这种方式称为带重启的随机梯度下降方法。参考(<a target="_blank" rel="noopener" href="https://blog.csdn.net/weixin_35848967/article/details/108493217">https://blog.csdn.net/weixin_35848967/article/details/108493217</a>)</li>
 <li>关于torch.backends.cudnn.benchmark，该选项设置为true时，会自动选择最优卷积算子，但是这个过程是随机的，也就是说即使固定了随机种子，如果这一项为true，训练的结果依然会不同。</li>
 <li>windows终端查看编码格式，chcp，切换编码chcp 65001(utf-8) chcp 936(简体中文gbk) chcp 437(英语)</li>
+</ol>
+<h3 id="第8周"><a class="markdownIt-Anchor" href="#第8周"></a> 第8周🌈</h3>
+<ol>
+<li>colab中命令前加！就可以执行linux命令，但是cd前需要加%</li>
+<li>linux下使用代理，终端输入export https_proxy=https://proxy_ip:prot或者export https_proxy=<a target="_blank" rel="noopener" href="https://username">https://username</a>:password@proxy_ip:port</li>
+<li>python中的functools.partial的用法，partial可以为函数固定一个参数，如函数f(a,b)-&gt;a+b，那么ff=partial(f,3)就将f的第一个参数固定为3，ff(3)的结果为3+3=6，参考(<a target="_blank" rel="noopener" href="https://blog.csdn.net/qsloony/article/details/123802110">https://blog.csdn.net/qsloony/article/details/123802110</a>)</li>
+<li>git clone和git fetch的区别，git clone用于首次获取整个远程仓库到本地。git fetch用于检查远程仓库的更新并将这些更新拉取到本地，但不会自动合并这些更新。在使用git fetch后，可能需要使用git merge或git rebase来将获取的更新合并到你的当前分支。如果想同时获取并合并，可以使用git pull，它实际上是git fetch和git merge的组合。</li>
+<li>upstream和origin的区别：git remote add upstream 用于添加原始仓库的引用，通常用于同步你 fork 的仓库。git remote add origin 用于添加你自己的远程仓库的引用，通常是你 fork 的仓库或你自己创建的新仓库。删除当前添加的远程仓库：git remote rm origin(仓库别名)</li>
+<li>添加自己代码到别人仓库的方法，先fork别人的仓库，然后clone到本地，然后git remote add upstream url添加别人的原始仓库作为上游，然后依据需要决定是否创建新分支(git checkout -b branch)，然后add commit，在push之前，一般可以先从upstream获取代码更新(git pull upstream 分支名)，然后push到自己的仓库git push origin 分支名，然后在自己的仓库提交PR即可，通过后原始仓库会把自己的代码修改更新过去。</li>
+<li>软连接的注意事项，参考(<a target="_blank" rel="noopener" href="https://blog.csdn.net/liu16659/article/details/83714066">https://blog.csdn.net/liu16659/article/details/83714066</a>)</li>
 </ol>
 
                 
