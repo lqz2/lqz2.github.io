@@ -1,7 +1,7 @@
 ---
 title: transformer笔记
 date: 2022-11-03 19:58:46
-categories: 论文笔记
+categories: 资料
 math: true
 tags:
 ---
