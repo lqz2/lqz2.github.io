@@ -16,21 +16,21 @@
   <meta name="author" content="zql">
   <meta name="keywords" content="">
   
-    <meta name="description" content="输入单词需要的最少按键次数  题目描述 思路 代码      输入单词需要的最少按键次数 原题  题目描述 给你一个字符串 word，由 不同 小写英文字母组成。 电话键盘上的按键与 不同 小写英文字母集合相映射，可以通过按压按键来组成单词。例如，按键 2 对应 [“a”,“b”,“c”]，我们需要按一次键来输入 “a”，按两次键来输入 “b”，按三次键来输入 “c”。 现在允许你将编号为 2">
+    <meta name="description" content="子集中元素的最大数量 原题  题目描述 给你一个 正整数 数组 nums 。 你需要从数组中选出一个满足下述条件的子集： 你可以将选中的元素放置在一个下标从 0 开始的数组中，并使其遵循以下模式：[x, x^2, x^4, ..., x^k&#x2F;2, x^k, x^k&#x2F;2, ..., x^4, x^2, x]（注意，k 可以是任何非负的2的幂）。例如，[2, 4, 16, 4, 2] 和 [3, 9">
 <meta property="og:type" content="article">
-<meta property="og:title" content="输入单词需要的最少按键次数">
-<meta property="og:url" content="http://lqz2.github.io/2024/01/21/%E8%BE%93%E5%85%A5%E5%8D%95%E8%AF%8D%E9%9C%80%E8%A6%81%E7%9A%84%E6%9C%80%E5%B0%91%E6%8C%89%E9%94%AE%E6%AC%A1%E6%95%B0/index.html">
+<meta property="og:title" content="子集中元素的最大数量">
+<meta property="og:url" content="http://lqz2.github.io/2024/01/28/%E5%AD%90%E9%9B%86%E4%B8%AD%E5%85%83%E7%B4%A0%E7%9A%84%E6%9C%80%E5%A4%A7%E6%95%B0%E9%87%8F/index.html">
 <meta property="og:site_name" content="my blogs">
-<meta property="og:description" content="输入单词需要的最少按键次数  题目描述 思路 代码      输入单词需要的最少按键次数 原题  题目描述 给你一个字符串 word，由 不同 小写英文字母组成。 电话键盘上的按键与 不同 小写英文字母集合相映射，可以通过按压按键来组成单词。例如，按键 2 对应 [“a”,“b”,“c”]，我们需要按一次键来输入 “a”，按两次键来输入 “b”，按三次键来输入 “c”。 现在允许你将编号为 2">
+<meta property="og:description" content="子集中元素的最大数量 原题  题目描述 给你一个 正整数 数组 nums 。 你需要从数组中选出一个满足下述条件的子集： 你可以将选中的元素放置在一个下标从 0 开始的数组中，并使其遵循以下模式：[x, x^2, x^4, ..., x^k&#x2F;2, x^k, x^k&#x2F;2, ..., x^4, x^2, x]（注意，k 可以是任何非负的2的幂）。例如，[2, 4, 16, 4, 2] 和 [3, 9">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2024-01-21T07:43:26.000Z">
-<meta property="article:modified_time" content="2024-01-21T08:13:59.890Z">
+<meta property="article:published_time" content="2024-01-28T08:45:51.000Z">
+<meta property="article:modified_time" content="2024-01-28T08:52:18.129Z">
 <meta property="article:author" content="zql">
 <meta name="twitter:card" content="summary_large_image">
   
   
   
-  <title>输入单词需要的最少按键次数 - my blogs</title>
+  <title>子集中元素的最大数量 - my blogs</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -196,7 +196,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="输入单词需要的最少按键次数"></span>
+            <span id="subtitle" data-typed-text="子集中元素的最大数量"></span>
           
         </div>
 
@@ -207,8 +207,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2024-01-21 15:43" pubdate>
-          2024年1月21日 下午
+        <time datetime="2024-01-28 16:45" pubdate>
+          2024年1月28日 下午
         </time>
       </span>
     
@@ -219,7 +219,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          902 字
+          731 字
         
       </span>
     
@@ -230,7 +230,7 @@
         
         
         
-          8 分钟
+          7 分钟
         
       </span>
     
@@ -268,34 +268,23 @@
         <div id="board">
           <article class="post-content mx-auto">
             <!-- SEO header -->
-            <h1 style="display: none">输入单词需要的最少按键次数</h1>
+            <h1 style="display: none">子集中元素的最大数量</h1>
             
             
               <div class="markdown-body">
                 
-                <!-- TOC -->
-<ul>
-<li><a href="#%E8%BE%93%E5%85%A5%E5%8D%95%E8%AF%8D%E9%9C%80%E8%A6%81%E7%9A%84%E6%9C%80%E5%B0%91%E6%8C%89%E9%94%AE%E6%AC%A1%E6%95%B0">输入单词需要的最少按键次数</a>
-<ul>
-<li><a href="#%E9%A2%98%E7%9B%AE%E6%8F%8F%E8%BF%B0">题目描述</a></li>
-<li><a href="#%E6%80%9D%E8%B7%AF">思路</a></li>
-<li><a href="#%E4%BB%A3%E7%A0%81">代码</a></li>
-</ul>
-</li>
-</ul>
-<!-- /TOC -->
-<h2 id="输入单词需要的最少按键次数"><a class="markdownIt-Anchor" href="#输入单词需要的最少按键次数"></a> 输入单词需要的最少按键次数</h2>
-<p><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/minimum-number-of-pushes-to-type-word-ii/description/">原题</a></p>
+                <h2 id="子集中元素的最大数量"><a class="markdownIt-Anchor" href="#子集中元素的最大数量"></a> 子集中元素的最大数量</h2>
+<p><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/find-the-maximum-number-of-elements-in-subset/description/">原题</a></p>
 <h3 id="题目描述"><a class="markdownIt-Anchor" href="#题目描述"></a> 题目描述</h3>
-<p>给你一个字符串 word，由 不同 小写英文字母组成。</p>
-<p>电话键盘上的按键与 不同 小写英文字母集合相映射，可以通过按压按键来组成单词。例如，按键 2 对应 [“a”,“b”,“c”]，我们需要按一次键来输入 “a”，按两次键来输入 “b”，按三次键来输入 “c”。</p>
-<p>现在允许你将编号为 2 到 9 的按键重新映射到 不同 字母集合。每个按键可以映射到 任意数量 的字母，但每个字母 必须 恰好 映射到 一个 按键上。你需要找到输入字符串 word 所需的 最少 按键次数。</p>
-<p>返回重新映射按键后输入 word 所需的 最少 按键次数。</p>
-<figure class="highlight tap"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs tap">输入：word = &quot;xyzxyzxyzxyz&quot;<br>输出：12<br>解释：图片中给出的重新映射方案的输入成本最小。<br>&quot;x&quot; -&gt; 在按键<span class="hljs-number"> 2 </span>上按一次<br>&quot;y&quot; -&gt; 在按键<span class="hljs-number"> 3 </span>上按一次<br>&quot;z&quot; -&gt; 在按键<span class="hljs-number"> 4 </span>上按一次<br>总成本为<span class="hljs-number"> 1 </span>*<span class="hljs-number"> 4 </span>+<span class="hljs-number"> 1 </span>*<span class="hljs-number"> 4 </span>+<span class="hljs-number"> 1 </span>*<span class="hljs-number"> 4 </span>=<span class="hljs-number"> 12 </span>。<br>可以证明不存在其他成本更低的映射方案。<br>注意按键<span class="hljs-number"> 9 </span>没有映射到任何字母：不必让每个按键都存在与之映射的字母，但是每个字母都必须映射到按键上。<br></code></pre></td></tr></table></figure>
+<p>给你一个 正整数 数组 nums 。</p>
+<p>你需要从数组中选出一个满足下述条件的子集：</p>
+<p>你可以将选中的元素放置在一个下标从 0 开始的数组中，并使其遵循以下模式：<code>[x, x^2, x^4, ..., x^k/2, x^k, x^k/2, ..., x^4, x^2, x]</code>（注意，k 可以是任何非负的2的幂）。例如，[2, 4, 16, 4, 2] 和 [3, 9, 3] 都符合这一模式，而 [2, 4, 8, 4, 2] 则不符合。<br />
+返回满足这些条件的子集中，元素数量的 最大值 。</p>
 <h3 id="思路"><a class="markdownIt-Anchor" href="#思路"></a> 思路</h3>
-<p>周赛第三题，思路其实很简单，但是比赛时想复杂了。首先统计所有字符出现的次数，然后按出现频率从大小排序，然后对于出现次数前8大的字符，只需1次，9到16大的字符，只需2次，以此类推</p>
+<p>主要思路就是统计出现2次以上的数字，然后遍历他们，统计子集的最大数量，具体实现看代码即可理解，注意1的特殊情况。</p>
+<p>周赛第二题，思路和答案一样，甚至数据结构都用的一样，但是就差一点点没实现好，感觉代码实现能力还需要好好提升。</p>
 <h3 id="代码"><a class="markdownIt-Anchor" href="#代码"></a> 代码</h3>
-<figure class="highlight arduino"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs arduino"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span><br>&#123;<br><span class="hljs-keyword">public</span>:<br>    <span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">minimumPushes</span><span class="hljs-params">(string <span class="hljs-type">word</span>)</span></span><br><span class="hljs-function">    </span>&#123;<br>        <span class="hljs-type">int</span> n = <span class="hljs-type">word</span>.<span class="hljs-built_in">size</span>();<br>        <span class="hljs-function">vector&lt;<span class="hljs-type">int</span>&gt; <span class="hljs-title">cnt</span><span class="hljs-params">(<span class="hljs-number">26</span>, <span class="hljs-number">0</span>)</span></span>;<br>        <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt; n; i++)<br>            cnt[<span class="hljs-type">word</span>[i] - <span class="hljs-string">&#x27;a&#x27;</span>]++;<br>        <span class="hljs-type">int</span> ans = <span class="hljs-number">0</span>;<br>        <span class="hljs-built_in">sort</span>(cnt.<span class="hljs-built_in">begin</span>(), cnt.<span class="hljs-built_in">end</span>(), <span class="hljs-built_in">greater</span>&lt;<span class="hljs-type">int</span>&gt;());<br>        <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i = <span class="hljs-number">0</span>; i &lt; <span class="hljs-number">26</span>; i++)<br>            ans += cnt[i] * ((i / <span class="hljs-number">8</span>) + <span class="hljs-number">1</span>);<br>        <span class="hljs-keyword">return</span> ans;<br>    &#125;<br>&#125;;<br></code></pre></td></tr></table></figure>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span><br>&#123;<br><span class="hljs-keyword">public</span>:<br>    <span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">maximumLength</span><span class="hljs-params">(vector&lt;<span class="hljs-type">int</span>&gt; &amp;nums)</span></span><br><span class="hljs-function">    </span>&#123;<br>        <span class="hljs-type">int</span> n = nums.<span class="hljs-built_in">size</span>();<br>        unordered_map&lt;<span class="hljs-type">long</span> <span class="hljs-type">long</span>, <span class="hljs-type">int</span>&gt; m;<br>        <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> a : nums)<br>            m[a]++;<br>        <span class="hljs-type">int</span> ans = m[<span class="hljs-number">1</span>] - (m[<span class="hljs-number">1</span>] % <span class="hljs-number">2</span> == <span class="hljs-number">0</span> ? <span class="hljs-number">1</span> : <span class="hljs-number">0</span>);<br>        m.<span class="hljs-built_in">erase</span>(<span class="hljs-number">1</span>);<br>        <span class="hljs-keyword">for</span> (<span class="hljs-keyword">auto</span> x : m)<br>        &#123;<br>            <span class="hljs-type">int</span> cnt = <span class="hljs-number">0</span>;<br>            <span class="hljs-type">long</span> <span class="hljs-type">long</span> t = x.first;<br>            <span class="hljs-keyword">while</span> (m.<span class="hljs-built_in">count</span>(t) &amp;&amp; m[t] &gt; <span class="hljs-number">1</span>)<br>            &#123;<br>                cnt += <span class="hljs-number">2</span>;<br>                t *= t;<br>            &#125;<br>            ans = <span class="hljs-built_in">max</span>(ans, cnt + (m.<span class="hljs-built_in">count</span>(t) ? <span class="hljs-number">1</span> : <span class="hljs-number">-1</span>));<br>        &#125;<br>        <span class="hljs-keyword">return</span> ans;<br>    &#125;<br>&#125;;<br></code></pre></td></tr></table></figure>
                 
               </div>
             
@@ -333,8 +322,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>输入单词需要的最少按键次数</div>
-      <div>http://lqz2.github.io/2024/01/21/输入单词需要的最少按键次数/</div>
+      <div>子集中元素的最大数量</div>
+      <div>http://lqz2.github.io/2024/01/28/子集中元素的最大数量/</div>
     </div>
     <div class="license-meta">
       
@@ -346,7 +335,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2024年1月21日</div>
+          <div>2024年1月28日</div>
         </div>
       
       
@@ -378,18 +367,12 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2024/01/28/%E5%AD%90%E9%9B%86%E4%B8%AD%E5%85%83%E7%B4%A0%E7%9A%84%E6%9C%80%E5%A4%A7%E6%95%B0%E9%87%8F/" title="子集中元素的最大数量">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">子集中元素的最大数量</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2024/01/15/%E4%BB%B7%E5%80%BC%E5%92%8C%E5%B0%8F%E4%BA%8E%E7%AD%89%E4%BA%8Ek%E7%9A%84%E6%9C%80%E5%A4%A7%E6%95%B0%E5%AD%97/" title="价值和小于等于k的最大数字">
-                        <span class="hidden-mobile">价值和小于等于k的最大数字</span>
+                      <a href="/2024/01/21/%E8%BE%93%E5%85%A5%E5%8D%95%E8%AF%8D%E9%9C%80%E8%A6%81%E7%9A%84%E6%9C%80%E5%B0%91%E6%8C%89%E9%94%AE%E6%AC%A1%E6%95%B0/" title="输入单词需要的最少按键次数">
+                        <span class="hidden-mobile">输入单词需要的最少按键次数</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
