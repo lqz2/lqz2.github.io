@@ -4,6 +4,25 @@
   
   
   <entry>
+    <title>预测赢家</title>
+    <link href="/2024/05/25/%E9%A2%84%E6%B5%8B%E8%B5%A2%E5%AE%B6/"/>
+    <url>/2024/05/25/%E9%A2%84%E6%B5%8B%E8%B5%A2%E5%AE%B6/</url>
+    
+    <content type="html"><![CDATA[<h2 id="预测赢家"><a class="markdownIt-Anchor" href="#预测赢家"></a> 预测赢家</h2><!-- TOC --><ul><li><a href="#%E9%A2%84%E6%B5%8B%E8%B5%A2%E5%AE%B6">预测赢家</a><ul><li><a href="#%E9%A2%98%E7%9B%AE%E6%8F%8F%E8%BF%B0">题目描述</a></li><li><a href="#%E6%80%9D%E8%B7%AF">思路</a></li><li><a href="#%E4%BB%A3%E7%A0%81">代码</a></li></ul></li></ul><!-- /TOC --><p><a href="https://leetcode.cn/problems/predict-the-winner/description">原题</a></p><h3 id="题目描述"><a class="markdownIt-Anchor" href="#题目描述"></a> 题目描述</h3><p>给你一个整数数组 nums 。玩家 1 和玩家 2 基于这个数组设计了一个游戏。</p><p>玩家 1 和玩家 2 轮流进行自己的回合，玩家 1 先手。开始时，两个玩家的初始分值都是 0 。每一回合，玩家从数组的任意一端取一个数字（即，nums[0] 或 nums[nums.length - 1]），取到的数字将会从数组中移除（数组长度减 1 ）。玩家选中的数字将会加到他的得分上。当数组中没有剩余数字可取时，游戏结束。</p><p>如果玩家 1 能成为赢家，返回 true 。如果两个玩家得分相等，同样认为玩家 1 是游戏的赢家，也返回 true 。你可以假设每个玩家的玩法都会使他的分数最大化。</p><p>e.g.</p><figure class="highlight tap"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs tap">输入：nums = [1,5,2]<br>输出：false<br>解释：一开始，玩家<span class="hljs-number"> 1 </span>可以从<span class="hljs-number"> 1 </span>和<span class="hljs-number"> 2 </span>中进行选择。<br>如果他选择 2（或者<span class="hljs-number"> 1 </span>），那么玩家<span class="hljs-number"> 2 </span>可以从 1（或者<span class="hljs-number"> 2 </span>）和<span class="hljs-number"> 5 </span>中进行选择。如果玩家<span class="hljs-number"> 2 </span>选择了<span class="hljs-number"> 5 </span>，那么玩家<span class="hljs-number"> 1 </span>则只剩下 1（或者<span class="hljs-number"> 2 </span>）可选。 <br>所以，玩家<span class="hljs-number"> 1 </span>的最终分数为<span class="hljs-number"> 1 </span>+<span class="hljs-number"> 2 </span>= 3，而玩家<span class="hljs-number"> 2 </span>为<span class="hljs-number"> 5 </span>。<br>因此，玩家<span class="hljs-number"> 1 </span>永远不会成为赢家，返回 false 。<br></code></pre></td></tr></table></figure><h3 id="思路"><a class="markdownIt-Anchor" href="#思路"></a> 思路</h3><p>两个玩家轮流取数字，用dp[i][j]表示在数字i~j之间，玩家1对于玩家2的最大分数差，显然，如果玩家1取nums[i]，那么dp[i+1][j]为玩家2对玩家1的最大分数差;如果玩家1取nums[j]，那么dp[i][j-1]为玩家2对玩家1的最大分数差，状态方程为：<code>dp[i][j]=max(nums[i]-dp[i+1][j],nums[j]-dp[i][j-1])</code>。如果i==j，那么玩家1先取，dp[i][i]=nums[i]。</p><h3 id="代码"><a class="markdownIt-Anchor" href="#代码"></a> 代码</h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span> &#123;<br><span class="hljs-keyword">public</span>:<br>    <span class="hljs-function"><span class="hljs-type">bool</span> <span class="hljs-title">predictTheWinner</span><span class="hljs-params">(vector&lt;<span class="hljs-type">int</span>&gt;&amp; nums)</span> </span>&#123;<br>        <span class="hljs-type">int</span> n=nums.<span class="hljs-built_in">size</span>();<br>        vector&lt;vector&lt;<span class="hljs-type">int</span>&gt;&gt; <span class="hljs-built_in">dp</span>(n,<span class="hljs-built_in">vector</span>&lt;<span class="hljs-type">int</span>&gt; (n));<br>        <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i=<span class="hljs-number">0</span>;i&lt;n;++i)<br>            dp[i][i]=nums[i];<br>        <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i=n<span class="hljs-number">-2</span>;i&gt;=<span class="hljs-number">0</span>;--i)<br>        &#123;<br>            <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> j=i+<span class="hljs-number">1</span>;j&lt;n;++j)<br>            &#123;<br>                dp[i][j]=<span class="hljs-built_in">max</span>(nums[i]-dp[i+<span class="hljs-number">1</span>][j],nums[j]-dp[i][j<span class="hljs-number">-1</span>]);<br>            &#125;<br>        &#125;<br>        <span class="hljs-keyword">return</span> dp[<span class="hljs-number">0</span>][n<span class="hljs-number">-1</span>]&gt;=<span class="hljs-number">0</span>;<br>    &#125;<br>&#125;;<br></code></pre></td></tr></table></figure>]]></content>
+    
+    
+    <categories>
+      
+      <category>机试</category>
+      
+    </categories>
+    
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>最小区间</title>
     <link href="/2024/05/23/%E6%9C%80%E5%B0%8F%E5%8C%BA%E9%97%B4/"/>
     <url>/2024/05/23/%E6%9C%80%E5%B0%8F%E5%8C%BA%E9%97%B4/</url>
