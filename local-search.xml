@@ -4,6 +4,25 @@
   
   
   <entry>
+    <title>长度最小子数组</title>
+    <link href="/2024/09/14/%E9%95%BF%E5%BA%A6%E6%9C%80%E5%B0%8F%E5%AD%90%E6%95%B0%E7%BB%84/"/>
+    <url>/2024/09/14/%E9%95%BF%E5%BA%A6%E6%9C%80%E5%B0%8F%E5%AD%90%E6%95%B0%E7%BB%84/</url>
+    
+    <content type="html"><![CDATA[<h2 id="长度最小子数组"><a class="markdownIt-Anchor" href="#长度最小子数组"></a> 长度最小子数组</h2><!-- TOC --><ul><li><a href="#%E9%95%BF%E5%BA%A6%E6%9C%80%E5%B0%8F%E5%AD%90%E6%95%B0%E7%BB%84">长度最小子数组</a><ul><li><a href="#%E9%A2%98%E7%9B%AE%E6%8F%8F%E8%BF%B0">题目描述</a></li><li><a href="#%E6%80%9D%E8%B7%AF">思路</a></li><li><a href="#%E4%BB%A3%E7%A0%81">代码</a></li></ul></li></ul><!-- /TOC --><p><a href="https://leetcode.cn/problems/minimum-size-subarray-sum/description">原题</a></p><h3 id="题目描述"><a class="markdownIt-Anchor" href="#题目描述"></a> 题目描述</h3><p>给定一个含有 n 个正整数的数组和一个正整数 target 。</p><p>找出该数组中满足其总和大于等于 target 的长度最小的<br />子数组<br /><code>[numsl, numsl+1, ..., numsr-1, numsr]</code> ，并返回其长度。如果不存在符合条件的子数组，返回 0 。</p><p>e.g.</p><figure class="highlight inform7"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs inform7">输入：target = 7, nums = <span class="hljs-comment">[2,3,1,2,4,3]</span><br>输出：2<br>解释：子数组 <span class="hljs-comment">[4,3]</span> 是该条件下的长度最小的子数组。<br></code></pre></td></tr></table></figure><h3 id="思路"><a class="markdownIt-Anchor" href="#思路"></a> 思路</h3><p>好久没刷题了，今天做道滑动窗口练练，结果直接超时了 😅，偷偷看了题解 😁，题目不难，右边界扩张，左边界收缩即可，具体见代码。</p><h3 id="代码"><a class="markdownIt-Anchor" href="#代码"></a> 代码</h3><figure class="highlight fortran"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><code class="hljs fortran"><span class="hljs-keyword">class</span> Solution &#123;<br><span class="hljs-keyword">public</span>:<br>    <span class="hljs-built_in">int</span> minSubArrayLen(<span class="hljs-built_in">int</span> <span class="hljs-keyword">target</span>, vector&lt;<span class="hljs-built_in">int</span>&gt;&amp; nums) &#123;<br>        <span class="hljs-built_in">int</span> n=nums.<span class="hljs-built_in">size</span>();<br>        <span class="hljs-built_in">int</span> res=INT_MAX;<br>        <span class="hljs-built_in">int</span> l=<span class="hljs-number">0</span>,r=<span class="hljs-number">0</span>;<br>        <span class="hljs-built_in">int</span> <span class="hljs-built_in">sum</span>=<span class="hljs-number">0</span>;<br>        <span class="hljs-keyword">while</span>(r&lt;n)&#123;<br>            <span class="hljs-built_in">sum</span>+=nums[r];<br>            <span class="hljs-keyword">while</span>(<span class="hljs-built_in">sum</span>&gt;=<span class="hljs-keyword">target</span>)&#123;<br>                res=<span class="hljs-built_in">min</span>(res,r-l+<span class="hljs-number">1</span>);<br>                <span class="hljs-built_in">sum</span>-=nums[l];<br>                ++l;<br>            &#125;<br>            ++r;<br>        &#125;<br>        <span class="hljs-keyword">return</span> res==INT_MAX ? <span class="hljs-number">0</span>:res;<br>    &#125;<br>&#125;;<br></code></pre></td></tr></table></figure>]]></content>
+    
+    
+    <categories>
+      
+      <category>机试</category>
+      
+    </categories>
+    
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>下一个排列</title>
     <link href="/2024/05/30/%E4%B8%8B%E4%B8%80%E4%B8%AA%E6%8E%92%E5%88%97/"/>
     <url>/2024/05/30/%E4%B8%8B%E4%B8%80%E4%B8%AA%E6%8E%92%E5%88%97/</url>
