@@ -19,21 +19,21 @@
   <meta name="author" content="zql">
   <meta name="keywords" content="">
   
-    <meta name="description" content="LRU缓存   LRU缓存  题目描述 思路 代码     原题  题目描述 请你设计并实现一个满足  LRU (最近最少使用) 缓存 约束的数据结构。 实现 LRUCache 类： LRUCache(int capacity) 以 正整数 作为容量 capacity 初始化 LRU 缓存 int get(int key) 如果关键字 key 存在于缓存中，则返回关键字的值，否则返回 -1 。">
+    <meta name="description" content="找到所有字母异位词   找到所有字母异位词  题目描述 思路 代码     原题  题目描述 给定两个字符串 s 和 p，找到 s 中所有 p 的 异位词 的子串，返回这些子串的起始索引。不考虑答案输出的顺序。 异位词 指由相同字母重排列形成的字符串（包括相同的字符串）。 e.g. 12345输入: s &#x3D; &quot;cbaebabacd&quot;, p &#x3D; &quot;abc&quot;输">
 <meta property="og:type" content="article">
-<meta property="og:title" content="LRU缓存">
-<meta property="og:url" content="http://lqz2.github.io/2024/09/16/LRU%E7%BC%93%E5%AD%98/index.html">
+<meta property="og:title" content="找到所有字母异位词">
+<meta property="og:url" content="http://lqz2.github.io/2024/09/16/%E6%89%BE%E5%88%B0%E6%89%80%E6%9C%89%E5%AD%97%E6%AF%8D%E5%BC%82%E4%BD%8D%E8%AF%8D/index.html">
 <meta property="og:site_name" content="my blogs">
-<meta property="og:description" content="LRU缓存   LRU缓存  题目描述 思路 代码     原题  题目描述 请你设计并实现一个满足  LRU (最近最少使用) 缓存 约束的数据结构。 实现 LRUCache 类： LRUCache(int capacity) 以 正整数 作为容量 capacity 初始化 LRU 缓存 int get(int key) 如果关键字 key 存在于缓存中，则返回关键字的值，否则返回 -1 。">
+<meta property="og:description" content="找到所有字母异位词   找到所有字母异位词  题目描述 思路 代码     原题  题目描述 给定两个字符串 s 和 p，找到 s 中所有 p 的 异位词 的子串，返回这些子串的起始索引。不考虑答案输出的顺序。 异位词 指由相同字母重排列形成的字符串（包括相同的字符串）。 e.g. 12345输入: s &#x3D; &quot;cbaebabacd&quot;, p &#x3D; &quot;abc&quot;输">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2024-09-16T02:11:11.000Z">
-<meta property="article:modified_time" content="2024-09-16T02:30:32.551Z">
+<meta property="article:published_time" content="2024-09-16T08:01:14.000Z">
+<meta property="article:modified_time" content="2024-09-16T08:08:52.448Z">
 <meta property="article:author" content="zql">
 <meta name="twitter:card" content="summary_large_image">
   
   
   
-  <title>LRU缓存 - my blogs</title>
+  <title>找到所有字母异位词 - my blogs</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -199,7 +199,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="LRU缓存"></span>
+            <span id="subtitle" data-typed-text="找到所有字母异位词"></span>
           
         </div>
 
@@ -210,8 +210,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2024-09-16 10:11" pubdate>
-          2024年9月16日 上午
+        <time datetime="2024-09-16 16:01" pubdate>
+          2024年9月16日 下午
         </time>
       </span>
     
@@ -222,7 +222,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          814 字
+          399 字
         
       </span>
     
@@ -233,7 +233,7 @@
         
         
         
-          7 分钟
+          4 分钟
         
       </span>
     
@@ -270,15 +270,15 @@
       <div class="container nopadding-x-md" id="board-ctn">
         <div id="board">
           <article class="post-content mx-auto">
-            <h1 id="seo-header">LRU缓存</h1>
+            <h1 id="seo-header">找到所有字母异位词</h1>
             
             
               <div class="markdown-body">
                 
-                <h2 id="lru缓存"><a class="markdownIt-Anchor" href="#lru缓存"></a> LRU缓存</h2>
+                <h2 id="找到所有字母异位词"><a class="markdownIt-Anchor" href="#找到所有字母异位词"></a> 找到所有字母异位词</h2>
 <!-- TOC -->
 <ul>
-<li><a href="#lru%E7%BC%93%E5%AD%98">LRU缓存</a>
+<li><a href="#%E6%89%BE%E5%88%B0%E6%89%80%E6%9C%89%E5%AD%97%E6%AF%8D%E5%BC%82%E4%BD%8D%E8%AF%8D">找到所有字母异位词</a>
 <ul>
 <li><a href="#%E9%A2%98%E7%9B%AE%E6%8F%8F%E8%BF%B0">题目描述</a></li>
 <li><a href="#%E6%80%9D%E8%B7%AF">思路</a></li>
@@ -287,35 +287,18 @@
 </li>
 </ul>
 <!-- /TOC -->
-<p><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/lru-cache/description">原题</a></p>
+<p><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/find-all-anagrams-in-a-string/description/">原题</a></p>
 <h3 id="题目描述"><a class="markdownIt-Anchor" href="#题目描述"></a> 题目描述</h3>
-<p>请你设计并实现一个满足  LRU (最近最少使用) 缓存 约束的数据结构。<br />
-实现 LRUCache 类：<br />
-LRUCache(int capacity) 以 正整数 作为容量 capacity 初始化 LRU 缓存<br />
-int get(int key) 如果关键字 key 存在于缓存中，则返回关键字的值，否则返回 -1 。<br />
-void put(int key, int value) 如果关键字 key 已经存在，则变更其数据值 value ；如果不存在，则向缓存中插入该组 key-value 。如果插入操作导致关键字数量超过 capacity ，则应该 逐出 最久未使用的关键字。<br />
-函数 get 和 put 必须以 O(1) 的平均时间复杂度运行。</p>
+<p>给定两个字符串 s 和 p，找到 s 中所有 p 的 异位词 的子串，返回这些子串的起始索引。不考虑答案输出的顺序。</p>
+<p>异位词 指由相同字母重排列形成的字符串（包括相同的字符串）。</p>
 <p>e.g.</p>
-<figure class="highlight prolog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs prolog">输入<br>[<span class="hljs-string">&quot;LRUCache&quot;</span>, <span class="hljs-string">&quot;put&quot;</span>, <span class="hljs-string">&quot;put&quot;</span>, <span class="hljs-string">&quot;get&quot;</span>, <span class="hljs-string">&quot;put&quot;</span>, <span class="hljs-string">&quot;get&quot;</span>, <span class="hljs-string">&quot;put&quot;</span>, <span class="hljs-string">&quot;get&quot;</span>, <span class="hljs-string">&quot;get&quot;</span>, <span class="hljs-string">&quot;get&quot;</span>]<br>[[<span class="hljs-number">2</span>], [<span class="hljs-number">1</span>, <span class="hljs-number">1</span>], [<span class="hljs-number">2</span>, <span class="hljs-number">2</span>], [<span class="hljs-number">1</span>], [<span class="hljs-number">3</span>, <span class="hljs-number">3</span>], [<span class="hljs-number">2</span>], [<span class="hljs-number">4</span>, <span class="hljs-number">4</span>], [<span class="hljs-number">1</span>], [<span class="hljs-number">3</span>], [<span class="hljs-number">4</span>]]<br>输出<br>[null, null, null, <span class="hljs-number">1</span>, null, <span class="hljs-number">-1</span>, null, <span class="hljs-number">-1</span>, <span class="hljs-number">3</span>, <span class="hljs-number">4</span>]<br></code></pre></td></tr></table></figure>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs stylus">输入: s = <span class="hljs-string">&quot;cbaebabacd&quot;</span>, <span class="hljs-selector-tag">p</span> = <span class="hljs-string">&quot;abc&quot;</span><br>输出: <span class="hljs-selector-attr">[0,6]</span><br>解释:<br>起始索引等于 <span class="hljs-number">0</span> 的子串是 <span class="hljs-string">&quot;cba&quot;</span>, 它是 <span class="hljs-string">&quot;abc&quot;</span> 的异位词。<br>起始索引等于 <span class="hljs-number">6</span> 的子串是 <span class="hljs-string">&quot;bac&quot;</span>, 它是 <span class="hljs-string">&quot;abc&quot;</span> 的异位词。<br></code></pre></td></tr></table></figure>
 <h3 id="思路"><a class="markdownIt-Anchor" href="#思路"></a> 思路</h3>
-<p>一开始看到以O(1)时间复杂度运行，想到用一个数组和一个队列解决，但是实际上想得太简单了，忽略了一些复杂情况。官方题解用哈系表和双向队列解决，写的很复杂，我主要参考了评论区的大佬的思路。</p>
-<p>首先定义一个结构体Node，包括Key, value, prev指针, next指针，用来代表一个双向链表中的节点。</p>
-<p>对该结构体的操作有remove, push_front, get_node等<br />
-<strong>remove</strong><br />
-移除节点，更新首尾指针</p>
-<figure class="highlight xl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs xl">void remove(Node *x)&#123;<br>        <span class="hljs-function"><span class="hljs-title">x</span>-&gt;</span><span class="hljs-function"><span class="hljs-title">prev</span>-&gt;</span><span class="hljs-function"><span class="hljs-title">next</span>=x-&gt;</span>next;<br>        <span class="hljs-function"><span class="hljs-title">x</span>-&gt;</span><span class="hljs-function"><span class="hljs-title">next</span>-&gt;</span><span class="hljs-function"><span class="hljs-title">prev</span>=x-&gt;</span>prev;<br>    &#125;<br></code></pre></td></tr></table></figure>
-<p><strong>push_front</strong><br />
-队列头插入新节点</p>
-<figure class="highlight xl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs xl">void push_front(Node *x)&#123;<br>        <span class="hljs-function"><span class="hljs-title">x</span>-&gt;</span>prev=dummy;<br>        <span class="hljs-function"><span class="hljs-title">x</span>-&gt;</span><span class="hljs-function"><span class="hljs-title">next</span>=dummy-&gt;</span>next;<br>        <span class="hljs-function"><span class="hljs-title">x</span>-&gt;</span><span class="hljs-function"><span class="hljs-title">prev</span>-&gt;</span>next=x;<br>        <span class="hljs-function"><span class="hljs-title">x</span>-&gt;</span><span class="hljs-function"><span class="hljs-title">next</span>-&gt;</span>prev=x;<br>    &#125;<br></code></pre></td></tr></table></figure>
-<p><strong>get_node</strong><br />
-模拟LRU中访问某个元素的操作，每当访问一个元素，若不存在返回空，存在则重新将它插入到头部</p>
-<figure class="highlight abnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs abnf">void push_front(Node *x)&#123;<br>        auto it<span class="hljs-operator">=</span>mp.find(key)<span class="hljs-comment">;</span><br>        if(it<span class="hljs-operator">=</span><span class="hljs-operator">=</span>mp.end())<br>            return nullptr<span class="hljs-comment">;</span><br>        Node *t<span class="hljs-operator">=</span>it-&gt;second<span class="hljs-comment">;</span><br>        remove(t)<span class="hljs-comment">;</span><br>        push_front(t)<span class="hljs-comment">;</span><br>        return t<span class="hljs-comment">;</span><br>    &#125;<br></code></pre></td></tr></table></figure>
-<p>定义一个哈系表<code>unordered_map&lt;int,Node*&gt;</code>保存每个key对应的Node，方便查询</p>
-<p>定义一个哨兵节点dummy，<code>dummy-&gt;next</code>指向队列头，<code>dummy-&gt;prev</code>指向队列尾，初始化<code>dummy-&gt;next=dummy，dummy-&gt;prev=dummy</code></p>
-<p>在get时，调用get_node，如果为空则返回-1,否则就返回对应value</p>
-<p>在put时，同样调用get_node，若已存在则修改<code>node-&gt;value</code>即可;否则使用push_front插入新节点，然后若超出容量，删除<code>dummy-&gt;prev</code>指向的队列尾元素。</p>
+<p>一道滑动窗口的题。首先要判断s中是否存在字母异位词，只需要保证s的子串<code>s1.size()==p.size()</code>且两个字符串中字母出现次数相等即可</p>
+<p>所以，可以用两个数组vs和vp记录字母的出现情况</p>
+<p>下来开始滑窗，枚举s的左端点，然后向右扩展右端点，当子串长度不超过<code>p.size()</code>且<code>vs!=vp</code>时，++r，并且更新vs数组，每当<code>vs==vp</code>，将当前左端点l加入ans</p>
 <h3 id="代码"><a class="markdownIt-Anchor" href="#代码"></a> 代码</h3>
-<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br></pre></td><td class="code"><pre><code class="hljs routeros">class Node&#123;<br>public:<br>    int key,value;<br>    Node *prev,*next;<br>    Node(int <span class="hljs-attribute">k</span>=0, int <span class="hljs-attribute">v</span>=0) : key(k),value(v)&#123;&#125;<br>&#125;;<br><br>class LRUCache &#123;<br>private:    <br>    unordered_map&lt;int,Node*&gt; mp;<br>    Node <span class="hljs-number">*d</span>ummy;<br>    int sz;<br><br>    void <span class="hljs-built_in">remove</span>(Node *x)&#123;<br>        x-&gt;prev-&gt;<span class="hljs-attribute">next</span>=x-&gt;next;<br>        x-&gt;next-&gt;<span class="hljs-attribute">prev</span>=x-&gt;prev;<br>    &#125;<br><br>    void push_front(Node *x)&#123;<br>        x-&gt;<span class="hljs-attribute">prev</span>=dummy;<br>        x-&gt;<span class="hljs-attribute">next</span>=dummy-&gt;next;<br>        x-&gt;prev-&gt;<span class="hljs-attribute">next</span>=x;<br>        x-&gt;next-&gt;<span class="hljs-attribute">prev</span>=x;<br>    &#125;<br><br>    Node *get_node(int key)&#123;<br>        auto <span class="hljs-attribute">it</span>=mp.find(key);<br>        <span class="hljs-keyword">if</span>(<span class="hljs-attribute">it</span>==mp.end())<br>            return nullptr;<br>        Node *<span class="hljs-attribute">t</span>=it-&gt;second;<br>        <span class="hljs-built_in">remove</span>(t);<br>        push_front(t);<br>        return t;<br>    &#125;<br><br>public:<br>    <br>    LRUCache(int capacity):sz(capacity)&#123;<br>        <span class="hljs-attribute">dummy</span>=new Node();<br>        dummy-&gt;<span class="hljs-attribute">prev</span>=dummy;<br>        dummy-&gt;<span class="hljs-attribute">next</span>=dummy;<br>    &#125;<br>    <br>    int <span class="hljs-built_in">get</span>(int key) &#123;<br>        Node *<span class="hljs-attribute">node</span>=get_node(key);<br>        return node ? node-&gt;value:-1; <br>    &#125;<br>    <br>    void put(int key, int value) &#123;<br>        Node *<span class="hljs-attribute">node</span>=get_node(key);<br>        <span class="hljs-keyword">if</span>(node)&#123;<br>            node-&gt;<span class="hljs-attribute">value</span>=value;<br>            return;<br>        &#125;<br>        node =new Node(key,value);<br>        mp[key]=node;<br>        push_front(node);<br>        <span class="hljs-keyword">if</span>(mp.size()&gt;sz)&#123;<br>            Node <span class="hljs-number">*bac</span><span class="hljs-attribute">k</span>=dummy-&gt;prev;<br>            mp.erase(back-&gt;key);<br>            <span class="hljs-built_in">remove</span>(back);<br>            delete back;<br>        &#125;<br>            <br>    &#125;<br>&#125;;<br><br></code></pre></td></tr></table></figure>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span> &#123;<br><span class="hljs-keyword">public</span>:<br>    <span class="hljs-function">vector&lt;<span class="hljs-type">int</span>&gt; <span class="hljs-title">findAnagrams</span><span class="hljs-params">(string s, string p)</span> </span>&#123;<br>        vector&lt;<span class="hljs-type">int</span>&gt; ans;<br>        <span class="hljs-function">vector&lt;<span class="hljs-type">int</span>&gt; <span class="hljs-title">vs</span><span class="hljs-params">(<span class="hljs-number">26</span>)</span></span>;<br>        <span class="hljs-function">vector&lt;<span class="hljs-type">int</span>&gt; <span class="hljs-title">vp</span><span class="hljs-params">(<span class="hljs-number">26</span>)</span></span>;<br>        <span class="hljs-keyword">for</span>(<span class="hljs-type">char</span> c:p)<br>            vp[c-<span class="hljs-string">&#x27;a&#x27;</span>]++;<br>        <span class="hljs-type">int</span> slen=s.<span class="hljs-built_in">size</span>(), plen=p.<span class="hljs-built_in">size</span>(), r=<span class="hljs-number">0</span>;<br>        <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> l=<span class="hljs-number">0</span>;l&lt;slen&amp;&amp;r&lt;slen;++l)&#123;<br>            <span class="hljs-keyword">if</span>(l!=<span class="hljs-number">0</span>)<br>                --vs[s[l<span class="hljs-number">-1</span>]-<span class="hljs-string">&#x27;a&#x27;</span>]; <br>            <span class="hljs-keyword">while</span>(r&lt;slen &amp;&amp; r-l+<span class="hljs-number">1</span>&lt;=plen)&#123;<br>                ++vs[s[r]-<span class="hljs-string">&#x27;a&#x27;</span>];<br>                ++r;<br>                <span class="hljs-keyword">if</span>(vs==vp)&#123;<br>                    ans.<span class="hljs-built_in">push_back</span>(l);<br>                    <span class="hljs-keyword">break</span>;<br>                &#125; <br>            &#125;<br>        &#125;<br>        <span class="hljs-keyword">return</span> ans;<br>    &#125;<br>&#125;;<br></code></pre></td></tr></table></figure>
 
                 
               </div>
@@ -354,8 +337,8 @@ void put(int key, int value) 如果关键字 key 已经存在，则变更其数�
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>LRU缓存</div>
-      <div>http://lqz2.github.io/2024/09/16/LRU缓存/</div>
+      <div>找到所有字母异位词</div>
+      <div>http://lqz2.github.io/2024/09/16/找到所有字母异位词/</div>
     </div>
     <div class="license-meta">
       
@@ -399,18 +382,12 @@ void put(int key, int value) 如果关键字 key 已经存在，则变更其数�
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2024/09/16/%E6%89%BE%E5%88%B0%E6%89%80%E6%9C%89%E5%AD%97%E6%AF%8D%E5%BC%82%E4%BD%8D%E8%AF%8D/" title="找到所有字母异位词">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">找到所有字母异位词</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2024/09/15/%E6%9C%80%E5%B0%8F%E6%A0%88/" title="最小栈">
-                        <span class="hidden-mobile">最小栈</span>
+                      <a href="/2024/09/16/LRU%E7%BC%93%E5%AD%98/" title="LRU缓存">
+                        <span class="hidden-mobile">LRU缓存</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
