@@ -4,6 +4,25 @@
   
   
   <entry>
+    <title>最长连续序列</title>
+    <link href="/2024/09/18/%E6%9C%80%E9%95%BF%E8%BF%9E%E7%BB%AD%E5%BA%8F%E5%88%97/"/>
+    <url>/2024/09/18/%E6%9C%80%E9%95%BF%E8%BF%9E%E7%BB%AD%E5%BA%8F%E5%88%97/</url>
+    
+    <content type="html"><![CDATA[<h2 id="最长连续序列"><a class="markdownIt-Anchor" href="#最长连续序列"></a> 最长连续序列</h2><!-- TOC --><ul><li><a href="#%E6%9C%80%E9%95%BF%E8%BF%9E%E7%BB%AD%E5%BA%8F%E5%88%97">最长连续序列</a><ul><li><a href="#%E9%A2%98%E7%9B%AE%E6%8F%8F%E8%BF%B0">题目描述</a></li><li><a href="#%E6%80%9D%E8%B7%AF">思路</a></li><li><a href="#%E4%BB%A3%E7%A0%81">代码</a></li></ul></li></ul><!-- /TOC --><p><a href="https://leetcode.cn/problems/longest-consecutive-sequence/description">原题</a></p><h3 id="题目描述"><a class="markdownIt-Anchor" href="#题目描述"></a> 题目描述</h3><p>给定一个未排序的整数数组 nums ，找出数字连续的最长序列（不要求序列元素在原数组中连续）的长度。</p><p>请你设计并实现时间复杂度为 O(n) 的算法解决此问题。</p><figure class="highlight accesslog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs accesslog">输入：nums = <span class="hljs-string">[100,4,200,1,3,2]</span><br>输出：<span class="hljs-number">4</span><br>解释：最长数字连续序列是 <span class="hljs-string">[1, 2, 3, 4]</span>。它的长度为 <span class="hljs-number">4</span>。<br></code></pre></td></tr></table></figure><h3 id="思路"><a class="markdownIt-Anchor" href="#思路"></a> 思路</h3><p>之前做过，不过用的是暴力排序的方法，能过但是不是O(n)时间复杂度。这道题可以先用一个哈希表保存所有数字，对于数字n，如果n-1不存在，那么n可以作为一个连续数组的起点，于是当n+1存在时，可以遍历下去，求出n为起点的最长连续序列长度。</p><h3 id="代码"><a class="markdownIt-Anchor" href="#代码"></a> 代码</h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span> &#123;<br><span class="hljs-keyword">public</span>:<br>    <span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">longestConsecutive</span><span class="hljs-params">(vector&lt;<span class="hljs-type">int</span>&gt;&amp; nums)</span> </span>&#123;<br>        unordered_set&lt;<span class="hljs-type">int</span>&gt; st;<br>        <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> &amp;t:nums)<br>            st.<span class="hljs-built_in">insert</span>(t);<br>        <span class="hljs-type">int</span> ans=<span class="hljs-number">0</span>, len=<span class="hljs-number">0</span>;<br>        <span class="hljs-type">int</span> tmp;<br>        <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> &amp;t:nums)&#123;<br>            <span class="hljs-keyword">if</span>(!st.<span class="hljs-built_in">count</span>(t<span class="hljs-number">-1</span>))&#123;<br>                tmp=t;<br>                len=<span class="hljs-number">1</span>;<br>                <span class="hljs-keyword">while</span>(st.<span class="hljs-built_in">count</span>(tmp+<span class="hljs-number">1</span>))&#123;<br>                    ++tmp;<br>                    ++len;<br>                &#125;<br>                ans=<span class="hljs-built_in">max</span>(ans,len);<br>            &#125;<br>        &#125;<br>        <span class="hljs-keyword">return</span> ans;<br>    &#125;<br>&#125;;<br></code></pre></td></tr></table></figure>]]></content>
+    
+    
+    <categories>
+      
+      <category>机试</category>
+      
+    </categories>
+    
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>最小编辑距离</title>
     <link href="/2024/09/17/%E6%9C%80%E5%B0%8F%E7%BC%96%E8%BE%91%E8%B7%9D%E7%A6%BB/"/>
     <url>/2024/09/17/%E6%9C%80%E5%B0%8F%E7%BC%96%E8%BE%91%E8%B7%9D%E7%A6%BB/</url>
