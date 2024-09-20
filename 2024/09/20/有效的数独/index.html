@@ -19,21 +19,21 @@
   <meta name="author" content="zql">
   <meta name="keywords" content="">
   
-    <meta name="description" content="最长连续序列   最长连续序列  题目描述 思路 代码     原题  题目描述 给定一个未排序的整数数组 nums ，找出数字连续的最长序列（不要求序列元素在原数组中连续）的长度。 请你设计并实现时间复杂度为 O(n) 的算法解决此问题。 123输入：nums &#x3D; [100,4,200,1,3,2]输出：4解释：最长数字连续序列是 [1, 2, 3, 4]。它的长度为 4。  思路 之前做过，">
+    <meta name="description" content="有效的数独   有效的数独  题目描述 思路 代码     原题  题目描述 请你判断一个 9 x 9 的数独是否有效。只需要 根据以下规则 ，验证已经填入的数字是否有效即可。 数字 1-9 在每一行只能出现一次。 数字 1-9 在每一列只能出现一次。 数字 1-9 在每一个以粗实线分隔的 3x3 宫内只能出现一次。 1234567891011输入：board &#x3D; [[&quot;5&quot;">
 <meta property="og:type" content="article">
-<meta property="og:title" content="最长连续序列">
-<meta property="og:url" content="http://lqz2.github.io/2024/09/18/%E6%9C%80%E9%95%BF%E8%BF%9E%E7%BB%AD%E5%BA%8F%E5%88%97/index.html">
+<meta property="og:title" content="有效的数独">
+<meta property="og:url" content="http://lqz2.github.io/2024/09/20/%E6%9C%89%E6%95%88%E7%9A%84%E6%95%B0%E7%8B%AC/index.html">
 <meta property="og:site_name" content="my blogs">
-<meta property="og:description" content="最长连续序列   最长连续序列  题目描述 思路 代码     原题  题目描述 给定一个未排序的整数数组 nums ，找出数字连续的最长序列（不要求序列元素在原数组中连续）的长度。 请你设计并实现时间复杂度为 O(n) 的算法解决此问题。 123输入：nums &#x3D; [100,4,200,1,3,2]输出：4解释：最长数字连续序列是 [1, 2, 3, 4]。它的长度为 4。  思路 之前做过，">
+<meta property="og:description" content="有效的数独   有效的数独  题目描述 思路 代码     原题  题目描述 请你判断一个 9 x 9 的数独是否有效。只需要 根据以下规则 ，验证已经填入的数字是否有效即可。 数字 1-9 在每一行只能出现一次。 数字 1-9 在每一列只能出现一次。 数字 1-9 在每一个以粗实线分隔的 3x3 宫内只能出现一次。 1234567891011输入：board &#x3D; [[&quot;5&quot;">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2024-09-18T00:54:00.000Z">
-<meta property="article:modified_time" content="2024-09-18T01:10:01.375Z">
+<meta property="article:published_time" content="2024-09-20T01:18:17.000Z">
+<meta property="article:modified_time" content="2024-09-20T01:25:41.800Z">
 <meta property="article:author" content="zql">
 <meta name="twitter:card" content="summary_large_image">
   
   
   
-  <title>最长连续序列 - my blogs</title>
+  <title>有效的数独 - my blogs</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -199,7 +199,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="最长连续序列"></span>
+            <span id="subtitle" data-typed-text="有效的数独"></span>
           
         </div>
 
@@ -210,8 +210,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2024-09-18 08:54" pubdate>
-          2024年9月18日 早上
+        <time datetime="2024-09-20 09:18" pubdate>
+          2024年9月20日 上午
         </time>
       </span>
     
@@ -222,7 +222,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          295 字
+          526 字
         
       </span>
     
@@ -233,7 +233,7 @@
         
         
         
-          3 分钟
+          5 分钟
         
       </span>
     
@@ -270,15 +270,15 @@
       <div class="container nopadding-x-md" id="board-ctn">
         <div id="board">
           <article class="post-content mx-auto">
-            <h1 id="seo-header">最长连续序列</h1>
+            <h1 id="seo-header">有效的数独</h1>
             
             
               <div class="markdown-body">
                 
-                <h2 id="最长连续序列"><a class="markdownIt-Anchor" href="#最长连续序列"></a> 最长连续序列</h2>
+                <h2 id="有效的数独"><a class="markdownIt-Anchor" href="#有效的数独"></a> 有效的数独</h2>
 <!-- TOC -->
 <ul>
-<li><a href="#%E6%9C%80%E9%95%BF%E8%BF%9E%E7%BB%AD%E5%BA%8F%E5%88%97">最长连续序列</a>
+<li><a href="#%E6%9C%89%E6%95%88%E7%9A%84%E6%95%B0%E7%8B%AC">有效的数独</a>
 <ul>
 <li><a href="#%E9%A2%98%E7%9B%AE%E6%8F%8F%E8%BF%B0">题目描述</a></li>
 <li><a href="#%E6%80%9D%E8%B7%AF">思路</a></li>
@@ -287,15 +287,23 @@
 </li>
 </ul>
 <!-- /TOC -->
-<p><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/longest-consecutive-sequence/description">原题</a></p>
+<p><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/valid-sudoku/description">原题</a></p>
 <h3 id="题目描述"><a class="markdownIt-Anchor" href="#题目描述"></a> 题目描述</h3>
-<p>给定一个未排序的整数数组 nums ，找出数字连续的最长序列（不要求序列元素在原数组中连续）的长度。</p>
-<p>请你设计并实现时间复杂度为 O(n) 的算法解决此问题。</p>
-<figure class="highlight accesslog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs accesslog">输入：nums = <span class="hljs-string">[100,4,200,1,3,2]</span><br>输出：<span class="hljs-number">4</span><br>解释：最长数字连续序列是 <span class="hljs-string">[1, 2, 3, 4]</span>。它的长度为 <span class="hljs-number">4</span>。<br></code></pre></td></tr></table></figure>
+<p>请你判断一个 9 x 9 的数独是否有效。只需要 根据以下规则 ，验证已经填入的数字是否有效即可。</p>
+<p>数字 1-9 在每一行只能出现一次。<br />
+数字 1-9 在每一列只能出现一次。<br />
+数字 1-9 在每一个以粗实线分隔的 3x3 宫内只能出现一次。</p>
+<figure class="highlight prolog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs prolog">输入：board = <br>[[<span class="hljs-string">&quot;5&quot;</span>,<span class="hljs-string">&quot;3&quot;</span>,<span class="hljs-string">&quot;.&quot;</span>,<span class="hljs-string">&quot;.&quot;</span>,<span class="hljs-string">&quot;7&quot;</span>,<span class="hljs-string">&quot;.&quot;</span>,<span class="hljs-string">&quot;.&quot;</span>,<span class="hljs-string">&quot;.&quot;</span>,<span class="hljs-string">&quot;.&quot;</span>]<br>,[<span class="hljs-string">&quot;6&quot;</span>,<span class="hljs-string">&quot;.&quot;</span>,<span class="hljs-string">&quot;.&quot;</span>,<span class="hljs-string">&quot;1&quot;</span>,<span class="hljs-string">&quot;9&quot;</span>,<span class="hljs-string">&quot;5&quot;</span>,<span class="hljs-string">&quot;.&quot;</span>,<span class="hljs-string">&quot;.&quot;</span>,<span class="hljs-string">&quot;.&quot;</span>]<br>,[<span class="hljs-string">&quot;.&quot;</span>,<span class="hljs-string">&quot;9&quot;</span>,<span class="hljs-string">&quot;8&quot;</span>,<span class="hljs-string">&quot;.&quot;</span>,<span class="hljs-string">&quot;.&quot;</span>,<span class="hljs-string">&quot;.&quot;</span>,<span class="hljs-string">&quot;.&quot;</span>,<span class="hljs-string">&quot;6&quot;</span>,<span class="hljs-string">&quot;.&quot;</span>]<br>,[<span class="hljs-string">&quot;8&quot;</span>,<span class="hljs-string">&quot;.&quot;</span>,<span class="hljs-string">&quot;.&quot;</span>,<span class="hljs-string">&quot;.&quot;</span>,<span class="hljs-string">&quot;6&quot;</span>,<span class="hljs-string">&quot;.&quot;</span>,<span class="hljs-string">&quot;.&quot;</span>,<span class="hljs-string">&quot;.&quot;</span>,<span class="hljs-string">&quot;3&quot;</span>]<br>,[<span class="hljs-string">&quot;4&quot;</span>,<span class="hljs-string">&quot;.&quot;</span>,<span class="hljs-string">&quot;.&quot;</span>,<span class="hljs-string">&quot;8&quot;</span>,<span class="hljs-string">&quot;.&quot;</span>,<span class="hljs-string">&quot;3&quot;</span>,<span class="hljs-string">&quot;.&quot;</span>,<span class="hljs-string">&quot;.&quot;</span>,<span class="hljs-string">&quot;1&quot;</span>]<br>,[<span class="hljs-string">&quot;7&quot;</span>,<span class="hljs-string">&quot;.&quot;</span>,<span class="hljs-string">&quot;.&quot;</span>,<span class="hljs-string">&quot;.&quot;</span>,<span class="hljs-string">&quot;2&quot;</span>,<span class="hljs-string">&quot;.&quot;</span>,<span class="hljs-string">&quot;.&quot;</span>,<span class="hljs-string">&quot;.&quot;</span>,<span class="hljs-string">&quot;6&quot;</span>]<br>,[<span class="hljs-string">&quot;.&quot;</span>,<span class="hljs-string">&quot;6&quot;</span>,<span class="hljs-string">&quot;.&quot;</span>,<span class="hljs-string">&quot;.&quot;</span>,<span class="hljs-string">&quot;.&quot;</span>,<span class="hljs-string">&quot;.&quot;</span>,<span class="hljs-string">&quot;2&quot;</span>,<span class="hljs-string">&quot;8&quot;</span>,<span class="hljs-string">&quot;.&quot;</span>]<br>,[<span class="hljs-string">&quot;.&quot;</span>,<span class="hljs-string">&quot;.&quot;</span>,<span class="hljs-string">&quot;.&quot;</span>,<span class="hljs-string">&quot;4&quot;</span>,<span class="hljs-string">&quot;1&quot;</span>,<span class="hljs-string">&quot;9&quot;</span>,<span class="hljs-string">&quot;.&quot;</span>,<span class="hljs-string">&quot;.&quot;</span>,<span class="hljs-string">&quot;5&quot;</span>]<br>,[<span class="hljs-string">&quot;.&quot;</span>,<span class="hljs-string">&quot;.&quot;</span>,<span class="hljs-string">&quot;.&quot;</span>,<span class="hljs-string">&quot;.&quot;</span>,<span class="hljs-string">&quot;8&quot;</span>,<span class="hljs-string">&quot;.&quot;</span>,<span class="hljs-string">&quot;.&quot;</span>,<span class="hljs-string">&quot;7&quot;</span>,<span class="hljs-string">&quot;9&quot;</span>]]<br>输出：true<br></code></pre></td></tr></table></figure>
 <h3 id="思路"><a class="markdownIt-Anchor" href="#思路"></a> 思路</h3>
-<p>之前做过，不过用的是暴力排序的方法，能过但是不是O(n)时间复杂度。这道题可以先用一个哈希表保存所有数字，对于数字n，如果n-1不存在，那么n可以作为一个连续数组的起点，于是当n+1存在时，可以遍历下去，求出n为起点的最长连续序列长度。</p>
+<p>用三个数组分别表示每行每列，每个九宫格的数字摆放情况：</p>
+<ul>
+<li>row[i][num]，第i行数字num+1出现的次数</li>
+<li>col[j][num]，第j列数字num+1出现的次数</li>
+<li>box[i/3][j/3][num]，对应小九宫格内的数字num+1出现的次数</li>
+</ul>
+<p>每次填入数字后，若出现次数大于2,则返回false即可。</p>
 <h3 id="代码"><a class="markdownIt-Anchor" href="#代码"></a> 代码</h3>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span> &#123;<br><span class="hljs-keyword">public</span>:<br>    <span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">longestConsecutive</span><span class="hljs-params">(vector&lt;<span class="hljs-type">int</span>&gt;&amp; nums)</span> </span>&#123;<br>        unordered_set&lt;<span class="hljs-type">int</span>&gt; st;<br>        <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> &amp;t:nums)<br>            st.<span class="hljs-built_in">insert</span>(t);<br>        <span class="hljs-type">int</span> ans=<span class="hljs-number">0</span>, len=<span class="hljs-number">0</span>;<br>        <span class="hljs-type">int</span> tmp;<br>        <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> &amp;t:nums)&#123;<br>            <span class="hljs-keyword">if</span>(!st.<span class="hljs-built_in">count</span>(t<span class="hljs-number">-1</span>))&#123;<br>                tmp=t;<br>                len=<span class="hljs-number">1</span>;<br>                <span class="hljs-keyword">while</span>(st.<span class="hljs-built_in">count</span>(tmp+<span class="hljs-number">1</span>))&#123;<br>                    ++tmp;<br>                    ++len;<br>                &#125;<br>                ans=<span class="hljs-built_in">max</span>(ans,len);<br>            &#125;<br>        &#125;<br>        <span class="hljs-keyword">return</span> ans;<br>    &#125;<br>&#125;;<br></code></pre></td></tr></table></figure>
+<figure class="highlight prolog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br></pre></td><td class="code"><pre><code class="hljs prolog">class <span class="hljs-symbol">Solution</span> &#123;<br>public:<br>    bool isValidSudoku(vector&lt;vector&lt;char&gt;&gt;&amp; board) &#123;<br>        int rows[<span class="hljs-number">9</span>][<span class="hljs-number">9</span>];<br>        int cols[<span class="hljs-number">9</span>][<span class="hljs-number">9</span>];<br>        int box[<span class="hljs-number">3</span>][<span class="hljs-number">3</span>][<span class="hljs-number">9</span>];<br>        memset(rows,<span class="hljs-number">0</span>,sizeof(rows));<br>        memset(cols,<span class="hljs-number">0</span>,sizeof(cols));<br>        memset(box,<span class="hljs-number">0</span>,sizeof(box));<br>        char c;<br>        int t;<br>        for(int i=<span class="hljs-number">0</span>;i&lt;<span class="hljs-number">9</span>;++i)&#123;<br>            for(int j=<span class="hljs-number">0</span>;j&lt;<span class="hljs-number">9</span>;++j)&#123;<br>                c=board[i][j];<br>                if(c!=<span class="hljs-string">&#x27;.&#x27;</span>)&#123;<br>                    t=c-<span class="hljs-string">&#x27;0&#x27;</span>;<br>                    ++rows[i][t<span class="hljs-number">-1</span>];<br>                    ++cols[j][t<span class="hljs-number">-1</span>];<br>                    ++box[i/<span class="hljs-number">3</span>][j/<span class="hljs-number">3</span>][t<span class="hljs-number">-1</span>];<br>                    if(rows[i][t<span class="hljs-number">-1</span>]&gt;<span class="hljs-number">1</span>||cols[j][t<span class="hljs-number">-1</span>]&gt;<span class="hljs-number">1</span>||box[i/<span class="hljs-number">3</span>][j/<span class="hljs-number">3</span>][t<span class="hljs-number">-1</span>]&gt;<span class="hljs-number">1</span>)<br>                        return false;<br>                &#125;<br>            &#125;<br>        &#125;<br>        return true;<br>    &#125;<br>&#125;;<br></code></pre></td></tr></table></figure>
                 
               </div>
             
@@ -333,8 +341,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>最长连续序列</div>
-      <div>http://lqz2.github.io/2024/09/18/最长连续序列/</div>
+      <div>有效的数独</div>
+      <div>http://lqz2.github.io/2024/09/20/有效的数独/</div>
     </div>
     <div class="license-meta">
       
@@ -346,7 +354,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2024年9月18日</div>
+          <div>2024年9月20日</div>
         </div>
       
       
@@ -378,18 +386,12 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2024/09/20/%E6%9C%89%E6%95%88%E7%9A%84%E6%95%B0%E7%8B%AC/" title="有效的数独">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">有效的数独</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2024/09/17/%E6%9C%80%E5%B0%8F%E7%BC%96%E8%BE%91%E8%B7%9D%E7%A6%BB/" title="最小编辑距离">
-                        <span class="hidden-mobile">最小编辑距离</span>
+                      <a href="/2024/09/18/%E6%9C%80%E9%95%BF%E8%BF%9E%E7%BB%AD%E5%BA%8F%E5%88%97/" title="最长连续序列">
+                        <span class="hidden-mobile">最长连续序列</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
