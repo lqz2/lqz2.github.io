@@ -19,21 +19,21 @@
   <meta name="author" content="zql">
   <meta name="keywords" content="">
   
-    <meta name="description" content="最长重复子串   最长重复子串  题目描述 思路 代码 tips     原题  题目描述 给你一个字符串 s ，考虑其所有 重复子串 ：即 s 的（连续）子串，在 s 中出现 2 次或更多次。这些出现之间可能存在重叠。 返回 任意一个 可能具有最长长度的重复子串。如果 s 不含重复子串，那么答案为 “” 。 e.g. 12输入：s &#x3D; &quot;banana&quot;输出：&quot;an">
+    <meta name="description" content="分隔链表   分隔链表  题目描述 思路 代码     原题  题目描述 给你一个链表的头节点 head 和一个特定值 x ，请你对链表进行分隔，使得所有 小于 x 的节点都出现在 大于或等于 x 的节点之前。 你应当 保留 两个分区中每个节点的初始相对位置。 e.g. 12输入：head &#x3D; [1,4,3,2,5,2], x &#x3D; 3输出：[1,2,2,4,3,5]  思路 这道题思路还是比较简">
 <meta property="og:type" content="article">
-<meta property="og:title" content="最长重复子串">
-<meta property="og:url" content="http://lqz2.github.io/2024/09/27/%E6%9C%80%E9%95%BF%E9%87%8D%E5%A4%8D%E5%AD%90%E4%B8%B2/index.html">
+<meta property="og:title" content="分隔链表">
+<meta property="og:url" content="http://lqz2.github.io/2024/09/28/%E5%88%86%E9%9A%94%E9%93%BE%E8%A1%A8/index.html">
 <meta property="og:site_name" content="my blogs">
-<meta property="og:description" content="最长重复子串   最长重复子串  题目描述 思路 代码 tips     原题  题目描述 给你一个字符串 s ，考虑其所有 重复子串 ：即 s 的（连续）子串，在 s 中出现 2 次或更多次。这些出现之间可能存在重叠。 返回 任意一个 可能具有最长长度的重复子串。如果 s 不含重复子串，那么答案为 “” 。 e.g. 12输入：s &#x3D; &quot;banana&quot;输出：&quot;an">
+<meta property="og:description" content="分隔链表   分隔链表  题目描述 思路 代码     原题  题目描述 给你一个链表的头节点 head 和一个特定值 x ，请你对链表进行分隔，使得所有 小于 x 的节点都出现在 大于或等于 x 的节点之前。 你应当 保留 两个分区中每个节点的初始相对位置。 e.g. 12输入：head &#x3D; [1,4,3,2,5,2], x &#x3D; 3输出：[1,2,2,4,3,5]  思路 这道题思路还是比较简">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2024-09-27T02:33:59.000Z">
-<meta property="article:modified_time" content="2024-09-27T05:02:31.638Z">
+<meta property="article:published_time" content="2024-09-28T06:02:39.000Z">
+<meta property="article:modified_time" content="2024-09-28T06:10:19.159Z">
 <meta property="article:author" content="zql">
 <meta name="twitter:card" content="summary_large_image">
   
   
   
-  <title>最长重复子串 - my blogs</title>
+  <title>分隔链表 - my blogs</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -199,7 +199,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="最长重复子串"></span>
+            <span id="subtitle" data-typed-text="分隔链表"></span>
           
         </div>
 
@@ -210,8 +210,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2024-09-27 10:33" pubdate>
-          2024年9月27日 上午
+        <time datetime="2024-09-28 14:02" pubdate>
+          2024年9月28日 下午
         </time>
       </span>
     
@@ -222,7 +222,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          597 字
+          256 字
         
       </span>
     
@@ -233,7 +233,7 @@
         
         
         
-          5 分钟
+          3 分钟
         
       </span>
     
@@ -270,75 +270,39 @@
       <div class="container nopadding-x-md" id="board-ctn">
         <div id="board">
           <article class="post-content mx-auto">
-            <h1 id="seo-header">最长重复子串</h1>
+            <h1 id="seo-header">分隔链表</h1>
             
             
               <div class="markdown-body">
                 
-                <h2 id="最长重复子串"><a class="markdownIt-Anchor" href="#最长重复子串"></a> 最长重复子串</h2>
+                <h2 id="分隔链表"><a class="markdownIt-Anchor" href="#分隔链表"></a> 分隔链表</h2>
 <!-- TOC -->
 <ul>
-<li><a href="#%E6%9C%80%E9%95%BF%E9%87%8D%E5%A4%8D%E5%AD%90%E4%B8%B2">最长重复子串</a>
+<li><a href="#%E5%88%86%E9%9A%94%E9%93%BE%E8%A1%A8">分隔链表</a>
 <ul>
 <li><a href="#%E9%A2%98%E7%9B%AE%E6%8F%8F%E8%BF%B0">题目描述</a></li>
 <li><a href="#%E6%80%9D%E8%B7%AF">思路</a></li>
 <li><a href="#%E4%BB%A3%E7%A0%81">代码</a></li>
-<li><a href="#tips">tips</a></li>
 </ul>
 </li>
 </ul>
 <!-- /TOC -->
-<p><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/longest-duplicate-substring/description/">原题</a></p>
+<p><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/partition-list/description">原题</a></p>
 <h3 id="题目描述"><a class="markdownIt-Anchor" href="#题目描述"></a> 题目描述</h3>
-<p>给你一个字符串 s ，考虑其所有 重复子串 ：即 s 的（连续）子串，在 s 中出现 2 次或更多次。这些出现之间可能存在重叠。</p>
-<p>返回 任意一个 可能具有最长长度的重复子串。如果 s 不含重复子串，那么答案为 “” 。</p>
-<p>e.g.</p>
-<figure class="highlight abnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs abnf">输入：s <span class="hljs-operator">=</span> <span class="hljs-string">&quot;banana&quot;</span><br>输出：<span class="hljs-string">&quot;ana&quot;</span><br></code></pre></td></tr></table></figure>
+<p>给你一个链表的头节点 head 和一个特定值 x ，请你对链表进行分隔，使得所有 小于 x 的节点都出现在 大于或等于 x 的节点之前。</p>
+<p>你应当 保留 两个分区中每个节点的初始相对位置。<br />
+e.g.</p>
+<figure class="highlight accesslog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs accesslog">输入：head = <span class="hljs-string">[1,4,3,2,5,2]</span>, x = <span class="hljs-number">3</span><br>输出：<span class="hljs-string">[1,2,2,4,3,5]</span><br></code></pre></td></tr></table></figure>
 <h3 id="思路"><a class="markdownIt-Anchor" href="#思路"></a> 思路</h3>
-<p>参考大佬的题解，主要思路是字符串哈希 + 二分。用二分搜索数组的长度，然后check长度为len的子串是否重复出现，如果是，返回该子串，否则，返回空串。二分过程中如果返回空串，缩短长度继续二分，否则扩大长度继续二分。</p>
-<p>现在难点在于如何在O(n)复杂度内执行check,这里用到字符串哈希：<br />
-创建数组h和p，P是一个质数(一般要尽可能大一点)<br />
-h：用于存储前缀哈希值的数组。<br />
-p：存储每个位置的幂次的数组，方便计算哈希值。<br />
-初始化:</p>
-<figure class="highlight inform7"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs inform7">for (int i = 0; i &lt; n; i++) &#123;<br>            p<span class="hljs-comment">[i + 1]</span> = p<span class="hljs-comment">[i]</span> * P;<br>            h<span class="hljs-comment">[i + 1]</span> = h<span class="hljs-comment">[i]</span> * P + s<span class="hljs-comment">[i]</span>;<br>        &#125;<br></code></pre></td></tr></table></figure>
-<p><code>h[i]</code>是子串从 第一个位置 到 第 i 个 的哈希值<br />
-从位置 i 到 j 的子串的哈希值的表达式为：</p>
-<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs css">h<span class="hljs-selector-attr">[j]</span> - h<span class="hljs-selector-attr">[i - 1]</span> * <span class="hljs-selector-tag">p</span><span class="hljs-selector-attr">[j - i + 1]</span><br></code></pre></td></tr></table></figure>
-<p>把这些哈希值存在set里，可以判断子串是否重复出现</p>
-<p>PS:大佬的java代码long long就能过，我写的c++用long long都会爆，必须用unsigned long long</p>
+<p>这道题思路还是比较简单的。创建两个链表，一个用来存储小于x的节点，一个用来存储大于x的节点，遍历完head后，将两个链表连接在一起即可。</p>
 <h3 id="代码"><a class="markdownIt-Anchor" href="#代码"></a> 代码</h3>
-<figure class="highlight excel"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br></pre></td><td class="code"><pre><code class="hljs excel">class Solution &#123;<br>publ<span class="hljs-symbol">ic:</span><br>    typedef unsigned long long ULL;<br>    <span class="hljs-built_in">int</span> P=<span class="hljs-number">1313131</span>;<br>    vector&lt;ULL&gt; h,p;<br>    string check(string &amp;s,<span class="hljs-built_in">int</span> <span class="hljs-built_in">len</span>)&#123;<br>        <span class="hljs-built_in">int</span> <span class="hljs-built_in">n</span>=s.size();<br>        unordered_set&lt;ULL&gt; st;<br>        for(<span class="hljs-built_in">int</span> i=<span class="hljs-number">1</span>;i+<span class="hljs-built_in">len</span>-<span class="hljs-number">1</span>&lt;=<span class="hljs-built_in">n</span>;++i)&#123;<br>            <span class="hljs-built_in">int</span> j=i+<span class="hljs-built_in">len</span>-<span class="hljs-number">1</span>;<br>            ULL <span class="hljs-built_in">t</span>=h[j]-h[i-<span class="hljs-number">1</span>]*p[j-i+<span class="hljs-number">1</span>];//i~j子串的哈希值<br>            <span class="hljs-built_in">if</span>(st.count(<span class="hljs-built_in">t</span>))<br>                return s.substr(i-<span class="hljs-number">1</span>,<span class="hljs-built_in">len</span>);<br>            st.insert(<span class="hljs-built_in">t</span>);<br>        &#125;<br>        return <span class="hljs-string">&quot;&quot;</span>;<br>    &#125;<br>    string longestDupSubstring(string s) &#123;<br>        <span class="hljs-built_in">int</span> <span class="hljs-built_in">n</span>=s.size();<br>        h.resize(<span class="hljs-built_in">n</span>+<span class="hljs-number">1</span>);<br>        p.resize(<span class="hljs-built_in">n</span>+<span class="hljs-number">1</span>);<br>        p[<span class="hljs-number">0</span>]=<span class="hljs-number">1</span>;<br>        for(<span class="hljs-built_in">int</span> i=<span class="hljs-number">0</span>;i&lt;<span class="hljs-built_in">n</span>;++i)&#123;<br>            p[i+<span class="hljs-number">1</span>]=p[i]*P;<br>            h[i+<span class="hljs-number">1</span>]=h[i]*P+s[i];<br>        &#125;<br>        <span class="hljs-built_in">int</span> l=<span class="hljs-number">0</span>,r=<span class="hljs-built_in">n</span>;<br>        string ans;<br>        while(l&lt;r)&#123;<br>            <span class="hljs-built_in">int</span> <span class="hljs-built_in">mid</span>=l+(r-l)/<span class="hljs-number">2</span>;<br>            string <span class="hljs-built_in">t</span>=check(s,<span class="hljs-built_in">mid</span>);<br>            <span class="hljs-built_in">int</span> tlen=t.size();<br>            <span class="hljs-built_in">if</span>(tlen==<span class="hljs-number">0</span>)<br>                r=<span class="hljs-built_in">mid</span>;<br>            else<br>                l=<span class="hljs-built_in">mid</span>+<span class="hljs-number">1</span>;<br>            ans=tlen&gt;ans.size()?<span class="hljs-symbol">t:an</span>s;<br>        &#125;<br>        return ans;<br>    &#125;<br>&#125;;<br></code></pre></td></tr></table></figure>
-<h3 id="tips"><a class="markdownIt-Anchor" href="#tips"></a> tips</h3>
-<p>最长公共子序列和最长公共子串的区别是：后者是连续的，当前字符不相等时<code>dp[i][j]=0</code></p>
-
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><code class="hljs routeros">class Solution &#123;<br>public:<br>    ListNode* partition(ListNode* head, int x) &#123;<br>        <span class="hljs-keyword">if</span>(<span class="hljs-attribute">head</span>==nullptr)<br>            return head;<br>        ListNode* <span class="hljs-attribute">l</span>=new ListNode(0);<br>        ListNode* <span class="hljs-attribute">lh</span>=l;<br>        ListNode* <span class="hljs-attribute">r</span>=new ListNode(0);<br>        ListNode* <span class="hljs-attribute">rh</span>=r;<br>        <span class="hljs-keyword">while</span>(head!=nullptr)&#123;<br>            <span class="hljs-keyword">if</span>(head-&gt;val&gt;=x)&#123;<br>                r-&gt;<span class="hljs-attribute">next</span>=head;<br>                <span class="hljs-attribute">r</span>=r-&gt;next;<br>            &#125;<span class="hljs-keyword">else</span>&#123;<br>                l-&gt;<span class="hljs-attribute">next</span>=head;<br>                <span class="hljs-attribute">l</span>=l-&gt;next;<br>            &#125;<br>            <span class="hljs-attribute">head</span>=head-&gt;next;<br>        &#125;<br>        r-&gt;<span class="hljs-attribute">next</span>=nullptr;<br>        l-&gt;<span class="hljs-attribute">next</span>=rh-&gt;next;<br>        return lh-&gt;next;<br>    &#125;<br>&#125;;<br></code></pre></td></tr></table></figure>
                 
               </div>
             
             <hr/>
             <div>
               <div class="post-metas my-3">
-  
-    <div class="post-meta mr-3 d-flex align-items-center">
-      <i class="iconfont icon-category"></i>
-      
-
-<span class="category-chains">
-  
-  
-    
-      <span class="category-chain">
-        
-  <a href="/categories/%E6%9C%BA%E8%AF%95/" class="category-chain-item">机试</a>
-  
-  
-
-      </span>
-    
-  
-</span>
-
-    </div>
   
   
 </div>
@@ -349,8 +313,8 @@ p：存储每个位置的幂次的数组，方便计算哈希值。<br />
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>最长重复子串</div>
-      <div>http://lqz2.github.io/2024/09/27/最长重复子串/</div>
+      <div>分隔链表</div>
+      <div>http://lqz2.github.io/2024/09/28/分隔链表/</div>
     </div>
     <div class="license-meta">
       
@@ -362,7 +326,7 @@ p：存储每个位置的幂次的数组，方便计算哈希值。<br />
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2024年9月27日</div>
+          <div>2024年9月28日</div>
         </div>
       
       
@@ -394,18 +358,12 @@ p：存储每个位置的幂次的数组，方便计算哈希值。<br />
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2024/09/28/%E5%88%86%E9%9A%94%E9%93%BE%E8%A1%A8/" title="分隔链表">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">分隔链表</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2024/09/26/%E8%A2%AB%E5%9B%B4%E7%BB%95%E7%9A%84%E5%8C%BA%E5%9F%9F/" title="被围绕的区域">
-                        <span class="hidden-mobile">被围绕的区域</span>
+                      <a href="/2024/09/27/%E6%9C%80%E9%95%BF%E9%87%8D%E5%A4%8D%E5%AD%90%E4%B8%B2/" title="最长重复子串">
+                        <span class="hidden-mobile">最长重复子串</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>

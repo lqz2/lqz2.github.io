@@ -4,6 +4,19 @@
   
   
   <entry>
+    <title>分隔链表</title>
+    <link href="/2024/09/28/%E5%88%86%E9%9A%94%E9%93%BE%E8%A1%A8/"/>
+    <url>/2024/09/28/%E5%88%86%E9%9A%94%E9%93%BE%E8%A1%A8/</url>
+    
+    <content type="html"><![CDATA[<h2 id="分隔链表"><a class="markdownIt-Anchor" href="#分隔链表"></a> 分隔链表</h2><!-- TOC --><ul><li><a href="#%E5%88%86%E9%9A%94%E9%93%BE%E8%A1%A8">分隔链表</a><ul><li><a href="#%E9%A2%98%E7%9B%AE%E6%8F%8F%E8%BF%B0">题目描述</a></li><li><a href="#%E6%80%9D%E8%B7%AF">思路</a></li><li><a href="#%E4%BB%A3%E7%A0%81">代码</a></li></ul></li></ul><!-- /TOC --><p><a href="https://leetcode.cn/problems/partition-list/description">原题</a></p><h3 id="题目描述"><a class="markdownIt-Anchor" href="#题目描述"></a> 题目描述</h3><p>给你一个链表的头节点 head 和一个特定值 x ，请你对链表进行分隔，使得所有 小于 x 的节点都出现在 大于或等于 x 的节点之前。</p><p>你应当 保留 两个分区中每个节点的初始相对位置。<br />e.g.</p><figure class="highlight accesslog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs accesslog">输入：head = <span class="hljs-string">[1,4,3,2,5,2]</span>, x = <span class="hljs-number">3</span><br>输出：<span class="hljs-string">[1,2,2,4,3,5]</span><br></code></pre></td></tr></table></figure><h3 id="思路"><a class="markdownIt-Anchor" href="#思路"></a> 思路</h3><p>这道题思路还是比较简单的。创建两个链表，一个用来存储小于x的节点，一个用来存储大于x的节点，遍历完head后，将两个链表连接在一起即可。</p><h3 id="代码"><a class="markdownIt-Anchor" href="#代码"></a> 代码</h3><figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><code class="hljs routeros">class Solution &#123;<br>public:<br>    ListNode* partition(ListNode* head, int x) &#123;<br>        <span class="hljs-keyword">if</span>(<span class="hljs-attribute">head</span>==nullptr)<br>            return head;<br>        ListNode* <span class="hljs-attribute">l</span>=new ListNode(0);<br>        ListNode* <span class="hljs-attribute">lh</span>=l;<br>        ListNode* <span class="hljs-attribute">r</span>=new ListNode(0);<br>        ListNode* <span class="hljs-attribute">rh</span>=r;<br>        <span class="hljs-keyword">while</span>(head!=nullptr)&#123;<br>            <span class="hljs-keyword">if</span>(head-&gt;val&gt;=x)&#123;<br>                r-&gt;<span class="hljs-attribute">next</span>=head;<br>                <span class="hljs-attribute">r</span>=r-&gt;next;<br>            &#125;<span class="hljs-keyword">else</span>&#123;<br>                l-&gt;<span class="hljs-attribute">next</span>=head;<br>                <span class="hljs-attribute">l</span>=l-&gt;next;<br>            &#125;<br>            <span class="hljs-attribute">head</span>=head-&gt;next;<br>        &#125;<br>        r-&gt;<span class="hljs-attribute">next</span>=nullptr;<br>        l-&gt;<span class="hljs-attribute">next</span>=rh-&gt;next;<br>        return lh-&gt;next;<br>    &#125;<br>&#125;;<br></code></pre></td></tr></table></figure>]]></content>
+    
+    
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>最长重复子串</title>
     <link href="/2024/09/27/%E6%9C%80%E9%95%BF%E9%87%8D%E5%A4%8D%E5%AD%90%E4%B8%B2/"/>
     <url>/2024/09/27/%E6%9C%80%E9%95%BF%E9%87%8D%E5%A4%8D%E5%AD%90%E4%B8%B2/</url>
