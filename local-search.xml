@@ -4,6 +4,25 @@
   
   
   <entry>
+    <title>克隆图</title>
+    <link href="/2024/09/29/%E5%85%8B%E9%9A%86%E5%9B%BE/"/>
+    <url>/2024/09/29/%E5%85%8B%E9%9A%86%E5%9B%BE/</url>
+    
+    <content type="html"><![CDATA[<h2 id="克隆图"><a class="markdownIt-Anchor" href="#克隆图"></a> 克隆图</h2><!-- TOC --><ul><li><a href="#%E5%85%8B%E9%9A%86%E5%9B%BE">克隆图</a><ul><li><a href="#%E9%A2%98%E7%9B%AE%E6%8F%8F%E8%BF%B0">题目描述</a></li><li><a href="#%E6%80%9D%E8%B7%AF">思路</a></li><li><a href="#%E4%BB%A3%E7%A0%81">代码</a></li></ul></li></ul><!-- /TOC --><p><a href="https://leetcode.cn/problems/clone-graph/description">原题</a></p><h3 id="题目描述"><a class="markdownIt-Anchor" href="#题目描述"></a> 题目描述</h3><p>给你无向 连通 图中一个节点的引用，请你返回该图的 深拷贝（克隆）。</p><p>图中的每个节点都包含它的值 val（int） 和其邻居的列表</p><p>简单起见，每个节点的值都和它的索引相同。例如，第一个节点值为 1（val = 1），第二个节点值为 2（val = 2），以此类推。该图在测试用例中使用邻接列表表示。</p><p>邻接列表 是用于表示有限图的无序列表的集合。每个列表都描述了图中节点的邻居集。</p><p>给定节点将始终是图中的第一个节点（值为 1）。你必须将 给定节点的拷贝 作为对克隆图的引用返回。</p><h3 id="思路"><a class="markdownIt-Anchor" href="#思路"></a> 思路</h3><p>这道题主要是实现深拷贝，主要思路是递归。首先用一个哈希表记录节点是否访问过，然后克隆当前节点(new一个新内存)，并在哈希表中记录该节点，然后遍历所有邻居，将当前节点的邻居拷贝给克隆节点。</p><h3 id="代码"><a class="markdownIt-Anchor" href="#代码"></a> 代码</h3><figure class="highlight crmsh"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs crmsh">class Solution &#123;<br>public:<br>    unordered_map<span class="hljs-tag">&lt;Node*, Node*&gt;</span> mp;<br>    <span class="hljs-keyword">Node</span><span class="hljs-title">* cloneGraph</span>(<span class="hljs-keyword">Node</span><span class="hljs-title">* node</span>) &#123;<br>        if(<span class="hljs-keyword">node</span><span class="hljs-title">==nullptr</span>)<br>            return <span class="hljs-keyword">node</span><span class="hljs-title">;</span><br><span class="hljs-title">        if</span>(mp.count(<span class="hljs-keyword">node</span><span class="hljs-title">))</span><br><span class="hljs-title">            return</span> mp[<span class="hljs-keyword">node</span><span class="hljs-title">];</span><br><span class="hljs-title">        Node</span>* <span class="hljs-attr">clone=</span>new <span class="hljs-keyword">Node</span><span class="hljs-title">(node-</span>&gt;val);<br>        mp[<span class="hljs-keyword">node</span><span class="hljs-title">]=clone</span>;<br>        for(auto t:<span class="hljs-keyword">node</span><span class="hljs-title">-&gt;neighbors</span>)&#123;<br>            clone-&gt;neighbors.push_back(cloneGraph(t));<br>        &#125;<br>        return clone;<br>    &#125;<br>&#125;;<br></code></pre></td></tr></table></figure>]]></content>
+    
+    
+    <categories>
+      
+      <category>机试</category>
+      
+    </categories>
+    
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>分隔链表</title>
     <link href="/2024/09/28/%E5%88%86%E9%9A%94%E9%93%BE%E8%A1%A8/"/>
     <url>/2024/09/28/%E5%88%86%E9%9A%94%E9%93%BE%E8%A1%A8/</url>
