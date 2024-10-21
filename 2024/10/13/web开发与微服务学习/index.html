@@ -19,15 +19,15 @@
   <meta name="author" content="zql">
   <meta name="keywords" content="">
   
-    <meta name="description" content="web开发与微服务学习   web开发与微服务学习  springboot的依赖注入  构造函数注入 setter方法注入 字段注入   springboot3自动配置原理  主要步骤 使用示例        springboot的依赖注入  依赖注入允许对象在需要使用其他对象时，不用自己去创建，而是由 Spring 框架负责提供这些对象（依赖）。这不仅提高了代码的可测试性，还简化了对象之间的依">
+    <meta name="description" content="web开发与微服务学习   web开发与微服务学习  springboot的依赖注入  构造函数注入 setter方法注入 字段注入   springboot3自动配置原理  主要步骤 使用示例   自定义starter JWT令牌      springboot的依赖注入  依赖注入允许对象在需要使用其他对象时，不用自己去创建，而是由 Spring 框架负责提供这些对象（依赖）。这不仅提高了代">
 <meta property="og:type" content="article">
 <meta property="og:title" content="web开发与微服务学习">
 <meta property="og:url" content="http://lqz2.github.io/2024/10/13/web%E5%BC%80%E5%8F%91%E4%B8%8E%E5%BE%AE%E6%9C%8D%E5%8A%A1%E5%AD%A6%E4%B9%A0/index.html">
 <meta property="og:site_name" content="my blogs">
-<meta property="og:description" content="web开发与微服务学习   web开发与微服务学习  springboot的依赖注入  构造函数注入 setter方法注入 字段注入   springboot3自动配置原理  主要步骤 使用示例        springboot的依赖注入  依赖注入允许对象在需要使用其他对象时，不用自己去创建，而是由 Spring 框架负责提供这些对象（依赖）。这不仅提高了代码的可测试性，还简化了对象之间的依">
+<meta property="og:description" content="web开发与微服务学习   web开发与微服务学习  springboot的依赖注入  构造函数注入 setter方法注入 字段注入   springboot3自动配置原理  主要步骤 使用示例   自定义starter JWT令牌      springboot的依赖注入  依赖注入允许对象在需要使用其他对象时，不用自己去创建，而是由 Spring 框架负责提供这些对象（依赖）。这不仅提高了代">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2024-10-13T07:03:53.000Z">
-<meta property="article:modified_time" content="2024-10-13T08:32:41.756Z">
+<meta property="article:modified_time" content="2024-10-21T11:04:22.931Z">
 <meta property="article:author" content="zql">
 <meta name="twitter:card" content="summary_large_image">
   
@@ -222,7 +222,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          899 字
+          1.6k 字
         
       </span>
     
@@ -233,7 +233,7 @@
         
         
         
-          8 分钟
+          14 分钟
         
       </span>
     
@@ -293,6 +293,8 @@
 <li><a href="#%E4%BD%BF%E7%94%A8%E7%A4%BA%E4%BE%8B">使用示例</a></li>
 </ul>
 </li>
+<li><a href="#%E8%87%AA%E5%AE%9A%E4%B9%89starter">自定义starter</a></li>
+<li><a href="#jwt%E4%BB%A4%E7%89%8C">JWT令牌</a></li>
 </ul>
 </li>
 </ul>
@@ -362,6 +364,7 @@
 <ul>
 <li>编写自动配置类，使用<code>@AutoConfiguration</code>注解，通过<code>@Import</code>导入所需要的自动配置类</li>
 </ul>
+<p><strong>注意</strong>：直接在配置类上使用<code>@AutoConfiguration</code>作为自动配置类，不额外创建一个自动配置类也是可以的</p>
 <figure class="highlight less"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs less"><span class="hljs-variable">@AutoConfiguration</span><br><span class="hljs-variable">@Import</span>(ThirdPartyConfig.class)<br>public class MyAutoConfiguration &#123;<br>&#125;<br></code></pre></td></tr></table></figure>
 <ul>
 <li>在<code>META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports</code>文件中添加自动配置类的全类名</li>
@@ -370,7 +373,28 @@
 <ul>
 <li>在pom文件中引入坐标，就可以通过依赖注入使用Bean了</li>
 </ul>
-
+<h2 id="自定义starter"><a class="markdownIt-Anchor" href="#自定义starter"></a> 自定义starter</h2>
+<p>熟悉自动配置之后，自定义starter的步骤其实很简单，只有两步：</p>
+<ul>
+<li>首先，创建一个模块，提供自动配置功能，即该模块包含自动配置类(定义了自动配置类并在<code>META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports</code>中声明)</li>
+<li>创建另一个模块作为starter，在pom文件中引入上面的自定义自动配置类模块的坐标</li>
+</ul>
+<h2 id="jwt令牌"><a class="markdownIt-Anchor" href="#jwt令牌"></a> JWT令牌</h2>
+<p>JWT全称为Json Web Token，定义了一种简洁的、自包含的格式，用于通信双方以json数据格式安全的传输信息。其形式是一个很长的字符串，中间用点<code>.</code>分隔成三个部分。这些字符串由JSON对象使用Base64URL算法转换得到。<br />
+分别是：</p>
+<ul>
+<li>头部(Header)，记录令牌类型，加密算法等，如<code>&#123;&quot;alg&quot;: &quot;HS256&quot;,&quot;typ&quot;: &quot;JWT&quot;&#125;</code></li>
+<li>载荷(Payload)，包括默认信息和自定义信息，如可添加自定义信息<code>&#123;&quot;id&quot;:&quot;1&quot;, &quot;name&quot;:&quot;tom&quot;&#125;</code></li>
+<li>签名(Signature)，防止JWT被篡改。需要指定一个密钥(secret)。这个密钥只有服务器才知道，不能泄露给用户。然后，使用Header里面指定的签名算法(默认是 HMAC SHA256)，按照下面的公式产生签名。</li>
+</ul>
+<figure class="highlight stylus"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs stylus"><span class="hljs-function"><span class="hljs-title">HMACSHA256</span><span class="hljs-params">( base64UrlEncode(header)</span></span> + <span class="hljs-string">&quot;.”&quot;</span>+<span class="hljs-built_in">base64UrlEncode</span>(payload), secret)<br></code></pre></td></tr></table></figure>
+<ul>
+<li>算出签名以后，把 Header、Payload、Signature 三个部分拼成一个字符串，每个部分之间用&quot;点&quot;(.)分隔，就可以返回给用户。</li>
+</ul>
+<p>以下是利用hutool工具封装的创建和解析JWT令牌的类:</p>
+<figure class="highlight haxe"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br><span class="line">66</span><br><span class="line">67</span><br><span class="line">68</span><br></pre></td><td class="code"><pre><code class="hljs haxe"><span class="hljs-meta">@Component</span><br><span class="hljs-keyword">public</span> <span class="hljs-title class_"><span class="hljs-keyword">class</span> <span class="hljs-title">JwtTool</span> </span>&#123;<br>    <span class="hljs-keyword">private</span> <span class="hljs-keyword">final</span> JWTSigner jwtSigner;<br><br>    <span class="hljs-keyword">public</span> JwtTool(KeyPair keyPair) &#123;<br>        <span class="hljs-built_in">this</span>.jwtSigner = JWTSignerUtil.createSigner(<span class="hljs-string">&quot;rs256&quot;</span>, keyPair);<br>    &#125;<br><br>    <span class="hljs-comment">/**</span><br><span class="hljs-comment">     * 创建 access-token</span><br><span class="hljs-comment">     *</span><br><span class="hljs-comment">     * @param userDTO 用户信息</span><br><span class="hljs-comment">     * @return access-token</span><br><span class="hljs-comment">     */</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">String</span> createToken(Long userId, Duration ttl) &#123;<br>        <span class="hljs-comment">// 1.生成jws</span><br>        <span class="hljs-keyword">return</span> JWT.create()<br>                .setPayload(<span class="hljs-string">&quot;user&quot;</span>, userId)<br>                .setExpiresAt(<span class="hljs-keyword">new</span> <span class="hljs-type">Date</span>(System.currentTimeMillis() + ttl.toMillis()))<br>                .setSigner(jwtSigner)<br>                .sign();<br>    &#125;<br><br>    <span class="hljs-comment">/**</span><br><span class="hljs-comment">     * 解析token</span><br><span class="hljs-comment">     *</span><br><span class="hljs-comment">     * @param token token</span><br><span class="hljs-comment">     * @return 解析刷新token得到的用户信息</span><br><span class="hljs-comment">     */</span><br>    <span class="hljs-keyword">public</span> Long parseToken(<span class="hljs-keyword">String</span> token) &#123;<br>        <span class="hljs-comment">// 1.校验token是否为空</span><br>        <span class="hljs-keyword">if</span> (token == <span class="hljs-literal">null</span>) &#123;<br>            <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-type">UnauthorizedException</span>(<span class="hljs-string">&quot;未登录&quot;</span>);<br>        &#125;<br>        <span class="hljs-comment">// 2.校验并解析jwt</span><br>        JWT jwt;<br>        <span class="hljs-keyword">try</span> &#123;<br>            jwt = JWT.of(token).setSigner(jwtSigner);<br>        &#125; <span class="hljs-keyword">catch</span> (Exception e) &#123;<br>            <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-type">UnauthorizedException</span>(<span class="hljs-string">&quot;无效的token&quot;</span>, e);<br>        &#125;<br>        <span class="hljs-comment">// 2.校验jwt是否有效</span><br>        <span class="hljs-keyword">if</span> (!jwt.verify()) &#123;<br>            <span class="hljs-comment">// 验证失败</span><br>            <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-type">UnauthorizedException</span>(<span class="hljs-string">&quot;无效的token&quot;</span>);<br>        &#125;<br>        <span class="hljs-comment">// 3.校验是否过期</span><br>        <span class="hljs-keyword">try</span> &#123;<br>            JWTValidator.of(jwt).validateDate();<br>        &#125; <span class="hljs-keyword">catch</span> (ValidateException e) &#123;<br>            <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-type">UnauthorizedException</span>(<span class="hljs-string">&quot;token已经过期&quot;</span>);<br>        &#125;<br>        <span class="hljs-comment">// 4.数据格式校验</span><br>        Object userPayload = jwt.getPayload(<span class="hljs-string">&quot;user&quot;</span>);<br>        <span class="hljs-keyword">if</span> (userPayload == <span class="hljs-literal">null</span>) &#123;<br>            <span class="hljs-comment">// 数据为空</span><br>            <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-type">UnauthorizedException</span>(<span class="hljs-string">&quot;无效的token&quot;</span>);<br>        &#125;<br><br>        <span class="hljs-comment">// 5.数据解析</span><br>        <span class="hljs-keyword">try</span> &#123;<br>           <span class="hljs-keyword">return</span> Long.valueOf(userPayload.toString());<br>        &#125; <span class="hljs-keyword">catch</span> (RuntimeException e) &#123;<br>            <span class="hljs-comment">// 数据格式有误</span><br>            <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-type">UnauthorizedException</span>(<span class="hljs-string">&quot;无效的token&quot;</span>);<br>        &#125;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>Spring 在创建 JwtTool 的实例时(自动注入JwtTool时)，会自动提供一个 KeyPair 实例(KeyPair在配置类中被注册成Bean)，所以使用该工具类时，直接注入，然后调用ceate或者parse方法即可，例如：</p>
+<figure class="highlight"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs"><br></code></pre></td></tr></table></figure>
                 
               </div>
             
