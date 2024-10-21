@@ -221,5 +221,6 @@ public class JwtTool {
 
 Spring 在创建 JwtTool 的实例时(自动注入JwtTool时)，会自动提供一个 KeyPair 实例(KeyPair在配置类中被注册成Bean)，所以使用该工具类时，直接注入，然后调用ceate或者parse方法即可，例如：
 ```
-
+private final JwtTool jwtTool;
+String token = jwtTool.createToken(user.getId(), jwtProperties.getTokenTTL());
 ```
