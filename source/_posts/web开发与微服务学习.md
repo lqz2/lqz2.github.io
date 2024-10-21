@@ -16,6 +16,8 @@ tags:
     - [springboot3自动配置原理](#springboot3自动配置原理)
         - [主要步骤](#主要步骤)
         - [使用示例](#使用示例)
+    - [自定义starter](#自定义starter)
+    - [JWT令牌](#jwt令牌)
 
 <!-- /TOC -->
 
@@ -109,6 +111,8 @@ public class ThirdPartyConfig {
 
 - 编写自动配置类，使用`@AutoConfiguration`注解，通过`@Import`导入所需要的自动配置类
 
+**注意**：直接在配置类上使用`@AutoConfiguration`作为自动配置类，不额外创建一个自动配置类也是可以的
+
 ```
 @AutoConfiguration
 @Import(ThirdPartyConfig.class)
@@ -125,4 +129,97 @@ com.example.config.MyAutoConfiguration
 - 在pom文件中引入坐标，就可以通过依赖注入使用Bean了
 
 
+## 自定义starter
 
+熟悉自动配置之后，自定义starter的步骤其实很简单，只有两步：
+- 首先，创建一个模块，提供自动配置功能，即该模块包含自动配置类(定义了自动配置类并在`META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports`中声明)
+- 创建另一个模块作为starter，在pom文件中引入上面的自定义自动配置类模块的坐标
+
+## JWT令牌
+
+JWT全称为Json Web Token，定义了一种简洁的、自包含的格式，用于通信双方以json数据格式安全的传输信息。其形式是一个很长的字符串，中间用点`.`分隔成三个部分。这些字符串由JSON对象使用Base64URL算法转换得到。
+分别是：
+- 头部(Header)，记录令牌类型，加密算法等，如`{"alg": "HS256","typ": "JWT"}`
+- 载荷(Payload)，包括默认信息和自定义信息，如可添加自定义信息`{"id":"1", "name":"tom"}`
+- 签名(Signature)，防止JWT被篡改。需要指定一个密钥(secret)。这个密钥只有服务器才知道，不能泄露给用户。然后，使用Header里面指定的签名算法(默认是 HMAC SHA256)，按照下面的公式产生签名。
+```
+HMACSHA256( base64UrlEncode(header) + ".”"+base64UrlEncode(payload), secret)
+```
+- 算出签名以后，把 Header、Payload、Signature 三个部分拼成一个字符串，每个部分之间用"点"(.)分隔，就可以返回给用户。
+
+以下是利用hutool工具封装的创建和解析JWT令牌的类:
+```
+@Component
+public class JwtTool {
+    private final JWTSigner jwtSigner;
+
+    public JwtTool(KeyPair keyPair) {
+        this.jwtSigner = JWTSignerUtil.createSigner("rs256", keyPair);
+    }
+
+    /**
+     * 创建 access-token
+     *
+     * @param userDTO 用户信息
+     * @return access-token
+     */
+    public String createToken(Long userId, Duration ttl) {
+        // 1.生成jws
+        return JWT.create()
+                .setPayload("user", userId)
+                .setExpiresAt(new Date(System.currentTimeMillis() + ttl.toMillis()))
+                .setSigner(jwtSigner)
+                .sign();
+    }
+
+    /**
+     * 解析token
+     *
+     * @param token token
+     * @return 解析刷新token得到的用户信息
+     */
+    public Long parseToken(String token) {
+        // 1.校验token是否为空
+        if (token == null) {
+            throw new UnauthorizedException("未登录");
+        }
+        // 2.校验并解析jwt
+        JWT jwt;
+        try {
+            jwt = JWT.of(token).setSigner(jwtSigner);
+        } catch (Exception e) {
+            throw new UnauthorizedException("无效的token", e);
+        }
+        // 2.校验jwt是否有效
+        if (!jwt.verify()) {
+            // 验证失败
+            throw new UnauthorizedException("无效的token");
+        }
+        // 3.校验是否过期
+        try {
+            JWTValidator.of(jwt).validateDate();
+        } catch (ValidateException e) {
+            throw new UnauthorizedException("token已经过期");
+        }
+        // 4.数据格式校验
+        Object userPayload = jwt.getPayload("user");
+        if (userPayload == null) {
+            // 数据为空
+            throw new UnauthorizedException("无效的token");
+        }
+
+        // 5.数据解析
+        try {
+           return Long.valueOf(userPayload.toString());
+        } catch (RuntimeException e) {
+            // 数据格式有误
+            throw new UnauthorizedException("无效的token");
+        }
+    }
+}
+```
+
+Spring 在创建 JwtTool 的实例时(自动注入JwtTool时)，会自动提供一个 KeyPair 实例(KeyPair在配置类中被注册成Bean)，所以使用该工具类时，直接注入，然后调用ceate或者parse方法即可，例如：
+```
+
+```
