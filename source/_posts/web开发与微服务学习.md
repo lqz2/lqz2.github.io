@@ -18,6 +18,14 @@ tags:
         - [使用示例](#使用示例)
     - [自定义starter](#自定义starter)
     - [JWT令牌](#jwt令牌)
+    - [ThreadLocal](#threadlocal)
+        - [特点](#特点)
+        - [使用](#使用)
+    - [拦截器](#拦截器)
+        - [作用](#作用)
+        - [拦截器与过滤器的区别](#拦截器与过滤器的区别)
+        - [实现](#实现)
+        - [拦截器的执行顺序](#拦截器的执行顺序)
 
 <!-- /TOC -->
 
@@ -224,3 +232,127 @@ Spring 在创建 JwtTool 的实例时(自动注入JwtTool时)，会自动提供�
 private final JwtTool jwtTool;
 String token = jwtTool.createToken(user.getId(), jwtProperties.getTokenTTL());
 ```
+
+## ThreadLocal
+ThreadLoal 变量，线程局部变量
+ThreadLocal 提供了线程本地的实例。它与普通变量的区别在于，每个使用该变量的线程都会初始化一个完全独立的实例副本。ThreadLocal 变量通常被private static修饰。当一个线程结束时，它所使用的所有 ThreadLocal 相对的实例副本都可被回收。
+
+>总的来说，ThreadLocal 适用于每个线程需要自己独立的实例且该实例需要在多个方法中被使用，也即变量在线程间隔离而在方法或类间共享的场景。如同一个用户进行不同的请求。
+
+### 特点
+- 线程隔离：每个线程都拥有自己的变量副本，线程之间的变量副本互不影响，从而避免了多线程操作共享资源造成的数据不一致问题。
+- 线程安全：由于每个线程只能访问自己的变量副本，因此不需要额外的同步机制来保证线程安全。
+- 减少参数传递：在复杂的业务逻辑中，使用ThreadLocal可以避免在多个方法之间频繁传递参数，从而简化代码。
+
+### 使用
+
+ThreadLocal的工具类模板：
+```
+public class ThreadLocalUtil {
+    private static final ThreadLocal THREAD_LOCAL = new ThreadLocal();
+
+    //    按键获取数据
+    public static <T> T get() {
+        return (T) THREAD_LOCAL.get();
+    }
+
+    //    存储数据
+    public static void set(Object value) {
+        THREAD_LOCAL.set(value);
+    }
+
+    //    清除线程
+    public static void remove() {
+        THREAD_LOCAL.remove();
+    }
+}
+```
+
+
+
+
+## 拦截器
+拦截器（Interceptor）是一种特殊的组件，它可以在请求处理的过程中对请求和响应进行拦截和处理。拦截器可以在请求到达目标处理器之前、处理器处理请求之后以及视图渲染之前执行特定的操作。拦截器的主要目的是在不修改原有代码的情况下，实现对请求和响应的统一处理。
+
+### 作用
+- 权限控制：拦截器可以在请求到达处理器之前进行权限验证，从而实现对不同用户的访问控制。
+- 日志记录：拦截器可以在请求处理过程中记录请求和响应的详细信息，便于后期分析和调试。
+- 接口幂等性校验：拦截器可以在请求到达处理器之前进行幂等性校验，防止重复提交。
+- 数据校验：拦截器可以在请求到达处理器之前对请求数据进行校验，确保数据的合法性。
+- 缓存处理：拦截器可以在请求处理之后对响应数据进行缓存，提高系统性能。
+
+### 拦截器与过滤器的区别
+- 执行顺序：过滤器在拦截器之前执行，拦截器在处理器之前执行。
+- 功能范围：过滤器可以对所有请求进行拦截，而拦截器只能对特定的请求进行拦截。
+- 生命周期：过滤器由Servlet容器管理，拦截器由Spring容器管理。
+- 使用场景：过滤器适用于对请求和响应的全局处理，拦截器适用于对特定请求的处理。
+
+### 实现
+1. 在SpringBoot中实现拦截器，首先需要创建一个类并实现HandlerInterceptor接口。HandlerInterceptor接口包含以下三个方法：
+    - preHandle：在请求到达处理器之前执行，可以用于权限验证、数据校验等操作。如果返回true，则继续执行后续操作；如果返回false，则中断请求处理。
+    - postHandle：在处理器处理请求之后执行，可以用于日志记录、缓存处理等操作。
+    - afterCompletion：在视图渲染之后执行，可以用于资源清理等操作。
+    以登录认证为例，代码如下：
+```
+@Component
+public class LoginInterceptor implements HandlerInterceptor {
+    @Autowired
+    private StringRedisTemplate redisTemplate;
+
+    @Override
+    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
+        String token = request.getHeader("Authorization");
+        //        验证token
+        try {
+//            从redis中获取token
+            ValueOperations<String, String> ops = redisTemplate.opsForValue();
+            String redisToken = ops.get(token);
+            if(redisToken==null){
+                throw new RuntimeException();
+            }
+            if(!redisToken.equals(token)){
+                throw new RuntimeException();
+            }
+            Map<String, Object> claims = JwtUtil.parseToken(token);
+//            把用户信息存到threadlocal中
+            ThreadLocalUtil.set(claims);
+            return true;
+        } catch (Exception e) {
+            response.setStatus(401);
+            return false;
+        }
+    }
+
+    @Override
+    public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) throws Exception {
+        ThreadLocalUtil.remove();
+    }
+}
+```
+
+2. 创建一个配置类，实现WebMvcConfigurer接口，注册拦截器到InterceptorRegistry，并设置拦截规则
+    以登录认证为例，代码如下：
+```
+@Configuration
+public class WebConfig implements WebMvcConfigurer {
+    @Autowired
+    private LoginInterceptor loginInterceptor;
+    @Override
+    public void addInterceptors(InterceptorRegistry registry) {
+
+//        拦截除了登录和注册的其他请求
+        registry.addInterceptor(loginInterceptor).excludePathPatterns("/user/login","/user/register");
+    }
+}
+```
+
+### 拦截器的执行顺序
+当有多个拦截器时，它们的执行顺序取决于注册顺序。先注册的拦截器先执行，后注册的拦截器后执行。在请求处理过程中，拦截器的preHandle方法按注册顺序执行，而postHandle和afterCompletion方法按注册顺序的逆序执行。
+
+当有多个拦截器时，它们的执行流程如下：
+
+- 执行所有拦截器的preHandle方法，按注册顺序执行。如果某个拦截器的preHandle方法返回false，则中断请求处理，直接执行已执行拦截器的afterCompletion方法。
+- 执行处理器的处理方法。
+- 执行所有拦截器的postHandle方法，按注册顺序的逆序执行。
+- 渲染视图。
+- 执行所有拦截器的afterCompletion方法，按注册顺序的逆序执行。
