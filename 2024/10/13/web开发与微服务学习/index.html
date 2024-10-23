@@ -19,15 +19,15 @@
   <meta name="author" content="zql">
   <meta name="keywords" content="">
   
-    <meta name="description" content="web开发与微服务学习   web开发与微服务学习  springboot的依赖注入  构造函数注入 setter方法注入 字段注入   springboot3自动配置原理  主要步骤 使用示例   自定义starter JWT令牌 ThreadLocal  特点 使用   拦截器  作用 拦截器与过滤器的区别 实现 拦截器的执行顺序        springboot的依赖注入  依赖注入允许">
+    <meta name="description" content="web开发与微服务学习   web开发与微服务学习  springboot的依赖注入  构造函数注入 setter方法注入 字段注入   springboot3自动配置原理  主要步骤 使用示例   自定义starter JWT令牌 ThreadLocal  特点 使用   拦截器  作用 拦截器与过滤器的区别 实现 拦截器的执行顺序   Controller中的方法接收参数注解  @Reque">
 <meta property="og:type" content="article">
 <meta property="og:title" content="web开发与微服务学习">
 <meta property="og:url" content="http://lqz2.github.io/2024/10/13/web%E5%BC%80%E5%8F%91%E4%B8%8E%E5%BE%AE%E6%9C%8D%E5%8A%A1%E5%AD%A6%E4%B9%A0/index.html">
 <meta property="og:site_name" content="my blogs">
-<meta property="og:description" content="web开发与微服务学习   web开发与微服务学习  springboot的依赖注入  构造函数注入 setter方法注入 字段注入   springboot3自动配置原理  主要步骤 使用示例   自定义starter JWT令牌 ThreadLocal  特点 使用   拦截器  作用 拦截器与过滤器的区别 实现 拦截器的执行顺序        springboot的依赖注入  依赖注入允许">
+<meta property="og:description" content="web开发与微服务学习   web开发与微服务学习  springboot的依赖注入  构造函数注入 setter方法注入 字段注入   springboot3自动配置原理  主要步骤 使用示例   自定义starter JWT令牌 ThreadLocal  特点 使用   拦截器  作用 拦截器与过滤器的区别 实现 拦截器的执行顺序   Controller中的方法接收参数注解  @Reque">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2024-10-13T07:03:53.000Z">
-<meta property="article:modified_time" content="2024-10-22T12:39:04.687Z">
+<meta property="article:modified_time" content="2024-10-23T08:46:26.613Z">
 <meta property="article:author" content="zql">
 <meta name="twitter:card" content="summary_large_image">
   
@@ -222,7 +222,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          3k 字
+          3.6k 字
         
       </span>
     
@@ -233,7 +233,7 @@
         
         
         
-          25 分钟
+          30 分钟
         
       </span>
     
@@ -307,6 +307,16 @@
 <li><a href="#%E6%8B%A6%E6%88%AA%E5%99%A8%E4%B8%8E%E8%BF%87%E6%BB%A4%E5%99%A8%E7%9A%84%E5%8C%BA%E5%88%AB">拦截器与过滤器的区别</a></li>
 <li><a href="#%E5%AE%9E%E7%8E%B0">实现</a></li>
 <li><a href="#%E6%8B%A6%E6%88%AA%E5%99%A8%E7%9A%84%E6%89%A7%E8%A1%8C%E9%A1%BA%E5%BA%8F">拦截器的执行顺序</a></li>
+</ul>
+</li>
+<li><a href="#controller%E4%B8%AD%E7%9A%84%E6%96%B9%E6%B3%95%E6%8E%A5%E6%94%B6%E5%8F%82%E6%95%B0%E6%B3%A8%E8%A7%A3">Controller中的方法接收参数注解</a>
+<ul>
+<li><a href="#requestparam">@RequestParam</a></li>
+<li><a href="#pathvariable">@PathVariable</a></li>
+<li><a href="#requestbody">@RequestBody</a></li>
+<li><a href="#cookievalue">@CookieValue</a></li>
+<li><a href="#requestheader">@RequestHeader</a></li>
+<li><a href="#modelattribute">@ModelAttribute</a></li>
 </ul>
 </li>
 </ul>
@@ -468,6 +478,36 @@ ThreadLocal 提供了线程本地的实例。它与普通变量的区别在于�
 <li>渲染视图。</li>
 <li>执行所有拦截器的afterCompletion方法，按注册顺序的逆序执行。</li>
 </ul>
+<h2 id="controller中的方法接收参数注解"><a class="markdownIt-Anchor" href="#controller中的方法接收参数注解"></a> Controller中的方法接收参数注解</h2>
+<h3 id="requestparam"><a class="markdownIt-Anchor" href="#requestparam"></a> @RequestParam</h3>
+<p>用于将HTTP请求参数绑定到控制器的方法参数上。如果请求参数不存在，可以指定一个默认值。这个注解主要用于处理请求中的<strong>查询参数（即URL中<code>?</code>后面的部分）</strong>，使得你可以轻松地从请求中获取这些参数的值。</p>
+<p>示例：</p>
+<figure class="highlight less"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs less"><span class="hljs-variable">@GetMapping</span>(<span class="hljs-string">&quot;/greeting&quot;</span>)  <br>public String <span class="hljs-built_in">greeting</span>(<span class="hljs-variable">@RequestParam</span>(value = <span class="hljs-string">&quot;name&quot;</span>, defaultValue = <span class="hljs-string">&quot;World&quot;</span>) String name) &#123;  <br>    <span class="hljs-selector-tag">return</span> <span class="hljs-selector-tag">String</span><span class="hljs-selector-class">.format</span>(<span class="hljs-string">&quot;Hello, %s!&quot;</span>, name);  <br>&#125;<br></code></pre></td></tr></table></figure>
+<h3 id="pathvariable"><a class="markdownIt-Anchor" href="#pathvariable"></a> @PathVariable</h3>
+<p>用于将URL模板变量值绑定到控制器处理方法的参数上。<br />
+这个注解使得你可以<strong>从URL的路径中提取变量值</strong>，这在构建RESTful API时非常有用。</p>
+<p>示例：</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs kotlin"><span class="hljs-meta">@GetMapping(<span class="hljs-string">&quot;/user/&#123;id&#125;&quot;</span>)</span>  <br><span class="hljs-keyword">public</span> String getUserById(<span class="hljs-meta">@PathVariable(<span class="hljs-string">&quot;id&quot;</span>)</span> <span class="hljs-built_in">Long</span> id) &#123;  <br>    <span class="hljs-comment">// 根据id获取用户信息  </span><br>    <span class="hljs-keyword">return</span> <span class="hljs-string">&quot;User ID is: &quot;</span> + id;  <br>&#125;<br></code></pre></td></tr></table></figure>
+<h3 id="requestbody"><a class="markdownIt-Anchor" href="#requestbody"></a> @RequestBody</h3>
+<p>用于处理HTTP请求的内容体（Body），<strong>将请求体中的数据绑定到Java对象</strong>上。</p>
+<p>这个注解<strong>通常用于处理POST和PUT请求</strong>，特别是当请求的内容类型为application/json或application/xml时。它允许你直接将请求体中的数据映射到Java对象上，便于后续处理</p>
+<p>示例：</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs typescript"><span class="hljs-meta">@GetMapping</span>(<span class="hljs-string">&quot;/cookie&quot;</span>)  <br><span class="hljs-keyword">public</span> <span class="hljs-title class_">String</span> <span class="hljs-title function_">readCookie</span>(<span class="hljs-params"><span class="hljs-meta">@CookieValue</span>(name = <span class="hljs-string">&quot;theme&quot;</span>, defaultValue = <span class="hljs-string">&quot;default&quot;</span>) <span class="hljs-built_in">String</span> theme</span>) &#123;  <br>    <span class="hljs-keyword">return</span> <span class="hljs-string">&quot;Theme is: &quot;</span> + theme;  <br>&#125;<br></code></pre></td></tr></table></figure>
+<h3 id="cookievalue"><a class="markdownIt-Anchor" href="#cookievalue"></a> @CookieValue</h3>
+<p>用于<strong>将请求的Cookie数据绑定到控制器方法的参数</strong>上。</p>
+<p>这个注解允许你访问HTTP请求中的Cookie信息，这在<strong>处理需要身份验证或会话管理的Web应用</strong>时非常有用。</p>
+<p>示例：</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs typescript"><span class="hljs-meta">@GetMapping</span>(<span class="hljs-string">&quot;/cookie&quot;</span>)  <br><span class="hljs-keyword">public</span> <span class="hljs-title class_">String</span> <span class="hljs-title function_">readCookie</span>(<span class="hljs-params"><span class="hljs-meta">@CookieValue</span>(name = <span class="hljs-string">&quot;theme&quot;</span>, defaultValue = <span class="hljs-string">&quot;default&quot;</span>) <span class="hljs-built_in">String</span> theme</span>) &#123;  <br>    <span class="hljs-keyword">return</span> <span class="hljs-string">&quot;Theme is: &quot;</span> + theme;  <br>&#125;<br></code></pre></td></tr></table></figure>
+<h3 id="requestheader"><a class="markdownIt-Anchor" href="#requestheader"></a> @RequestHeader</h3>
+<p>用于<strong>将HTTP请求头信息绑定到控制器方法的参数</strong>上。</p>
+<p>这个注解<strong>允许你访问HTTP请求中的头部信息</strong>，比如User-Agent、Content-Type等，这对于日志记录、内容协商等场景非常有用。</p>
+<p>示例：</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs typescript"><span class="hljs-meta">@GetMapping</span>(<span class="hljs-string">&quot;/header&quot;</span>)  <br><span class="hljs-keyword">public</span> <span class="hljs-title class_">String</span> <span class="hljs-title function_">readHeader</span>(<span class="hljs-params"><span class="hljs-meta">@RequestHeader</span>(name = <span class="hljs-string">&quot;User-Agent&quot;</span>, defaultValue = <span class="hljs-string">&quot;Unknown&quot;</span>) <span class="hljs-built_in">String</span> userAgent</span>) &#123;  <br>    <span class="hljs-keyword">return</span> <span class="hljs-string">&quot;User-Agent header is: &quot;</span> + userAgent;  <br>&#125;<br></code></pre></td></tr></table></figure>
+<h3 id="modelattribute"><a class="markdownIt-Anchor" href="#modelattribute"></a> @ModelAttribute</h3>
+<p>用于<strong>将请求参数绑定到JavaBean上</strong>，也可以用在方法上，表示该方法的返回值应该添加到模型（Model）中。</p>
+<p>这个注解主要用于处理表单数据，它可以将请求中的参数自动绑定到一个或多个JavaBean上，便于后续处理。</p>
+<p>示例：</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs typescript"><span class="hljs-meta">@PostMapping</span>(<span class="hljs-string">&quot;/addUser&quot;</span>)  <br><span class="hljs-keyword">public</span> <span class="hljs-title class_">String</span> <span class="hljs-title function_">addUser</span>(<span class="hljs-params"><span class="hljs-meta">@ModelAttribute</span> User user</span>) &#123;  <br>    <span class="hljs-comment">// 处理user对象  </span><br>    <span class="hljs-keyword">return</span> <span class="hljs-string">&quot;User added successfully&quot;</span>;  <br>&#125;<br></code></pre></td></tr></table></figure>
 
                 
               </div>
