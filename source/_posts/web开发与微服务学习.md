@@ -26,6 +26,13 @@ tags:
         - [拦截器与过滤器的区别](#拦截器与过滤器的区别)
         - [实现](#实现)
         - [拦截器的执行顺序](#拦截器的执行顺序)
+    - [Controller中的方法接收参数注解](#controller中的方法接收参数注解)
+        - [@RequestParam](#requestparam)
+        - [@PathVariable](#pathvariable)
+        - [@RequestBody](#requestbody)
+        - [@CookieValue](#cookievalue)
+        - [@RequestHeader](#requestheader)
+        - [@ModelAttribute](#modelattribute)
 
 <!-- /TOC -->
 
@@ -356,3 +363,83 @@ public class WebConfig implements WebMvcConfigurer {
 - 执行所有拦截器的postHandle方法，按注册顺序的逆序执行。
 - 渲染视图。
 - 执行所有拦截器的afterCompletion方法，按注册顺序的逆序执行。
+
+## Controller中的方法接收参数注解
+### @RequestParam
+用于将HTTP请求参数绑定到控制器的方法参数上。如果请求参数不存在，可以指定一个默认值。这个注解主要用于处理请求中的**查询参数（即URL中`?`后面的部分）**，使得你可以轻松地从请求中获取这些参数的值。
+
+示例：
+```
+@GetMapping("/greeting")  
+public String greeting(@RequestParam(value = "name", defaultValue = "World") String name) {  
+    return String.format("Hello, %s!", name);  
+}
+```
+
+### @PathVariable
+用于将URL模板变量值绑定到控制器处理方法的参数上。
+这个注解使得你可以**从URL的路径中提取变量值**，这在构建RESTful API时非常有用。
+
+示例：
+```
+@GetMapping("/user/{id}")  
+public String getUserById(@PathVariable("id") Long id) {  
+    // 根据id获取用户信息  
+    return "User ID is: " + id;  
+}
+```
+
+### @RequestBody
+用于处理HTTP请求的内容体（Body），**将请求体中的数据绑定到Java对象**上。
+
+这个注解**通常用于处理POST和PUT请求**，特别是当请求的内容类型为application/json或application/xml时。它允许你直接将请求体中的数据映射到Java对象上，便于后续处理
+
+示例：
+```
+@GetMapping("/cookie")  
+public String readCookie(@CookieValue(name = "theme", defaultValue = "default") String theme) {  
+    return "Theme is: " + theme;  
+}
+```
+
+### @CookieValue
+用于**将请求的Cookie数据绑定到控制器方法的参数**上。
+
+这个注解允许你访问HTTP请求中的Cookie信息，这在**处理需要身份验证或会话管理的Web应用**时非常有用。
+
+示例：
+```
+@GetMapping("/cookie")  
+public String readCookie(@CookieValue(name = "theme", defaultValue = "default") String theme) {  
+    return "Theme is: " + theme;  
+}
+```
+
+### @RequestHeader
+用于**将HTTP请求头信息绑定到控制器方法的参数**上。
+
+这个注解**允许你访问HTTP请求中的头部信息**，比如User-Agent、Content-Type等，这对于日志记录、内容协商等场景非常有用。
+
+示例：
+```
+@GetMapping("/header")  
+public String readHeader(@RequestHeader(name = "User-Agent", defaultValue = "Unknown") String userAgent) {  
+    return "User-Agent header is: " + userAgent;  
+}
+```
+
+### @ModelAttribute
+
+用于**将请求参数绑定到JavaBean上**，也可以用在方法上，表示该方法的返回值应该添加到模型（Model）中。
+
+这个注解主要用于处理表单数据，它可以将请求中的参数自动绑定到一个或多个JavaBean上，便于后续处理。
+
+示例：
+```
+@PostMapping("/addUser")  
+public String addUser(@ModelAttribute User user) {  
+    // 处理user对象  
+    return "User added successfully";  
+}
+```
+
