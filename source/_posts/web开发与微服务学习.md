@@ -33,6 +33,13 @@ tags:
         - [@CookieValue](#cookievalue)
         - [@RequestHeader](#requestheader)
         - [@ModelAttribute](#modelattribute)
+    - [参数校验](#参数校验)
+        - [常用注解](#常用注解)
+        - [开启参数校验](#开启参数校验)
+        - [@Validated和@Valid区别](#validated和valid区别)
+    - [自定义参数校验](#自定义参数校验)
+        - [自定义State注解](#自定义state注解)
+        - [自定义校验规则的类](#自定义校验规则的类)
 
 <!-- /TOC -->
 
@@ -442,4 +449,121 @@ public String addUser(@ModelAttribute User user) {
     return "User added successfully";  
 }
 ```
+## 参数校验
+一般对于提交的表单要进行参数校验，主要步骤如下：
+
+### 常用注解
+可以通过注解给对象的每个属性设置校验规则，常见的注解有
+
+- @NotEmpty：检查集合或数组等对象是否为 null 或空。该注解通常用于检查字符串是否为空，集合是否为空等情况。
+- @NotBlank：检查字符串是否不为空，并且去除首尾空格后长度大于 0。该注解通常用于检查用户输入的字符串是否为有效值。
+- @NotNull：检查对象(包装类：Integer、Boolean等)是否不为 null。该注解通常用于检查对象是否已经被初始化。
+- Size(max,min)：检查该字段的size是否在min和max之间，可以是字符串、数组、集合、Map等
+- @Pattern(regexp = “[abc]”)：被注释的元素必须符合指定的正则表达式
+- @Email：被注释的元素必须是电子邮件地址
+- @URL：被注释的元素必须是URL地址
+
+示例：
+```
+import jakarta.validation.constraints.*;
+import lombok.Data;
+/**
+ * @author mijiupro
+ */
+@Data
+public class UserLoginDTO {
+    @NotBlank(message = "账号不能为空")
+    private String userAccount;// 用户账号
+    @Size(min = 6, max = 18, message = "用户密码长度需在6-18位")
+    private String password;// 密码
+    @NotBlank(message = "验证码id不能为空")
+    private String captchaId;// 验证码id
+    @NotBlank(message = "验证码内容不能为空")
+    private String captcha;// 验证码内容
+}
+```
+
+### 开启参数校验
+通常在控制层进行参数校验，通过对请求参数使用@Validated注解或者@Valid注解来启用校验。
+
+示例：
+```
+@RestController
+@RequestMapping("/user")
+@Tag(name = "用户管理", description = "用户管理")
+public class UserController {
+    private final UserService userService;
+ 
+    public UserController(UserService userService) {
+        this.userService = userService;
+    }
+ 
+    @PostMapping("/login")
+    @Operation(summary = "用户登录")
+    public UserLoginVO login(@RequestBody @Validated UserLoginDTO userLoginDTO) {
+        return userService.login(userLoginDTO);
+    }
+ 
+}
+```
+
+### @Validated和@Valid区别
+
+- @Validated注解是 Spring 框架提供的，主要用于在 Spring MVC 中对控制器的方法参数进行校验。
+- @Valid注解是 Java 标准库提供的，用于在任何地方触发参数校验，包括 Spring MVC 的控制器方法、Spring Boot 的 REST 控制器方法、Spring Data JPA 的实体类等。
+
+>在spring boot推荐用@Validated注解，因为它能够支持 Spring 提供的校验注解，并且具有更好的集成性。
+
+## 自定义参数校验
+
+已有的参数校验注解不能覆盖所有特殊情况，比如发布状态state要求必须是草稿或已发布状态，因此需要自定义校验规则。
+
+### 自定义State注解
+需要实现State接口
+
+代码：
+
+```
+@Documented//元注解
+@Target({FIELD})//元注解
+@Retention(RUNTIME)//元注解
+@Constraint(validatedBy = {StateValidation.class})//指定提供校验规则的类
+public @interface State {
+    //提供校验失败后的提示信息
+    String message() default "state参数的值只能是已发布或者草稿";
+    //指定分组
+    Class<?>[] groups() default { };
+    //负载  获取到State注解的附加信息
+    Class<? extends Payload>[] payload() default { };
+}
+```
+
+- @Documented: 这是一个元注解，用于指示该注解应该被包含在文档中
+- @Target({FIELD}): 这也是一个元注解，指定了该注解可以应用在字段上
+- @Retention(RUNTIME): 这是一个元注解，指定了该注解应该在运行时保留，以便在运行时可以通过反射获取注解信息。
+- @Constraint(validatedBy = {StateValidation.class}): 这是一个约束注解，用于指定提供校验规则的类，即 StateValidation 类(自定义的)
+
+### 自定义校验规则的类
+下面实现StateValidation类，该类要实现ConstraintValidator接口：
+
+```
+public class StateValidation implements ConstraintValidator<State, String>{
+
+    @Override
+    public boolean isValid(String value, ConstraintValidatorContext context) {
+        if(value==null)
+            return false;
+        return value.equals("已发布") || value.equals("草稿");
+    }
+}
+```
+ConstraintValidator接口要传入两个参数，一个是提供校验规则的注解(State)，一个是校验的数据类型(String)，然后重写isValid方法。
+
+经过以上步骤，自定义的@State注解就可以使用了。
+
+
+
+
+
+
 
