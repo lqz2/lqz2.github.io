@@ -27,7 +27,7 @@
 <meta property="og:description" content="web开发与微服务学习   web开发与微服务学习  springboot的依赖注入  构造函数注入 setter方法注入 字段注入   springboot3自动配置原理  主要步骤 使用示例   自定义starter JWT令牌 ThreadLocal  特点 使用   拦截器  作用 拦截器与过滤器的区别 实现 拦截器的执行顺序   Controller中的方法接收参数注解  @Reque">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2024-10-13T07:03:53.000Z">
-<meta property="article:modified_time" content="2024-10-23T08:46:26.613Z">
+<meta property="article:modified_time" content="2024-10-25T03:41:17.261Z">
 <meta property="article:author" content="zql">
 <meta name="twitter:card" content="summary_large_image">
   
@@ -222,7 +222,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          3.6k 字
+          4.6k 字
         
       </span>
     
@@ -233,7 +233,7 @@
         
         
         
-          30 分钟
+          38 分钟
         
       </span>
     
@@ -317,6 +317,19 @@
 <li><a href="#cookievalue">@CookieValue</a></li>
 <li><a href="#requestheader">@RequestHeader</a></li>
 <li><a href="#modelattribute">@ModelAttribute</a></li>
+</ul>
+</li>
+<li><a href="#%E5%8F%82%E6%95%B0%E6%A0%A1%E9%AA%8C">参数校验</a>
+<ul>
+<li><a href="#%E5%B8%B8%E7%94%A8%E6%B3%A8%E8%A7%A3">常用注解</a></li>
+<li><a href="#%E5%BC%80%E5%90%AF%E5%8F%82%E6%95%B0%E6%A0%A1%E9%AA%8C">开启参数校验</a></li>
+<li><a href="#validated%E5%92%8Cvalid%E5%8C%BA%E5%88%AB">@Validated和@Valid区别</a></li>
+</ul>
+</li>
+<li><a href="#%E8%87%AA%E5%AE%9A%E4%B9%89%E5%8F%82%E6%95%B0%E6%A0%A1%E9%AA%8C">自定义参数校验</a>
+<ul>
+<li><a href="#%E8%87%AA%E5%AE%9A%E4%B9%89state%E6%B3%A8%E8%A7%A3">自定义State注解</a></li>
+<li><a href="#%E8%87%AA%E5%AE%9A%E4%B9%89%E6%A0%A1%E9%AA%8C%E8%A7%84%E5%88%99%E7%9A%84%E7%B1%BB">自定义校验规则的类</a></li>
 </ul>
 </li>
 </ul>
@@ -508,6 +521,50 @@ ThreadLocal 提供了线程本地的实例。它与普通变量的区别在于�
 <p>这个注解主要用于处理表单数据，它可以将请求中的参数自动绑定到一个或多个JavaBean上，便于后续处理。</p>
 <p>示例：</p>
 <figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs typescript"><span class="hljs-meta">@PostMapping</span>(<span class="hljs-string">&quot;/addUser&quot;</span>)  <br><span class="hljs-keyword">public</span> <span class="hljs-title class_">String</span> <span class="hljs-title function_">addUser</span>(<span class="hljs-params"><span class="hljs-meta">@ModelAttribute</span> User user</span>) &#123;  <br>    <span class="hljs-comment">// 处理user对象  </span><br>    <span class="hljs-keyword">return</span> <span class="hljs-string">&quot;User added successfully&quot;</span>;  <br>&#125;<br></code></pre></td></tr></table></figure>
+<h2 id="参数校验"><a class="markdownIt-Anchor" href="#参数校验"></a> 参数校验</h2>
+<p>一般对于提交的表单要进行参数校验，主要步骤如下：</p>
+<h3 id="常用注解"><a class="markdownIt-Anchor" href="#常用注解"></a> 常用注解</h3>
+<p>可以通过注解给对象的每个属性设置校验规则，常见的注解有</p>
+<ul>
+<li>@NotEmpty：检查集合或数组等对象是否为 null 或空。该注解通常用于检查字符串是否为空，集合是否为空等情况。</li>
+<li>@NotBlank：检查字符串是否不为空，并且去除首尾空格后长度大于 0。该注解通常用于检查用户输入的字符串是否为有效值。</li>
+<li>@NotNull：检查对象(包装类：Integer、Boolean等)是否不为 null。该注解通常用于检查对象是否已经被初始化。</li>
+<li>Size(max,min)：检查该字段的size是否在min和max之间，可以是字符串、数组、集合、Map等</li>
+<li>@Pattern(regexp = “[abc]”)：被注释的元素必须符合指定的正则表达式</li>
+<li>@Email：被注释的元素必须是电子邮件地址</li>
+<li>@URL：被注释的元素必须是URL地址</li>
+</ul>
+<p>示例：</p>
+<figure class="highlight haxe"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs haxe"><span class="hljs-keyword">import</span> jakarta.validation.constraints.*;<br><span class="hljs-keyword">import</span> lombok.Data;<br><span class="hljs-comment">/**</span><br><span class="hljs-comment"> * @author mijiupro</span><br><span class="hljs-comment"> */</span><br><span class="hljs-meta">@Data</span><br><span class="hljs-keyword">public</span> <span class="hljs-title class_"><span class="hljs-keyword">class</span> <span class="hljs-title">UserLoginDTO</span> </span>&#123;<br>    <span class="hljs-meta">@NotBlank</span>(message = <span class="hljs-string">&quot;账号不能为空&quot;</span>)<br>    <span class="hljs-keyword">private</span> <span class="hljs-keyword">String</span> userAccount;<span class="hljs-comment">// 用户账号</span><br>    <span class="hljs-meta">@Size</span>(min = <span class="hljs-number">6</span>, max = <span class="hljs-number">18</span>, message = <span class="hljs-string">&quot;用户密码长度需在6-18位&quot;</span>)<br>    <span class="hljs-keyword">private</span> <span class="hljs-keyword">String</span> password;<span class="hljs-comment">// 密码</span><br>    <span class="hljs-meta">@NotBlank</span>(message = <span class="hljs-string">&quot;验证码id不能为空&quot;</span>)<br>    <span class="hljs-keyword">private</span> <span class="hljs-keyword">String</span> captchaId;<span class="hljs-comment">// 验证码id</span><br>    <span class="hljs-meta">@NotBlank</span>(message = <span class="hljs-string">&quot;验证码内容不能为空&quot;</span>)<br>    <span class="hljs-keyword">private</span> <span class="hljs-keyword">String</span> captcha;<span class="hljs-comment">// 验证码内容</span><br>&#125;<br></code></pre></td></tr></table></figure>
+<h3 id="开启参数校验"><a class="markdownIt-Anchor" href="#开启参数校验"></a> 开启参数校验</h3>
+<p>通常在控制层进行参数校验，通过对请求参数使用@Validated注解或者@Valid注解来启用校验。</p>
+<p>示例：</p>
+<figure class="highlight kotlin"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs kotlin"><span class="hljs-meta">@RestController</span><br><span class="hljs-meta">@RequestMapping(<span class="hljs-string">&quot;/user&quot;</span>)</span><br><span class="hljs-meta">@Tag(name = <span class="hljs-string">&quot;用户管理&quot;</span>, description = <span class="hljs-string">&quot;用户管理&quot;</span>)</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">UserController</span> &#123;<br>    <span class="hljs-keyword">private</span> <span class="hljs-keyword">final</span> UserService userService;<br> <br>    <span class="hljs-keyword">public</span> UserController(UserService userService) &#123;<br>        <span class="hljs-keyword">this</span>.userService = userService;<br>    &#125;<br> <br>    <span class="hljs-meta">@PostMapping(<span class="hljs-string">&quot;/login&quot;</span>)</span><br>    <span class="hljs-meta">@Operation(summary = <span class="hljs-string">&quot;用户登录&quot;</span>)</span><br>    <span class="hljs-keyword">public</span> UserLoginVO login(<span class="hljs-meta">@RequestBody</span> <span class="hljs-meta">@Validated</span> UserLoginDTO userLoginDTO) &#123;<br>        <span class="hljs-keyword">return</span> userService.login(userLoginDTO);<br>    &#125;<br> <br>&#125;<br></code></pre></td></tr></table></figure>
+<h3 id="validated和valid区别"><a class="markdownIt-Anchor" href="#validated和valid区别"></a> @Validated和@Valid区别</h3>
+<ul>
+<li>@Validated注解是 Spring 框架提供的，主要用于在 Spring MVC 中对控制器的方法参数进行校验。</li>
+<li>@Valid注解是 Java 标准库提供的，用于在任何地方触发参数校验，包括 Spring MVC 的控制器方法、Spring Boot 的 REST 控制器方法、Spring Data JPA 的实体类等。</li>
+</ul>
+<blockquote>
+<p>在spring boot推荐用@Validated注解，因为它能够支持 Spring 提供的校验注解，并且具有更好的集成性。</p>
+</blockquote>
+<h2 id="自定义参数校验"><a class="markdownIt-Anchor" href="#自定义参数校验"></a> 自定义参数校验</h2>
+<p>已有的参数校验注解不能覆盖所有特殊情况，比如发布状态state要求必须是草稿或已发布状态，因此需要自定义校验规则。</p>
+<h3 id="自定义state注解"><a class="markdownIt-Anchor" href="#自定义state注解"></a> 自定义State注解</h3>
+<p>需要实现State接口</p>
+<p>代码：</p>
+<figure class="highlight scss"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs scss"><span class="hljs-keyword">@Documented</span>//元注解<br><span class="hljs-keyword">@Target</span>(&#123;FIELD&#125;)<span class="hljs-comment">//元注解</span><br><span class="hljs-keyword">@Retention</span>(RUNTIME)//元注解<br><span class="hljs-keyword">@Constraint</span>(validatedBy = &#123;StateValidation<span class="hljs-selector-class">.class</span>&#125;)<span class="hljs-comment">//指定提供校验规则的类</span><br>public <span class="hljs-keyword">@interface</span> State &#123;<br>    <span class="hljs-comment">//提供校验失败后的提示信息</span><br>    String <span class="hljs-built_in">message</span>() default &quot;state参数的值只能是已发布或者草稿&quot;;<br>    <span class="hljs-comment">//指定分组</span><br>    Class&lt;?&gt;<span class="hljs-selector-attr">[]</span> <span class="hljs-built_in">groups</span>() default &#123; &#125;;<br>    <span class="hljs-comment">//负载  获取到State注解的附加信息</span><br>    Class&lt;? extends Payload&gt;<span class="hljs-selector-attr">[]</span> <span class="hljs-built_in">payload</span>() default &#123; &#125;;<br>&#125;<br></code></pre></td></tr></table></figure>
+<ul>
+<li>@Documented: 这是一个元注解，用于指示该注解应该被包含在文档中</li>
+<li>@Target({FIELD}): 这也是一个元注解，指定了该注解可以应用在字段上</li>
+<li>@Retention(RUNTIME): 这是一个元注解，指定了该注解应该在运行时保留，以便在运行时可以通过反射获取注解信息。</li>
+<li>@Constraint(validatedBy = {StateValidation.class}): 这是一个约束注解，用于指定提供校验规则的类，即 StateValidation 类(自定义的)</li>
+</ul>
+<h3 id="自定义校验规则的类"><a class="markdownIt-Anchor" href="#自定义校验规则的类"></a> 自定义校验规则的类</h3>
+<p>下面实现StateValidation类，该类要实现ConstraintValidator接口：</p>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs typescript"><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">StateValidation</span> <span class="hljs-keyword">implements</span> <span class="hljs-title class_">ConstraintValidator</span>&lt;<span class="hljs-title class_">State</span>, <span class="hljs-title class_">String</span>&gt;&#123;<br><br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-built_in">boolean</span> <span class="hljs-title function_">isValid</span>(<span class="hljs-params"><span class="hljs-built_in">String</span> value, ConstraintValidatorContext context</span>) &#123;<br>        <span class="hljs-keyword">if</span>(value==<span class="hljs-literal">null</span>)<br>            <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;<br>        <span class="hljs-keyword">return</span> value.<span class="hljs-title function_">equals</span>(<span class="hljs-string">&quot;已发布&quot;</span>) || value.<span class="hljs-title function_">equals</span>(<span class="hljs-string">&quot;草稿&quot;</span>);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>ConstraintValidator接口要传入两个参数，一个是提供校验规则的注解(State)，一个是校验的数据类型(String)，然后重写isValid方法。</p>
+<p>经过以上步骤，自定义的@State注解就可以使用了。</p>
 
                 
               </div>
