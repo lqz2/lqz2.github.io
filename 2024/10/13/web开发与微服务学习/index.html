@@ -27,7 +27,7 @@
 <meta property="og:description" content="web开发与微服务学习   web开发与微服务学习  springboot的依赖注入  构造函数注入 setter方法注入 字段注入   springboot3自动配置原理  主要步骤 使用示例   自定义starter JWT令牌 ThreadLocal  特点 使用   拦截器  作用 拦截器与过滤器的区别 实现 拦截器的执行顺序   Controller中的方法接收参数注解  @Reque">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2024-10-13T07:03:53.000Z">
-<meta property="article:modified_time" content="2024-10-25T03:41:17.261Z">
+<meta property="article:modified_time" content="2024-10-27T12:38:06.113Z">
 <meta property="article:author" content="zql">
 <meta name="twitter:card" content="summary_large_image">
   
@@ -222,7 +222,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          4.6k 字
+          5.7k 字
         
       </span>
     
@@ -233,7 +233,7 @@
         
         
         
-          38 分钟
+          48 分钟
         
       </span>
     
@@ -330,6 +330,17 @@
 <ul>
 <li><a href="#%E8%87%AA%E5%AE%9A%E4%B9%89state%E6%B3%A8%E8%A7%A3">自定义State注解</a></li>
 <li><a href="#%E8%87%AA%E5%AE%9A%E4%B9%89%E6%A0%A1%E9%AA%8C%E8%A7%84%E5%88%99%E7%9A%84%E7%B1%BB">自定义校验规则的类</a></li>
+</ul>
+</li>
+<li><a href="#redis%E5%AE%9E%E7%8E%B0%E7%99%BB%E9%99%86%E4%B8%BB%E5%8A%A8%E5%A4%B1%E6%95%88">redis实现登陆主动失效</a></li>
+<li><a href="#vue%E5%B8%B8%E7%94%A8%E6%8C%87%E4%BB%A4">vue常用指令</a>
+<ul>
+<li><a href="#ref%E5%92%8Creactive">ref和reactive</a></li>
+<li><a href="#v-for">v-for</a></li>
+<li><a href="#v-bind">v-bind</a></li>
+<li><a href="#v-if-%E5%92%8C-v-show">v-if 和 v-show</a></li>
+<li><a href="#v-on">v-on</a></li>
+<li><a href="#v-model">v-model</a></li>
 </ul>
 </li>
 </ul>
@@ -565,6 +576,74 @@ ThreadLocal 提供了线程本地的实例。它与普通变量的区别在于�
 <figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs typescript"><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">StateValidation</span> <span class="hljs-keyword">implements</span> <span class="hljs-title class_">ConstraintValidator</span>&lt;<span class="hljs-title class_">State</span>, <span class="hljs-title class_">String</span>&gt;&#123;<br><br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-built_in">boolean</span> <span class="hljs-title function_">isValid</span>(<span class="hljs-params"><span class="hljs-built_in">String</span> value, ConstraintValidatorContext context</span>) &#123;<br>        <span class="hljs-keyword">if</span>(value==<span class="hljs-literal">null</span>)<br>            <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;<br>        <span class="hljs-keyword">return</span> value.<span class="hljs-title function_">equals</span>(<span class="hljs-string">&quot;已发布&quot;</span>) || value.<span class="hljs-title function_">equals</span>(<span class="hljs-string">&quot;草稿&quot;</span>);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
 <p>ConstraintValidator接口要传入两个参数，一个是提供校验规则的注解(State)，一个是校验的数据类型(String)，然后重写isValid方法。</p>
 <p>经过以上步骤，自定义的@State注解就可以使用了。</p>
+<h2 id="redis实现登陆主动失效"><a class="markdownIt-Anchor" href="#redis实现登陆主动失效"></a> redis实现登陆主动失效</h2>
+<p>在普通的token颁发和校验中 当用户发现自己账号和密码被暴露了时修改了登录密码后，旧的token仍然可以通过系统校验直至token到达失效时间，这肯定是不安全的，所以系统需要利用redis实现token主动失效机制</p>
+<p>实现这个机制的主要步骤如下：</p>
+<ul>
+<li>在每次用户登录后颁发token的同时往redis数据库中存储一份颁发给用户的token，两个token过期时间要相同</li>
+</ul>
+<figure class="highlight gauss"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs gauss">ValueOperations&lt;<span class="hljs-keyword">String</span>, <span class="hljs-keyword">String</span>&gt; ops = redisTemplate.opsForValue();<br>ops.set(<span class="hljs-built_in">token</span>, <span class="hljs-built_in">token</span>, <span class="hljs-number">30</span>, TimeUnit.MINUTES);<br></code></pre></td></tr></table></figure>
+<ul>
+<li>每次每次用户请求时除了解析token外还需要查询redis中是否有当前token，有则校验通过，没有则校验失败，校验一般在拦截器执行</li>
+</ul>
+<figure class="highlight haxe"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs haxe"><span class="hljs-comment">//从redis中获取token</span><br>ValueOperations&lt;<span class="hljs-keyword">String</span>, <span class="hljs-keyword">String</span>&gt; ops = redisTemplate.opsForValue();<br><span class="hljs-keyword">String</span> redisToken = ops.<span class="hljs-keyword">get</span>(token);<br><span class="hljs-keyword">if</span>(redisToken==<span class="hljs-literal">null</span>)&#123;<br>    <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-type">RuntimeException</span>();<br>&#125;<br></code></pre></td></tr></table></figure>
+<ul>
+<li>每次用户修改密码后删除redis中当前用所携带的token,从而使旧token无法通过token校验</li>
+</ul>
+<figure class="highlight haxe"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs haxe">userService.updatePwd(Md5Util.getMD5String(<span class="hljs-keyword">new</span><span class="hljs-type">Pwd</span>));<br>ValueOperations&lt;<span class="hljs-keyword">String</span>, <span class="hljs-keyword">String</span>&gt; ops = redisTemplate.opsForValue();<br>ops.getOperations().delete(token);<br></code></pre></td></tr></table></figure>
+<h2 id="vue常用指令"><a class="markdownIt-Anchor" href="#vue常用指令"></a> vue常用指令</h2>
+<h3 id="ref和reactive"><a class="markdownIt-Anchor" href="#ref和reactive"></a> ref和reactive</h3>
+<blockquote>
+<p>响应式数据是指当数据发生变化时，相关的视图会自动更新</p>
+</blockquote>
+<p>ref 可以用来定义所有类型的数据，包括基本数据类型（如字符串、数字、布尔值）和引用类型（如对象、数组等）。ref 会返回一个具有 .value 属性的响应式对象，在模板中可以直接访问，而在脚本中需要通过 .value 来访问和更新其值。</p>
+<p>特点:</p>
+<ul>
+<li>基本数据类型必须使用ref进行修饰</li>
+<li>在template引入响应式数据时，直接引入变量名即可</li>
+<li>修改ref修饰的响应数据的值时，必须使用 &quot;变量.value&quot;才能修改</li>
+</ul>
+<p>reactive 只能用来定义引用类型（如对象、数组等），它将整个对象进行深度代理，使其具有响应式特性。通常用于复杂的对象结构或嵌套对象，便于直接在对象属性上进行修改。</p>
+<p>特点：</p>
+<ul>
+<li>reactive 如果重新进行赋值，那么原来的对象就会失去响应式</li>
+<li>reactive 修改值的内容不需要使用 .value</li>
+</ul>
+<blockquote>
+<p>如何选择：ref 更适合基本类型和简单的变量，而 reactive 更适合对象和结构复杂的数据。</p>
+</blockquote>
+<h3 id="v-for"><a class="markdownIt-Anchor" href="#v-for"></a> v-for</h3>
+<p>常用于列表渲染，用于遍历容器的元素或者对象的属性。</p>
+<p>如渲染多行表格<br />
+示例：</p>
+<figure class="highlight handlebars"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs handlebars"><span class="language-xml"><span class="hljs-tag">&lt;<span class="hljs-name">tr</span> <span class="hljs-attr">v-for</span>=<span class="hljs-string">&quot;(article,index) in articleList&quot;</span>&gt;</span></span><br><span class="language-xml">    <span class="hljs-tag">&lt;<span class="hljs-name">td</span>&gt;</span></span><span class="hljs-template-variable">&#123;&#123;<span class="hljs-name">article.title</span>&#125;&#125;</span><span class="language-xml"><span class="hljs-tag">&lt;/<span class="hljs-name">td</span>&gt;</span></span><br><span class="language-xml">    <span class="hljs-tag">&lt;<span class="hljs-name">td</span>&gt;</span></span><span class="hljs-template-variable">&#123;&#123;<span class="hljs-name">article.category</span>&#125;&#125;</span><span class="language-xml"><span class="hljs-tag">&lt;/<span class="hljs-name">td</span>&gt;</span></span><br><span class="language-xml">    <span class="hljs-tag">&lt;<span class="hljs-name">td</span>&gt;</span></span><span class="hljs-template-variable">&#123;&#123;<span class="hljs-name">article.time</span>&#125;&#125;</span><span class="language-xml"><span class="hljs-tag">&lt;/<span class="hljs-name">td</span>&gt;</span></span><br><span class="language-xml">    <span class="hljs-tag">&lt;<span class="hljs-name">td</span>&gt;</span></span><span class="hljs-template-variable">&#123;&#123;<span class="hljs-name">article.state</span>&#125;&#125;</span><span class="language-xml"><span class="hljs-tag">&lt;/<span class="hljs-name">td</span>&gt;</span></span><br><span class="language-xml">    <span class="hljs-tag">&lt;<span class="hljs-name">td</span>&gt;</span></span><br><span class="language-xml">        <span class="hljs-tag">&lt;<span class="hljs-name">button</span>&gt;</span>编辑<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span></span><br><span class="language-xml">        <span class="hljs-tag">&lt;<span class="hljs-name">button</span>&gt;</span>删除<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span></span><br><span class="language-xml">    <span class="hljs-tag">&lt;/<span class="hljs-name">td</span>&gt;</span></span><br><span class="language-xml"><span class="hljs-tag">&lt;/<span class="hljs-name">tr</span>&gt;</span></span><br></code></pre></td></tr></table></figure>
+<p>其中，index可以省略，如<code>v-for=&quot;article in articleList&quot;</code></p>
+<h3 id="v-bind"><a class="markdownIt-Anchor" href="#v-bind"></a> v-bind</h3>
+<p>动态为HTML标签属性绑定属性，即让标签绑定一个变量</p>
+<p>如为herf标签绑定url变量：<br />
+示例</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">a</span> <span class="hljs-attr">v-bind:href</span>=<span class="hljs-string">&quot;url&quot;</span>&gt;</span>我的博客<span class="hljs-tag">&lt;/<span class="hljs-name">a</span>&gt;</span><br><br>简写： <span class="hljs-tag">&lt;<span class="hljs-name">a</span> <span class="hljs-attr">:href</span>=<span class="hljs-string">&quot;url&quot;</span>&gt;</span>我的博客<span class="hljs-tag">&lt;/<span class="hljs-name">a</span>&gt;</span> <br></code></pre></td></tr></table></figure>
+<p>其中，url可以是博客的网页链接</p>
+<h3 id="v-if-和-v-show"><a class="markdownIt-Anchor" href="#v-if-和-v-show"></a> v-if 和 v-show</h3>
+<p>这两个指令都用来控制元素的显示与隐藏</p>
+<p>v-if 示例：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs xml">手链价格为: <span class="hljs-tag">&lt;<span class="hljs-name">span</span> <span class="hljs-attr">v-if</span>=<span class="hljs-string">&quot;customer.level&gt;=0 &amp;&amp; customer.level&lt;=1&quot;</span>&gt;</span>9.9<span class="hljs-tag">&lt;/<span class="hljs-name">span</span>&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">span</span> <span class="hljs-attr">v-else-if</span>=<span class="hljs-string">&quot;customer.level&gt;1 &amp;&amp; customer.level&lt;=2&quot;</span>&gt;</span>8.8<span class="hljs-tag">&lt;/<span class="hljs-name">span</span>&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">span</span> <span class="hljs-attr">v-else</span>&gt;</span>7.7<span class="hljs-tag">&lt;/<span class="hljs-name">span</span>&gt;</span><br></code></pre></td></tr></table></figure>
+<p>v-show 示例：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs xml">手链价格为: <span class="hljs-tag">&lt;<span class="hljs-name">span</span> <span class="hljs-attr">v-show</span>=<span class="hljs-string">&quot;customer.level&gt;=0 &amp;&amp; customer.level&lt;=1&quot;</span>&gt;</span>9.9<span class="hljs-tag">&lt;/<span class="hljs-name">span</span>&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">span</span> <span class="hljs-attr">v-show</span>=<span class="hljs-string">&quot;customer.level&gt;1 &amp;&amp; customer.level&lt;=2&quot;</span>&gt;</span>8.8<span class="hljs-tag">&lt;/<span class="hljs-name">span</span>&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">span</span> <span class="hljs-attr">v-show</span>=<span class="hljs-string">&quot;customer.level&gt;2&quot;</span>&gt;</span>7.7<span class="hljs-tag">&lt;/<span class="hljs-name">span</span>&gt;</span><br></code></pre></td></tr></table></figure>
+<p><strong>区别</strong></p>
+<ul>
+<li>v-if 基于条件来创建或移除元素</li>
+<li>v-show 基于css的display属性的切换，控制元素的显示和隐藏</li>
+</ul>
+<h3 id="v-on"><a class="markdownIt-Anchor" href="#v-on"></a> v-on</h3>
+<p>为html元素绑定事件</p>
+<p>示例：</p>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-tag">&lt;<span class="hljs-name">button</span> <span class="hljs-attr">v-on:click</span>=<span class="hljs-string">&quot;oneClick&quot;</span>&gt;</span>点我有惊喜<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span> <span class="hljs-symbol">&amp;nbsp;</span><br><br>简写： <span class="hljs-tag">&lt;<span class="hljs-name">button</span> @<span class="hljs-attr">click</span>=<span class="hljs-string">&quot;twoClick&quot;</span>&gt;</span>再点更惊喜<span class="hljs-tag">&lt;/<span class="hljs-name">button</span>&gt;</span><br></code></pre></td></tr></table></figure>
+<h3 id="v-model"><a class="markdownIt-Anchor" href="#v-model"></a> v-model</h3>
+<p>在表单元素上创建双向数据绑定</p>
+<p>如将表单中输入框和代码中的数据变量绑定</p>
+<figure class="highlight lua"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs lua">文章分类: &lt;<span class="hljs-built_in">input</span> <span class="hljs-built_in">type</span>=<span class="hljs-string">&quot;text&quot;</span> v-model=<span class="hljs-string">&quot;searchConditions.category&quot;</span> /&gt;<br><br>发布状态: &lt;<span class="hljs-built_in">input</span> <span class="hljs-built_in">type</span>=<span class="hljs-string">&quot;text&quot;</span> v-model=<span class="hljs-string">&quot;searchConditions.state&quot;</span> /&gt;<br></code></pre></td></tr></table></figure>
+<p>这样，当表单中填写的值改动，代码中的变量值也会改变，反之亦然</p>
 
                 
               </div>
