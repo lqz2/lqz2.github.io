@@ -48,6 +48,7 @@ tags:
         - [v-if 和 v-show](#v-if-和-v-show)
         - [v-on](#v-on)
         - [v-model](#v-model)
+    - [let和var的区别](#let和var的区别)
 
 <!-- /TOC -->
 
@@ -693,3 +694,45 @@ v-show 示例：
 发布状态: <input type="text" v-model="searchConditions.state" />
 ```
 这样，当表单中填写的值改动，代码中的变量值也会改变，反之亦然
+
+## let和var的区别
+
+- 作用域（Scope）：
+    - var 声明的变量具有函数作用域，即它在函数内部声明时，作用域限制在该函数内；如果在代码块（如if、for）中声明，它的作用域仍然是该代码块所在的函数或全局作用域。
+    - let 声明的变量具有块作用域，即它的作用范围仅限于声明它的代码块内。因此在if、for等代码块中使用let，变量只在该代码块内有效。
+```
+function test() {
+    if (true) {
+        var a = 1; // 函数作用域
+        let b = 2; // 块作用域
+    }
+    console.log(a); // 1
+    console.log(b); // ReferenceError: b is not defined
+}
+```
+
+- 变量提升（Hoisting）：
+
+    - var 声明的变量会被提升到当前作用域的顶部，在声明之前可以访问到，但值为undefined。
+    - let 声明的变量也会提升到作用域顶部，但存在暂时性死区（Temporal Dead Zone），即在变量声明之前访问会**报错**。
+```
+console.log(a); // undefined
+var a = 1;
+
+console.log(b); // ReferenceError: Cannot access 'b' before initialization
+let b = 2;
+```
+
+- 重复声明：
+    - var 允许在同一作用域内重复声明相同变量名，而let不允许重复声明相同变量名。
+```
+var a = 1;
+var a = 2; // 不会报错
+
+let b = 1;
+let b = 2; // SyntaxError: Identifier 'b' has already been declared
+```
+
+- 全局对象属性：
+
+    - 在全局作用域中用var声明的变量会成为全局对象（如浏览器中的window对象）的属性，而let声明的全局变量不会添加到全局对象上。
