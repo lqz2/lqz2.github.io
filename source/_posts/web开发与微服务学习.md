@@ -40,6 +40,14 @@ tags:
     - [自定义参数校验](#自定义参数校验)
         - [自定义State注解](#自定义state注解)
         - [自定义校验规则的类](#自定义校验规则的类)
+    - [redis实现登陆主动失效](#redis实现登陆主动失效)
+    - [vue常用指令](#vue常用指令)
+        - [ref和reactive](#ref和reactive)
+        - [v-for](#v-for)
+        - [v-bind](#v-bind)
+        - [v-if 和 v-show](#v-if-和-v-show)
+        - [v-on](#v-on)
+        - [v-model](#v-model)
 
 <!-- /TOC -->
 
@@ -561,9 +569,127 @@ ConstraintValidator接口要传入两个参数，一个是提供校验规则的�
 
 经过以上步骤，自定义的@State注解就可以使用了。
 
+## redis实现登陆主动失效
 
+在普通的token颁发和校验中 当用户发现自己账号和密码被暴露了时修改了登录密码后，旧的token仍然可以通过系统校验直至token到达失效时间，这肯定是不安全的，所以系统需要利用redis实现token主动失效机制
 
+实现这个机制的主要步骤如下：
 
+- 在每次用户登录后颁发token的同时往redis数据库中存储一份颁发给用户的token，两个token过期时间要相同
+```
+    ValueOperations<String, String> ops = redisTemplate.opsForValue();
+    ops.set(token, token, 30, TimeUnit.MINUTES);
+```
+- 每次每次用户请求时除了解析token外还需要查询redis中是否有当前token，有则校验通过，没有则校验失败，校验一般在拦截器执行
+```
+    //从redis中获取token
+    ValueOperations<String, String> ops = redisTemplate.opsForValue();
+    String redisToken = ops.get(token);
+    if(redisToken==null){
+        throw new RuntimeException();
+    }
+```
+- 每次用户修改密码后删除redis中当前用所携带的token,从而使旧token无法通过token校验
+```
+    userService.updatePwd(Md5Util.getMD5String(newPwd));
+    ValueOperations<String, String> ops = redisTemplate.opsForValue();
+    ops.getOperations().delete(token);
+```
 
+## vue常用指令
+### ref和reactive
 
+>响应式数据是指当数据发生变化时，相关的视图会自动更新
 
+ref 可以用来定义所有类型的数据，包括基本数据类型（如字符串、数字、布尔值）和引用类型（如对象、数组等）。ref 会返回一个具有 .value 属性的响应式对象，在模板中可以直接访问，而在脚本中需要通过 .value 来访问和更新其值。
+
+特点:
+- 基本数据类型必须使用ref进行修饰
+- 在template引入响应式数据时，直接引入变量名即可
+- 修改ref修饰的响应数据的值时，必须使用 "变量.value"才能修改
+
+reactive 只能用来定义引用类型（如对象、数组等），它将整个对象进行深度代理，使其具有响应式特性。通常用于复杂的对象结构或嵌套对象，便于直接在对象属性上进行修改。
+
+特点：
+- reactive 如果重新进行赋值，那么原来的对象就会失去响应式
+- reactive 修改值的内容不需要使用 .value
+
+>如何选择：ref 更适合基本类型和简单的变量，而 reactive 更适合对象和结构复杂的数据。
+### v-for
+
+常用于列表渲染，用于遍历容器的元素或者对象的属性。
+
+如渲染多行表格
+示例：
+```
+<tr v-for="(article,index) in articleList">
+    <td>{{article.title}}</td>
+    <td>{{article.category}}</td>
+    <td>{{article.time}}</td>
+    <td>{{article.state}}</td>
+    <td>
+        <button>编辑</button>
+        <button>删除</button>
+    </td>
+</tr>
+```
+其中，index可以省略，如`v-for="article in articleList"`
+
+### v-bind
+
+动态为HTML标签属性绑定属性，即让标签绑定一个变量
+
+如为herf标签绑定url变量：
+示例
+```
+<a v-bind:href="url">我的博客</a>
+
+简写： <a :href="url">我的博客</a> 
+```
+其中，url可以是博客的网页链接
+
+### v-if 和 v-show
+
+这两个指令都用来控制元素的显示与隐藏
+
+v-if 示例：
+```
+手链价格为: <span v-if="customer.level>=0 && customer.level<=1">9.9</span>
+<span v-else-if="customer.level>1 && customer.level<=2">8.8</span>
+<span v-else>7.7</span>
+```
+
+v-show 示例：
+```
+手链价格为: <span v-show="customer.level>=0 && customer.level<=1">9.9</span>
+<span v-show="customer.level>1 && customer.level<=2">8.8</span>
+<span v-show="customer.level>2">7.7</span>
+```
+
+**区别**
+
+- v-if 基于条件来创建或移除元素
+- v-show 基于css的display属性的切换，控制元素的显示和隐藏
+
+### v-on
+
+为html元素绑定事件
+
+示例：
+```
+<button v-on:click="oneClick">点我有惊喜</button> &nbsp;
+
+简写： <button @click="twoClick">再点更惊喜</button>
+```
+
+### v-model
+
+在表单元素上创建双向数据绑定
+
+如将表单中输入框和代码中的数据变量绑定
+```
+文章分类: <input type="text" v-model="searchConditions.category" />
+
+发布状态: <input type="text" v-model="searchConditions.state" />
+```
+这样，当表单中填写的值改动，代码中的变量值也会改变，反之亦然
