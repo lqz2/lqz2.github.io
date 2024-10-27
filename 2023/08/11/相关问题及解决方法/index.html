@@ -19,15 +19,15 @@
   <meta name="author" content="zql">
   <meta name="keywords" content="">
   
-    <meta name="description" content="遇到的一些问题和解决方法（持续更新！）🌈🌈🌈  第1周🌈 第2周🌈 第3周🌈 第4周🌈 第5周🌈 第6周🌈 第7周🌈      遇到的一些问题和解决方法（持续更新！）🌈🌈🌈  第1周🌈  windows环境下安装pycocotools报错：ERROR: Could not build wheels for pycocotools, which is required">
+    <meta name="description" content="遇到的一些问题和解决方法（持续更新！）🌈🌈🌈  第1周🌈 第2周🌈 第3周🌈 第4周🌈 第5周🌈 第6周🌈 第7周🌈 持续更新🌈      遇到的一些问题和解决方法（持续更新！）🌈🌈🌈  第1周🌈  windows环境下安装pycocotools报错：ERROR: Could not build wheels for pycocotools, which is r">
 <meta property="og:type" content="article">
 <meta property="og:title" content="相关问题及解决方法">
 <meta property="og:url" content="http://lqz2.github.io/2023/08/11/%E7%9B%B8%E5%85%B3%E9%97%AE%E9%A2%98%E5%8F%8A%E8%A7%A3%E5%86%B3%E6%96%B9%E6%B3%95/index.html">
 <meta property="og:site_name" content="my blogs">
-<meta property="og:description" content="遇到的一些问题和解决方法（持续更新！）🌈🌈🌈  第1周🌈 第2周🌈 第3周🌈 第4周🌈 第5周🌈 第6周🌈 第7周🌈      遇到的一些问题和解决方法（持续更新！）🌈🌈🌈  第1周🌈  windows环境下安装pycocotools报错：ERROR: Could not build wheels for pycocotools, which is required">
+<meta property="og:description" content="遇到的一些问题和解决方法（持续更新！）🌈🌈🌈  第1周🌈 第2周🌈 第3周🌈 第4周🌈 第5周🌈 第6周🌈 第7周🌈 持续更新🌈      遇到的一些问题和解决方法（持续更新！）🌈🌈🌈  第1周🌈  windows环境下安装pycocotools报错：ERROR: Could not build wheels for pycocotools, which is r">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2023-08-11T09:58:23.000Z">
-<meta property="article:modified_time" content="2024-01-28T08:59:35.376Z">
+<meta property="article:modified_time" content="2024-10-27T02:06:28.528Z">
 <meta property="article:author" content="zql">
 <meta name="twitter:card" content="summary_large_image">
   
@@ -222,7 +222,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          2.3k 字
+          2.5k 字
         
       </span>
     
@@ -233,7 +233,7 @@
         
         
         
-          20 分钟
+          21 分钟
         
       </span>
     
@@ -286,6 +286,7 @@
 <li><a href="#%E7%AC%AC5%E5%91%A8rainbow">第5周🌈</a></li>
 <li><a href="#%E7%AC%AC6%E5%91%A8rainbow">第6周🌈</a></li>
 <li><a href="#%E7%AC%AC7%E5%91%A8rainbow">第7周🌈</a></li>
+<li><a href="#%E6%8C%81%E7%BB%AD%E6%9B%B4%E6%96%B0rainbow">持续更新🌈</a></li>
 </ul>
 </li>
 </ul>
@@ -357,6 +358,10 @@ pip install --user wheel==0.38.0</li>
 <ol>
 <li>cannot import name ‘greycomatrix’ from ‘skimage.feature’，解决方法，由于skimage版本问题，旧版本为greycomatrix，新版本为graycomatrix，更正即可</li>
 <li>fft后频域融合的结果不理想，解决方法：仔细检查后发现幅值和相位的处理有问题，一些损失函数如relu，sigmoid会对结果有很大影响，需要重新分析，分析时要考虑值域以及相应的几何意义。</li>
+</ol>
+<h3 id="持续更新"><a class="markdownIt-Anchor" href="#持续更新"></a> 持续更新🌈</h3>
+<ol>
+<li>训练网络时报错，RuntimeError: one of the variables needed for gradient computation has been modified by an inplace operation: [torch.cuda.FloatTensor [4, 32, 320, 320]], which is output 0 of ReluBackward0, is at version 1; expected version 0 instead. Hint: enable anomaly detection to find the operation that failed to compute its gradient, with torch.autograd.set_detect_anomaly(True). 原因：利用a变量进行一次网络运算后，使用修改后的a变量又进行一次网络运算，而网络在后向传播时，发现第一次网络运算的梯度溯源失败，a变量被修改了。解决方法，在出错的地方将x换成x.clone()，例如<code>x = self.dhsa(x.clone())</code>即可</li>
 </ol>
 
                 
