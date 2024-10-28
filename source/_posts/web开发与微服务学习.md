@@ -41,6 +41,10 @@ tags:
         - [自定义State注解](#自定义state注解)
         - [自定义校验规则的类](#自定义校验规则的类)
     - [redis实现登陆主动失效](#redis实现登陆主动失效)
+    - [JavaScript的导入导出](#javascript的导入导出)
+        - [非默认导出](#非默认导出)
+        - [默认导出](#默认导出)
+    - [vue基本概念](#vue基本概念)
     - [vue常用指令](#vue常用指令)
         - [ref和reactive](#ref和reactive)
         - [v-for](#v-for)
@@ -49,6 +53,17 @@ tags:
         - [v-on](#v-on)
         - [v-model](#v-model)
     - [let和var的区别](#let和var的区别)
+    - [vue生命周期](#vue生命周期)
+    - [axios的使用](#axios的使用)
+        - [基本用法](#基本用法)
+        - [axios响应拦截器](#axios响应拦截器)
+        - [axios请求拦截器](#axios请求拦截器)
+    - [浏览器跨域问题](#浏览器跨域问题)
+        - [问题描述](#问题描述)
+        - [解决方法](#解决方法)
+    - [vue的路由](#vue的路由)
+        - [vue中路由的使用步骤](#vue中路由的使用步骤)
+        - [路由主动切换组件](#路由主动切换组件)
 
 <!-- /TOC -->
 
@@ -597,6 +612,48 @@ ConstraintValidator接口要传入两个参数，一个是提供校验规则的�
     ops.getOperations().delete(token);
 ```
 
+## JavaScript的导入导出
+
+### 非默认导出
+可以导出多个变量、函数、类等，使用`export`关键字
+
+示例：
+```
+##不带别名
+export {test1, test2}; ##只有一个函数，可以不用{}
+import {test1, test2} from './test.js'; 
+##带别名
+export {test1 as t1, test2 as t2};
+import {t1, t2} from './test.js'; 
+```
+
+### 默认导出
+每个模块只能有一个默认导出，使用`export default`关键字
+
+示例：
+```
+export default {test1, test2};
+import testMethods from './test.js'; ##不需要{}
+testMethods.test1();
+testMethods.test2();
+```
+>导入非默认导出的模块时，需要使用`{}`，导入默认导出的模块时，不需要使用`{}`
+
+
+## vue基本概念
+
+- 一般vue项目目录中，index.html是默认首页，在该文件中引入main.js文件，main.js是**vue项目的入口文件**
+
+- npm下载的包在node_modules文件夹中，一般不需要手动引入，直接在main.js中引入即可
+
+- main.js中引入App.vue文件，App.vue是根组件，其他组件都是在根组件中引入的
+
+- App.vue文件中包含三个部分：template、script、style，分别对应html、js、css
+    - template: 模板，定义页面结构，生成html
+    - script: 页面逻辑，处理数据和事件
+    - style: 样式，定义页面样式
+
+
 ## vue常用指令
 ### ref和reactive
 
@@ -736,3 +793,229 @@ let b = 2; // SyntaxError: Identifier 'b' has already been declared
 - 全局对象属性：
 
     - 在全局作用域中用var声明的变量会成为全局对象（如浏览器中的window对象）的属性，而let声明的全局变量不会添加到全局对象上。
+
+## vue生命周期
+
+vue 生命周期一共包含八个阶段，每个阶段会自动执行对应的钩子函数，这些钩子函数可以用来执行一些初始化操作、数据请求、事件监听等操作，具体如下：
+
+| 钩子函数 | 阶段 |
+| :---: | :---: |
+|beforeCreate|创建前|
+|created|创建后|
+|beforeMount|挂载前|
+|mounted|挂载后|
+|beforeUpdate|数据更新前|
+|updated|数据更新后|
+|beforeUnmount|组件销毁前|
+|unmounted|组件销毁后|
+
+## axios的使用
+### 基本用法
+axios 是一个基于 promise 的 异步 ajax 请求库，前端最流行的 ajax 请求库。简单的讲就是可以发送get、post请求，负责与后端交互。
+
+axios有2种基本使用方式：
+
+1. axios({method:'方法'，url: '', baseURL: ''，data:{name: 'cc', sex: 'man'} })
+
+示例：
+```
+axios({
+    method: 'post',
+    url: '/user',
+    baseURL: 'http://localhost:8080',
+    data: {
+        name: 'cc',
+        sex: 'man'
+    }
+}).then(res => {
+    console.log(res)
+}).catch(err => {
+    console.log(err)
+})
+```
+2. 直接调用axios.get()、axios.post()等方法
+
+示例：
+```
+axios.post('/login',{name:'cc', sex:'man'}).then(res => {
+    console.log(res)
+}).catch(err => {
+    console.log(err)
+})
+```
+### axios响应拦截器
+
+在响应被 then 或 catch 处理前拦截它们，可以对响应数据进行处理，如统一处理错误信息、统一处理loading等。
+
+示例：
+```
+import axios from "axios";
+const baseURL = 'http://localhost:8080'; //后端接口地址
+const instance = axios.create({baseURL}); // 定义请求实例
+// 添加响应拦截器
+instance.interceptors.response.use(
+    response => {//http状态码为2xx时触发
+        return response.data; 
+    },
+    error => {//http状态码不为2xx时触发
+        alert('请求错误');
+        return Promise.reject(error);//异步的状态转为失败状态，抛出错误
+    }
+);
+export default instance;
+```
+axios的拦截器是基于Promise的，use()方法接收两个参数，第一个是成功的回调函数，第二个是失败的回调函数。
+由于该函数本身就是异步的，所以不需要async和await关键字，js文件调用时也不需要加，只需要在vue文件中调用时加上async和await关键字即可。
+
+### axios请求拦截器
+
+在请求被 then 或 catch 处理前拦截它们，可以对请求数据进行处理，如统一添加token、统一添加loading等。
+
+用法与响应拦截器类似，下面是一个请求拦截器添加token的示例：
+```
+instance.interceptors.request.use(
+  (config) => {
+    let tokenStore = useTokenStore();
+    if (tokenStore.token) {
+      config.headers.Authorization = tokenStore.token;
+    }
+    return config;
+  },
+  (error) => {
+    ElMessage({
+      type: "error",
+      message: "请求错误！",
+      plain: true,
+    });
+    return Promise.reject(error);
+  }
+);
+```
+
+## 浏览器跨域问题
+
+### 问题描述
+由于浏览器的同源策略，不同源（不同协议、不同域名、不同端口）发送ajax请求时会被浏览器拦截，这就是跨域问题。
+
+比如，前端页面的地址是 `http://localhost:5173`，后端接口的地址是 `http://localhost:8080`，当浏览器启动时，会先发送请求到前端地址，得到注册页面
+当用户点击注册时，会发送请求到后端地址，这时浏览器会拦截这个请求，因为这是跨域请求。
+
+### 解决方法
+一般是用代理解决跨域问题，即在前端项目中配置代理，将请求转发到后端接口地址。步骤如下：
+
+1. 在vite.config.js中配置代理
+```
+server: {
+    proxy: {
+      "/api": {//获取路径中包含/api的请求，将其代理到http://localhost:8080
+        target: "http://localhost:8080",
+        changeOrigin: true,
+        rewrite: (path) => path.replace(/^\/api/, ""), //重写路径，将路径中的/api替换为空
+      },
+    },
+  }
+```
+2. 将axios的baseURL设置为`/api`，然后定义axios实例
+```
+const baseURL = "/api"; //前端代理地址
+const instance = axios.create({ baseURL });
+```
+
+## vue的路由
+
+路由的含义是根据不同的url地址，返回不同的内容给用户，他的实现原理是监听url地址的变化，然后根据url地址的变化返回不同的内容给用户
+他的优点是当用户在应用中浏览不同页面时，URL 会随之更新，但页面不需要从服务器重新加载，这样就可以实现单页应用
+
+### vue中路由的使用步骤
+
+- 安装vue-router
+- 在src/router/index.js中配置路由
+
+示例:
+```
+import { createRouter, createWebHistory } from "vue-router";
+
+//导入组件
+import LoginVue from "@/views/Login.vue";
+import LayoutVue from "@/views/Layout.vue";
+import ArticleCategoryVue from "@/views/article/ArticleCategory.vue";
+import ArticleManageVue from "@/views/article/ArticleManage.vue";
+import UserAvatarVue from "@/views/user/UserAvatar.vue";
+import UserInfoVue from "@/views/user/UserInfo.vue";
+import UserResetPasswordVue from "@/views/user/UserResetPassword.vue";
+
+//定义路由关系
+const routes = [
+  {
+    path: "/login",
+    component: LoginVue,
+  },
+  {
+    path: "/",
+    component: LayoutVue,
+    redirect: "/article/category",
+    //子路由，访问子路由时，父路由的内容会先被渲染，然后子路由的内容会被渲染到父路由的内容上
+    //子路由的path不需要加/，会自动拼接到父路由的path后面
+    children: [
+      {
+        path: "article/category",
+        component: ArticleCategoryVue,
+      },
+      {
+        path: "article/manage",
+        component: ArticleManageVue,
+      },
+      {
+        path: "user/avatar",
+        component: UserAvatarVue,
+      },
+      {
+        path: "user/info",
+        component: UserInfoVue,
+      },
+      {
+        path: "user/resetpwd",
+        component: UserResetPasswordVue,
+      },
+    ],
+  },
+];
+
+//创建路由
+const router = createRouter({ history: createWebHistory(), routes: routes });
+export default router;
+```
+
+- 在main.js中引入路由
+```
+import router from "@/router";
+app.use(router);
+```
+
+- 在App.vue中使用路由
+```
+<template>
+  <router-view></router-view>
+</template>
+```
+
+### 路由主动切换组件
+
+实际应用中，vue文件和js文件中路由主动跳转方式是不同的
+
+- vue文件中
+
+示例：
+```
+import { useRouter } from "vue-router";
+const router = useRouter();
+router.push("/login");
+```
+
+- js文件中，没有setup，说明js不是vue组件，因此不能用import {useRouter} from 'vue-router'来获取router
+
+示例：
+```
+import router from "@/router";
+router.push("/login");
+```
