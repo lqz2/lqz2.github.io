@@ -64,6 +64,9 @@ tags:
     - [vue的路由](#vue的路由)
         - [vue中路由的使用步骤](#vue中路由的使用步骤)
         - [路由主动切换组件](#路由主动切换组件)
+    - [vue中使用pinia及其持久化](#vue中使用pinia及其持久化)
+        - [pinia使用步骤](#pinia使用步骤)
+        - [pinia持久化](#pinia持久化)
 
 <!-- /TOC -->
 
@@ -1018,4 +1021,78 @@ router.push("/login");
 ```
 import router from "@/router";
 router.push("/login");
+```
+
+## vue中使用pinia及其持久化
+
+pinia是vue的专属状态管理库，它允许跨组件或页面共享状态，比如在登陆页面登陆成功后，可以将用户信息存储在pinia中，然后其他页面从pinia中获取用户信息。
+
+### pinia使用步骤
+
+- 在main.js中引入pinia
+
+```
+import { createPinia } from "pinia";
+const pinia = createPinia();
+app.use(pinia);
+```
+
+- 在src/stores/token.js中定义pinia的store
+
+```
+//定义关于counter的store
+import {defineStore} from 'pinia'
+const useCounter = defineStore("counter",{
+    state:() => ({
+        count:66,
+    }),
+    
+    getters: {
+
+  	},
+
+  	actions: {
+
+  	}
+})
+
+//导出这个useCounter模块
+export default useCounter
+```
+defineStore 是需要传参数的，其中第一个参数是id，就是一个唯一的值，简单点说就可以理解成是一个命名空间。
+第二个参数就是一个对象，里面有三个模块需要处理，第一个是 state，第二个是 getters，第三个是 actions。
+
+
+### pinia持久化
+
+>pinia默认是内存存储，当刷新浏览器时会丢失数据，所以需要利用persist插件实现持久化
+
+- 引入pinia-persistedstate-plugin插件
+```
+import { createPersistedState } from "pinia-persistedstate-plugin"; 
+pinia.use(createPersistedState());
+```
+
+- 设置persisted为true
+```
+import { defineStore } from "pinia";
+//defineStore函数接受二个参数，第一个参数是store的名字，第二个参数是一个函数，定义了关于token的一些操作
+export const useTokenStore = defineStore("token", {
+  state: () => ({
+    //state，一般定义要存储的数据，state的数据本身就是响应式的
+    token: "",
+  }),
+  actions: {
+    //actions，定义一些操作
+    setToken(newToken) {
+      this.token = newToken;
+    },
+    removeToken() {
+      this.token = "";
+    },
+  },
+  //persist为true，开启持久化
+  persist: true,
+});
+
 ```
