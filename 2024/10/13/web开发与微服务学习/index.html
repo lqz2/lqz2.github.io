@@ -27,7 +27,7 @@
 <meta property="og:description" content="web开发与微服务学习   web开发与微服务学习  springboot的依赖注入  构造函数注入 setter方法注入 字段注入   springboot3自动配置原理  主要步骤 使用示例   自定义starter JWT令牌 ThreadLocal  特点 使用   拦截器  作用 拦截器与过滤器的区别 实现 拦截器的执行顺序   Controller中的方法接收参数注解  @Reque">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2024-10-13T07:03:53.000Z">
-<meta property="article:modified_time" content="2024-10-28T13:03:28.937Z">
+<meta property="article:modified_time" content="2024-10-29T02:54:14.464Z">
 <meta property="article:author" content="zql">
 <meta name="twitter:card" content="summary_large_image">
   
@@ -222,7 +222,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          7.8k 字
+          8.2k 字
         
       </span>
     
@@ -233,7 +233,7 @@
         
         
         
-          66 分钟
+          69 分钟
         
       </span>
     
@@ -369,6 +369,12 @@
 <ul>
 <li><a href="#vue%E4%B8%AD%E8%B7%AF%E7%94%B1%E7%9A%84%E4%BD%BF%E7%94%A8%E6%AD%A5%E9%AA%A4">vue中路由的使用步骤</a></li>
 <li><a href="#%E8%B7%AF%E7%94%B1%E4%B8%BB%E5%8A%A8%E5%88%87%E6%8D%A2%E7%BB%84%E4%BB%B6">路由主动切换组件</a></li>
+</ul>
+</li>
+<li><a href="#vue%E4%B8%AD%E4%BD%BF%E7%94%A8pinia%E5%8F%8A%E5%85%B6%E6%8C%81%E4%B9%85%E5%8C%96">vue中使用pinia及其持久化</a>
+<ul>
+<li><a href="#pinia%E4%BD%BF%E7%94%A8%E6%AD%A5%E9%AA%A4">pinia使用步骤</a></li>
+<li><a href="#pinia%E6%8C%81%E4%B9%85%E5%8C%96">pinia持久化</a></li>
 </ul>
 </li>
 </ul>
@@ -853,6 +859,32 @@ ThreadLocal 提供了线程本地的实例。它与普通变量的区别在于�
 </ul>
 <p>示例：</p>
 <figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs gradle"><span class="hljs-keyword">import</span> router <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;@/router&quot;</span>;<br>router.<span class="hljs-keyword">push</span>(<span class="hljs-string">&quot;/login&quot;</span>);<br></code></pre></td></tr></table></figure>
+<h2 id="vue中使用pinia及其持久化"><a class="markdownIt-Anchor" href="#vue中使用pinia及其持久化"></a> vue中使用pinia及其持久化</h2>
+<p>pinia是vue的专属状态管理库，它允许跨组件或页面共享状态，比如在登陆页面登陆成功后，可以将用户信息存储在pinia中，然后其他页面从pinia中获取用户信息。</p>
+<h3 id="pinia使用步骤"><a class="markdownIt-Anchor" href="#pinia使用步骤"></a> pinia使用步骤</h3>
+<ul>
+<li>在main.js中引入pinia</li>
+</ul>
+<figure class="highlight abnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs abnf">import &#123; createPinia &#125; from <span class="hljs-string">&quot;pinia&quot;</span><span class="hljs-comment">;</span><br>const pinia <span class="hljs-operator">=</span> createPinia()<span class="hljs-comment">;</span><br>app.use(pinia)<span class="hljs-comment">;</span><br></code></pre></td></tr></table></figure>
+<ul>
+<li>在src/stores/token.js中定义pinia的store</li>
+</ul>
+<figure class="highlight javascript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><code class="hljs javascript"><span class="hljs-comment">//定义关于counter的store</span><br><span class="hljs-keyword">import</span> &#123;defineStore&#125; <span class="hljs-keyword">from</span> <span class="hljs-string">&#x27;pinia&#x27;</span><br><span class="hljs-keyword">const</span> useCounter = <span class="hljs-title function_">defineStore</span>(<span class="hljs-string">&quot;counter&quot;</span>,&#123;<br>    <span class="hljs-attr">state</span>:<span class="hljs-function">() =&gt;</span> (&#123;<br>        <span class="hljs-attr">count</span>:<span class="hljs-number">66</span>,<br>    &#125;),<br>    <br>    <span class="hljs-attr">getters</span>: &#123;<br><br>  	&#125;,<br><br>  	<span class="hljs-attr">actions</span>: &#123;<br><br>  	&#125;<br>&#125;)<br><br><span class="hljs-comment">//导出这个useCounter模块</span><br><span class="hljs-keyword">export</span> <span class="hljs-keyword">default</span> useCounter<br></code></pre></td></tr></table></figure>
+<p>defineStore 是需要传参数的，其中第一个参数是id，就是一个唯一的值，简单点说就可以理解成是一个命名空间。<br />
+第二个参数就是一个对象，里面有三个模块需要处理，第一个是 state，第二个是 getters，第三个是 actions。</p>
+<h3 id="pinia持久化"><a class="markdownIt-Anchor" href="#pinia持久化"></a> pinia持久化</h3>
+<blockquote>
+<p>pinia默认是内存存储，当刷新浏览器时会丢失数据，所以需要利用persist插件实现持久化</p>
+</blockquote>
+<ul>
+<li>引入pinia-persistedstate-plugin插件</li>
+</ul>
+<figure class="highlight abnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs abnf">import &#123; createPersistedState &#125; from <span class="hljs-string">&quot;pinia-persistedstate-plugin&quot;</span><span class="hljs-comment">; </span><br>pinia.use(createPersistedState())<span class="hljs-comment">;</span><br></code></pre></td></tr></table></figure>
+<ul>
+<li>设置persisted为true</li>
+</ul>
+<figure class="highlight pf"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><code class="hljs pf">import &#123; defineStore &#125; <span class="hljs-keyword">from</span> <span class="hljs-string">&quot;pinia&quot;</span>;<br>//defineStore函数接受二个参数，第一个参数是store的名字，第二个参数是一个函数，定义了关于token的一些操作<br>export <span class="hljs-keyword">const</span> useTokenStore = defineStore(<span class="hljs-string">&quot;token&quot;</span>, &#123;<br>  <span class="hljs-keyword">state</span>: () =&gt; (&#123;<br>    //<span class="hljs-keyword">state</span>，一般定义要存储的数据，<span class="hljs-keyword">state</span>的数据本身就是响应式的<br>    token: <span class="hljs-string">&quot;&quot;</span>,<br>  &#125;),<br>  actions: &#123;<br>    //actions，定义一些操作<br>    <span class="hljs-built_in">set</span>Token(newToken) &#123;<br>      this.token = newToken;<br>    &#125;,<br>    removeToken() &#123;<br>      this.token = <span class="hljs-string">&quot;&quot;</span>;<br>    &#125;,<br>  &#125;,<br>  //<span class="hljs-keyword">persist</span>为true，开启持久化<br>  <span class="hljs-keyword">persist</span>: true,<br>&#125;);<br><br></code></pre></td></tr></table></figure>
+
                 
               </div>
             
