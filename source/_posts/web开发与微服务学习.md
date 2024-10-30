@@ -5,10 +5,10 @@ categories: 学习
 math:
 tags:
 ---
-# web开发与微服务学习
+# web开发部分
 <!-- TOC -->
 
-- [web开发与微服务学习](#web开发与微服务学习)
+- [web开发部分](#web开发部分)
     - [springboot的依赖注入](#springboot的依赖注入)
         - [构造函数注入](#构造函数注入)
         - [setter方法注入](#setter方法注入)
@@ -67,6 +67,8 @@ tags:
     - [vue中使用pinia及其持久化](#vue中使用pinia及其持久化)
         - [pinia使用步骤](#pinia使用步骤)
         - [pinia持久化](#pinia持久化)
+- [微服务部分](#微服务部分)
+    - [nacos服务治理](#nacos服务治理)
 
 <!-- /TOC -->
 
@@ -1094,5 +1096,7 @@ export const useTokenStore = defineStore("token", {
   //persist为true，开启持久化
   persist: true,
 });
-
 ```
+# 微服务部分
+
+## nacos服务治理
