@@ -68,7 +68,11 @@ tags:
         - [pinia使用步骤](#pinia使用步骤)
         - [pinia持久化](#pinia持久化)
 - [微服务部分](#微服务部分)
-    - [nacos服务治理](#nacos服务治理)
+    - [注册中心](#注册中心)
+        - [服务治理基础知识](#服务治理基础知识)
+        - [nacos基础知识](#nacos基础知识)
+        - [环境隔离](#环境隔离)
+        - [服务分级模型](#服务分级模型)
 
 <!-- /TOC -->
 
@@ -1099,4 +1103,79 @@ export const useTokenStore = defineStore("token", {
 ```
 # 微服务部分
 
-## nacos服务治理
+## 注册中心
+
+### 服务治理基础知识
+服务治理中的三个角色：
+- 服务提供者：暴露服务接口，供其他服务调用
+- 服务消费者：调用其他服务提供的接口
+- 注册中心：记录并监控微服务各实例的状态，推送服务变更信息
+
+消费者如何知道服务提供者的地址？
+- 服务提供者启动时向注册中心注册服务信息，消费者从注册中心订阅和拉取服务信息
+
+消费者如何知道服务状态变更？
+- 服务提供者通过心跳机制向注册中心报告健康状态，当“心跳”异常时注册中心会剔除异常服务，并通知订阅了该服务的消费者
+
+当服务提供者有多个实例时，如何选择？
+- 通过负载均衡算法选择一个服务提供者
+
+### nacos基础知识
+
+Nacos是阿里旗下的一款开源产品，它主要是针对微服务架构中的服务发现、配置管理、服务治理的综合型解决方案；简单来说 Nacos 就是注册中心 + 配置中心的组合，致力于帮助您发现、配置和管理微服务，提供简单易用的特性集，帮助您快速实现动态服务发现、服务配置、服务元数据及流量管理。
+
+配置方式：
+一般会把所有微服务的共享的配置，如jdbc、logger、mq等配置放在nacos中，然后由微服务拉取。
+
+- 在nacos控制台新建共享配置，如shared-jdbc.yaml
+- 接下来，要在微服务拉取共享配置。将拉取到的共享配置与本地的application.yaml配置合并，完成项目上下文的初始化。
+
+需要注意的是，拉取Nacos配置是SpringCloud上下文（ApplicationContext）初始化时处理的。然后才会初始化SpringBoot上下文，去读取application.yaml。
+
+如果将nacos配置放在application.yaml中，那么在项目引导阶段就无法拉取nacos中的配置了。
+
+因此，将nacos地址配置到bootstrap.yaml中，那么在项目引导阶段就可以拉取nacos中的共享配置了。
+
+配置示例：
+```
+spring:
+  application:
+    name: item-service # 服务名称
+  profiles:
+    active: dev
+  cloud:
+    nacos:
+      server-addr: 192.168.56.101:8848 # nacos地址
+      config:
+        file-extension: yaml # 文件后缀名
+        shared-configs: # 共享配置
+          - dataId: shared-jdbc.yaml
+          - dataId: shared-log.yaml
+          - dataId: shared-swagger.yaml
+          - dataId: shared-seata.yaml #
+          - dataId: shared-mq.yaml
+```
+
+
+### 环境隔离
+实际开发中，通常会有多个环境，如开发环境、测试环境、发布环境等，不同的环境需要隔离。
+
+nacos中，主要分为namespace, group, service三级：
+- namespace：用于隔离不同环境，默认为空（public）
+- group：服务分组，用于区分不同的服务，默认为DEFAULT_GROUP
+- service：服务名，用于标识服务
+
+配置namespace：
+- 在nacos控制台中创建namespace，如dev、test、prod
+- 在nacos配置文件中config或discovery字段下指定namespace, 如`namespace: {namespaceId}`
+
+### 服务分级模型
+大厂的服务可能部署在多个机房，物理上被隔离为多个集群，nacos可以实现对集群的划分，实现服务分级模型。
+
+nacos的分级分为服务，集群，实例三级。
+比如，某个服务的实例有很多个，分布在全国各地，可以将这些实例划分为多个集群，如华北集群、华南集群、华东集群等，每个集群下有多个实例。
+
+具体来说，nacos的注册表是一个Map结构`Map<String1, Map<String2, Map<String3, Cluster<Set<Instance>>>>>`
+- String1：namespace名称
+- String2：服务名称（含分组信息）
+- String3：集群名称
