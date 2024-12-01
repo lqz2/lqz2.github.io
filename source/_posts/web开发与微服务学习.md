@@ -73,6 +73,10 @@ tags:
         - [nacos基础知识](#nacos基础知识)
         - [环境隔离](#环境隔离)
         - [服务分级模型](#服务分级模型)
+    - [OpenFeign](#openfeign)
+        - [基本用法](#基本用法-1)
+        - [连接池](#连接池)
+        - [负载均衡](#负载均衡)
 
 <!-- /TOC -->
 
@@ -1179,3 +1183,98 @@ nacos的分级分为服务，集群，实例三级。
 - String1：namespace名称
 - String2：服务名称（含分组信息）
 - String3：集群名称
+
+## OpenFeign
+利用Nacos实现服务治理和发现后，需要利用RestTemplate实现服务的远程调用，步骤如下：
+- 获取服务名称
+- 根据服务名称获取服务实例列表
+- 利用负载均衡算法选择一个服务实例
+- 重构请求的url，通过RestTemplate发送请求
+
+但是远程调用的代码太复杂，OpenFeign可以简化远程调用的代码。
+
+### 基本用法
+OpenFeign的使用步骤如下：
+- 引入OpenFeign依赖
+```
+  <!--openFeign-->
+  <dependency>
+      <groupId>org.springframework.cloud</groupId>
+      <artifactId>spring-cloud-starter-openfeign</artifactId>
+  </dependency>
+  <!--负载均衡器，早期是Ribbon，新版为loadbalancer--> 
+  <dependency>
+      <groupId>org.springframework.cloud</groupId>
+      <artifactId>spring-cloud-starter-loadbalancer</artifactId>
+  </dependency>
+```
+
+- 在对应服务的启动类上添加`@EnableFeignClients`注解
+- 编写OpenFeign客户端接口
+```
+@FeignClient(value = "item-service",fallbackFactory = ItemClientFallbackFactory.class)
+public interface ItemClient {
+    @GetMapping("/items")
+    List<ItemDTO> queryItemByIds(@RequestParam("ids") Collection<Long> ids);
+    @PutMapping("/items/stock/deduct")
+    void deductStock(@RequestBody List<OrderDetailDTO> items);
+    @PutMapping("/items/stock/restore")
+    void restoreStock(@RequestBody List<OrderDetailDTO> items);
+}
+```
+注意，接口内的方法和对应的Controller方法的参数、返回值、请求方式、请求路径等要一致
+- 在需要的地方注入OpenFeign客户端接口，调用接口方法
+
+### 连接池
+
+Feign底层发起http请求，依赖于其它的框架。其底层支持的http客户端实现包括：
+- HttpURLConnection：默认实现，不支持连接池
+- Apache HttpClient ：支持连接池
+- OKHttp：支持连接池
+
+支持连接池的优点是可以复用连接，减少连接的创建和销毁，提高性能，一般会使用OKHttp。一般两步即可：
+- 引入OKHttp依赖
+```
+<!--OK http 的依赖 -->
+<dependency>
+    <groupId>io.github.openfeign</groupId>
+    <artifactId>feign-okhttp</artifactId>
+</dependency>
+```
+- 在配置文件中配置使用OKHttp
+```
+feign:
+  okhttp:
+    enabled: true # 开启OKHttp功能
+``` 
+### 负载均衡
+OpenFeign默认的负载均衡策略是轮询策略，在内部维护一个自增的计数器（达到INT最大值时归零），每次调用时，选择一个服务实例。
+这样的缺点是，当服务实例的数量不均匀时，轮询策略可能会导致某些实例的负载过高，而某些实例的负载过低。
+
+内置的负载均衡策略有三种：
+- RoundRobinLoadBalancer：轮询策略
+- RandomLoadBalancer：随机策略
+- NacosLoadBalancer：优先在本集群内选择实例（访问快），根据不同实例的权重（nacos控制台设置权重），随机选择实例
+
+
+
+修改默认的负载均衡策略，需要自定义一个返回ReactorLoadBalancer的Bean，具体步骤如下：
+- 在对应的服务中创建一个配置类，返回ReactorLoadBalancer的Bean
+```
+public class OpenFeignConfig {
+    ##修改为NacosLoadBalancer
+    @Bean
+    public ReactorLoadBalancer<ServiceInstance> reactorServiceInstanceLoadBalancer(
+            Environment environment, NacosDiscoveryProperties properties,
+            LoadBalancerClientFactory loadBalancerClientFactory) {
+        String name = environment.getProperty(LoadBalancerClientFactory.PROPERTY_NAME);
+        return new NacosLoadBalancer(
+                loadBalancerClientFactory.getLazyProvider(name, ServiceInstanceListSupplier.class), name, properties);
+    }
+
+}
+```
+注意，这个配置类**不要加@Configuration注解**，也不要被SpringBootApplication扫描到。而是在启动类上通过注解来声明这个配置
+
+全局配置：`@LoadBalancerClients(defaultConfiguration = OpenFeignConfig.class)`，对所有服务生效
+局部配置：`@LoadBalancerClients({@LoadBalancerClient(value = "item-service", configuration = OpenFeignConfig.class)})`，仅对某个服务生效
