@@ -27,7 +27,7 @@
 <meta property="og:description" content="web开发部分   web开发部分  springboot的依赖注入  构造函数注入 setter方法注入 字段注入   springboot3自动配置原理  主要步骤 使用示例   自定义starter JWT令牌 ThreadLocal  特点 使用   拦截器  作用 拦截器与过滤器的区别 实现 拦截器的执行顺序   Controller中的方法接收参数注解  @RequestParam">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2024-10-13T07:03:53.000Z">
-<meta property="article:modified_time" content="2024-11-30T14:02:13.266Z">
+<meta property="article:modified_time" content="2024-12-01T08:44:26.499Z">
 <meta property="article:author" content="zql">
 <meta name="twitter:card" content="summary_large_image">
   
@@ -222,7 +222,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          9.1k 字
+          9.9k 字
         
       </span>
     
@@ -233,7 +233,7 @@
         
         
         
-          77 分钟
+          83 分钟
         
       </span>
     
@@ -387,6 +387,13 @@
 <li><a href="#nacos%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86">nacos基础知识</a></li>
 <li><a href="#%E7%8E%AF%E5%A2%83%E9%9A%94%E7%A6%BB">环境隔离</a></li>
 <li><a href="#%E6%9C%8D%E5%8A%A1%E5%88%86%E7%BA%A7%E6%A8%A1%E5%9E%8B">服务分级模型</a></li>
+</ul>
+</li>
+<li><a href="#openfeign">OpenFeign</a>
+<ul>
+<li><a href="#%E5%9F%BA%E6%9C%AC%E7%94%A8%E6%B3%95-1">基本用法</a></li>
+<li><a href="#%E8%BF%9E%E6%8E%A5%E6%B1%A0">连接池</a></li>
+<li><a href="#%E8%B4%9F%E8%BD%BD%E5%9D%87%E8%A1%A1">负载均衡</a></li>
 </ul>
 </li>
 </ul>
@@ -953,6 +960,63 @@ ThreadLocal 提供了线程本地的实例。它与普通变量的区别在于�
 <li>String2：服务名称（含分组信息）</li>
 <li>String3：集群名称</li>
 </ul>
+<h2 id="openfeign"><a class="markdownIt-Anchor" href="#openfeign"></a> OpenFeign</h2>
+<p>利用Nacos实现服务治理和发现后，需要利用RestTemplate实现服务的远程调用，步骤如下：</p>
+<ul>
+<li>获取服务名称</li>
+<li>根据服务名称获取服务实例列表</li>
+<li>利用负载均衡算法选择一个服务实例</li>
+<li>重构请求的url，通过RestTemplate发送请求</li>
+</ul>
+<p>但是远程调用的代码太复杂，OpenFeign可以简化远程调用的代码。</p>
+<h3 id="基本用法-2"><a class="markdownIt-Anchor" href="#基本用法-2"></a> 基本用法</h3>
+<p>OpenFeign的使用步骤如下：</p>
+<ul>
+<li>引入OpenFeign依赖</li>
+</ul>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-comment">&lt;!--openFeign--&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">dependency</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>org.springframework.cloud<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>spring-cloud-starter-openfeign<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">dependency</span>&gt;</span><br><span class="hljs-comment">&lt;!--负载均衡器，早期是Ribbon，新版为loadbalancer--&gt;</span> <br><span class="hljs-tag">&lt;<span class="hljs-name">dependency</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>org.springframework.cloud<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>spring-cloud-starter-loadbalancer<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">dependency</span>&gt;</span><br></code></pre></td></tr></table></figure>
+<ul>
+<li>在对应服务的启动类上添加<code>@EnableFeignClients</code>注解</li>
+<li>编写OpenFeign客户端接口</li>
+</ul>
+<figure class="highlight less"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs less"><span class="hljs-variable">@FeignClient</span>(value = <span class="hljs-string">&quot;item-service&quot;</span>,fallbackFactory = ItemClientFallbackFactory.class)<br>public interface ItemClient &#123;<br>    <span class="hljs-variable">@GetMapping</span>(<span class="hljs-string">&quot;/items&quot;</span>)<br>    List&lt;ItemDTO&gt; <span class="hljs-built_in">queryItemByIds</span>(<span class="hljs-variable">@RequestParam</span>(<span class="hljs-string">&quot;ids&quot;</span>) Collection&lt;Long&gt; ids);<br>    <span class="hljs-variable">@PutMapping</span>(<span class="hljs-string">&quot;/items/stock/deduct&quot;</span>)<br>    void <span class="hljs-built_in">deductStock</span>(<span class="hljs-variable">@RequestBody</span> List&lt;OrderDetailDTO&gt; items);<br>    <span class="hljs-variable">@PutMapping</span>(<span class="hljs-string">&quot;/items/stock/restore&quot;</span>)<br>    void <span class="hljs-built_in">restoreStock</span>(<span class="hljs-variable">@RequestBody</span> List&lt;OrderDetailDTO&gt; items);<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>注意，接口内的方法和对应的Controller方法的参数、返回值、请求方式、请求路径等要一致</p>
+<ul>
+<li>在需要的地方注入OpenFeign客户端接口，调用接口方法</li>
+</ul>
+<h3 id="连接池"><a class="markdownIt-Anchor" href="#连接池"></a> 连接池</h3>
+<p>Feign底层发起http请求，依赖于其它的框架。其底层支持的http客户端实现包括：</p>
+<ul>
+<li>HttpURLConnection：默认实现，不支持连接池</li>
+<li>Apache HttpClient ：支持连接池</li>
+<li>OKHttp：支持连接池</li>
+</ul>
+<p>支持连接池的优点是可以复用连接，减少连接的创建和销毁，提高性能，一般会使用OKHttp。一般两步即可：</p>
+<ul>
+<li>引入OKHttp依赖</li>
+</ul>
+<figure class="highlight xml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs xml"><span class="hljs-comment">&lt;!--OK http 的依赖 --&gt;</span><br><span class="hljs-tag">&lt;<span class="hljs-name">dependency</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">groupId</span>&gt;</span>io.github.openfeign<span class="hljs-tag">&lt;/<span class="hljs-name">groupId</span>&gt;</span><br>    <span class="hljs-tag">&lt;<span class="hljs-name">artifactId</span>&gt;</span>feign-okhttp<span class="hljs-tag">&lt;/<span class="hljs-name">artifactId</span>&gt;</span><br><span class="hljs-tag">&lt;/<span class="hljs-name">dependency</span>&gt;</span><br></code></pre></td></tr></table></figure>
+<ul>
+<li>在配置文件中配置使用OKHttp</li>
+</ul>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs yaml"><span class="hljs-attr">feign:</span><br>  <span class="hljs-attr">okhttp:</span><br>    <span class="hljs-attr">enabled:</span> <span class="hljs-literal">true</span> <span class="hljs-comment"># 开启OKHttp功能</span><br></code></pre></td></tr></table></figure>
+<h3 id="负载均衡"><a class="markdownIt-Anchor" href="#负载均衡"></a> 负载均衡</h3>
+<p>OpenFeign默认的负载均衡策略是轮询策略，在内部维护一个自增的计数器（达到INT最大值时归零），每次调用时，选择一个服务实例。<br />
+这样的缺点是，当服务实例的数量不均匀时，轮询策略可能会导致某些实例的负载过高，而某些实例的负载过低。</p>
+<p>内置的负载均衡策略有三种：</p>
+<ul>
+<li>RoundRobinLoadBalancer：轮询策略</li>
+<li>RandomLoadBalancer：随机策略</li>
+<li>NacosLoadBalancer：优先在本集群内选择实例（访问快），根据不同实例的权重（nacos控制台设置权重），随机选择实例</li>
+</ul>
+<p>修改默认的负载均衡策略，需要自定义一个返回ReactorLoadBalancer的Bean，具体步骤如下：</p>
+<ul>
+<li>在对应的服务中创建一个配置类，返回ReactorLoadBalancer的Bean</li>
+</ul>
+<figure class="highlight haxe"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs haxe"><span class="hljs-keyword">public</span> <span class="hljs-title class_"><span class="hljs-keyword">class</span> <span class="hljs-title">OpenFeignConfig</span> </span>&#123;<br>    <span class="hljs-meta">##修改为NacosLoadBalancer</span><br>    <span class="hljs-meta">@Bean</span><br>    <span class="hljs-keyword">public</span> ReactorLoadBalancer&lt;ServiceInstance&gt; reactorServiceInstanceLoadBalancer(<br>            Environment environment, NacosDiscoveryProperties properties,<br>            LoadBalancerClientFactory loadBalancerClientFactory) &#123;<br>        <span class="hljs-keyword">String</span> name = environment.getProperty(LoadBalancerClientFactory.PROPERTY_NAME);<br>        <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> <span class="hljs-type">NacosLoadBalancer</span>(<br>                loadBalancerClientFactory.getLazyProvider(name, ServiceInstanceListSupplier.class), name, properties);<br>    &#125;<br><br>&#125;<br></code></pre></td></tr></table></figure>
+<p>注意，这个配置类<strong>不要加@Configuration注解</strong>，也不要被SpringBootApplication扫描到。而是在启动类上通过注解来声明这个配置</p>
+<p>全局配置：<code>@LoadBalancerClients(defaultConfiguration = OpenFeignConfig.class)</code>，对所有服务生效<br />
+局部配置：<code>@LoadBalancerClients(&#123;@LoadBalancerClient(value = &quot;item-service&quot;, configuration = OpenFeignConfig.class)&#125;)</code>，仅对某个服务生效</p>
 
                 
               </div>
