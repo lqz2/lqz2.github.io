@@ -26,10 +26,12 @@
 <meta property="og:site_name" content="my blogs">
 <meta property="og:description" content="web开发部分   web开发部分  springboot的依赖注入  构造函数注入 setter方法注入 字段注入   springboot3自动配置原理  主要步骤 使用示例   自定义starter JWT令牌 ThreadLocal  特点 使用   拦截器  作用 拦截器与过滤器的区别 实现 拦截器的执行顺序   Controller中的方法接收参数注解  @RequestParam">
 <meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="http://lqz2.github.io/2024/10/13/img/gateway.png">
 <meta property="article:published_time" content="2024-10-13T07:03:53.000Z">
-<meta property="article:modified_time" content="2024-12-01T08:44:26.499Z">
+<meta property="article:modified_time" content="2024-12-02T02:00:09.841Z">
 <meta property="article:author" content="zql">
 <meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="http://lqz2.github.io/2024/10/13/img/gateway.png">
   
   
   
@@ -222,7 +224,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          9.9k 字
+          11k 字
         
       </span>
     
@@ -233,7 +235,7 @@
         
         
         
-          83 分钟
+          90 分钟
         
       </span>
     
@@ -394,6 +396,12 @@
 <li><a href="#%E5%9F%BA%E6%9C%AC%E7%94%A8%E6%B3%95-1">基本用法</a></li>
 <li><a href="#%E8%BF%9E%E6%8E%A5%E6%B1%A0">连接池</a></li>
 <li><a href="#%E8%B4%9F%E8%BD%BD%E5%9D%87%E8%A1%A1">负载均衡</a></li>
+</ul>
+</li>
+<li><a href="#%E7%BD%91%E5%85%B3">网关</a>
+<ul>
+<li><a href="#%E5%9F%BA%E6%9C%AC%E7%94%A8%E6%B3%95-2">基本用法</a></li>
+<li><a href="#%E7%BD%91%E5%85%B3%E5%AE%9E%E7%8E%B0%E7%99%BB%E9%99%86%E6%A0%A1%E9%AA%8C">网关实现登陆校验</a></li>
 </ul>
 </li>
 </ul>
@@ -1017,6 +1025,50 @@ ThreadLocal 提供了线程本地的实例。它与普通变量的区别在于�
 <p>注意，这个配置类<strong>不要加@Configuration注解</strong>，也不要被SpringBootApplication扫描到。而是在启动类上通过注解来声明这个配置</p>
 <p>全局配置：<code>@LoadBalancerClients(defaultConfiguration = OpenFeignConfig.class)</code>，对所有服务生效<br />
 局部配置：<code>@LoadBalancerClients(&#123;@LoadBalancerClient(value = &quot;item-service&quot;, configuration = OpenFeignConfig.class)&#125;)</code>，仅对某个服务生效</p>
+<h2 id="网关"><a class="markdownIt-Anchor" href="#网关"></a> 网关</h2>
+<p>网关就是网络的关口。数据在网络间传输，从一个网络传输到另一网络时就需要经过网关来做数据的路由和转发以及数据安全的校验。</p>
+<p>一般单体项目拆分成各种微服务后，每个服务都有自己的端口号，这样会导致前端请求时需要知道每个服务的端口号，这样不利于维护，因此需要一个网关来统一管理请求。</p>
+<p>网关在微服务架构中的作用：</p>
+<ul>
+<li>网关可以做安全控制，也就是<strong>登录身份校验</strong>，校验通过才放行</li>
+<li>通过认证后，网关再根据请求判断应该访问哪个微服务，将请求转发过去</li>
+</ul>
+<h3 id="基本用法-3"><a class="markdownIt-Anchor" href="#基本用法-3"></a> 基本用法</h3>
+<p>利用网关实现请求路由。由于网关本身也是一个独立的微服务，因此也需要创建一个模块开发功能。大概步骤如下：</p>
+<ul>
+<li>创建网关微服务，引入依赖</li>
+<li>编写启动类</li>
+<li>在application.yaml中配置网关路由</li>
+</ul>
+<figure class="highlight dts"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br></pre></td><td class="code"><pre><code class="hljs dts"><span class="hljs-symbol">server:</span><br><span class="hljs-symbol">  port:</span> <span class="hljs-number">8080</span><br><span class="hljs-symbol">spring:</span><br><span class="hljs-symbol">  application:</span><br><span class="hljs-symbol">    name:</span> gateway<br><span class="hljs-symbol">  cloud:</span><br><span class="hljs-symbol">    nacos:</span><br>      server-addr: <span class="hljs-number">192.168</span><span class="hljs-number">.150</span><span class="hljs-number">.101</span>:<span class="hljs-number">8848</span><br><span class="hljs-symbol">    gateway:</span><br><span class="hljs-symbol">      routes:</span><br>        - id: item <span class="hljs-meta"># 路由规则id，自定义，唯一</span><br><span class="hljs-symbol">          uri:</span> lb:<span class="hljs-comment">//item-service # 路由的目标服务，lb代表负载均衡，会从注册中心拉取服务列表</span><br><span class="hljs-symbol">          predicates:</span> <span class="hljs-meta"># 路由断言，判断当前请求是否符合当前规则，符合则路由到目标服务</span><br>            - P<span class="hljs-attr">ath</span><span class="hljs-operator">=</span><span class="hljs-keyword">/items/</span>**,<span class="hljs-keyword">/search/</span>** <span class="hljs-meta"># 这里是以请求路径作为判断规则</span><br>        - id: cart<br><span class="hljs-symbol">          uri:</span> lb:<span class="hljs-comment">//cart-service</span><br><span class="hljs-symbol">          predicates:</span><br>            - P<span class="hljs-attr">ath</span><span class="hljs-operator">=</span><span class="hljs-keyword">/carts/</span>**<br>        - id: user<br><span class="hljs-symbol">          uri:</span> lb:<span class="hljs-comment">//user-service</span><br><span class="hljs-symbol">          predicates:</span><br>            - P<span class="hljs-attr">ath</span><span class="hljs-operator">=</span><span class="hljs-keyword">/users/</span>**,<span class="hljs-keyword">/addresses/</span>**<br>        - id: trade<br><span class="hljs-symbol">          uri:</span> lb:<span class="hljs-comment">//trade-service</span><br><span class="hljs-symbol">          predicates:</span><br>            - P<span class="hljs-attr">ath</span><span class="hljs-operator">=</span><span class="hljs-keyword">/orders/</span>**<br>        - id: pay<br><span class="hljs-symbol">          uri:</span> lb:<span class="hljs-comment">//pay-service</span><br><span class="hljs-symbol">          predicates:</span><br>            - P<span class="hljs-attr">ath</span><span class="hljs-operator">=</span><span class="hljs-keyword">/pay-orders/</span>**<br></code></pre></td></tr></table></figure>
+<p>四个属性含义如下：</p>
+<ul>
+<li>id：路由的唯一标示</li>
+<li>predicates：路由断言，其实就是匹配条件</li>
+<li>filters：路由过滤器，对请求或响应做特殊处理</li>
+<li>uri：路由目标地址，lb://代表负载均衡，从注册中心获取目标微服务的实例列表，并且负载均衡选择一个访问。</li>
+</ul>
+<h3 id="网关实现登陆校验"><a class="markdownIt-Anchor" href="#网关实现登陆校验"></a> 网关实现登陆校验</h3>
+<p>登录是基于JWT来实现的，校验JWT的算法复杂，而且需要用到秘钥。如果每个微服务都去做登录校验，这就存在着两大问题：</p>
+<ul>
+<li>每个微服务都需要知道JWT的秘钥，不安全</li>
+<li>每个微服务重复编写登录校验代码、权限校验代码，麻烦</li>
+</ul>
+<p>网关是所有微服务的入口，一切请求都需要先经过网关。完全可以把登录校验的工作放到网关去做：</p>
+<ul>
+<li>只需要在网关和用户服务保存秘钥</li>
+<li>只需要在网关开发登录校验功能</li>
+</ul>
+<p>不过，这里存在几个问题：</p>
+<ul>
+<li>网关路由是配置的，请求转发是Gateway内部代码，我们如何在转发之前做登录校验？</li>
+</ul>
+<p>网关处理请求的流程如下：<br />
+<img src="../img/gateway.png" srcset="/img/loading.gif" lazyload alt="" /></p>
+<ul>
+<li>网关校验JWT之后，如何将用户信息传递给微服务？</li>
+<li>微服务之间也会相互调用，这种调用不经过网关，又该如何传递用户信息？</li>
+</ul>
 
                 
               </div>
