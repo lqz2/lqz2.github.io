@@ -26,12 +26,12 @@
 <meta property="og:site_name" content="my blogs">
 <meta property="og:description" content="web开发部分   web开发部分  springboot的依赖注入  构造函数注入 setter方法注入 字段注入   springboot3自动配置原理  主要步骤 使用示例   自定义starter JWT令牌 ThreadLocal  特点 使用   拦截器  作用 拦截器与过滤器的区别 实现 拦截器的执行顺序   Controller中的方法接收参数注解  @RequestParam">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="http://lqz2.github.io/2024/10/13/img/gateway.png">
+<meta property="og:image" content="http://lqz2.github.io/img/gateway.png">
 <meta property="article:published_time" content="2024-10-13T07:03:53.000Z">
-<meta property="article:modified_time" content="2024-12-02T02:05:16.907Z">
+<meta property="article:modified_time" content="2024-12-02T02:05:53.803Z">
 <meta property="article:author" content="zql">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:image" content="http://lqz2.github.io/2024/10/13/img/gateway.png">
+<meta name="twitter:image" content="http://lqz2.github.io/img/gateway.png">
   
   
   
@@ -1064,7 +1064,7 @@ ThreadLocal 提供了线程本地的实例。它与普通变量的区别在于�
 <li>网关路由是配置的，请求转发是Gateway内部代码，我们如何在转发之前做登录校验？</li>
 </ul>
 <p>网关处理请求的流程如下：</p>
-<p><img src="../img/gateway.png" srcset="/img/loading.gif" lazyload alt="" /></p>
+<p><img src="/img/gateway.png" srcset="/img/loading.gif" lazyload alt="" /></p>
 <ol>
 <li>客户端请求进入网关后由HandlerMapping对请求做判断，找到与当前请求匹配的路由规则（Route），然后将请求交给WebHandler去处理。</li>
 <li>WebHandler则会加载当前路由下需要执行的过滤器链（Filter chain），然后按照顺序逐一执行过滤器（后面称为Filter）。</li>
