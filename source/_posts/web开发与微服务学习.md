@@ -80,6 +80,10 @@ tags:
     - [网关](#网关)
         - [基本用法](#基本用法-2)
         - [网关实现登陆校验](#网关实现登陆校验)
+            - [如何在转发之前做登录校验？](#如何在转发之前做登录校验)
+            - [网关登陆校验之后，如何将用户信息传递给微服务？](#网关登陆校验之后如何将用户信息传递给微服务)
+            - [微服务之间也会相互调用，这种调用不经过网关，又该如何传递用户信息？](#微服务之间也会相互调用这种调用不经过网关又该如何传递用户信息)
+        - [动态路由](#动态路由)
 
 <!-- /TOC -->
 
@@ -1345,7 +1349,8 @@ spring:
 - 只需要在网关开发登录校验功能
 
 不过，这里存在几个问题：
-- 网关路由是配置的，请求转发是Gateway内部代码，我们如何在转发之前做登录校验？
+
+#### 如何在转发之前做登录校验？
 
 网关处理请求的流程如下：
 
@@ -1358,6 +1363,207 @@ spring:
 5. 微服务返回结果后，再倒序执行Filter的post逻辑。
 6. 最终把响应结果返回。
 
+最终请求转发是有一个名为NettyRoutingFilter的过滤器来执行的，而且这个过滤器是整个过滤器链中顺序最靠后的一个。
+如果我们能够定义一个过滤器，在其中实现登录校验逻辑，并且将过滤器执行顺序定义到NettyRoutingFilter之前，这就符合我们的需求了！
 
-- 网关校验JWT之后，如何将用户信息传递给微服务？
-- 微服务之间也会相互调用，这种调用不经过网关，又该如何传递用户信息？
+网关过滤器链中的过滤器有两种：
+- GatewayFilter：路由过滤器，作用范围比较灵活，可以是任意指定的路由Route. 
+- GlobalFilter：全局过滤器，作用范围是所有路由，不可配置。
+
+接下来以GlobalFilter为例，实现登录校验功能:
+```
+@Component
+@RequiredArgsConstructor
+public class AuthGlobalFilter implements GlobalFilter, Ordered {
+
+    private final AuthProperties authProperties;
+    private final JwtTool jwtTool;
+    private final AntPathMatcher antPathMatcher = new AntPathMatcher();
+
+    @Override
+    public Mono<Void> filter(ServerWebExchange exchange, GatewayFilterChain chain) {
+        //获取request
+        ServerHttpRequest request = exchange.getRequest();
+        //判断是否需要登录校验
+        if (isExclude(request.getPath().toString())) {
+            return chain.filter(exchange);
+        }
+        //获取token
+        String token = null;
+        List<String> authorizations = request.getHeaders().get("authorization");
+        if (authorizations != null && !authorizations.isEmpty()) {
+            token = authorizations.get(0);
+        }
+        //校验解析token
+        Long userId = null;
+        try {
+            userId = jwtTool.parseToken(token);
+        } catch (Exception e) {
+            ServerHttpResponse response = exchange.getResponse();
+            response.setStatusCode(HttpStatus.UNAUTHORIZED);
+            return response.setComplete();
+        }
+        //通过请求头传递用户信息
+        String userInfo = userId.toString();
+        ServerWebExchange ex = exchange.mutate()
+                .request(builder -> builder.header("userInfo", userInfo))
+                .build();
+        return chain.filter(ex);
+    }
+
+    private boolean isExclude(String string) {
+        for (String pathPattern : authProperties.getExcludePaths()) {
+            if (antPathMatcher.match(pathPattern, string)) {
+                return true;
+            }
+        }
+        return false;
+    }
+
+    //设置优先级，确保该过滤器在NettyRoutingFilter之前执行，越小优先级越高
+    @Override
+    public int getOrder() {
+        return 0;
+    }
+}
+```
+#### 网关登陆校验之后，如何将用户信息传递给微服务？
+由于网关发送请求到微服务依然采用的是Http请求，因此我们可以将用户信息以请求头的方式传递到下游微服务。
+然后微服务可以从请求头中获取登录用户信息。考虑到微服务内部可能很多地方都需要用到登录用户信息，因此我们可以利用SpringMVC的拦截器来实现登录用户信息获取，并存入ThreadLocal，方便后续使用。
+具体步骤如下：
+- 在网关的过滤器中将用户信息放入请求头
+```
+//通过请求头传递用户信息
+        String userInfo = userId.toString();
+        ServerWebExchange ex = exchange.mutate()
+                .request(builder -> builder.header("userInfo", userInfo))
+                .build();
+        return chain.filter(ex);
+```
+- 在通用微服务中定义一个拦截器，从请求头中获取用户信息
+```
+public class UserInfoInterceptor implements HandlerInterceptor {
+    @Override
+    public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
+
+        //获取登录用户信息
+        String userInfo = request.getHeader("userInfo");
+        //判断是否为空，如果不为空存入ThreadLocal
+        if(StrUtil.isNotBlank(userInfo)){
+            UserContext.setUser(Long.valueOf(userInfo));
+        }
+        //因为网关已经做过了token校验，所以这里不需要再校验
+        return true;
+    }
+    
+    @Override
+    public void afterCompletion(HttpServletRequest request, HttpServletResponse response, Object handler, Exception ex) throws Exception {
+        //清除ThreadLocal中的用户信息
+        UserContext.removeUser();
+    }
+
+}
+```
+
+- 在通用微服务配置类中，添加拦截器，为了只对微服务生效，仅在SpringMVC中添加拦截器，添加注解`@ConditionalOnClass(DispatcherServlet.class)`
+```
+@Configuration
+@ConditionalOnClass(DispatcherServlet.class)
+public class MvcConfig implements WebMvcConfigurer {
+    @Override
+    public void addInterceptors(InterceptorRegistry registry) {
+        registry.addInterceptor(new UserInfoInterceptor());
+    }
+}
+```
+- 在文件中设置自动配置（参考自动配置原理）
+
+- 其他微服务引入通用微服务的依赖
+
+#### 微服务之间也会相互调用，这种调用不经过网关，又该如何传递用户信息？
+要想实现微服务之间的用户信息传递，就必须在微服务发起调用时把用户信息存入请求头。
+
+为了让每一个由OpenFeign发起的请求自动携带登录用户信息，这里要借助Feign中提供的一个拦截器接口：feign.RequestInterceptor
+
+配置类中添加一个Bean，将用户信息存入请求头：
+```
+@Bean
+public RequestInterceptor userInfoRequestInterceptor(){
+    return new RequestInterceptor() {
+        @Override
+        public void apply(RequestTemplate template) {
+            // 获取登录用户
+            Long userId = UserContext.getUser();
+            if(userId == null) {
+                // 如果为空则直接跳过
+                return;
+            }
+            // 如果不为空则放入请求头中，传递给下游微服务
+            template.header("user-info", userId.toString());
+        }
+    };
+}
+```
+### 动态路由
+网关的路由配置全部是在项目启动的时候加载，并且一经加载就会缓存到内存中的路由表内（一个Map），不会改变，也不会监听路由变更。要修改路由配置，需要重启网关。
+
+实现动态路由，需要把路由信息保存到nacos，当路由配置更新时，推送最新路由信息到网关，实现实时更新路由表，步骤如下：
+- 在nacos控制台中添加路由表，类型为json格式
+- 在原始网关配置文件application.yml中，删除路由配置
+- 引入nacos配置管理依赖
+- 监听nacos配置变更，更新路由表
+```
+@Slf4j
+@Component
+@RequiredArgsConstructor
+public class DynamicRouteLoader {
+    private final RouteDefinitionWriter routeDefinitionWriter;
+    private final NacosConfigManager nacosConfigManager;
+    private final String dataId = "gateway-routes.json";
+    private final String group = "DEFAULT_GROUP";
+    private final Set<String> routeIds = new HashSet<>();
+
+    @PostConstruct // 在构造函数执行完之后执行
+    public void initRouteConfigListener() throws NacosException {
+        //拉取配置，添加监听器
+        String configInfo = nacosConfigManager.getConfigService()
+                .getConfigAndSignListener(dataId, group, 5000, new Listener() {
+                    @Override
+                    public Executor getExecutor() {
+                        return null;
+                    }
+
+                    @Override
+                    public void receiveConfigInfo(String configInfo) {
+                        //监听到配置变化后，更新路由表
+                        updateRouteConfig(configInfo);
+                    }
+                });
+        //第一次拉取配置后，更新路由表
+        updateRouteConfig(configInfo);
+    }
+
+    //更新路由表
+    public void updateRouteConfig(String configInfo) {
+        log.debug("监听到配置变化，更新路由表{}", configInfo);
+        //解析配置信息
+        List<RouteDefinition> routeDefinitions = JSONUtil.toList(configInfo, RouteDefinition.class);
+        //清空路由表
+        for (String id : routeIds) {
+            routeDefinitionWriter.delete(Mono.just(id)).subscribe();
+        }
+        routeIds.clear();
+        //判断是否需要更新路由表
+        if (CollUtil.isEmpty(routeDefinitions)) {
+            return;
+        }
+        //更新路由表
+        routeDefinitions.forEach(routeDefinition -> {
+            // 3.1.更新路由
+            routeDefinitionWriter.save(Mono.just(routeDefinition)).subscribe();
+            // 3.2.记录路由id，方便将来删除
+            routeIds.add(routeDefinition.getId());
+        });
+    }
+}
+```
