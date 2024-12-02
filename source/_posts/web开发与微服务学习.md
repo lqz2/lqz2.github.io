@@ -1349,7 +1349,7 @@ spring:
 
 网关处理请求的流程如下：
 
-![](/img/gateway.png)
+![](../img/gateway.png)
 
 1. 客户端请求进入网关后由HandlerMapping对请求做判断，找到与当前请求匹配的路由规则（Route），然后将请求交给WebHandler去处理。
 2. WebHandler则会加载当前路由下需要执行的过滤器链（Filter chain），然后按照顺序逐一执行过滤器（后面称为Filter）。
