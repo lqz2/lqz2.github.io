@@ -77,6 +77,9 @@ tags:
         - [基本用法](#基本用法-1)
         - [连接池](#连接池)
         - [负载均衡](#负载均衡)
+    - [网关](#网关)
+        - [基本用法](#基本用法-2)
+        - [网关实现登陆校验](#网关实现登陆校验)
 
 <!-- /TOC -->
 
@@ -1278,3 +1281,76 @@ public class OpenFeignConfig {
 
 全局配置：`@LoadBalancerClients(defaultConfiguration = OpenFeignConfig.class)`，对所有服务生效
 局部配置：`@LoadBalancerClients({@LoadBalancerClient(value = "item-service", configuration = OpenFeignConfig.class)})`，仅对某个服务生效
+
+## 网关
+
+网关就是网络的关口。数据在网络间传输，从一个网络传输到另一网络时就需要经过网关来做数据的路由和转发以及数据安全的校验。
+
+一般单体项目拆分成各种微服务后，每个服务都有自己的端口号，这样会导致前端请求时需要知道每个服务的端口号，这样不利于维护，因此需要一个网关来统一管理请求。
+
+网关在微服务架构中的作用：
+- 网关可以做安全控制，也就是**登录身份校验**，校验通过才放行
+- 通过认证后，网关再根据请求判断应该访问哪个微服务，将请求转发过去
+
+### 基本用法
+利用网关实现请求路由。由于网关本身也是一个独立的微服务，因此也需要创建一个模块开发功能。大概步骤如下：
+- 创建网关微服务，引入依赖
+- 编写启动类
+- 在application.yaml中配置网关路由
+```
+server:
+  port: 8080
+spring:
+  application:
+    name: gateway
+  cloud:
+    nacos:
+      server-addr: 192.168.150.101:8848
+    gateway:
+      routes:
+        - id: item # 路由规则id，自定义，唯一
+          uri: lb://item-service # 路由的目标服务，lb代表负载均衡，会从注册中心拉取服务列表
+          predicates: # 路由断言，判断当前请求是否符合当前规则，符合则路由到目标服务
+            - Path=/items/**,/search/** # 这里是以请求路径作为判断规则
+        - id: cart
+          uri: lb://cart-service
+          predicates:
+            - Path=/carts/**
+        - id: user
+          uri: lb://user-service
+          predicates:
+            - Path=/users/**,/addresses/**
+        - id: trade
+          uri: lb://trade-service
+          predicates:
+            - Path=/orders/**
+        - id: pay
+          uri: lb://pay-service
+          predicates:
+            - Path=/pay-orders/**
+```
+四个属性含义如下：
+- id：路由的唯一标示
+- predicates：路由断言，其实就是匹配条件
+- filters：路由过滤器，对请求或响应做特殊处理
+- uri：路由目标地址，lb://代表负载均衡，从注册中心获取目标微服务的实例列表，并且负载均衡选择一个访问。
+
+### 网关实现登陆校验
+登录是基于JWT来实现的，校验JWT的算法复杂，而且需要用到秘钥。如果每个微服务都去做登录校验，这就存在着两大问题：
+- 每个微服务都需要知道JWT的秘钥，不安全
+- 每个微服务重复编写登录校验代码、权限校验代码，麻烦
+
+网关是所有微服务的入口，一切请求都需要先经过网关。完全可以把登录校验的工作放到网关去做：
+- 只需要在网关和用户服务保存秘钥
+- 只需要在网关开发登录校验功能
+
+不过，这里存在几个问题：
+- 网关路由是配置的，请求转发是Gateway内部代码，我们如何在转发之前做登录校验？
+
+网关处理请求的流程如下：
+![](../img/gateway.png)
+
+
+
+- 网关校验JWT之后，如何将用户信息传递给微服务？
+- 微服务之间也会相互调用，这种调用不经过网关，又该如何传递用户信息？
