@@ -84,6 +84,10 @@ tags:
             - [网关登陆校验之后，如何将用户信息传递给微服务？](#网关登陆校验之后如何将用户信息传递给微服务)
             - [微服务之间也会相互调用，这种调用不经过网关，又该如何传递用户信息？](#微服务之间也会相互调用这种调用不经过网关又该如何传递用户信息)
         - [动态路由](#动态路由)
+    - [微服务保护](#微服务保护)
+        - [请求限流](#请求限流)
+        - [线程隔离](#线程隔离)
+        - [服务熔断](#服务熔断)
 
 <!-- /TOC -->
 
@@ -1567,3 +1571,112 @@ public class DynamicRouteLoader {
     }
 }
 ```
+## 微服务保护
+雪崩问题：微服务调用链路中某个微服务出现故障，引起整个链路中所有微服务不可用，这就是雪崩
+雪崩问题出现的原因主要有：
+- 微服务相互调用，服务提供者出现故障
+- 服务调用者没有做好异常处理，导致自身故障
+- 调用链所有服务级联故障，最终整个链路不可用
+
+微服务保护的方案有很多，比如：
+- 请求限流
+- 线程隔离
+- 服务熔断
+
+这些方案或多或少都会导致服务的体验上略有下降
+
+比如请求限流，降低了并发上限；
+线程隔离，降低了可用资源数量；
+服务熔断，降低了服务的完整度，部分服务变的不可用或弱可用。
+因此这些方案都属于服务降级的方案。但通过这些方案，服务的健壮性得到了提升，
+
+### 请求限流
+服务故障最重要原因，就是并发太高！当然，接口的并发不是一直很高，而是突发的。因此请求限流，就是**限制或控制接口访问的并发流量**，避免服务因流量激增而出现故障。
+
+Sentinel是阿里巴巴开源的一款服务保护框架，目前已经加入SpringCloudAlibaba中。
+
+下面利用Sentinel实现请求限流：
+- 在相应的微服务中引入Sentinel依赖
+- 在配置文件中添加Sentinel配置
+```
+spring:
+  cloud:
+    sentinel:
+      transport:
+        dashboard: localhost:8090
+      http-method-specify: true # 开启请求方式前缀
+```
+- 打开Sentinel控制台，查看簇点链路，查看每个接口的访问情况。
+- 在簇点链路中点击流控，设置流控规则，如QPS为10
+### 线程隔离
+限流可以降低服务器压力，尽量减少因并发流量引起的服务故障的概率，但并不能完全避免服务故障。一旦某个服务出现故障，我们必须隔离对这个服务的调用，避免发生雪崩。
+
+比如，购物车服务运行中可能涉及到商品服务，商品会占用一些线程资源，为防止商品服务故障导致整个购物车服务不可用，可以限制商品服务可用的线程资源。
+
+步骤如下：
+- 开启feign对sentinel的支持
+```
+feign:
+  sentinel:
+    enabled: true # 开启feign对sentinel的支持
+```
+- 打开Sentinel控制台,打开簇点链路，点击流控
+- 设置设置并发线程数，如10
+### 服务熔断
+线程隔离限定了线程数，导致接口吞吐能力有限，会产生以下问题：
+1. 超出的QPS上限的请求就只能抛出异常，从而导致购物车的查询失败。但从业务角度来说，即便没有查询到最新的商品信息，购物车也应该展示给用户，用户体验更好。也就是给查询失败设置一个降级处理逻辑。
+2. 由于查询商品的延迟较高（模拟的500ms），从而导致查询购物车的响应时间也变的很长。这样不仅拖慢了购物车服务，消耗了购物车服务的更多资源，而且用户体验也很差。对于商品服务这种不太健康的接口，我们应该直接停止调用，直接走降级逻辑，避免影响到当前服务。也就是将商品查询接口熔断。
+
+编写降级逻辑一般通过FallbackFactory实现，步骤如下：
+- 定义降级处理类，实现FallbackFactory接口
+```
+@Slf4j
+public class ItemClientFallbackFactory implements FallbackFactory<ItemClient> {
+    @Override
+    public ItemClient create(Throwable cause) {
+        return new ItemClient() {
+            @Override
+            public List<ItemDTO> queryItemByIds(Collection<Long> ids) {
+                log.error("查询商品失败", cause);
+                return CollUtils.emptyList();
+            }
+
+            @Override
+            public void deductStock(List<OrderDetailDTO> items) {
+                log.error("扣减库存失败", cause);
+                throw new RuntimeException(cause);
+            }
+
+            @Override
+            public void restoreStock(List<OrderDetailDTO> items) {
+                log.error("恢复库存失败", cause);
+                throw new RuntimeException(cause);
+            }
+        };
+    }
+}
+```
+- 在配置类中定义Bean
+```
+@Bean
+    public ItemClientFallbackFactory itemClientFallbackFactory() {
+        return new ItemClientFallbackFactory();
+    }
+```
+- ItemClient接口中使用ItemClientFallbackFactory
+```
+@FeignClient(value = "item-service",fallbackFactory = ItemClientFallbackFactory.class)
+public interface ItemClient {
+    @GetMapping("/items")
+    List<ItemDTO> queryItemByIds(@RequestParam("ids") Collection<Long> ids);
+    @PutMapping("/items/stock/deduct")
+    void deductStock(@RequestBody List<OrderDetailDTO> items);
+    @PutMapping("/items/stock/restore")
+    void restoreStock(@RequestBody List<OrderDetailDTO> items);
+}
+```
+编写完降级逻辑后，还需要在Sentinel控制台中配置熔断规则
+
+Sentinel中的断路器不仅可以统计某个接口的**慢请求比例**，还可以统计**异常请求**比例。
+当这些比例超出阈值时，就会熔断该接口，即拦截访问该接口的一切请求，降级处理；当该接口恢复正常时，再放行对于该接口的请求。
+具体规则在控制台中簇点链路中进行设置即可。
