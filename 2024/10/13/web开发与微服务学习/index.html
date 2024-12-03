@@ -28,7 +28,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="http://lqz2.github.io/img/gateway.png">
 <meta property="article:published_time" content="2024-10-13T07:03:53.000Z">
-<meta property="article:modified_time" content="2024-12-02T03:06:29.090Z">
+<meta property="article:modified_time" content="2024-12-03T08:36:45.047Z">
 <meta property="article:author" content="zql">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="http://lqz2.github.io/img/gateway.png">
@@ -224,7 +224,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          12k 字
+          13k 字
         
       </span>
     
@@ -235,7 +235,7 @@
         
         
         
-          102 分钟
+          112 分钟
         
       </span>
     
@@ -409,6 +409,13 @@
 </ul>
 </li>
 <li><a href="#%E5%8A%A8%E6%80%81%E8%B7%AF%E7%94%B1">动态路由</a></li>
+</ul>
+</li>
+<li><a href="#%E5%BE%AE%E6%9C%8D%E5%8A%A1%E4%BF%9D%E6%8A%A4">微服务保护</a>
+<ul>
+<li><a href="#%E8%AF%B7%E6%B1%82%E9%99%90%E6%B5%81">请求限流</a></li>
+<li><a href="#%E7%BA%BF%E7%A8%8B%E9%9A%94%E7%A6%BB">线程隔离</a></li>
+<li><a href="#%E6%9C%8D%E5%8A%A1%E7%86%94%E6%96%AD">服务熔断</a></li>
 </ul>
 </li>
 </ul>
@@ -1126,6 +1133,74 @@ ThreadLocal 提供了线程本地的实例。它与普通变量的区别在于�
 <li>监听nacos配置变更，更新路由表</li>
 </ul>
 <figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br></pre></td><td class="code"><pre><code class="hljs typescript"><span class="hljs-meta">@Slf4j</span><br><span class="hljs-meta">@Component</span><br><span class="hljs-meta">@RequiredArgsConstructor</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">DynamicRouteLoader</span> &#123;<br>    <span class="hljs-keyword">private</span> final <span class="hljs-title class_">RouteDefinitionWriter</span> routeDefinitionWriter;<br>    <span class="hljs-keyword">private</span> final <span class="hljs-title class_">NacosConfigManager</span> nacosConfigManager;<br>    <span class="hljs-keyword">private</span> final <span class="hljs-title class_">String</span> dataId = <span class="hljs-string">&quot;gateway-routes.json&quot;</span>;<br>    <span class="hljs-keyword">private</span> final <span class="hljs-title class_">String</span> group = <span class="hljs-string">&quot;DEFAULT_GROUP&quot;</span>;<br>    <span class="hljs-keyword">private</span> final <span class="hljs-title class_">Set</span>&lt;<span class="hljs-title class_">String</span>&gt; routeIds = <span class="hljs-keyword">new</span> <span class="hljs-title class_">HashSet</span>&lt;&gt;();<br><br>    <span class="hljs-meta">@PostConstruct</span> <span class="hljs-comment">// 在构造函数执行完之后执行</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-built_in">void</span> <span class="hljs-title function_">initRouteConfigListener</span>() throws <span class="hljs-title class_">NacosException</span> &#123;<br>        <span class="hljs-comment">//拉取配置，添加监听器</span><br>        <span class="hljs-title class_">String</span> configInfo = nacosConfigManager.<span class="hljs-title function_">getConfigService</span>()<br>                .<span class="hljs-title function_">getConfigAndSignListener</span>(dataId, group, <span class="hljs-number">5000</span>, <span class="hljs-keyword">new</span> <span class="hljs-title class_">Listener</span>() &#123;<br>                    <span class="hljs-meta">@Override</span><br>                    <span class="hljs-keyword">public</span> <span class="hljs-title class_">Executor</span> <span class="hljs-title function_">getExecutor</span>(<span class="hljs-params"></span>) &#123;<br>                        <span class="hljs-keyword">return</span> <span class="hljs-literal">null</span>;<br>                    &#125;<br><br>                    <span class="hljs-meta">@Override</span><br>                    <span class="hljs-keyword">public</span> <span class="hljs-built_in">void</span> <span class="hljs-title function_">receiveConfigInfo</span>(<span class="hljs-params"><span class="hljs-built_in">String</span> configInfo</span>) &#123;<br>                        <span class="hljs-comment">//监听到配置变化后，更新路由表</span><br>                        <span class="hljs-title function_">updateRouteConfig</span>(configInfo);<br>                    &#125;<br>                &#125;);<br>        <span class="hljs-comment">//第一次拉取配置后，更新路由表</span><br>        <span class="hljs-title function_">updateRouteConfig</span>(configInfo);<br>    &#125;<br><br>    <span class="hljs-comment">//更新路由表</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-built_in">void</span> <span class="hljs-title function_">updateRouteConfig</span>(<span class="hljs-params"><span class="hljs-built_in">String</span> configInfo</span>) &#123;<br>        log.<span class="hljs-title function_">debug</span>(<span class="hljs-string">&quot;监听到配置变化，更新路由表&#123;&#125;&quot;</span>, configInfo);<br>        <span class="hljs-comment">//解析配置信息</span><br>        <span class="hljs-title class_">List</span>&lt;<span class="hljs-title class_">RouteDefinition</span>&gt; routeDefinitions = <span class="hljs-title class_">JSON</span>Util.<span class="hljs-title function_">toList</span>(configInfo, <span class="hljs-title class_">RouteDefinition</span>.<span class="hljs-property">class</span>);<br>        <span class="hljs-comment">//清空路由表</span><br>        <span class="hljs-keyword">for</span> (<span class="hljs-title class_">String</span> id : routeIds) &#123;<br>            routeDefinitionWriter.<span class="hljs-title function_">delete</span>(<span class="hljs-title class_">Mono</span>.<span class="hljs-title function_">just</span>(id)).<span class="hljs-title function_">subscribe</span>();<br>        &#125;<br>        routeIds.<span class="hljs-title function_">clear</span>();<br>        <span class="hljs-comment">//判断是否需要更新路由表</span><br>        <span class="hljs-keyword">if</span> (<span class="hljs-title class_">CollUtil</span>.<span class="hljs-title function_">isEmpty</span>(routeDefinitions)) &#123;<br>            <span class="hljs-keyword">return</span>;<br>        &#125;<br>        <span class="hljs-comment">//更新路由表</span><br>        routeDefinitions.<span class="hljs-title function_">forEach</span>(routeDefinition -&gt; &#123;<br>            <span class="hljs-comment">// 3.1.更新路由</span><br>            routeDefinitionWriter.<span class="hljs-title function_">save</span>(<span class="hljs-title class_">Mono</span>.<span class="hljs-title function_">just</span>(routeDefinition)).<span class="hljs-title function_">subscribe</span>();<br>            <span class="hljs-comment">// 3.2.记录路由id，方便将来删除</span><br>            routeIds.<span class="hljs-title function_">add</span>(routeDefinition.<span class="hljs-title function_">getId</span>());<br>        &#125;);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<h2 id="微服务保护"><a class="markdownIt-Anchor" href="#微服务保护"></a> 微服务保护</h2>
+<p>雪崩问题：微服务调用链路中某个微服务出现故障，引起整个链路中所有微服务不可用，这就是雪崩<br />
+雪崩问题出现的原因主要有：</p>
+<ul>
+<li>微服务相互调用，服务提供者出现故障</li>
+<li>服务调用者没有做好异常处理，导致自身故障</li>
+<li>调用链所有服务级联故障，最终整个链路不可用</li>
+</ul>
+<p>微服务保护的方案有很多，比如：</p>
+<ul>
+<li>请求限流</li>
+<li>线程隔离</li>
+<li>服务熔断</li>
+</ul>
+<p>这些方案或多或少都会导致服务的体验上略有下降</p>
+<p>比如请求限流，降低了并发上限；<br />
+线程隔离，降低了可用资源数量；<br />
+服务熔断，降低了服务的完整度，部分服务变的不可用或弱可用。<br />
+因此这些方案都属于服务降级的方案。但通过这些方案，服务的健壮性得到了提升，</p>
+<h3 id="请求限流"><a class="markdownIt-Anchor" href="#请求限流"></a> 请求限流</h3>
+<p>服务故障最重要原因，就是并发太高！当然，接口的并发不是一直很高，而是突发的。因此请求限流，就是<strong>限制或控制接口访问的并发流量</strong>，避免服务因流量激增而出现故障。</p>
+<p>Sentinel是阿里巴巴开源的一款服务保护框架，目前已经加入SpringCloudAlibaba中。</p>
+<p>下面利用Sentinel实现请求限流：</p>
+<ul>
+<li>在相应的微服务中引入Sentinel依赖</li>
+<li>在配置文件中添加Sentinel配置</li>
+</ul>
+<figure class="highlight oxygene"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs oxygene">spring:<br>  cloud:<br>    sentinel:<br>      transport:<br>        dashboard: localhost:<span class="hljs-number">8090</span><br>      http-<span class="hljs-keyword">method</span>-<span class="hljs-title function_">specify</span>: <span class="hljs-keyword">true</span> # 开启请求方式前缀<br></code></pre></td></tr></table></figure>
+<ul>
+<li>打开Sentinel控制台，查看簇点链路，查看每个接口的访问情况。</li>
+<li>在簇点链路中点击流控，设置流控规则，如QPS为10</li>
+</ul>
+<h3 id="线程隔离"><a class="markdownIt-Anchor" href="#线程隔离"></a> 线程隔离</h3>
+<p>限流可以降低服务器压力，尽量减少因并发流量引起的服务故障的概率，但并不能完全避免服务故障。一旦某个服务出现故障，我们必须隔离对这个服务的调用，避免发生雪崩。</p>
+<p>比如，购物车服务运行中可能涉及到商品服务，商品会占用一些线程资源，为防止商品服务故障导致整个购物车服务不可用，可以限制商品服务可用的线程资源。</p>
+<p>步骤如下：</p>
+<ul>
+<li>开启feign对sentinel的支持</li>
+</ul>
+<figure class="highlight yaml"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs yaml"><span class="hljs-attr">feign:</span><br>  <span class="hljs-attr">sentinel:</span><br>    <span class="hljs-attr">enabled:</span> <span class="hljs-literal">true</span> <span class="hljs-comment"># 开启feign对sentinel的支持</span><br></code></pre></td></tr></table></figure>
+<ul>
+<li>打开Sentinel控制台,打开簇点链路，点击流控</li>
+<li>设置设置并发线程数，如10</li>
+</ul>
+<h3 id="服务熔断"><a class="markdownIt-Anchor" href="#服务熔断"></a> 服务熔断</h3>
+<p>线程隔离限定了线程数，导致接口吞吐能力有限，会产生以下问题：</p>
+<ol>
+<li>超出的QPS上限的请求就只能抛出异常，从而导致购物车的查询失败。但从业务角度来说，即便没有查询到最新的商品信息，购物车也应该展示给用户，用户体验更好。也就是给查询失败设置一个降级处理逻辑。</li>
+<li>由于查询商品的延迟较高（模拟的500ms），从而导致查询购物车的响应时间也变的很长。这样不仅拖慢了购物车服务，消耗了购物车服务的更多资源，而且用户体验也很差。对于商品服务这种不太健康的接口，我们应该直接停止调用，直接走降级逻辑，避免影响到当前服务。也就是将商品查询接口熔断。</li>
+</ol>
+<p>编写降级逻辑一般通过FallbackFactory实现，步骤如下：</p>
+<ul>
+<li>定义降级处理类，实现FallbackFactory接口</li>
+</ul>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br></pre></td><td class="code"><pre><code class="hljs typescript"><span class="hljs-meta">@Slf4j</span><br><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">ItemClientFallbackFactory</span> <span class="hljs-keyword">implements</span> <span class="hljs-title class_">FallbackFactory</span>&lt;<span class="hljs-title class_">ItemClient</span>&gt; &#123;<br>    <span class="hljs-meta">@Override</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-title class_">ItemClient</span> <span class="hljs-title function_">create</span>(<span class="hljs-params">Throwable cause</span>) &#123;<br>        <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">ItemClient</span>() &#123;<br>            <span class="hljs-meta">@Override</span><br>            <span class="hljs-keyword">public</span> <span class="hljs-title class_">List</span>&lt;<span class="hljs-title class_">ItemDTO</span>&gt; <span class="hljs-title function_">queryItemByIds</span>(<span class="hljs-params">Collection&lt;Long&gt; ids</span>) &#123;<br>                log.<span class="hljs-title function_">error</span>(<span class="hljs-string">&quot;查询商品失败&quot;</span>, cause);<br>                <span class="hljs-keyword">return</span> <span class="hljs-title class_">CollUtils</span>.<span class="hljs-title function_">emptyList</span>();<br>            &#125;<br><br>            <span class="hljs-meta">@Override</span><br>            <span class="hljs-keyword">public</span> <span class="hljs-built_in">void</span> <span class="hljs-title function_">deductStock</span>(<span class="hljs-params">List&lt;OrderDetailDTO&gt; items</span>) &#123;<br>                log.<span class="hljs-title function_">error</span>(<span class="hljs-string">&quot;扣减库存失败&quot;</span>, cause);<br>                <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">RuntimeException</span>(cause);<br>            &#125;<br><br>            <span class="hljs-meta">@Override</span><br>            <span class="hljs-keyword">public</span> <span class="hljs-built_in">void</span> <span class="hljs-title function_">restoreStock</span>(<span class="hljs-params">List&lt;OrderDetailDTO&gt; items</span>) &#123;<br>                log.<span class="hljs-title function_">error</span>(<span class="hljs-string">&quot;恢复库存失败&quot;</span>, cause);<br>                <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">RuntimeException</span>(cause);<br>            &#125;<br>        &#125;;<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<ul>
+<li>在配置类中定义Bean</li>
+</ul>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs typescript"><span class="hljs-meta">@Bean</span><br>    <span class="hljs-keyword">public</span> <span class="hljs-title class_">ItemClientFallbackFactory</span> <span class="hljs-title function_">itemClientFallbackFactory</span>(<span class="hljs-params"></span>) &#123;<br>        <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">ItemClientFallbackFactory</span>();<br>    &#125;<br></code></pre></td></tr></table></figure>
+<ul>
+<li>ItemClient接口中使用ItemClientFallbackFactory</li>
+</ul>
+<figure class="highlight less"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs less"><span class="hljs-variable">@FeignClient</span>(value = <span class="hljs-string">&quot;item-service&quot;</span>,fallbackFactory = ItemClientFallbackFactory.class)<br>public interface ItemClient &#123;<br>    <span class="hljs-variable">@GetMapping</span>(<span class="hljs-string">&quot;/items&quot;</span>)<br>    List&lt;ItemDTO&gt; <span class="hljs-built_in">queryItemByIds</span>(<span class="hljs-variable">@RequestParam</span>(<span class="hljs-string">&quot;ids&quot;</span>) Collection&lt;Long&gt; ids);<br>    <span class="hljs-variable">@PutMapping</span>(<span class="hljs-string">&quot;/items/stock/deduct&quot;</span>)<br>    void <span class="hljs-built_in">deductStock</span>(<span class="hljs-variable">@RequestBody</span> List&lt;OrderDetailDTO&gt; items);<br>    <span class="hljs-variable">@PutMapping</span>(<span class="hljs-string">&quot;/items/stock/restore&quot;</span>)<br>    void <span class="hljs-built_in">restoreStock</span>(<span class="hljs-variable">@RequestBody</span> List&lt;OrderDetailDTO&gt; items);<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>编写完降级逻辑后，还需要在Sentinel控制台中配置熔断规则</p>
+<p>Sentinel中的断路器不仅可以统计某个接口的<strong>慢请求比例</strong>，还可以统计<strong>异常请求</strong>比例。<br />
+当这些比例超出阈值时，就会熔断该接口，即拦截访问该接口的一切请求，降级处理；当该接口恢复正常时，再放行对于该接口的请求。<br />
+具体规则在控制台中簇点链路中进行设置即可。</p>
+
                 
               </div>
             
