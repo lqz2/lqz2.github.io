@@ -27,8 +27,10 @@
 <meta property="og:description" content="web开发部分   web开发部分  springboot的依赖注入  构造函数注入 setter方法注入 字段注入   springboot3自动配置原理  主要步骤 使用示例   自定义starter JWT令牌 ThreadLocal  特点 使用   拦截器  作用 拦截器与过滤器的区别 实现 拦截器的执行顺序   Controller中的方法接收参数注解  @RequestParam">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="http://lqz2.github.io/img/gateway.png">
+<meta property="og:image" content="http://lqz2.github.io/img/seata1.png">
+<meta property="og:image" content="http://lqz2.github.io/img/seata2.png">
 <meta property="article:published_time" content="2024-10-13T07:03:53.000Z">
-<meta property="article:modified_time" content="2024-12-03T08:36:45.047Z">
+<meta property="article:modified_time" content="2024-12-04T02:13:52.654Z">
 <meta property="article:author" content="zql">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="http://lqz2.github.io/img/gateway.png">
@@ -224,7 +226,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          13k 字
+          14k 字
         
       </span>
     
@@ -235,7 +237,7 @@
         
         
         
-          112 分钟
+          121 分钟
         
       </span>
     
@@ -416,6 +418,13 @@
 <li><a href="#%E8%AF%B7%E6%B1%82%E9%99%90%E6%B5%81">请求限流</a></li>
 <li><a href="#%E7%BA%BF%E7%A8%8B%E9%9A%94%E7%A6%BB">线程隔离</a></li>
 <li><a href="#%E6%9C%8D%E5%8A%A1%E7%86%94%E6%96%AD">服务熔断</a></li>
+</ul>
+</li>
+<li><a href="#%E5%88%86%E5%B8%83%E5%BC%8F%E4%BA%8B%E5%8A%A1">分布式事务</a>
+<ul>
+<li><a href="#seata%E7%9A%84%E5%9F%BA%E6%9C%AC%E7%94%A8%E6%B3%95">Seata的基本用法</a></li>
+<li><a href="#xa%E6%A8%A1%E5%BC%8F">XA模式</a></li>
+<li><a href="#at%E6%A8%A1%E5%BC%8F">AT模式</a></li>
 </ul>
 </li>
 </ul>
@@ -1200,6 +1209,71 @@ ThreadLocal 提供了线程本地的实例。它与普通变量的区别在于�
 <p>Sentinel中的断路器不仅可以统计某个接口的<strong>慢请求比例</strong>，还可以统计<strong>异常请求</strong>比例。<br />
 当这些比例超出阈值时，就会熔断该接口，即拦截访问该接口的一切请求，降级处理；当该接口恢复正常时，再放行对于该接口的请求。<br />
 具体规则在控制台中簇点链路中进行设置即可。</p>
+<h2 id="分布式事务"><a class="markdownIt-Anchor" href="#分布式事务"></a> 分布式事务</h2>
+<p>整个业务中，各个本地事务是有关联的。因此每个微服务的本地事务，也可以称为分支事务。多个有关联的分支事务一起就组成了全局事务。我们必须保证整个全局事务同时成功或失败。</p>
+<p>比如商品添加购物车后，进入下单界面，此时如果将后台数据库中对应商品库存改为0，那么点击下单会下单失败，但是回到购物车界面，发现购物车中的商品已经清除了，说明购物服务对其他服务的异常没有感知，没有保证事务的一致性。</p>
+<p>解决分布式事务一般采用Seata，Seata中有三个重要的角色：</p>
+<ul>
+<li>TC (Transaction Coordinator) - 事务协调者：维护全局和分支事务的状态，协调全局事务提交或回滚。</li>
+<li>TM (Transaction Manager) - 事务管理器：定义全局事务的范围、开始全局事务、提交或回滚全局事务。</li>
+<li>RM (Resource Manager) - 资源管理器：管理分支事务，与TC交谈以注册分支事务和报告分支事务的状态，并驱动分支事务提交或回滚。</li>
+</ul>
+<p>其中，TM和RM可以理解为Seata的客户端部分，引入到参与事务的微服务依赖中即可。将来TM和RM就会协助微服务，实现本地分支事务与TC之间交互，实现事务的提交或回滚。<br />
+而TC服务则是事务协调中心，是一个独立的微服务，需要单独部署。</p>
+<h3 id="seata的基本用法"><a class="markdownIt-Anchor" href="#seata的基本用法"></a> Seata的基本用法</h3>
+<ul>
+<li>首先，在服务端部署TC</li>
+<li>在微服务中引入Seata的依赖，在配置文件中配置Seata</li>
+<li>seata的客户端在解决分布式事务的时候需要记录一些中间数据，因此还需要准备数据表。</li>
+<li>在对应serviceimpl的方法上添加@GlobalTransactional注解，@GlobalTransactional注解就是在标记事务的起点，将来TM就会基于这个方法判断全局事务范围，初始化全局事务。</li>
+</ul>
+<p>此外Seata支持四种不同的分布式事务解决方案：</p>
+<ul>
+<li>XA</li>
+<li>TCC</li>
+<li>AT</li>
+<li>SAGA</li>
+</ul>
+<p>下面主要介绍XA和AT两种解决方案。</p>
+<h3 id="xa模式"><a class="markdownIt-Anchor" href="#xa模式"></a> XA模式</h3>
+<p>A是一种规范，目前主流数据库都实现了这种规范，实现的原理都是基于两阶段提交。</p>
+<p>一阶段：</p>
+<ul>
+<li>TM发起并注册全局事务到TC</li>
+<li>TM调用分支事务</li>
+<li>RM注册分支事务到TC</li>
+<li>本地事务执行完sql后<strong>不提交</strong>，而是报告事务执行状态给TC，继续持有数据库锁</li>
+</ul>
+<p>二阶段：</p>
+<ul>
+<li>TC基于一阶段的报告检查事务执行状态</li>
+<li>如果一阶段都成功，则通知所有事务参与者，提交事务</li>
+<li>如果一阶段任意一个参与者失败，则通知所有事务参与者回滚事务</li>
+</ul>
+<p><img src="/img/seata1.png" srcset="/img/loading.gif" lazyload alt="" /></p>
+<p>XA模式的优点是什么？</p>
+<ul>
+<li>事务的强一致性，满足ACID原则</li>
+<li>常用数据库都支持，实现简单，并且没有代码侵入</li>
+</ul>
+<p>XA模式的缺点是什么？</p>
+<ul>
+<li>因为一阶段需要锁定数据库资源，等待二阶段结束才释放，<strong>性能较差</strong></li>
+<li>依赖关系型数据库实现事务，有的数据库不支持XA</li>
+</ul>
+<p>使用XA模式很简单，只需要在在配置文件中设置XA模式，然后添加@GlobalTransactional注解即可(上面已经用过)：</p>
+<figure class="highlight haskell"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs haskell"><span class="hljs-title">seata</span>:<br>  <span class="hljs-class"><span class="hljs-keyword">data</span>-source-proxy-mode: <span class="hljs-type">XA</span></span><br></code></pre></td></tr></table></figure>
+<h3 id="at模式"><a class="markdownIt-Anchor" href="#at模式"></a> AT模式</h3>
+<p>AT模式是Seata的默认模式，AT模式是基于数据库的undo-log（数据快照）实现的，流程如下图：</p>
+<p><img src="/img/seata2.png" srcset="/img/loading.gif" lazyload alt="" /></p>
+<p>与XA模式不同的是，AT模式<strong>执行sql之前要保存数据快照</strong>，然后执行sql，执行完<strong>立刻提交</strong>，并向TC报告状态<br />
+TC检查各事务状态，如果所有事务都成功则删除undo-log，如果有人失败则根据undo-log回滚事务</p>
+<p>简述AT模式与XA模式最大的区别是什么？</p>
+<ul>
+<li>XA模式一阶段不提交事务，锁定资源；AT模式一阶段直接提交，不锁定资源。</li>
+<li>XA模式依赖数据库机制实现回滚；AT模式利用数据快照实现数据回滚。</li>
+<li>XA模式强一致；AT模式最终一致（会有短暂不一致）。</li>
+</ul>
 
                 
               </div>
