@@ -96,6 +96,16 @@ tags:
         - [AT模式](#at模式)
         - [AT模式的脏写问题](#at模式的脏写问题)
         - [TCC模式](#tcc模式)
+    - [消息队列 (MQ)](#消息队列-mq)
+        - [基础知识](#基础知识)
+        - [RabbitMQ基础知识](#rabbitmq基础知识)
+        - [RabbitMQ交换机类型](#rabbitmq交换机类型)
+        - [声明队列和交换机](#声明队列和交换机)
+        - [消息转换器](#消息转换器)
+        - [发送者可靠性](#发送者可靠性)
+        - [MQ可靠性](#mq可靠性)
+        - [消费者可靠性](#消费者可靠性)
+        - [延迟消息](#延迟消息)
 
 <!-- /TOC -->
 
@@ -1807,3 +1817,291 @@ TCC的缺点是什么？
 - 有代码侵入，需要人为编写try、Confirm和Cancel接口，太麻烦
 - 软状态，事务是最终一致
 - 需要考虑Confirm和Cancel的失败情况，做好幂等处理、事务悬挂和空回滚处理
+
+## 消息队列 (MQ)
+
+### 基础知识
+引入MQ之前，微服务之间的调用都是基于OpenFeign的同步调用，存在以下问题：
+
+- 拓展性差：每次有新的需求，现有支付逻辑都要跟着变化，拓展性不好
+- 性能下降：调用者需要等待服务提供者执行完返回结果后，才能继续向下执行，也就是说每次远程调用，调用者都是阻塞等待状态。最终整个业务的响应时长就是每次远程调用的执行时长之和
+- 级联失败：由于是基于OpenFeign调用交易服务、通知服务。当交易服务、通知服务出现故障时，整个事务都会回滚，交易失败。
+
+异步调用方式其实就是基于消息通知的方式，一般包含三个角色：
+- 消息发送者：投递消息的人，就是原来的调用方
+- 消息Broker：管理、暂存、转发消息，你可以把它理解成微信服务器
+- 消息接收者：接收和处理消息的人，就是原来的服务提供方
+
+异步调用的优势包括：
+- 耦合度更低
+- 性能更好
+- 业务拓展性强
+- 故障隔离，避免级联失败
+
+缺点是：
+- 完全依赖于Broker的可靠性、安全性和性能
+- 架构复杂，后期维护和调试麻烦
+
+几种常见的MQ对比如下：
+|               | RabbitMQ            | ActiveMQ                                                     | RocketMQ     | Kafka         |
+| :------------: | :------------------: | :-----------------------------------------------------------: | :-----------: | :------------: |
+| 公司/社区     | Rabbit              | Apache                                                       | 阿里         | Apache        |
+| 开发语言      | Erlang              | Java                                                         | Java         | Scala&Java   |
+| 协议支持      | AMQP, XMPP, SMTP, STOMP | OpenWire,STOMP, REST,XMPP,AMQP                            | 自定义协议   | 自定义协议    |
+| 可用性        | 高                  | 一般                                                         | 高           | 高            |
+| 单机吞吐量    | 一般                | 差                                                           | 高           | 非常高        |
+| 消息延迟      | 微秒级              | 毫秒级                                                       | 毫秒级       | 毫秒以内      |
+| 消息可靠性    | 高                  | 一般                                                         | 高           | 一般          |
+
+### RabbitMQ基础知识
+
+RabbitMQ主要有以下几个角色：
+- publisher：生产者，也就是发送消息的一方
+- consumer：消费者，也就是消费消息的一方
+- queue：队列，存储消息。生产者投递的消息会暂存在消息队列中，等待消费者处理
+- exchange：交换机，负责消息路由。生产者发送的消息由交换机决定投递到哪个队列。
+- virtual host：虚拟主机，起到数据隔离的作用。每个虚拟主机相互独立，有各自的exchange、queue
+
+上述内容都可以在RabbitMQ的管理控制台来管理
+
+WorkQueues模型：
+Work queues，任务模型。简单来说就是让多个消费者绑定到一个队列，共同消费队列中的消息。RabbitMQ**默认会将消息平均分发**给每个消费者。
+这样的问题是处理消息快的消费者会快速消费完分配给自己所有消息，然后处于空闲状态，而处理慢的消费者则会消费的很慢。因此我们可以通过设置prefetch来限制每个消费者一次性获取的消息数量。
+```
+spring:
+  rabbitmq:
+    listener:
+      simple:
+        prefetch: 1 # 每次只能获取一条消息，处理完成才能获取下一个消息
+```
+这样设置以后，处理快的消费者会处理更多消息（能者多劳），总的处理时间会大大缩短。
+
+### RabbitMQ交换机类型
+交换机的作用是：
+- 接收publisher发送的消息
+- 将消息按照规则路由到与之绑定的队列
+- 不能缓存消息，路由失败，消息丢失
+- FanoutExchange的会将消息路由到每个绑定的队列
+
+
+RabbitMQ的交换机类型有以下几种：
+- Fanout：广播，将消息交给所有绑定到交换机的队列。
+- Direct：订阅，基于RoutingKey（路由key）发送给订阅了消息的队列
+- Topic：通配符订阅，与Direct类似，只不过RoutingKey可以使用通配符
+- Headers：头匹配，基于MQ的消息头匹配，用的较少。
+
+Direct交换机和Topic交换机的区别：
+- Direct交换机是**完全匹配**，只有RoutingKey和BindingKey完全一致，才会将消息路由到队列，可以是多个单词、数字、符号等组成的字符串。
+- Topic交换机接收的消息RoutingKey必须是多个单词，以 `.` 分割
+- Topic交换机与队列绑定时的bindingKey可以指定通配符，`#`：代表0个或多个词，`*`：代表1个词
+
+BindingKey和RoutingKey的区别：
+- RoutingKey是**生产者发送消息时指定**的，用于交换机将消息路由到队列
+- BindingKey是**消费者绑定队列时指定**的，用于交换机将消息路由到队列
+
+### 声明队列和交换机
+声明的方式有两种，通过Bean和通过注解。
+通过Bean的方式比较麻烦，需要手动声明队列和交换机，然后绑定队列和交换机。
+下面给出通过注解声明的例子：
+使用前需要引入`spring-boot-starter-amqp`依赖
+```
+public class PayStatusListener {
+
+    private final IOrderService orderService;
+
+    @RabbitListener(bindings = @QueueBinding(
+            value=@Queue(name = "trade.pay.success.queue",durable = "true"),
+            exchange = @Exchange(name = "pay.direct",type = ExchangeTypes.DIRECT),
+            key = {"pay.success"}
+    ))
+    public void listenPaySuccess(Long orderId) {
+        //查询订单
+        Order order = orderService.getById(orderId);
+        //判断订单状态,仅处理未支付订单
+        if(order==null || order.getStatus()!=1) {
+            return;
+        }
+        //标记订单支付成功
+        orderService.markOrderPaySuccess(orderId);
+    }
+}
+```
+
+发送消息：
+```
+rabbitTemplate.convertAndSend("pay.direct", "pay.success", po.getBizOrderNo());
+```
+### 消息转换器
+SpringAMQP数据传输时，会把发送的消息序列化为字节发送给MQ，接收消息的时候，还会把字节反序列化为Java对象。
+默认情况下Spring采用的序列化方式是JDK序列化。众所周知，JDK序列化存在下列问题：
+- 数据体积过大
+- 有安全漏洞
+- 可读性差
+
+我们希望消息体的体积更小、可读性更高，因此可以使用JSON方式来做序列化和反序列化。步骤如下：
+- 在publisher和consumer中引入依赖
+```
+<dependency>
+    <groupId>com.fasterxml.jackson.core</groupId>
+    <artifactId>jackson-databind</artifactId>
+</dependency>
+```
+- 在publisher和consumer的启动类中添加Bean
+```
+@Bean
+public MessageConverter messageConverter(){
+    // 1.定义消息转换器
+    Jackson2JsonMessageConverter jjmc = new Jackson2JsonMessageConverter();
+    // 2.配置自动创建消息id，用于识别不同消息，也可以在业务中基于ID判断是否是重复消息
+    jjmc.setCreateMessageIds(true);
+    return jjmc;
+}
+```
+### 发送者可靠性
+RabbitMQ提供了发送者重连机制和发送者确认机制来保证发送者的可靠性。
+
+发送者重连：当RabbitTemplate与MQ连接超时后，多次重试，可通过配置yaml文件启用。重试机制是阻塞式的重试，也就是说多次重试等待的过程中，当前线程是被阻塞的。
+如果对于业务性能有要求，建议禁用重试机制。
+
+发送者确认：生产者消息确认机制，包括Publisher Confirm和Publisher Return两种。在开启确认机制的情况下，当生产者发送消息给MQ后，MQ会根据消息处理的情况返回不同的回执。包括以下几种情况：
+- 消息到达交换机，但是路由失败，会通过Publisher Return机制返回ACK，告知投递成功
+- 临时消息到达交换机，并路由到队列，返回ACK，告知投递成功
+- 持久消息到达交换机，并路由到队列完成持久化，返回ACK，告知投递成功
+- 其他情况都会返回NACK，告知投递失败
+
+总结就是只要消息到了交换机，就会返回ACK，但是不一定会投递到队列中。
+开启生产者确认比较消耗MQ性能，一般不建议开启。
+
+### MQ可靠性
+默认情况下，MQ接收到的消息保存在内存中，如果MQ宕机，消息会丢失。为了保证可靠性，主要通过数据持久化和懒队列来实现。
+
+数据持久化包括：
+- 交换机持久化，默认就是持久化的
+- 队列持久化，也是默认持久化的
+- 消息持久化，需要在发送消息时设置
+
+懒队列：
+在默认情况下，RabbitMQ会将接收到的信息保存在内存中以降低消息收发的延迟。但在某些特殊情况下，这会导致消息积压，比如：
+- 消费者宕机或出现网络故障
+- 消息发送量激增，超过了消费者处理速度
+- 消费者处理业务发生阻塞
+
+一旦出现消息堆积问题，RabbitMQ的内存占用就会越来越高，直到触发内存预警上限。此时RabbitMQ会将内存消息刷到磁盘上，这个行为称为PageOut. 
+PageOut会耗费一段时间，并且会阻塞队列进程。因此在这个过程中RabbitMQ不会再处理新的消息，生产者的所有请求都会被阻塞。
+
+懒队列的特点是：
+- 接收到消息后直接存入磁盘而非内存
+- 消费者要消费消息时才会从磁盘中读取并加载到内存（也就是懒加载）
+- 支持数百万条的消息存储
+
+RabbitMQ 3.12版本之后，LazyQueue已经成为所有队列的默认格式。之前版本声明LazyQueue：
+```
+@RabbitListener(queuesToDeclare = @Queue(
+        name = "lazy.queue",
+        durable = "true",
+        arguments = @Argument(name = "x-queue-mode", value = "lazy")
+))
+public void listenLazyQueue(String msg){
+    log.info("接收到 lazy.queue的消息：{}", msg);
+}
+```
+### 消费者可靠性
+
+消费者确认机制：
+为了确认消费者是否成功处理消息，RabbitMQ提供了消费者确认机制。当消费者处理消息结束后，应该向RabbitMQ发送一个回执，告知RabbitMQ自己消息处理状态。回执有三种可选值：
+- ack：成功处理消息，RabbitMQ从队列中删除该消息
+- nack：消息处理失败，RabbitMQ需要再次投递消息
+- reject：消息处理失败并拒绝该消息，RabbitMQ从队列中删除该消息
+
+一般reject方式用的较少，除非是消息格式有问题
+
+SpringAMQP帮我们实现了消息确认。并允许我们通过配置文件设置ACK处理方式，有三种模式：
+- none：不处理。即消息投递给消费者后立刻ack，消息会立刻从MQ删除。非常不安全，不建议使用
+- manual：手动模式。需要自己在业务代码中调用api，发送ack或reject，存在业务入侵，但更灵活
+- auto：自动模式。SpringAMQP利用AOP对我们的消息处理逻辑做了环绕增强，当业务正常执行时则自动返回ack. 当业务出现异常时，根据异常类型判断返回不同结果：
+  - 如果是业务异常，会自动返回nack；
+  - 如果是消息处理或校验异常，自动返回reject;
+
+
+失败重试机制：
+当消费者出现异常后，消息会不断requeue（重入队）到队列，再重新发送给消费者。如果消费者再次执行依然出错，消息会再次requeue到队列，再次投递，直到消息处理成功为止。
+极端情况就是消费者一直无法执行成功，那么消息requeue就会无限循环，导致mq的消息处理飙升，带来不必要的压力
+
+应对上述情况Spring又提供了消费者失败重试机制：在消费者出现异常时利用**本地重试**，而不是无限制的requeue到mq队列。例如
+```
+spring:
+  rabbitmq:
+    listener:
+      simple:
+        retry:
+          enabled: true # 开启消费者失败重试
+          initial-interval: 1000ms # 初识的失败等待时长为1秒
+          multiplier: 1 # 失败的等待时长倍数，下次等待时长 = multiplier * last-interval
+          max-attempts: 3 # 最大重试次数
+          stateless: true # true无状态；false有状态。如果业务中包含事务，这里改为false
+```
+- 开启本地重试时，消息处理过程中抛出异常，不会requeue到队列，而是在消费者本地重试
+- 重试达到最大次数后，Spring会返回reject，消息会被丢弃
+对于失败的处理一共有三种策略：
+-  RejectAndDontRequeueRecoverer：重试耗尽后，直接reject，丢弃消息。默认就是这种方式 
+-  ImmediateRequeueMessageRecoverer：重试耗尽后，返回nack，消息重新入队 
+-  RepublishMessageRecoverer：重试耗尽后，将失败消息投递到指定的交换机 
+
+业务幂等性：
+是指同一个业务，执行一次或多次对业务状态的影响是一致的。
+数据的更新往往不是幂等的，如果重复执行可能造成不一样的后果。比如：
+- 取消订单，恢复库存的业务。如果多次恢复就会出现库存重复增加的情况
+- 退款业务。重复退款对商家而言会有经济损失。
+保证消息处理的幂等性，这里给出两种方案：
+- 唯一消息ID
+    1. 每一条消息都生成一个唯一的id，与消息一起投递给消费者。
+    2. 消费者接收到消息后处理自己的业务，业务处理成功后将消息ID保存到数据库
+    3. 如果下次又收到相同消息，去数据库查询判断是否存在，存在则为重复消息放弃处理。
+    4. 实现方式很简单，在Jackson的消息转换器里即可实现，见上面消息转换器部分
+- 业务状态判断，基于业务本身的逻辑或状态来判断是否是重复的请求或消息
+
+### 延迟消息
+发送者发送消息后，消费者在指定时间后才收到消息。
+
+假设现在有以下极端情况，用户下单后，进行支付服务，如果支付服务出现问题，导致支付服务无法通知交易服务修改订单状态，那么支付服务流水为已支付，交易服务的订单为未支付，状态不一致；如果用户没有支付，就会一直占有库存资源，导致其他客户无法正常交易
+
+解决方法是，设置延迟消息，一段时间后通知交易服务查询支付状态即可。
+
+实现延迟消息有死信交换机和延迟消息插件两种。
+
+死信交换机：
+当一个队列中的消息满足下列情况之一时，可以成为死信（dead letter）：
+- 消费者使用basic.reject或 basic.nack声明消费失败，并且消息的requeue参数设置为false
+- 消息是一个过期消息，超时无人消费
+- 要投递的队列消息满了，无法投递
+如果一个队列中的消息已经成为死信，并且这个队列通过dead-letter-exchange属性指定了一个交换机，那么队列中的死信就会投递到这个交换机中，而这个交换机就称为死信交换机（Dead Letter Exchange）。
+
+延迟消息插件：
+死信交换机的实现较繁琐，DelayExchange插件则更为便捷，步骤如下：
+- 安装配置插件
+- 声明延迟交换机，基于注解
+```
+@RabbitListener(bindings = @QueueBinding(
+            value = @Queue(name = MQConstants.DELAY_EXCHANGE_NAME),
+            exchange = @Exchange(name = MQConstants.DELAY_EXCHANGE_NAME, delayed = "true"),
+            key = {MQConstants.DELAY_ORDER_KEY}
+    ))
+```
+- 发送延迟消息
+```
+rabbitTemplate.convertAndSend(
+                MQConstants.DELAY_EXCHANGE_NAME,
+                MQConstants.DELAY_ORDER_KEY,
+                order.getId(),
+                message -> {
+                    message.getMessageProperties().setDelay(1000 * 10 * 1);
+                    return message;
+                }
+        );
+```
+
+综上，支付服务与交易服务之间的订单状态一致性是如何保证的？
+- 首先，支付服务会正在用户支付成功以后利用MQ消息通知交易服务，完成订单状态同步。
+- 其次，为了保证MQ消息的可靠性，我们采用了生产者确认机制、消费者确认、消费者失败重试等策略，确保消息投递的可靠性
+- 最后，我们还在交易服务设置了定时任务，定期查询订单支付状态。这样即便MQ通知失败，还可以利用延迟任务作为兜底方案，确保订单支付状态的最终一致性。
+
