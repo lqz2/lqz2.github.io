@@ -30,7 +30,7 @@
 <meta property="og:image" content="http://lqz2.github.io/img/seata1.png">
 <meta property="og:image" content="http://lqz2.github.io/img/seata2.png">
 <meta property="article:published_time" content="2024-10-13T07:03:53.000Z">
-<meta property="article:modified_time" content="2024-12-09T09:12:23.801Z">
+<meta property="article:modified_time" content="2024-12-10T11:33:00.730Z">
 <meta property="article:author" content="zql">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="http://lqz2.github.io/img/gateway.png">
@@ -226,7 +226,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          20k 字
+          24k 字
         
       </span>
     
@@ -237,7 +237,7 @@
         
         
         
-          165 分钟
+          202 分钟
         
       </span>
     
@@ -442,6 +442,14 @@
 <li><a href="#mq%E5%8F%AF%E9%9D%A0%E6%80%A7">MQ可靠性</a></li>
 <li><a href="#%E6%B6%88%E8%B4%B9%E8%80%85%E5%8F%AF%E9%9D%A0%E6%80%A7">消费者可靠性</a></li>
 <li><a href="#%E5%BB%B6%E8%BF%9F%E6%B6%88%E6%81%AF">延迟消息</a></li>
+</ul>
+</li>
+<li><a href="#elasticsearch">ElasticSearch</a>
+<ul>
+<li><a href="#%E5%9F%BA%E7%A1%80%E7%9F%A5%E8%AF%86-1">基础知识</a></li>
+<li><a href="#kibana%E4%B8%AD%E7%9A%84%E5%A2%9E%E5%88%A0%E6%94%B9%E6%9F%A5">Kibana中的增删改查</a></li>
+<li><a href="#dsl%E6%9F%A5%E8%AF%A2">DSL查询</a></li>
+<li><a href="#restclient%E5%9F%BA%E7%A1%80%E6%93%8D%E4%BD%9C">RestClient基础操作</a></li>
 </ul>
 </li>
 </ul>
@@ -1612,7 +1620,311 @@ PageOut会耗费一段时间，并且会阻塞队列进程。因此在这个过�
 <li>其次，为了保证MQ消息的可靠性，我们采用了生产者确认机制、消费者确认、消费者失败重试等策略，确保消息投递的可靠性</li>
 <li>最后，我们还在交易服务设置了定时任务，定期查询订单支付状态。这样即便MQ通知失败，还可以利用延迟任务作为兜底方案，确保订单支付状态的最终一致性。</li>
 </ul>
-
+<h2 id="elasticsearch"><a class="markdownIt-Anchor" href="#elasticsearch"></a> ElasticSearch</h2>
+<h3 id="基础知识-2"><a class="markdownIt-Anchor" href="#基础知识-2"></a> 基础知识</h3>
+<p>数据库的模糊搜索存在以下问题：</p>
+<ul>
+<li>数据库模糊查询不走索引，在数据量较大的时候，查询性能很差。</li>
+<li>数据库的模糊搜索功能单一，必须恰好包含用户搜索的关键字。而在搜索引擎中，用户输入出现个别错字，或者用拼音搜索、同义词搜索都能正确匹配到数据。</li>
+</ul>
+<p>Elasticsearch是由elastic公司开发的一套搜索引擎技术，它是elastic技术栈中的一部分。完整的技术栈包括：</p>
+<ul>
+<li>Elasticsearch：用于数据存储、计算和搜索</li>
+<li>Logstash/Beats：用于数据收集</li>
+<li>Kibana：用于数据可视化<br />
+整套技术栈被称为ELK，经常用来做日志收集、系统监控和状态分析等。</li>
+</ul>
+<p>一般数据库搜索中，当搜索条件为模糊匹配时，由于索引无法生效，导致从索引查询退化为全表扫描，效率很差。<br />
+因此，正向索引适合于根据索引字段的精确搜索，不适合基于部分词条的模糊匹配。<br />
+elasticsearch之所以有如此高性能的搜索表现，正是得益于底层的倒排索引技术。</p>
+<p>什么是<em><strong>倒排索引</strong></em>？</p>
+<ul>
+<li>正向索引是最传统的，根据id索引的方式。但根据词条查询时，必须先逐条获取每个文档，然后判断文档中是否包含所需要的词条，是根据文档找词条的过程。</li>
+<li>而倒排索引则相反，是先找到用户要搜索的词条，根据词条得到保护词条的文档的id，然后根据id获取文档。是根据词条找文档的过程。<br />
+这里的文档就是数据库中的一行数据，词条就是分词后的词语。</li>
+</ul>
+<p>创建倒排索引的过程：</p>
+<ul>
+<li>分词：将文档中的词语进行分词，形成词条</li>
+<li>建立倒排索引：将词条与文档id进行映射，形成倒排索引表</li>
+</ul>
+<p>有了倒排索引，搜索流程就变成了：</p>
+<ul>
+<li>用户输入搜索词条</li>
+<li>对输入进行分词</li>
+<li>根据分词结果在倒排索引表中查找文档id</li>
+<li>根据文档id获取文档</li>
+</ul>
+<p>一些<strong>基础概念</strong>对比：</p>
+<table>
+<thead>
+<tr>
+<th>MySQL</th>
+<th>Elasticsearch</th>
+<th>说明</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Table</td>
+<td>Index</td>
+<td>索引(index)，就是文档的集合，类似数据库的表(table)</td>
+</tr>
+<tr>
+<td>Row</td>
+<td>Document</td>
+<td>文档（Document），就是一条一条的数据，类似数据库中的行（Row），文档都是JSON格式</td>
+</tr>
+<tr>
+<td>Column</td>
+<td>Field</td>
+<td>字段（Field），就是JSON文档中的字段，类似数据库中的列（Column）</td>
+</tr>
+<tr>
+<td>Schema</td>
+<td>Mapping</td>
+<td>Mapping（映射）是索引中文档的约束，例如字段类型约束。类似数据库的表结构（Schema）</td>
+</tr>
+<tr>
+<td>SQL</td>
+<td>DSL</td>
+<td>DSL是elasticsearch提供的JSON风格的请求语句，用来操作elasticsearch，实现CRUD</td>
+</tr>
+</tbody>
+</table>
+<p>Mapping是对索引库中文档的约束，常见的Mapping属性包括：</p>
+<ul>
+<li>type：字段数据类型，常见的简单类型有：
+<ul>
+<li>字符串：text（可分词的文本）、keyword（精确值，例如：品牌、国家、ip地址）</li>
+<li>数值：long、integer、short、byte、double、float、</li>
+<li>布尔：boolean</li>
+<li>日期：date</li>
+<li>对象：object</li>
+</ul>
+</li>
+<li>index：是否创建索引，默认为true</li>
+<li>analyzer：使用哪种分词器</li>
+<li>properties：该字段的子字段</li>
+</ul>
+<h3 id="kibana中的增删改查"><a class="markdownIt-Anchor" href="#kibana中的增删改查"></a> Kibana中的增删改查</h3>
+<p>Kibana是一个开源的数据分析和可视化平台，可以让你在Elasticsearch上进行数据分析和搜索。</p>
+<p><strong>索引库的增删改查</strong></p>
+<ul>
+<li>创建索引库</li>
+</ul>
+<figure class="highlight gams"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><code class="hljs gams"><span class="hljs-keyword">PUT</span> /索引库名称<br>&#123;<br>  <span class="hljs-string">&quot;mappings&quot;</span>: &#123;<br>    <span class="hljs-string">&quot;properties&quot;</span>: &#123;<br>      <span class="hljs-string">&quot;字段名&quot;</span>:&#123;<br>        <span class="hljs-string">&quot;type&quot;</span>: <span class="hljs-string">&quot;text&quot;</span>,<br>        <span class="hljs-string">&quot;analyzer&quot;</span>: <span class="hljs-string">&quot;ik_smart&quot;</span><br>      &#125;,<br>      <span class="hljs-string">&quot;字段名2&quot;</span>:&#123;<br>        <span class="hljs-string">&quot;type&quot;</span>: <span class="hljs-string">&quot;keyword&quot;</span>,<br>        <span class="hljs-string">&quot;index&quot;</span>: <span class="hljs-string">&quot;false&quot;</span><br>      &#125;,<br>      <span class="hljs-string">&quot;字段名3&quot;</span>:&#123;<br>        <span class="hljs-string">&quot;properties&quot;</span>: &#123;<br>          <span class="hljs-string">&quot;子字段&quot;</span>: &#123;<br>            <span class="hljs-string">&quot;type&quot;</span>: <span class="hljs-string">&quot;keyword&quot;</span><br>          &#125;<br>        &#125;<br>      &#125;,<br>      <span class="hljs-comment">// ...略</span><br>    &#125;<br>  &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<ul>
+<li>查询索引库</li>
+</ul>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs routeros"><span class="hljs-built_in">GET</span> /索引库名<br></code></pre></td></tr></table></figure>
+<ul>
+<li>删除索引库</li>
+</ul>
+<figure class="highlight gauss"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs gauss"><span class="hljs-keyword">DELETE</span> /索引库名<br></code></pre></td></tr></table></figure>
+<ul>
+<li>修改索引库，索引库一旦创建，无法修改mapping，但可以添加新的字段</li>
+</ul>
+<figure class="highlight awk"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs awk">PUT <span class="hljs-regexp">/索引库名/</span>_mapping<br>&#123;<br>  <span class="hljs-string">&quot;properties&quot;</span>: &#123;<br>    <span class="hljs-string">&quot;新字段名&quot;</span>:&#123;<br>      <span class="hljs-string">&quot;type&quot;</span>: <span class="hljs-string">&quot;integer&quot;</span><br>    &#125;<br>  &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p><strong>文档的增删改查</strong></p>
+<ul>
+<li>新增文档</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs bash">POST /索引库名/_doc/文档<span class="hljs-built_in">id</span><br>&#123;<br>    <span class="hljs-string">&quot;字段1&quot;</span>: <span class="hljs-string">&quot;值1&quot;</span>,<br>    <span class="hljs-string">&quot;字段2&quot;</span>: <span class="hljs-string">&quot;值2&quot;</span>,<br>    <span class="hljs-string">&quot;字段3&quot;</span>: &#123;<br>        <span class="hljs-string">&quot;子属性1&quot;</span>: <span class="hljs-string">&quot;值3&quot;</span>,<br>        <span class="hljs-string">&quot;子属性2&quot;</span>: <span class="hljs-string">&quot;值4&quot;</span><br>    &#125;,<br>&#125;<br></code></pre></td></tr></table></figure>
+<ul>
+<li>查询文档</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs bash">GET /&#123;索引库名称&#125;/_doc/&#123;<span class="hljs-built_in">id</span>&#125;<br></code></pre></td></tr></table></figure>
+<ul>
+<li>删除文档</li>
+</ul>
+<figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs gradle"><span class="hljs-keyword">DELETE</span> <span class="hljs-regexp">/&#123;索引库名&#125;/</span>_doc/id值<br></code></pre></td></tr></table></figure>
+<ul>
+<li>修改文档有两种方式，全量修改直接覆盖原来的文档；局部修改，修改文档中的部分字段，</li>
+</ul>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs bash">全量修改：与新增文档语法一样<br>局部修改：<br>POST /&#123;索引库名&#125;/_update/文档<span class="hljs-built_in">id</span><br>&#123;<br>    <span class="hljs-string">&quot;doc&quot;</span>: &#123;<br>         <span class="hljs-string">&quot;字段名&quot;</span>: <span class="hljs-string">&quot;新的值&quot;</span>,<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<h3 id="dsl查询"><a class="markdownIt-Anchor" href="#dsl查询"></a> DSL查询</h3>
+<p>Elasticsearch提供了基于JSON的DSL（Domain Specific Language）语句来定义<strong>复杂的查询条件</strong><br />
+Elasticsearch的查询可以分为两大类：</p>
+<ul>
+<li>叶子查询（Leaf query clauses）：一般是在特定的字段里查询特定值，属于简单查询，很少单独使用。</li>
+<li>复合查询（Compound query clauses）：以逻辑方式组合多个叶子查询或者更改叶子查询的行为方式。</li>
+</ul>
+<p><strong>叶子查询</strong></p>
+<ul>
+<li>全文检索查询（Full Text Queries）：利用分词器对用户输入搜索条件先分词，得到词条，然后再利用倒排索引搜索词条。例如：
+<ul>
+<li>match：</li>
+<li>multi_match</li>
+</ul>
+</li>
+<li>精确查询（Term-level queries）：不对用户输入搜索条件分词，根据字段内容精确值匹配。但只能查找keyword、数值、日期、boolean类型的字段。例如：
+<ul>
+<li>ids：根据文档id查询</li>
+<li>term：精确匹配某个字段的值</li>
+<li>range：范围查询</li>
+</ul>
+</li>
+<li>地理坐标查询：用于搜索地理位置，搜索方式很多，例如：
+<ul>
+<li>geo_bounding_box：按矩形搜索</li>
+<li>geo_distance：按点和半径搜索</li>
+</ul>
+</li>
+</ul>
+<p><strong>全文检索查询</strong></p>
+<ul>
+<li>match查询，例如模糊搜索商品名称为苹果手机的商品</li>
+</ul>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs routeros"><span class="hljs-built_in">GET</span> /&#123;索引库名&#125;/_search<br>&#123;<br>  <span class="hljs-string">&quot;query&quot;</span>: &#123;<br>    <span class="hljs-string">&quot;match&quot;</span>: &#123;<br>      <span class="hljs-string">&quot;name&quot;</span>: <span class="hljs-string">&quot;苹果手机&quot;</span><br>    &#125;<br>  &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<ul>
+<li>multi_match查询：可以指定多个字段进行搜索。例如模糊搜索商品名称和品牌中包含苹果手机的商品</li>
+</ul>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><code class="hljs routeros"><span class="hljs-built_in">GET</span> /&#123;索引库名&#125;/_search<br>&#123;<br>  <span class="hljs-string">&quot;query&quot;</span>: &#123;<br>    <span class="hljs-string">&quot;multi_match&quot;</span>: &#123;<br>      <span class="hljs-string">&quot;query&quot;</span>: <span class="hljs-string">&quot;苹果手机&quot;</span>,<br>      <span class="hljs-string">&quot;fields&quot;</span>: [<span class="hljs-string">&quot;name&quot;</span>, <span class="hljs-string">&quot;brand&quot;</span>]<br>    &#125;<br>  &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p><strong>精确查询</strong></p>
+<ul>
+<li>term查询：精确匹配某个字段的值，例如查询品牌为苹果的商品</li>
+</ul>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs routeros"><span class="hljs-built_in">GET</span> /&#123;索引库名&#125;/_search<br>&#123;<br>  <span class="hljs-string">&quot;query&quot;</span>: &#123;<br>    <span class="hljs-string">&quot;term&quot;</span>: &#123;<br>      <span class="hljs-string">&quot;brand&quot;</span>: &#123;<br>        <span class="hljs-string">&quot;value&quot;</span>: <span class="hljs-string">&quot;苹果&quot;</span><br>      &#125;<br>    &#125;<br>  &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<ul>
+<li>range查询：范围查询，例如查询价格在100-500之间的商品</li>
+</ul>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs routeros"><span class="hljs-built_in">GET</span> /&#123;索引库名&#125;/_search<br>&#123;<br>  <span class="hljs-string">&quot;query&quot;</span>: &#123;<br>    <span class="hljs-string">&quot;range&quot;</span>: &#123;<br>      <span class="hljs-string">&quot;price&quot;</span>: &#123;<br>        <span class="hljs-string">&quot;gte&quot;</span>: 100,<br>        <span class="hljs-string">&quot;lte&quot;</span>: 500<br>      &#125;<br>    &#125;<br>  &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p><strong>复合查询</strong><br />
+复合查询大致可以分为两类：</p>
+<ul>
+<li>第一类：基于逻辑运算组合叶子查询，实现组合条件，例如
+<ul>
+<li>bool</li>
+</ul>
+</li>
+<li>第二类：基于某种算法修改查询时的文档相关性算分，从而改变文档排名。例如：
+<ul>
+<li>function_score</li>
+<li>dis_max</li>
+</ul>
+</li>
+</ul>
+<p><strong>bool查询</strong><br />
+bool查询是最常用的复合查询，利用逻辑运算来组合一个或多个查询子句的组合。bool查询支持的逻辑运算有：</p>
+<ul>
+<li>must：必须匹配每个子查询，类似“与”</li>
+<li>should：选择性匹配子查询，类似“或”，满足相关项即可提升匹配分数</li>
+<li>must_not：必须不匹配，不参与算分，类似“非”</li>
+<li>filter：必须匹配，不参与算分</li>
+</ul>
+<p>例如查询商品名称中包含手机，品牌最好为vivo或小米，价格大于等于1000且小于2500的商品</p>
+<figure class="highlight prolog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><code class="hljs prolog"><span class="hljs-symbol">GET</span> /items/<span class="hljs-symbol">_search</span><br>&#123;<br>  <span class="hljs-string">&quot;query&quot;</span>: &#123;<br>    <span class="hljs-string">&quot;bool&quot;</span>: &#123;<br>      <span class="hljs-string">&quot;must&quot;</span>: [<br>        &#123;<span class="hljs-string">&quot;match&quot;</span>: &#123;<span class="hljs-string">&quot;name&quot;</span>: <span class="hljs-string">&quot;手机&quot;</span>&#125;&#125;<br>      ],<br>      <span class="hljs-string">&quot;should&quot;</span>: [<br>        &#123;<span class="hljs-string">&quot;term&quot;</span>: &#123;<span class="hljs-string">&quot;brand&quot;</span>: &#123; <span class="hljs-string">&quot;value&quot;</span>: <span class="hljs-string">&quot;vivo&quot;</span> &#125;&#125;&#125;,<br>        &#123;<span class="hljs-string">&quot;term&quot;</span>: &#123;<span class="hljs-string">&quot;brand&quot;</span>: &#123; <span class="hljs-string">&quot;value&quot;</span>: <span class="hljs-string">&quot;小米&quot;</span> &#125;&#125;&#125;<br>      ],<br>      <span class="hljs-string">&quot;must_not&quot;</span>: [<br>        &#123;<span class="hljs-string">&quot;range&quot;</span>: &#123;<span class="hljs-string">&quot;price&quot;</span>: &#123;<span class="hljs-string">&quot;gte&quot;</span>: <span class="hljs-number">2500</span>&#125;&#125;&#125;<br>      ],<br>      <span class="hljs-string">&quot;filter&quot;</span>: [<br>        &#123;<span class="hljs-string">&quot;range&quot;</span>: &#123;<span class="hljs-string">&quot;price&quot;</span>: &#123;<span class="hljs-string">&quot;gte&quot;</span>: <span class="hljs-number">1000</span>&#125;&#125;&#125;<br>      ]<br>    &#125;<br>  &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p><strong>排序</strong><br />
+elasticsearch默认是根据相关度算分（_score）来排序，但是也支持自定义方式对搜索结果排序。不过分词字段无法排序，能参与排序字段类型有：keyword类型、数值类型、地理坐标类型、日期类型等。<br />
+例如按商品价格降序排序</p>
+<figure class="highlight sqf"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><code class="hljs sqf"><span class="hljs-built_in">GET</span> /<span class="hljs-built_in">items</span>/<span class="hljs-variable">_search</span><br>&#123;<br>  <span class="hljs-string">&quot;query&quot;</span>: &#123;<br>    <span class="hljs-string">&quot;match_all&quot;</span>: &#123;&#125;<br>  &#125;,<br>  <span class="hljs-string">&quot;sort&quot;</span>: [<br>    &#123;<br>      <span class="hljs-string">&quot;price&quot;</span>: &#123;<br>        <span class="hljs-string">&quot;order&quot;</span>: <span class="hljs-string">&quot;desc&quot;</span><br>      &#125;<br>    &#125;<br>  ]<br>&#125;<br></code></pre></td></tr></table></figure>
+<p><strong>分页</strong><br />
+elasticsearch 默认情况下只返回top10的数据。而如果要查询更多数据就需要修改分页参数了。<br />
+基础分页通过修改from和size参数来实现，from表示从第几条开始，size表示返回多少条数据。</p>
+<figure class="highlight sqf"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs sqf"><span class="hljs-built_in">GET</span> /<span class="hljs-built_in">items</span>/<span class="hljs-variable">_search</span><br>&#123;<br>  <span class="hljs-string">&quot;query&quot;</span>: &#123;<br>    <span class="hljs-string">&quot;match_all&quot;</span>: &#123;&#125;<br>  &#125;,<br>  <span class="hljs-string">&quot;from&quot;</span>: <span class="hljs-number">0</span>, <span class="hljs-comment">// 分页开始的位置，默认为0</span><br>  <span class="hljs-string">&quot;size&quot;</span>: <span class="hljs-number">10</span>,  <span class="hljs-comment">// 每页文档数量，默认10</span><br>  <span class="hljs-string">&quot;sort&quot;</span>: [<br>    &#123;<br>      <span class="hljs-string">&quot;price&quot;</span>: &#123;<br>        <span class="hljs-string">&quot;order&quot;</span>: <span class="hljs-string">&quot;desc&quot;</span><br>      &#125;<br>    &#125;<br>  ]<br>&#125;<br></code></pre></td></tr></table></figure>
+<p><strong>深度分页问题</strong><br />
+elasticsearch的数据一般会采用分片存储，也就是把一个索引中的数据分成N份，存储到不同节点上。这种存储方式比较有利于数据扩展，但给分页带来了一些麻烦。<br />
+比如要查找所有数据中最小的前1000条数据，需要在每个分片上查找前1000条数据，然后再在所有分片上合并排序，最后返回前1000条数据。这个过程会消耗大量的时间和资源。</p>
+<p>当查询分页深度较大时，汇总数据过多，对内存和CPU会产生非常大的压力。<br />
+在ES中，<code>from+ size</code> 超过10000的请求会被拒绝。</p>
+<p>针对深度分页，elasticsearch提供了两种解决方案：</p>
+<ul>
+<li>search after：分页时需要排序，原理是从上一次的排序值开始，查询下一页数据。官方推荐使用的方式。</li>
+<li>scroll：原理将排序后的文档id形成快照，保存下来，基于快照做分页。官方已经不推荐使用。</li>
+</ul>
+<p>search after的优点是支持深度分页，但是必须依赖排序字段，而且排序字段的值必须是全局唯一的，不支持跳页。</p>
+<p><strong>高亮</strong><br />
+我们在百度搜索时，关键字会变成红色，比较醒目，这叫高亮显示，实现如下：</p>
+<figure class="highlight routeros"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs routeros"><span class="hljs-built_in">GET</span> /&#123;索引库名&#125;/_search<br>&#123;<br>  <span class="hljs-string">&quot;query&quot;</span>: &#123;<br>    <span class="hljs-string">&quot;match&quot;</span>: &#123;<br>      <span class="hljs-string">&quot;搜索字段&quot;</span>: <span class="hljs-string">&quot;搜索关键字&quot;</span><br>    &#125;<br>  &#125;,<br>  <span class="hljs-string">&quot;highlight&quot;</span>: &#123;<br>    <span class="hljs-string">&quot;fields&quot;</span>: &#123;<br>      <span class="hljs-string">&quot;高亮字段名称&quot;</span>: &#123;<br>        <span class="hljs-string">&quot;pre_tags&quot;</span>: <span class="hljs-string">&quot;&lt;em&gt;&quot;</span>,<br>        <span class="hljs-string">&quot;post_tags&quot;</span>: <span class="hljs-string">&quot;&lt;/em&gt;&quot;</span><br>      &#125;<br>    &#125;<br>  &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p><strong>聚合</strong><br />
+聚合（aggregations）可以让我们极其方便的实现对数据的统计、分析、运算。<br />
+聚合常见的有三类：</p>
+<ul>
+<li>桶（Bucket）聚合：用来对文档做分组</li>
+<li>TermAggregation：按照文档字段值分组，例如按照品牌值分组、按照国家分组</li>
+<li>Date Histogram：按照日期阶梯分组，例如一周为一组，或者一月为一组</li>
+<li>度量（Metric）聚合：用以计算一些值，比如：最大值、最小值、平均值等</li>
+<li>Avg：求平均值</li>
+<li>Max：求最大值</li>
+<li>Min：求最小值</li>
+<li>Stats：同时求max、min、avg、sum等</li>
+<li>管道（pipeline）聚合：其它聚合的结果为基础做进一步运算</li>
+</ul>
+<blockquote>
+<p>注意：参加聚合的字段必须是keyword、日期、数值、布尔类型</p>
+</blockquote>
+<p>Bucket聚合语法，查询商品按照品牌分组</p>
+<figure class="highlight sqf"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br></pre></td><td class="code"><pre><code class="hljs sqf"><span class="hljs-built_in">GET</span> /<span class="hljs-built_in">items</span>/<span class="hljs-variable">_search</span><br>&#123;<br>  <span class="hljs-string">&quot;size&quot;</span>: <span class="hljs-number">0</span>, <span class="hljs-comment">//size为0表示不返回文档，只返回聚合结果</span><br>  <span class="hljs-string">&quot;aggs&quot;</span>: &#123;<br>    <span class="hljs-string">&quot;brand_agg&quot;</span>: &#123; <span class="hljs-comment">//聚合名称</span><br>      <span class="hljs-string">&quot;terms&quot;</span>: &#123; <span class="hljs-comment">//桶聚合用terms</span><br>        <span class="hljs-string">&quot;field&quot;</span>: <span class="hljs-string">&quot;brand&quot;</span>,<br>        <span class="hljs-string">&quot;size&quot;</span>: <span class="hljs-number">20</span> <span class="hljs-comment">//返回几个桶</span><br>      &#125;<br>    &#125;<br>  &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>Metric聚合语法，比如查询商品按品牌分组后，查看价格的统计数据</p>
+<figure class="highlight sqf"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><code class="hljs sqf"><span class="hljs-built_in">GET</span> /<span class="hljs-built_in">items</span>/<span class="hljs-variable">_search</span><br>&#123;<br>  <span class="hljs-string">&quot;size&quot;</span>: <span class="hljs-number">0</span>,<br>  <span class="hljs-string">&quot;aggs&quot;</span>: &#123;<br>    <span class="hljs-string">&quot;brand_agg&quot;</span>: &#123;<br>      <span class="hljs-string">&quot;terms&quot;</span>: &#123;<br>        <span class="hljs-string">&quot;field&quot;</span>: <span class="hljs-string">&quot;brand&quot;</span>,<br>        <span class="hljs-string">&quot;size&quot;</span>: <span class="hljs-number">20</span><br>      &#125;,<br>      <span class="hljs-string">&quot;aggs&quot;</span>: &#123; <span class="hljs-comment">//子聚合</span><br>        <span class="hljs-string">&quot;stats_agg&quot;</span>: &#123; <span class="hljs-comment">//聚合名称</span><br>          <span class="hljs-string">&quot;stats&quot;</span>: &#123; <span class="hljs-comment">//Metric聚合用stats</span><br>            <span class="hljs-string">&quot;field&quot;</span>: <span class="hljs-string">&quot;price&quot;</span> <br>          &#125;<br>        &#125;<br>      &#125;<br>    &#125;<br>  &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<h3 id="restclient基础操作"><a class="markdownIt-Anchor" href="#restclient基础操作"></a> RestClient基础操作</h3>
+<p>在elasticsearch提供的API中，与elasticsearch一切交互都封装在一个名为RestHighLevelClient的类中，必须先完成这个对象的初始化，建立与elasticsearch的连接。<br />
+一些基本操作如下：</p>
+<ul>
+<li>初始化RestHighLevelClient：</li>
+</ul>
+<figure class="highlight aspectj"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs aspectj"><span class="hljs-meta">@BeforeEach</span><br><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">setUp</span><span class="hljs-params">()</span> </span>&#123;<br>    client = <span class="hljs-keyword">new</span> RestHighLevelClient(RestClient.builder(<br>            HttpHost.create(<span class="hljs-string">&quot;http://192.168.56.101:9200&quot;</span>)<br><span class="hljs-comment">//                HttpHost.create(&quot;http://192.168.56.101:9200&quot;),</span><br><span class="hljs-comment">//                HttpHost.create(&quot;http://192.168.56.101:9200&quot;)</span><br>    ));<br>&#125;<br><br><span class="hljs-meta">@AfterEach</span><br><span class="hljs-function"><span class="hljs-keyword">void</span> <span class="hljs-title">tearDown</span><span class="hljs-params">()</span> <span class="hljs-keyword">throws</span> IOException </span>&#123;<br>    <span class="hljs-keyword">if</span> (client != <span class="hljs-keyword">null</span>) &#123;<br>        client.close();<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<ul>
+<li>创建索引库</li>
+</ul>
+<figure class="highlight swift"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br></pre></td><td class="code"><pre><code class="hljs swift">void createIndex() <span class="hljs-keyword">throws</span> <span class="hljs-type">IOException</span> &#123;<br>        <span class="hljs-comment">// 创建索引</span><br>        <span class="hljs-type">CreateIndexRequest</span> request <span class="hljs-operator">=</span> new <span class="hljs-type">CreateIndexRequest</span>(<span class="hljs-string">&quot;items&quot;</span>);<br>        request.source(<span class="hljs-type">MAPPING_TEMPLATE</span>, <span class="hljs-type">XContentType</span>.<span class="hljs-type">JSON</span>);<br>        client.indices().create(request, <span class="hljs-type">RequestOptions</span>.<span class="hljs-type">DEFAULT</span>);<br>    &#125;<br><br>    <span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">final</span> <span class="hljs-type">String</span> <span class="hljs-type">MAPPING_TEMPLATE</span> <span class="hljs-operator">=</span> <span class="hljs-string">&quot;&#123;<span class="hljs-subst">\n</span>&quot;</span> <span class="hljs-operator">+</span><br>            <span class="hljs-string">&quot;  <span class="hljs-subst">\&quot;</span>mappings<span class="hljs-subst">\&quot;</span>: &#123;<span class="hljs-subst">\n</span>&quot;</span> <span class="hljs-operator">+</span><br>            <span class="hljs-string">&quot;    <span class="hljs-subst">\&quot;</span>properties<span class="hljs-subst">\&quot;</span>: &#123;<span class="hljs-subst">\n</span>&quot;</span> <span class="hljs-operator">+</span><br>            <span class="hljs-string">&quot;      <span class="hljs-subst">\&quot;</span>id<span class="hljs-subst">\&quot;</span>: &#123;<span class="hljs-subst">\n</span>&quot;</span> <span class="hljs-operator">+</span><br>            <span class="hljs-string">&quot;        <span class="hljs-subst">\&quot;</span>type<span class="hljs-subst">\&quot;</span>: <span class="hljs-subst">\&quot;</span>keyword<span class="hljs-subst">\&quot;</span><span class="hljs-subst">\n</span>&quot;</span> <span class="hljs-operator">+</span><br>            <span class="hljs-string">&quot;      &#125;,<span class="hljs-subst">\n</span>&quot;</span> <span class="hljs-operator">+</span><br>            <span class="hljs-string">&quot;      <span class="hljs-subst">\&quot;</span>name<span class="hljs-subst">\&quot;</span>:&#123;<span class="hljs-subst">\n</span>&quot;</span> <span class="hljs-operator">+</span><br>            <span class="hljs-string">&quot;        <span class="hljs-subst">\&quot;</span>type<span class="hljs-subst">\&quot;</span>: <span class="hljs-subst">\&quot;</span>text<span class="hljs-subst">\&quot;</span>,<span class="hljs-subst">\n</span>&quot;</span> <span class="hljs-operator">+</span><br>            <span class="hljs-string">&quot;        <span class="hljs-subst">\&quot;</span>analyzer<span class="hljs-subst">\&quot;</span>: <span class="hljs-subst">\&quot;</span>ik_max_word<span class="hljs-subst">\&quot;</span><span class="hljs-subst">\n</span>&quot;</span> <span class="hljs-operator">+</span><br>            <span class="hljs-string">&quot;      &#125;,<span class="hljs-subst">\n</span>&quot;</span> <span class="hljs-operator">+</span><br>            <span class="hljs-string">&quot;      <span class="hljs-subst">\&quot;</span>price<span class="hljs-subst">\&quot;</span>:&#123;<span class="hljs-subst">\n</span>&quot;</span> <span class="hljs-operator">+</span><br>            <span class="hljs-string">&quot;        <span class="hljs-subst">\&quot;</span>type<span class="hljs-subst">\&quot;</span>: <span class="hljs-subst">\&quot;</span>integer<span class="hljs-subst">\&quot;</span><span class="hljs-subst">\n</span>&quot;</span> <span class="hljs-operator">+</span><br>            <span class="hljs-string">&quot;      &#125;,<span class="hljs-subst">\n</span>&quot;</span> <span class="hljs-operator">+</span><br>            <span class="hljs-string">&quot;      <span class="hljs-subst">\&quot;</span>image<span class="hljs-subst">\&quot;</span>:&#123;<span class="hljs-subst">\n</span>&quot;</span> <span class="hljs-operator">+</span><br>            <span class="hljs-string">&quot;        <span class="hljs-subst">\&quot;</span>type<span class="hljs-subst">\&quot;</span>: <span class="hljs-subst">\&quot;</span>keyword<span class="hljs-subst">\&quot;</span>,<span class="hljs-subst">\n</span>&quot;</span> <span class="hljs-operator">+</span><br>            <span class="hljs-string">&quot;        <span class="hljs-subst">\&quot;</span>index<span class="hljs-subst">\&quot;</span>: false<span class="hljs-subst">\n</span>&quot;</span> <span class="hljs-operator">+</span><br>            <span class="hljs-string">&quot;      &#125;,<span class="hljs-subst">\n</span>&quot;</span> <span class="hljs-operator">+</span><br>            <span class="hljs-string">&quot;      <span class="hljs-subst">\&quot;</span>category<span class="hljs-subst">\&quot;</span>:&#123;<span class="hljs-subst">\n</span>&quot;</span> <span class="hljs-operator">+</span><br>            <span class="hljs-string">&quot;        <span class="hljs-subst">\&quot;</span>type<span class="hljs-subst">\&quot;</span>: <span class="hljs-subst">\&quot;</span>keyword<span class="hljs-subst">\&quot;</span><span class="hljs-subst">\n</span>&quot;</span> <span class="hljs-operator">+</span><br>            <span class="hljs-string">&quot;      &#125;,<span class="hljs-subst">\n</span>&quot;</span> <span class="hljs-operator">+</span><br>            <span class="hljs-string">&quot;      <span class="hljs-subst">\&quot;</span>brand<span class="hljs-subst">\&quot;</span>:&#123;<span class="hljs-subst">\n</span>&quot;</span> <span class="hljs-operator">+</span><br>            <span class="hljs-string">&quot;        <span class="hljs-subst">\&quot;</span>type<span class="hljs-subst">\&quot;</span>: <span class="hljs-subst">\&quot;</span>keyword<span class="hljs-subst">\&quot;</span><span class="hljs-subst">\n</span>&quot;</span> <span class="hljs-operator">+</span><br>            <span class="hljs-string">&quot;      &#125;,<span class="hljs-subst">\n</span>&quot;</span> <span class="hljs-operator">+</span><br>            <span class="hljs-string">&quot;      <span class="hljs-subst">\&quot;</span>sold<span class="hljs-subst">\&quot;</span>:&#123;<span class="hljs-subst">\n</span>&quot;</span> <span class="hljs-operator">+</span><br>            <span class="hljs-string">&quot;        <span class="hljs-subst">\&quot;</span>type<span class="hljs-subst">\&quot;</span>: <span class="hljs-subst">\&quot;</span>integer<span class="hljs-subst">\&quot;</span><span class="hljs-subst">\n</span>&quot;</span> <span class="hljs-operator">+</span><br>            <span class="hljs-string">&quot;      &#125;,<span class="hljs-subst">\n</span>&quot;</span> <span class="hljs-operator">+</span><br>            <span class="hljs-string">&quot;      <span class="hljs-subst">\&quot;</span>commentCount<span class="hljs-subst">\&quot;</span>:&#123;<span class="hljs-subst">\n</span>&quot;</span> <span class="hljs-operator">+</span><br>            <span class="hljs-string">&quot;        <span class="hljs-subst">\&quot;</span>type<span class="hljs-subst">\&quot;</span>: <span class="hljs-subst">\&quot;</span>integer<span class="hljs-subst">\&quot;</span>,<span class="hljs-subst">\n</span>&quot;</span> <span class="hljs-operator">+</span><br>            <span class="hljs-string">&quot;        <span class="hljs-subst">\&quot;</span>index<span class="hljs-subst">\&quot;</span>: false<span class="hljs-subst">\n</span>&quot;</span> <span class="hljs-operator">+</span><br>            <span class="hljs-string">&quot;      &#125;,<span class="hljs-subst">\n</span>&quot;</span> <span class="hljs-operator">+</span><br>            <span class="hljs-string">&quot;      <span class="hljs-subst">\&quot;</span>isAD<span class="hljs-subst">\&quot;</span>:&#123;<span class="hljs-subst">\n</span>&quot;</span> <span class="hljs-operator">+</span><br>            <span class="hljs-string">&quot;        <span class="hljs-subst">\&quot;</span>type<span class="hljs-subst">\&quot;</span>: <span class="hljs-subst">\&quot;</span>boolean<span class="hljs-subst">\&quot;</span><span class="hljs-subst">\n</span>&quot;</span> <span class="hljs-operator">+</span><br>            <span class="hljs-string">&quot;      &#125;,<span class="hljs-subst">\n</span>&quot;</span> <span class="hljs-operator">+</span><br>            <span class="hljs-string">&quot;      <span class="hljs-subst">\&quot;</span>updateTime<span class="hljs-subst">\&quot;</span>:&#123;<span class="hljs-subst">\n</span>&quot;</span> <span class="hljs-operator">+</span><br>            <span class="hljs-string">&quot;        <span class="hljs-subst">\&quot;</span>type<span class="hljs-subst">\&quot;</span>: <span class="hljs-subst">\&quot;</span>date<span class="hljs-subst">\&quot;</span><span class="hljs-subst">\n</span>&quot;</span> <span class="hljs-operator">+</span><br>            <span class="hljs-string">&quot;      &#125;<span class="hljs-subst">\n</span>&quot;</span> <span class="hljs-operator">+</span><br>            <span class="hljs-string">&quot;    &#125;<span class="hljs-subst">\n</span>&quot;</span> <span class="hljs-operator">+</span><br>            <span class="hljs-string">&quot;  &#125;<span class="hljs-subst">\n</span>&quot;</span> <span class="hljs-operator">+</span><br>            <span class="hljs-string">&quot;&#125;&quot;</span>;<br></code></pre></td></tr></table></figure>
+<ul>
+<li>删除索引库</li>
+</ul>
+<figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs gradle"><span class="hljs-keyword">void</span> deleteIndex() <span class="hljs-keyword">throws</span> IOException &#123;<br>        DeleteIndexRequest request = <span class="hljs-keyword">new</span> DeleteIndexRequest(<span class="hljs-string">&quot;items&quot;</span>);<br>        client.indices().<span class="hljs-keyword">delete</span>(request, RequestOptions.<span class="hljs-keyword">DEFAULT</span>);<br>    &#125;<br></code></pre></td></tr></table></figure>
+<ul>
+<li>新增文档</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">void</span> <span class="hljs-title function_">createDoc</span><span class="hljs-params">()</span> <span class="hljs-keyword">throws</span> IOException &#123;<br>        <span class="hljs-comment">//准备数据</span><br>        <span class="hljs-type">Item</span> <span class="hljs-variable">item</span> <span class="hljs-operator">=</span> itemService.getById(<span class="hljs-number">317578L</span>);<br>        <span class="hljs-type">ItemDoc</span> <span class="hljs-variable">itemDoc</span> <span class="hljs-operator">=</span> BeanUtils.copyProperties(item, ItemDoc.class);<br>        <span class="hljs-comment">//准备request,IndexRequest即能创建文档，也能全量更新文档</span><br>        <span class="hljs-type">IndexRequest</span> <span class="hljs-variable">request</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">IndexRequest</span>(<span class="hljs-string">&quot;items&quot;</span>).id(item.getId().toString());<br>        <span class="hljs-comment">//准备请求参数</span><br>        request.source(JSONUtil.toJsonStr(itemDoc), XContentType.JSON);<br>        <span class="hljs-comment">//发送请求</span><br>        client.index(request, RequestOptions.DEFAULT);<br>    &#125;<br></code></pre></td></tr></table></figure>
+<ul>
+<li>查询文档</li>
+</ul>
+<figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs gradle"><span class="hljs-keyword">void</span> getDoc() <span class="hljs-keyword">throws</span> IOException &#123;<br>        <span class="hljs-comment">//准备request</span><br>        GetRequest request = <span class="hljs-keyword">new</span> GetRequest(<span class="hljs-string">&quot;items&quot;</span>).id(<span class="hljs-string">&quot;317578&quot;</span>);<br>        <span class="hljs-comment">//发送请求</span><br>        GetResponse response = client.get(request, RequestOptions.<span class="hljs-keyword">DEFAULT</span>);<br>        <span class="hljs-comment">//解析结果</span><br>        String <span class="hljs-keyword">source</span> = response.getSourceAsString();<br>        ItemDoc doc = JSONUtil.toBean(<span class="hljs-keyword">source</span>, ItemDoc.<span class="hljs-keyword">class</span>);<br>        System.out.<span class="hljs-keyword">println</span>(<span class="hljs-string">&quot;doc = &quot;</span> + doc);<br>    &#125;<br></code></pre></td></tr></table></figure>
+<ul>
+<li>删除文档</li>
+</ul>
+<figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><code class="hljs gradle"><span class="hljs-keyword">void</span> deleteDoc() <span class="hljs-keyword">throws</span> IOException &#123;<br>        DeleteRequest request = <span class="hljs-keyword">new</span> DeleteRequest(<span class="hljs-string">&quot;items&quot;</span>).id(<span class="hljs-string">&quot;317578&quot;</span>);<br>        client.<span class="hljs-keyword">delete</span>(request, RequestOptions.<span class="hljs-keyword">DEFAULT</span>);<br>    &#125;<br></code></pre></td></tr></table></figure>
+<ul>
+<li>修改文档</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">void</span> <span class="hljs-title function_">updateDoc</span><span class="hljs-params">()</span> <span class="hljs-keyword">throws</span> IOException &#123;<br>        <span class="hljs-comment">//局部更新</span><br>        <span class="hljs-type">UpdateRequest</span> <span class="hljs-variable">request</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">UpdateRequest</span>(<span class="hljs-string">&quot;items&quot;</span>, <span class="hljs-string">&quot;317578&quot;</span>);<br>        request.doc(<span class="hljs-string">&quot;price&quot;</span>, <span class="hljs-number">9999</span>);<br>        client.update(request, RequestOptions.DEFAULT);<br>    &#125;<br></code></pre></td></tr></table></figure>
+<ul>
+<li>批量新增文档</li>
+</ul>
+<figure class="highlight lasso"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br></pre></td><td class="code"><pre><code class="hljs lasso"><span class="hljs-literal">void</span> testBulkDoc() throws IOException &#123;<br>        int pageNo = <span class="hljs-number">1</span>, pageSize = <span class="hljs-number">500</span>;<br>        <span class="hljs-keyword">while</span> (<span class="hljs-literal">true</span>) &#123;<br>            <span class="hljs-comment">//准备数据</span><br>            Page&lt;Item&gt; page = itemService.lambdaQuery()<br>                    .<span class="hljs-literal">eq</span>(Item<span class="hljs-type">::getStatus</span>, <span class="hljs-number">1</span>)<br>                    .page(<span class="hljs-literal">new</span> Page&lt;&gt;(pageNo, pageSize));<br>            <span class="hljs-built_in">List</span>&lt;Item&gt; <span class="hljs-keyword">records</span> = page.getRecords();<br>            <span class="hljs-keyword">if</span> (<span class="hljs-keyword">records</span> == <span class="hljs-built_in">null</span> || <span class="hljs-keyword">records</span>.isEmpty()) &#123;<br>                <span class="hljs-keyword">return</span>;<br>            &#125;<br>            BulkRequest request = <span class="hljs-literal">new</span> BulkRequest();<br>            <span class="hljs-comment">//批量插入</span><br>            for (Item item : <span class="hljs-keyword">records</span>) &#123;<br>                request.add(<span class="hljs-literal">new</span> IndexRequest(<span class="hljs-string">&quot;items&quot;</span>)<br>                        .id(item.getId().toString())<br>                        .source(JSONUtil.toJsonStr(BeanUtils.copyProperties(item, ItemDoc.class)), XContentType.JSON));<br>            &#125;<br>            <span class="hljs-comment">//发送请求</span><br>            client.bulk(request, RequestOptions.DEFAULT);<br>            pageNo++;<br>        &#125;<br>    &#125;<br></code></pre></td></tr></table></figure>
+<ul>
+<li>DSL match查询</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Test</span><br><span class="hljs-keyword">void</span> <span class="hljs-title function_">testMatch</span><span class="hljs-params">()</span> <span class="hljs-keyword">throws</span> IOException &#123;<br>    <span class="hljs-comment">// 1.创建Request</span><br>    <span class="hljs-type">SearchRequest</span> <span class="hljs-variable">request</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">SearchRequest</span>(<span class="hljs-string">&quot;items&quot;</span>);<br>    <span class="hljs-comment">// 2.组织请求参数</span><br>    request.source().query(QueryBuilders.matchQuery(<span class="hljs-string">&quot;name&quot;</span>, <span class="hljs-string">&quot;脱脂牛奶&quot;</span>));<br>    <span class="hljs-comment">// 3.发送请求</span><br>    <span class="hljs-type">SearchResponse</span> <span class="hljs-variable">response</span> <span class="hljs-operator">=</span> client.search(request, RequestOptions.DEFAULT);<br>    <span class="hljs-comment">// 4.解析响应</span><br>    handleResponse(response);<br>&#125;<br></code></pre></td></tr></table></figure>
+<ul>
+<li>DSL multi_match查询</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-meta">@Test</span><br><span class="hljs-keyword">void</span> <span class="hljs-title function_">testMultiMatch</span><span class="hljs-params">()</span> <span class="hljs-keyword">throws</span> IOException &#123;<br>    <span class="hljs-comment">// 1.创建Request</span><br>    <span class="hljs-type">SearchRequest</span> <span class="hljs-variable">request</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">SearchRequest</span>(<span class="hljs-string">&quot;items&quot;</span>);<br>    <span class="hljs-comment">// 2.组织请求参数</span><br>    request.source().query(QueryBuilders.multiMatchQuery(<span class="hljs-string">&quot;脱脂牛奶&quot;</span>, <span class="hljs-string">&quot;name&quot;</span>, <span class="hljs-string">&quot;category&quot;</span>));<br>    <span class="hljs-comment">// 3.发送请求</span><br>    <span class="hljs-type">SearchResponse</span> <span class="hljs-variable">response</span> <span class="hljs-operator">=</span> client.search(request, RequestOptions.DEFAULT);<br>    <span class="hljs-comment">// 4.解析响应</span><br>    handleResponse(response);<br>&#125;<br></code></pre></td></tr></table></figure>
+<ul>
+<li>DSL bool查询，查询商品名称包含脱脂牛奶，品牌为德亚，价格在5000-30000之间的商品</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">void</span> <span class="hljs-title function_">testSearch</span><span class="hljs-params">()</span> <span class="hljs-keyword">throws</span> IOException &#123;<br>        <span class="hljs-comment">// 1.创建Request</span><br>        <span class="hljs-type">SearchRequest</span> <span class="hljs-variable">request</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">SearchRequest</span>(<span class="hljs-string">&quot;items&quot;</span>);<br>        <span class="hljs-comment">// 2.组织请求参数</span><br>        request.source().query(QueryBuilders.boolQuery()<br>                .must(QueryBuilders.matchQuery(<span class="hljs-string">&quot;name&quot;</span>, <span class="hljs-string">&quot;脱脂牛奶&quot;</span>))<br>                .must(QueryBuilders.termQuery(<span class="hljs-string">&quot;brand&quot;</span>, <span class="hljs-string">&quot;德亚&quot;</span>))<br>                .filter(QueryBuilders.rangeQuery(<span class="hljs-string">&quot;price&quot;</span>).gte(<span class="hljs-number">5000</span>).lte(<span class="hljs-number">30000</span>))<br>        );<br>        <span class="hljs-comment">// 3.发送请求</span><br>        <span class="hljs-type">SearchResponse</span> <span class="hljs-variable">response</span> <span class="hljs-operator">=</span> client.search(request, RequestOptions.DEFAULT);<br>        <span class="hljs-comment">// 4.解析响应</span><br>        parseDocResponse(response);<br>    &#125;<br></code></pre></td></tr></table></figure>
+<ul>
+<li>DSL 排序和分页查询</li>
+</ul>
+<figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs gradle"><span class="hljs-keyword">void</span> testPageAndSort() <span class="hljs-keyword">throws</span> IOException &#123;<br>        <span class="hljs-keyword">int</span> pageNo = <span class="hljs-number">1</span>, pageSize = <span class="hljs-number">5</span>;<br>        <span class="hljs-comment">// 1.创建Request</span><br>        SearchRequest request = <span class="hljs-keyword">new</span> SearchRequest(<span class="hljs-string">&quot;items&quot;</span>);<br>        <span class="hljs-comment">// 2.组织请求参数</span><br>        request.<span class="hljs-keyword">source</span>().query(QueryBuilders.matchAllQuery())<br>                .<span class="hljs-keyword">from</span>((pageNo - <span class="hljs-number">1</span>) * pageSize)<br>                .<span class="hljs-keyword">size</span>(pageSize)<br>                .<span class="hljs-keyword">sort</span>(<span class="hljs-string">&quot;sold&quot;</span>, SortOrder.DESC)<br>                .<span class="hljs-keyword">sort</span>(<span class="hljs-string">&quot;price&quot;</span>, SortOrder.ASC);<br>        <span class="hljs-comment">// 3.发送请求</span><br>        SearchResponse response = client.search(request, RequestOptions.<span class="hljs-keyword">DEFAULT</span>);<br>        <span class="hljs-comment">// 4.解析响应</span><br>        parseDocResponse(response);<br>    &#125;<br></code></pre></td></tr></table></figure>
+<ul>
+<li>DSL 高亮查询</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">void</span> <span class="hljs-title function_">testHighlight</span><span class="hljs-params">()</span> <span class="hljs-keyword">throws</span> IOException &#123;<br>        <span class="hljs-comment">// 1.创建Request</span><br>        <span class="hljs-type">SearchRequest</span> <span class="hljs-variable">request</span> <span class="hljs-operator">=</span> <span class="hljs-keyword">new</span> <span class="hljs-title class_">SearchRequest</span>(<span class="hljs-string">&quot;items&quot;</span>);<br>        <span class="hljs-comment">// 2.组织请求参数</span><br>        request.source().query(QueryBuilders.matchQuery(<span class="hljs-string">&quot;name&quot;</span>, <span class="hljs-string">&quot;脱脂牛奶&quot;</span>))<br>                .highlighter(SearchSourceBuilder.highlight()<br>                        .field(<span class="hljs-string">&quot;name&quot;</span>)<br>                        .preTags(<span class="hljs-string">&quot;&lt;em&gt;&quot;</span>)<br>                        .postTags(<span class="hljs-string">&quot;&lt;/em&gt;&quot;</span>)<br>                );<br>        <span class="hljs-comment">// 3.发送请求</span><br>        <span class="hljs-type">SearchResponse</span> <span class="hljs-variable">response</span> <span class="hljs-operator">=</span> client.search(request, RequestOptions.DEFAULT);<br>        <span class="hljs-comment">// 4.解析响应</span><br>        parseDocResponse(response);<br>    &#125;<br></code></pre></td></tr></table></figure>
+<ul>
+<li>DSL 聚合查询</li>
+</ul>
+<figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><code class="hljs gradle"><span class="hljs-keyword">void</span> testAggs() <span class="hljs-keyword">throws</span> IOException &#123;<br>        <span class="hljs-comment">//查询价格大于等于3000的手机，按品牌聚合，然后按每个品牌的数量升序</span><br>        <span class="hljs-comment">// 1.创建Request</span><br>        SearchRequest request = <span class="hljs-keyword">new</span> SearchRequest(<span class="hljs-string">&quot;items&quot;</span>);<br>        <span class="hljs-comment">// 2.组织请求参数</span><br>        BoolQueryBuilder boolQuery = QueryBuilders.boolQuery()<br>                .filter(QueryBuilders.termQuery(<span class="hljs-string">&quot;category&quot;</span>, <span class="hljs-string">&quot;手机&quot;</span>))<br>                .filter(QueryBuilders.rangeQuery(<span class="hljs-string">&quot;price&quot;</span>).gte(<span class="hljs-number">300000</span>));<br>        request.<span class="hljs-keyword">source</span>().query(boolQuery).<span class="hljs-keyword">size</span>(<span class="hljs-number">0</span>);<span class="hljs-comment">//size=0表示不查询doc</span><br><br>        String brandAggName = <span class="hljs-string">&quot;brands_agg&quot;</span>;<br>        request.<span class="hljs-keyword">source</span>().aggregation(AggregationBuilders.terms(brandAggName)<br>                .field(<span class="hljs-string">&quot;brand&quot;</span>)<br>                .<span class="hljs-keyword">size</span>(<span class="hljs-number">10</span>)<br>                .order(BucketOrder.<span class="hljs-keyword">count</span>(<span class="hljs-keyword">true</span>))<br>        );<br>        <span class="hljs-comment">// 3.发送请求</span><br>        SearchResponse response = client.search(request, RequestOptions.<span class="hljs-keyword">DEFAULT</span>);<br>        <span class="hljs-comment">// 4.解析响应</span><br>        parseAggsResponse(response, brandAggName);<br>    &#125;<br></code></pre></td></tr></table></figure>
+<ul>
+<li>解析响应</li>
+</ul>
+<figure class="highlight gradle"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br></pre></td><td class="code"><pre><code class="hljs gradle"><span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> parseDocResponse(SearchResponse response) &#123;<br>        SearchHits searchHits = response.getHits();<br>        <span class="hljs-comment">// 1.获取总条数</span><br>        <span class="hljs-keyword">long</span> total = searchHits.getTotalHits().value;<br>        System.out.<span class="hljs-keyword">println</span>(<span class="hljs-string">&quot;共搜索到&quot;</span> + total + <span class="hljs-string">&quot;条数据&quot;</span>);<br>        <span class="hljs-comment">// 2.遍历结果数组</span><br>        SearchHit[] hits = searchHits.getHits();<br>        <span class="hljs-keyword">for</span> (SearchHit hit : hits) &#123;<br>            <span class="hljs-comment">// 3.得到_source，也就是原始json文档</span><br>            String <span class="hljs-keyword">source</span> = hit.getSourceAsString();<br>            <span class="hljs-comment">// 4.反序列化并打印</span><br>            ItemDoc item = JSONUtil.toBean(<span class="hljs-keyword">source</span>, ItemDoc.<span class="hljs-keyword">class</span>);<br>            <span class="hljs-comment">// 5.获取高亮字段</span><br>            Map&lt;String, HighlightField&gt; hfs = hit.getHighlightFields();<br>            <span class="hljs-keyword">if</span> (CollUtils.isNotEmpty(hfs)) &#123;<br>                HighlightField hf = hfs.get(<span class="hljs-string">&quot;name&quot;</span>);<br>                <span class="hljs-keyword">if</span> (hf != <span class="hljs-keyword">null</span>) &#123;<br>                    Text[] fragments = hf.fragments();<br>                    <span class="hljs-comment">//拼接高亮字段</span><br>                    StringBuilder sb = <span class="hljs-keyword">new</span> StringBuilder();<br>                    <span class="hljs-keyword">for</span> (Text fragment : fragments)<br>                        sb.<span class="hljs-keyword">append</span>(fragment);<br>                    item.setName(sb.toString());<br>                &#125;<br>            &#125;<br>            System.out.<span class="hljs-keyword">println</span>(item);<br>        &#125;<br>    &#125;<br></code></pre></td></tr></table></figure>
+<ul>
+<li>解析聚合查询响应</li>
+</ul>
+<figure class="highlight java"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><code class="hljs java"><span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> <span class="hljs-keyword">void</span> <span class="hljs-title function_">parseAggsResponse</span><span class="hljs-params">(SearchResponse response, String aggName)</span> &#123;<br>        <span class="hljs-type">Aggregations</span> <span class="hljs-variable">aggregations</span> <span class="hljs-operator">=</span> response.getAggregations();<br>        <span class="hljs-comment">//根据聚合名称获取聚合</span><br>        <span class="hljs-type">Terms</span> <span class="hljs-variable">terms</span> <span class="hljs-operator">=</span> aggregations.get(aggName);<br>        <span class="hljs-comment">//获取桶</span><br>        List&lt;? <span class="hljs-keyword">extends</span> <span class="hljs-title class_">Terms</span>.Bucket&gt; buckets = terms.getBuckets();<br>        <span class="hljs-keyword">for</span> (Terms.Bucket bucket : buckets) &#123;<br>            System.out.println(<span class="hljs-string">&quot;key:&quot;</span> + bucket.getKeyAsString() + <span class="hljs-string">&quot;,&quot;</span> + <span class="hljs-string">&quot;cnt:&quot;</span> + bucket.getDocCount());<br>        &#125;<br>    &#125;<br></code></pre></td></tr></table></figure>
                 
               </div>
             
