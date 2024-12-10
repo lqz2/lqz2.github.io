@@ -106,6 +106,11 @@ tags:
         - [MQ可靠性](#mq可靠性)
         - [消费者可靠性](#消费者可靠性)
         - [延迟消息](#延迟消息)
+    - [ElasticSearch](#elasticsearch)
+        - [基础知识](#基础知识-1)
+        - [Kibana中的增删改查](#kibana中的增删改查)
+        - [DSL查询](#dsl查询)
+        - [RestClient基础操作](#restclient基础操作)
 
 <!-- /TOC -->
 
@@ -2105,3 +2110,670 @@ rabbitTemplate.convertAndSend(
 - 其次，为了保证MQ消息的可靠性，我们采用了生产者确认机制、消费者确认、消费者失败重试等策略，确保消息投递的可靠性
 - 最后，我们还在交易服务设置了定时任务，定期查询订单支付状态。这样即便MQ通知失败，还可以利用延迟任务作为兜底方案，确保订单支付状态的最终一致性。
 
+## ElasticSearch
+
+### 基础知识
+数据库的模糊搜索存在以下问题：
+- 数据库模糊查询不走索引，在数据量较大的时候，查询性能很差。
+- 数据库的模糊搜索功能单一，必须恰好包含用户搜索的关键字。而在搜索引擎中，用户输入出现个别错字，或者用拼音搜索、同义词搜索都能正确匹配到数据。
+
+Elasticsearch是由elastic公司开发的一套搜索引擎技术，它是elastic技术栈中的一部分。完整的技术栈包括：
+- Elasticsearch：用于数据存储、计算和搜索
+- Logstash/Beats：用于数据收集
+- Kibana：用于数据可视化
+整套技术栈被称为ELK，经常用来做日志收集、系统监控和状态分析等。
+
+一般数据库搜索中，当搜索条件为模糊匹配时，由于索引无法生效，导致从索引查询退化为全表扫描，效率很差。
+因此，正向索引适合于根据索引字段的精确搜索，不适合基于部分词条的模糊匹配。
+elasticsearch之所以有如此高性能的搜索表现，正是得益于底层的倒排索引技术。
+
+什么是***倒排索引***？
+- 正向索引是最传统的，根据id索引的方式。但根据词条查询时，必须先逐条获取每个文档，然后判断文档中是否包含所需要的词条，是根据文档找词条的过程。 
+- 而倒排索引则相反，是先找到用户要搜索的词条，根据词条得到保护词条的文档的id，然后根据id获取文档。是根据词条找文档的过程。
+这里的文档就是数据库中的一行数据，词条就是分词后的词语。
+
+创建倒排索引的过程：
+- 分词：将文档中的词语进行分词，形成词条
+- 建立倒排索引：将词条与文档id进行映射，形成倒排索引表
+
+有了倒排索引，搜索流程就变成了：
+- 用户输入搜索词条
+- 对输入进行分词
+- 根据分词结果在倒排索引表中查找文档id
+- 根据文档id获取文档
+
+一些**基础概念**对比：
+| MySQL     | Elasticsearch | 说明                                                                                                                                                                     |
+| --------- | ------------- | ------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| Table     | Index         | 索引(index)，就是文档的集合，类似数据库的表(table)                                                                                                                          |
+| Row       | Document      | 文档（Document），就是一条一条的数据，类似数据库中的行（Row），文档都是JSON格式                                                                                                 |
+| Column    | Field         | 字段（Field），就是JSON文档中的字段，类似数据库中的列（Column）                                                                                                               |
+| Schema    | Mapping       | Mapping（映射）是索引中文档的约束，例如字段类型约束。类似数据库的表结构（Schema）                                                                                                |
+| SQL       | DSL           | DSL是elasticsearch提供的JSON风格的请求语句，用来操作elasticsearch，实现CRUD                                                                                                    |
+
+Mapping是对索引库中文档的约束，常见的Mapping属性包括：
+- type：字段数据类型，常见的简单类型有： 
+  - 字符串：text（可分词的文本）、keyword（精确值，例如：品牌、国家、ip地址）
+  - 数值：long、integer、short、byte、double、float、
+  - 布尔：boolean
+  - 日期：date
+  - 对象：object
+- index：是否创建索引，默认为true
+- analyzer：使用哪种分词器
+- properties：该字段的子字段
+### Kibana中的增删改查
+Kibana是一个开源的数据分析和可视化平台，可以让你在Elasticsearch上进行数据分析和搜索。
+
+**索引库的增删改查**
+- 创建索引库
+```
+PUT /索引库名称
+{
+  "mappings": {
+    "properties": {
+      "字段名":{
+        "type": "text",
+        "analyzer": "ik_smart"
+      },
+      "字段名2":{
+        "type": "keyword",
+        "index": "false"
+      },
+      "字段名3":{
+        "properties": {
+          "子字段": {
+            "type": "keyword"
+          }
+        }
+      },
+      // ...略
+    }
+  }
+}
+```
+- 查询索引库
+```
+GET /索引库名
+```
+- 删除索引库
+```
+DELETE /索引库名
+```
+- 修改索引库，索引库一旦创建，无法修改mapping，但可以添加新的字段
+```
+PUT /索引库名/_mapping
+{
+  "properties": {
+    "新字段名":{
+      "type": "integer"
+    }
+  }
+}
+```
+
+**文档的增删改查**
+- 新增文档
+```
+POST /索引库名/_doc/文档id
+{
+    "字段1": "值1",
+    "字段2": "值2",
+    "字段3": {
+        "子属性1": "值3",
+        "子属性2": "值4"
+    },
+}
+```
+- 查询文档
+```
+GET /{索引库名称}/_doc/{id}
+```
+- 删除文档
+```
+DELETE /{索引库名}/_doc/id值
+```
+- 修改文档有两种方式，全量修改直接覆盖原来的文档；局部修改，修改文档中的部分字段，
+```
+全量修改：与新增文档语法一样
+局部修改：
+POST /{索引库名}/_update/文档id
+{
+    "doc": {
+         "字段名": "新的值",
+    }
+}
+```
+
+### DSL查询
+Elasticsearch提供了基于JSON的DSL（Domain Specific Language）语句来定义**复杂的查询条件**
+Elasticsearch的查询可以分为两大类：
+- 叶子查询（Leaf query clauses）：一般是在特定的字段里查询特定值，属于简单查询，很少单独使用。
+- 复合查询（Compound query clauses）：以逻辑方式组合多个叶子查询或者更改叶子查询的行为方式。
+
+**叶子查询**
+- 全文检索查询（Full Text Queries）：利用分词器对用户输入搜索条件先分词，得到词条，然后再利用倒排索引搜索词条。例如：
+  - match：
+  - multi_match
+- 精确查询（Term-level queries）：不对用户输入搜索条件分词，根据字段内容精确值匹配。但只能查找keyword、数值、日期、boolean类型的字段。例如：
+  - ids：根据文档id查询
+  - term：精确匹配某个字段的值
+  - range：范围查询
+- 地理坐标查询：用于搜索地理位置，搜索方式很多，例如：
+  - geo_bounding_box：按矩形搜索
+  - geo_distance：按点和半径搜索
+
+**全文检索查询**
+- match查询，例如模糊搜索商品名称为苹果手机的商品
+```
+GET /{索引库名}/_search
+{
+  "query": {
+    "match": {
+      "name": "苹果手机"
+    }
+  }
+}
+```
+- multi_match查询：可以指定多个字段进行搜索。例如模糊搜索商品名称和品牌中包含苹果手机的商品
+```
+GET /{索引库名}/_search
+{
+  "query": {
+    "multi_match": {
+      "query": "苹果手机",
+      "fields": ["name", "brand"]
+    }
+  }
+}
+```
+
+**精确查询**
+- term查询：精确匹配某个字段的值，例如查询品牌为苹果的商品
+```
+GET /{索引库名}/_search
+{
+  "query": {
+    "term": {
+      "brand": {
+        "value": "苹果"
+      }
+    }
+  }
+}
+```
+- range查询：范围查询，例如查询价格在100-500之间的商品
+```
+GET /{索引库名}/_search
+{
+  "query": {
+    "range": {
+      "price": {
+        "gte": 100,
+        "lte": 500
+      }
+    }
+  }
+}
+```
+
+**复合查询**
+复合查询大致可以分为两类：
+- 第一类：基于逻辑运算组合叶子查询，实现组合条件，例如
+  - bool
+- 第二类：基于某种算法修改查询时的文档相关性算分，从而改变文档排名。例如：
+  - function_score
+  - dis_max
+
+**bool查询**
+bool查询是最常用的复合查询，利用逻辑运算来组合一个或多个查询子句的组合。bool查询支持的逻辑运算有：
+- must：必须匹配每个子查询，类似“与”
+- should：选择性匹配子查询，类似“或”，满足相关项即可提升匹配分数
+- must_not：必须不匹配，不参与算分，类似“非”
+- filter：必须匹配，不参与算分
+
+例如查询商品名称中包含手机，品牌最好为vivo或小米，价格大于等于1000且小于2500的商品
+```
+GET /items/_search
+{
+  "query": {
+    "bool": {
+      "must": [
+        {"match": {"name": "手机"}}
+      ],
+      "should": [
+        {"term": {"brand": { "value": "vivo" }}},
+        {"term": {"brand": { "value": "小米" }}}
+      ],
+      "must_not": [
+        {"range": {"price": {"gte": 2500}}}
+      ],
+      "filter": [
+        {"range": {"price": {"gte": 1000}}}
+      ]
+    }
+  }
+}
+```
+
+**排序**
+elasticsearch默认是根据相关度算分（_score）来排序，但是也支持自定义方式对搜索结果排序。不过分词字段无法排序，能参与排序字段类型有：keyword类型、数值类型、地理坐标类型、日期类型等。
+例如按商品价格降序排序
+```
+GET /items/_search
+{
+  "query": {
+    "match_all": {}
+  },
+  "sort": [
+    {
+      "price": {
+        "order": "desc"
+      }
+    }
+  ]
+}
+```
+
+**分页**
+elasticsearch 默认情况下只返回top10的数据。而如果要查询更多数据就需要修改分页参数了。
+基础分页通过修改from和size参数来实现，from表示从第几条开始，size表示返回多少条数据。
+```
+GET /items/_search
+{
+  "query": {
+    "match_all": {}
+  },
+  "from": 0, // 分页开始的位置，默认为0
+  "size": 10,  // 每页文档数量，默认10
+  "sort": [
+    {
+      "price": {
+        "order": "desc"
+      }
+    }
+  ]
+}
+```
+**深度分页问题**
+elasticsearch的数据一般会采用分片存储，也就是把一个索引中的数据分成N份，存储到不同节点上。这种存储方式比较有利于数据扩展，但给分页带来了一些麻烦。
+比如要查找所有数据中最小的前1000条数据，需要在每个分片上查找前1000条数据，然后再在所有分片上合并排序，最后返回前1000条数据。这个过程会消耗大量的时间和资源。
+
+当查询分页深度较大时，汇总数据过多，对内存和CPU会产生非常大的压力。
+在ES中，`from+ size` 超过10000的请求会被拒绝。
+
+针对深度分页，elasticsearch提供了两种解决方案：
+- search after：分页时需要排序，原理是从上一次的排序值开始，查询下一页数据。官方推荐使用的方式。
+- scroll：原理将排序后的文档id形成快照，保存下来，基于快照做分页。官方已经不推荐使用。
+
+search after的优点是支持深度分页，但是必须依赖排序字段，而且排序字段的值必须是全局唯一的，不支持跳页。
+
+**高亮**
+我们在百度搜索时，关键字会变成红色，比较醒目，这叫高亮显示，实现如下：
+```
+GET /{索引库名}/_search
+{
+  "query": {
+    "match": {
+      "搜索字段": "搜索关键字"
+    }
+  },
+  "highlight": {
+    "fields": {
+      "高亮字段名称": {
+        "pre_tags": "<em>",
+        "post_tags": "</em>"
+      }
+    }
+  }
+}
+```
+**聚合**
+聚合（aggregations）可以让我们极其方便的实现对数据的统计、分析、运算。
+聚合常见的有三类：
+-  桶（Bucket）聚合：用来对文档做分组 
+  - TermAggregation：按照文档字段值分组，例如按照品牌值分组、按照国家分组
+  - Date Histogram：按照日期阶梯分组，例如一周为一组，或者一月为一组
+-  度量（Metric）聚合：用以计算一些值，比如：最大值、最小值、平均值等 
+  - Avg：求平均值
+  - Max：求最大值
+  - Min：求最小值
+  - Stats：同时求max、min、avg、sum等
+-  管道（pipeline）聚合：其它聚合的结果为基础做进一步运算 
+
+>注意：参加聚合的字段必须是keyword、日期、数值、布尔类型
+
+Bucket聚合语法，查询商品按照品牌分组
+```
+GET /items/_search
+{
+  "size": 0, //size为0表示不返回文档，只返回聚合结果
+  "aggs": {
+    "brand_agg": { //聚合名称
+      "terms": { //桶聚合用terms
+        "field": "brand",
+        "size": 20 //返回几个桶
+      }
+    }
+  }
+}
+```
+Metric聚合语法，比如查询商品按品牌分组后，查看价格的统计数据
+```
+GET /items/_search
+{
+  "size": 0,
+  "aggs": {
+    "brand_agg": {
+      "terms": {
+        "field": "brand",
+        "size": 20
+      },
+      "aggs": { //子聚合
+        "stats_agg": { //聚合名称
+          "stats": { //Metric聚合用stats
+            "field": "price" 
+          }
+        }
+      }
+    }
+  }
+}
+```
+### RestClient基础操作
+在elasticsearch提供的API中，与elasticsearch一切交互都封装在一个名为RestHighLevelClient的类中，必须先完成这个对象的初始化，建立与elasticsearch的连接。
+一些基本操作如下：
+
+- 初始化RestHighLevelClient：
+```
+@BeforeEach
+void setUp() {
+    client = new RestHighLevelClient(RestClient.builder(
+            HttpHost.create("http://192.168.56.101:9200")
+//                HttpHost.create("http://192.168.56.101:9200"),
+//                HttpHost.create("http://192.168.56.101:9200")
+    ));
+}
+
+@AfterEach
+void tearDown() throws IOException {
+    if (client != null) {
+        client.close();
+    }
+}
+```
+
+- 创建索引库
+```
+void createIndex() throws IOException {
+        // 创建索引
+        CreateIndexRequest request = new CreateIndexRequest("items");
+        request.source(MAPPING_TEMPLATE, XContentType.JSON);
+        client.indices().create(request, RequestOptions.DEFAULT);
+    }
+
+    private static final String MAPPING_TEMPLATE = "{\n" +
+            "  \"mappings\": {\n" +
+            "    \"properties\": {\n" +
+            "      \"id\": {\n" +
+            "        \"type\": \"keyword\"\n" +
+            "      },\n" +
+            "      \"name\":{\n" +
+            "        \"type\": \"text\",\n" +
+            "        \"analyzer\": \"ik_max_word\"\n" +
+            "      },\n" +
+            "      \"price\":{\n" +
+            "        \"type\": \"integer\"\n" +
+            "      },\n" +
+            "      \"image\":{\n" +
+            "        \"type\": \"keyword\",\n" +
+            "        \"index\": false\n" +
+            "      },\n" +
+            "      \"category\":{\n" +
+            "        \"type\": \"keyword\"\n" +
+            "      },\n" +
+            "      \"brand\":{\n" +
+            "        \"type\": \"keyword\"\n" +
+            "      },\n" +
+            "      \"sold\":{\n" +
+            "        \"type\": \"integer\"\n" +
+            "      },\n" +
+            "      \"commentCount\":{\n" +
+            "        \"type\": \"integer\",\n" +
+            "        \"index\": false\n" +
+            "      },\n" +
+            "      \"isAD\":{\n" +
+            "        \"type\": \"boolean\"\n" +
+            "      },\n" +
+            "      \"updateTime\":{\n" +
+            "        \"type\": \"date\"\n" +
+            "      }\n" +
+            "    }\n" +
+            "  }\n" +
+            "}";
+```
+- 删除索引库
+```
+void deleteIndex() throws IOException {
+        DeleteIndexRequest request = new DeleteIndexRequest("items");
+        client.indices().delete(request, RequestOptions.DEFAULT);
+    }
+```
+- 新增文档
+```
+void createDoc() throws IOException {
+        //准备数据
+        Item item = itemService.getById(317578L);
+        ItemDoc itemDoc = BeanUtils.copyProperties(item, ItemDoc.class);
+        //准备request,IndexRequest即能创建文档，也能全量更新文档
+        IndexRequest request = new IndexRequest("items").id(item.getId().toString());
+        //准备请求参数
+        request.source(JSONUtil.toJsonStr(itemDoc), XContentType.JSON);
+        //发送请求
+        client.index(request, RequestOptions.DEFAULT);
+    }
+```
+- 查询文档
+```
+void getDoc() throws IOException {
+        //准备request
+        GetRequest request = new GetRequest("items").id("317578");
+        //发送请求
+        GetResponse response = client.get(request, RequestOptions.DEFAULT);
+        //解析结果
+        String source = response.getSourceAsString();
+        ItemDoc doc = JSONUtil.toBean(source, ItemDoc.class);
+        System.out.println("doc = " + doc);
+    }
+```
+- 删除文档
+```
+void deleteDoc() throws IOException {
+        DeleteRequest request = new DeleteRequest("items").id("317578");
+        client.delete(request, RequestOptions.DEFAULT);
+    }
+```
+- 修改文档
+```
+void updateDoc() throws IOException {
+        //局部更新
+        UpdateRequest request = new UpdateRequest("items", "317578");
+        request.doc("price", 9999);
+        client.update(request, RequestOptions.DEFAULT);
+    }
+```
+- 批量新增文档
+```
+void testBulkDoc() throws IOException {
+        int pageNo = 1, pageSize = 500;
+        while (true) {
+            //准备数据
+            Page<Item> page = itemService.lambdaQuery()
+                    .eq(Item::getStatus, 1)
+                    .page(new Page<>(pageNo, pageSize));
+            List<Item> records = page.getRecords();
+            if (records == null || records.isEmpty()) {
+                return;
+            }
+            BulkRequest request = new BulkRequest();
+            //批量插入
+            for (Item item : records) {
+                request.add(new IndexRequest("items")
+                        .id(item.getId().toString())
+                        .source(JSONUtil.toJsonStr(BeanUtils.copyProperties(item, ItemDoc.class)), XContentType.JSON));
+            }
+            //发送请求
+            client.bulk(request, RequestOptions.DEFAULT);
+            pageNo++;
+        }
+    }
+```
+- DSL match查询
+```
+@Test
+void testMatch() throws IOException {
+    // 1.创建Request
+    SearchRequest request = new SearchRequest("items");
+    // 2.组织请求参数
+    request.source().query(QueryBuilders.matchQuery("name", "脱脂牛奶"));
+    // 3.发送请求
+    SearchResponse response = client.search(request, RequestOptions.DEFAULT);
+    // 4.解析响应
+    handleResponse(response);
+}
+```
+- DSL multi_match查询
+```
+@Test
+void testMultiMatch() throws IOException {
+    // 1.创建Request
+    SearchRequest request = new SearchRequest("items");
+    // 2.组织请求参数
+    request.source().query(QueryBuilders.multiMatchQuery("脱脂牛奶", "name", "category"));
+    // 3.发送请求
+    SearchResponse response = client.search(request, RequestOptions.DEFAULT);
+    // 4.解析响应
+    handleResponse(response);
+}
+```
+- DSL bool查询，查询商品名称包含脱脂牛奶，品牌为德亚，价格在5000-30000之间的商品
+```
+void testSearch() throws IOException {
+        // 1.创建Request
+        SearchRequest request = new SearchRequest("items");
+        // 2.组织请求参数
+        request.source().query(QueryBuilders.boolQuery()
+                .must(QueryBuilders.matchQuery("name", "脱脂牛奶"))
+                .must(QueryBuilders.termQuery("brand", "德亚"))
+                .filter(QueryBuilders.rangeQuery("price").gte(5000).lte(30000))
+        );
+        // 3.发送请求
+        SearchResponse response = client.search(request, RequestOptions.DEFAULT);
+        // 4.解析响应
+        parseDocResponse(response);
+    }
+```
+- DSL 排序和分页查询
+```
+void testPageAndSort() throws IOException {
+        int pageNo = 1, pageSize = 5;
+        // 1.创建Request
+        SearchRequest request = new SearchRequest("items");
+        // 2.组织请求参数
+        request.source().query(QueryBuilders.matchAllQuery())
+                .from((pageNo - 1) * pageSize)
+                .size(pageSize)
+                .sort("sold", SortOrder.DESC)
+                .sort("price", SortOrder.ASC);
+        // 3.发送请求
+        SearchResponse response = client.search(request, RequestOptions.DEFAULT);
+        // 4.解析响应
+        parseDocResponse(response);
+    }
+```
+- DSL 高亮查询
+```
+void testHighlight() throws IOException {
+        // 1.创建Request
+        SearchRequest request = new SearchRequest("items");
+        // 2.组织请求参数
+        request.source().query(QueryBuilders.matchQuery("name", "脱脂牛奶"))
+                .highlighter(SearchSourceBuilder.highlight()
+                        .field("name")
+                        .preTags("<em>")
+                        .postTags("</em>")
+                );
+        // 3.发送请求
+        SearchResponse response = client.search(request, RequestOptions.DEFAULT);
+        // 4.解析响应
+        parseDocResponse(response);
+    }
+```
+- DSL 聚合查询
+```
+void testAggs() throws IOException {
+        //查询价格大于等于3000的手机，按品牌聚合，然后按每个品牌的数量升序
+        // 1.创建Request
+        SearchRequest request = new SearchRequest("items");
+        // 2.组织请求参数
+        BoolQueryBuilder boolQuery = QueryBuilders.boolQuery()
+                .filter(QueryBuilders.termQuery("category", "手机"))
+                .filter(QueryBuilders.rangeQuery("price").gte(300000));
+        request.source().query(boolQuery).size(0);//size=0表示不查询doc
+
+        String brandAggName = "brands_agg";
+        request.source().aggregation(AggregationBuilders.terms(brandAggName)
+                .field("brand")
+                .size(10)
+                .order(BucketOrder.count(true))
+        );
+        // 3.发送请求
+        SearchResponse response = client.search(request, RequestOptions.DEFAULT);
+        // 4.解析响应
+        parseAggsResponse(response, brandAggName);
+    }
+```
+
+- 解析响应
+```
+private static void parseDocResponse(SearchResponse response) {
+        SearchHits searchHits = response.getHits();
+        // 1.获取总条数
+        long total = searchHits.getTotalHits().value;
+        System.out.println("共搜索到" + total + "条数据");
+        // 2.遍历结果数组
+        SearchHit[] hits = searchHits.getHits();
+        for (SearchHit hit : hits) {
+            // 3.得到_source，也就是原始json文档
+            String source = hit.getSourceAsString();
+            // 4.反序列化并打印
+            ItemDoc item = JSONUtil.toBean(source, ItemDoc.class);
+            // 5.获取高亮字段
+            Map<String, HighlightField> hfs = hit.getHighlightFields();
+            if (CollUtils.isNotEmpty(hfs)) {
+                HighlightField hf = hfs.get("name");
+                if (hf != null) {
+                    Text[] fragments = hf.fragments();
+                    //拼接高亮字段
+                    StringBuilder sb = new StringBuilder();
+                    for (Text fragment : fragments)
+                        sb.append(fragment);
+                    item.setName(sb.toString());
+                }
+            }
+            System.out.println(item);
+        }
+    }
+```
+- 解析聚合查询响应
+```
+private static void parseAggsResponse(SearchResponse response, String aggName) {
+        Aggregations aggregations = response.getAggregations();
+        //根据聚合名称获取聚合
+        Terms terms = aggregations.get(aggName);
+        //获取桶
+        List<? extends Terms.Bucket> buckets = terms.getBuckets();
+        for (Terms.Bucket bucket : buckets) {
+            System.out.println("key:" + bucket.getKeyAsString() + "," + "cnt:" + bucket.getDocCount());
+        }
+    }
+```
