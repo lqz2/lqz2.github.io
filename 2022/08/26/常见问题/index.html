@@ -27,7 +27,7 @@
 <meta property="og:description" content="CS基础  进程和线程的区别   C++  c++中的static关键字 c++模板 c++深拷贝和浅拷贝的区别 c++多态 虚函数与纯虚函数 c++智能指针 const 和 volatile辨析 NULL 和 nullptr的区别是什么，为什么引入nulllptr？ git fetch和git pull的区别 delete[]是怎样知道数组长度的？ 程序是从main 函数开始执行的吗？">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2022-08-26T13:10:10.000Z">
-<meta property="article:modified_time" content="2023-10-18T12:49:28.672Z">
+<meta property="article:modified_time" content="2024-12-17T08:46:51.895Z">
 <meta property="article:author" content="zql">
 <meta name="twitter:card" content="summary_large_image">
   
@@ -224,7 +224,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          5.9k 字
+          5.8k 字
         
       </span>
     
@@ -235,7 +235,7 @@
         
         
         
-          49 分钟
+          48 分钟
         
       </span>
     
@@ -312,7 +312,6 @@
 <li><a href="#tensorflow%E5%92%8Cpytorch%E7%9A%84%E5%8C%BA%E5%88%AB">tensorflow和pytorch的区别</a></li>
 <li><a href="#transformer%E4%B8%AD%E7%9A%84%E4%BD%8D%E7%BD%AE%E7%BC%96%E7%A0%81">transformer中的位置编码</a></li>
 <li><a href="#%E8%87%AA%E6%B3%A8%E6%84%8F%E5%8A%9B%E5%92%8C%E6%B3%A8%E6%84%8F%E5%8A%9B%E7%9A%84%E5%8C%BA%E5%88%AB">自注意力和注意力的区别</a></li>
-<li><a href="#unet%E5%8E%9F%E7%90%86">Unet原理</a></li>
 </ul>
 </li>
 </ul>
@@ -708,12 +707,6 @@ M834 80h400000v40h-400000z'/></svg></span></span></span><span class="vlist-s">�
 </blockquote>
 <p>query是每张图设置的预测的proposals的数量，例如一张图的gt有20个bbox，然后query为100，那么网络会产生100个proposals，然后用匈牙利算法求得100个query和20个bbox的最优匹配</p>
 <p>对于decoder的多头注意力，我理解的是kv来自encoder是因为encoder中将图像的特征进行了编码，然后由于需要产生100个proposals，所以就用外部的q来计算encoder产生的k的权重信息，比如qk^T-&gt;[16,100,32]*[16,32,576]=[16,100,576]，这里[100,576]代表了100个query在576个特征上的权重或者相似度信息，然后乘v[16,576,32]，输出是[16,100,32]，reshape为[100,2,256]，encoder的输出[576,2,256]经过decoder后映射为[100,2,256]，因此加入的query可能是为了学习encoder的输出中的特征信息，然后将特征的维度降到100，然后从这100个proposals中取匹配最佳的gt。</p>
-<h2 id="unet原理"><a class="markdownIt-Anchor" href="#unet原理"></a> Unet原理</h2>
-<ul>
-<li>本质是像素级别的分类</li>
-<li>网络呈现<code>U</code>型，左边部分主要是做特征提取，最后得到14*14的特征图，右边是上采样和通道拼接，用转置卷积做上采样，然后与对应shape的特征图做通道维度的concat，最后得到与原图shape相等的输出，输出通道是类别数。</li>
-<li>缺点是计算量大，上采样很难恢复全局信息。</li>
-</ul>
 
                 
               </div>
