@@ -9,6 +9,19 @@ tags:
 <!-- TOC -->
 
 - [web开发部分](#web开发部分)
+    - [SpringBoot的启动流程](#springboot的启动流程)
+    - [Spring IOC](#spring-ioc)
+        - [基础概念](#基础概念)
+        - [IOC解决了什么问题？](#ioc解决了什么问题)
+        - [IOC容器的初始化](#ioc容器的初始化)
+    - [Spring Bean](#spring-bean)
+        - [什么是Spring Bean？@Component 和 @Bean 的区别是什么？](#什么是spring-beancomponent-和-bean-的区别是什么)
+        - [Bean生命周期](#bean生命周期)
+        - [Bean的循环依赖](#bean的循环依赖)
+    - [SpringMVC](#springmvc)
+        - [SpringMVC关键组件](#springmvc关键组件)
+        - [SpringMVC执行流程](#springmvc执行流程)
+        - [统一异常处理怎么做？](#统一异常处理怎么做)
     - [springboot的依赖注入](#springboot的依赖注入)
         - [构造函数注入](#构造函数注入)
         - [setter方法注入](#setter方法注入)
@@ -17,6 +30,8 @@ tags:
         - [主要步骤](#主要步骤)
         - [使用示例](#使用示例)
     - [自定义starter](#自定义starter)
+        - [什么是springboot starter](#什么是springboot-starter)
+        - [如何创建自定义starter](#如何创建自定义starter)
     - [JWT令牌](#jwt令牌)
     - [ThreadLocal](#threadlocal)
         - [特点](#特点)
@@ -128,8 +143,130 @@ tags:
         - [缓存击穿](#缓存击穿)
 
 <!-- /TOC -->
+## SpringBoot的启动流程
+SpringBoot的启动，其本质就是加载各种配置信息，然后初始化IOC容器并返回
 
+首先，当我们在启动类执行SpringApplication.run这行代码的时候，在它的方法内部其实会做两个事情：
+- 创建SpringApplication对象；
+- 执行run方法。
 
+在创建SpringApplication对象的时候，在它的构造方法内部主要做3个事情：
+- 确认web应用类型，一般情况下是Servlet类型，这种类型的应用，将来会自动启动一个tomcat
+- 从spring.factories配置文件中，加载默认的ApplicationContextInitializer和ApplicationListener
+- 记录当前应用的主启动类，将来做包扫描使用
+
+对象创建好了以后，再调用该对象的run方法，在run方法的内部主要做4个事情：
+- 准备Environment对象，它里面会封装一些当前应用运行环境的参数，比如环境变量等等
+- 实例化容器，这里仅仅是创建ApplicationContext对象
+- 容器创建好了以后，会为容器做一些准备工作，比如为容器设置Environment、BeanFactoryPostProcessor后置处理器，并且加载主类对应的Definition
+- 刷新容器，就是我们常说的refresh，在这里会真正的创建Bean实例
+
+总结下来，SpringBoot启动的时候核心就两步，创建SpringApplication对象以及run方法的调用，在run方法中会真正的实例化容器，并创建容器中需要的Bean实例，最终返回
+
+## Spring IOC
+### 基础概念
+IoC （Inversion of Control ）即控制反转/反转控制。它是一种思想不是一个技术实现。描述的是：Java 开发领域对象的创建以及管理的问题。
+- 传统的开发方式 ：往往是在类 A 中手动通过 new 关键字来 new 一个 B 的对象出来使用 
+- IoC 思想的开发方式 ：不通过 new 关键字来创建对象，而是通过 IoC 容器(Spring 框架) 来帮助我们实例化对象。我们需要哪个对象，直接从 IoC 容器里面去取即可。
+- 控制 ：指的是对象创建（实例化、管理）的权力
+- 反转 ：控制权交给外部环境（IoC 容器）
+![](https://oss.javaguide.cn/github/javaguide/system-design/framework/spring/IoC&Aop-ioc-illustration.png)
+
+### IOC解决了什么问题？
+IoC 的思想就是两方之间不互相依赖，由第三方容器来管理相关资源。这样有什么好处呢？
+- 对象之间的耦合度或者说依赖程度降低；
+- 资源变的容易管理；比如你用 Spring 容器提供的话很容易就可以实现一个单例。
+>将对象之间的相互依赖关系交给 IoC 容器来管理，并由 IoC 容器完成对象的注入。这样可以很大程度上简化应用的开发，把应用从复杂的依赖关系中解放出来。 IoC 容器就像是一个工厂一样，当我们需要创建一个对象的时候，只需要配置好配置文件/注解即可，完全不用考虑对象是如何被创建出来的。
+
+### IOC容器的初始化
+IOC容器初始化，核心步骤主要是在`AbstractApplicationContext`类中的`refresh`方法中完成的：
+- 准备BeanFactory，在这一块需要给BeanFactory设置很多属性，比如类加载器、Environment等
+- 执行BeanFactory后置处理器，这一阶段会扫描要放入到容器中的Bean信息，得到对应的BeanDefinition（注意，这里只扫描，不创建）
+- 是注册BeanPostProcessor，我们自定义的BeanPostProcessor就是在这一阶段被加载的，将来Bean对象实例化好后需要用到
+- 启动tomcat
+- 实例化容器中实例化非懒加载的单例Bean，这里需要说的是，多例Bean和懒加载的Bean不会在这个阶段实例化，将来用到的时候再创建
+- 当容器初始化完毕后，再做一些收尾工作，比如清除缓存等
+
+总结一下就是，在IOC容器初始化的过程中，首先得准备并执行BeanFactory后置处理器，其次得注册Bean后置处理器，并启动tomcat，最后需要借助于BeanFactory完成Bean的实例化
+
+## Spring Bean
+
+### 什么是Spring Bean？@Component 和 @Bean 的区别是什么？
+Bean 代指的就是那些被 IoC 容器所管理的对象。
+- @Component 注解作用于类，而@Bean注解作用于方法。
+- @Component通常是通过类路径扫描来自动侦测以及自动装配到 Spring 容器中（我们可以使用 @ComponentScan 注解定义要扫描的路径从中找出标识了需要装配的类自动装配到 Spring 的 bean 容器中）。
+- @Bean 注解通常是我们在标有该注解的方法中定义产生这个 bean, @Bean告诉了 Spring 这是某个类的实例，当我需要用它的时候还给我。
+- @Bean 注解比 @Component 注解的自定义性更强，而且很多地方我们只能通过 @Bean 注解来注册 bean。比如当我们引用第三方库中的类需要装配到 Spring容器时，则只能通过 @Bean来实现。
+
+### Bean生命周期
+Bean的生命周期总的来说有4个阶段，分别有创建对象、初始化对象、使用对象以及销毁对象，而且这些工作大部分是交给Bean工厂的doCreateBean方法完成的。
+
+- 在创建对象阶段，先调用构造方法实例化对象，对象有了后会填充该对象的内容，其实就是处理依赖注入。
+
+- 对象创建完毕后，需要做一些初始化的操作，在这里涉及到几个扩展点。
+  - 执行Aware感知接口的回调方法
+  - 执行Bean后置处理器的postProcessBeforeInitialization方法
+  - 执行InitializingBean接口的回调，在这一步如果Bean中有标注了@PostConstruct注解的方法，会先执行它
+  - 执行Bean后置处理器的postProcessAfterInitialization
+  - 把这些扩展点都执行完，Bean的初始化就完成了。
+
+- 在使用阶段就是程序员从容器中获取该Bean使用即可。
+- 在容器销毁之前，会先销毁对象，此时会执行DisposableBean接口的回调，这一步如果Bean中有标注了@PreDestroy接口的函数，会先执行它。
+
+简单总结一下，Bean的生命周期共包含四个阶段，其中初始化对象和销毁对象我们程序员可以通过一些扩展点执行自己的代码。
+
+### Bean的循环依赖
+Bean的循环依赖指的是A依赖B，B又依赖A这样的依赖闭环问题。
+
+在Spring中，通过三个对象缓存区来解决循环依赖问题，这三个缓存区被定义到了DefaultSingletonBeanRegistry中，分别是singletonObjects用来存储创建完毕的Bean，earlySingletonObjects用来存储未完成依赖注入的Bean，还有SingletonFactories用来存储创建Bean的ObjectFactory。假如说现在A依赖B，B依赖A，整个Bean的创建过程是这样的
+
+- 首先，调用A的构造方法实例化A，当前的A还没有处理依赖注入，暂且把它称为半成品，此时会把半成品A封装到一个ObjectFactory中，并存储到SingletonFactories缓存区。
+
+- 接下来，要处理A的依赖注入了，由于此时还没有B，所以得先实例化一个B，同样的，半成品B也会被封装到ObjectFactory中，并存储到SingletonFactories缓存区。
+
+- 紧接着，要处理B的依赖注入了，此时会找到SingletonFactories中A对应的ObjectFactory，调用它的getObject方法得到刚才实例化的半成品A（如果需要代理对象，则会自动创建代理对象，将来得到的就是代理对象），把得到的半成品A注入给B，并同时会把半成品A存入到earlySingletonObjects中，将来如果还有其他的类循环依赖了A，就可以直接从earlySingletonObjects中找到它了，那么此时SingletonFactories中创建A的ObjectFactory也可以删除了。
+
+- 至此，B的依赖注入处理完了后，B就创建完毕了，就可以把B的对象存入到singletonObjects中了，并同时删除掉SingletonFactories中创建B的ObjectFactory。
+
+- B创建完毕后，就可以继续处理A的依赖注入了，把B注入给A，此时A也创建完毕了，就可以把A的对象存储到singletonObjects中，并同时删除掉earlySingletonObjects中的半成品A。
+
+- 至此，A和B对象全部创建完毕，并存储到了singletonObjects中，将来通过容器获取对象，都是从singletonObjects中获取。
+
+总结起来还是一句话，借助于DefaultSingletonBeanRegistry的三个缓存区singletonObjects、earlySingletonObjects、singletonFactories可以解决循环依赖问题。
+
+## SpringMVC
+MVC 是模型(Model)、视图(View)、控制器(Controller)的简写，其核心思想是通过将业务逻辑、数据、显示分离来组织代码。
+Spring MVC 下我们一般把后端项目分为 Service 层（处理业务）、Dao 层（数据库操作）、Entity 层（实体类）、Controller 层(控制层，返回数据给前台页面)。
+
+### SpringMVC关键组件
+- DispatcherServlet：核心的中央处理器，负责接收请求、分发，并给予客户端响应。
+- HandlerMapping：处理器映射器，根据 URL 去匹配查找能处理的 Handler ，并会将请求涉及到的拦截器和 Handler 一起封装。
+- HandlerAdapter：处理器适配器，根据 HandlerMapping 找到的 Handler ，适配执行对应的 Handler；
+- Handler：请求处理器，处理实际请求的处理器。
+- ViewResolver：视图解析器，根据 Handler 返回的逻辑视图 / 视图，解析并渲染真正的视图，并传递给 DispatcherServlet 响应客户端
+### SpringMVC执行流程
+- 客户端（浏览器）发送请求， DispatcherServlet拦截请求。
+- DispatcherServlet 根据请求信息调用 HandlerMapping 。
+- HandlerMapping 根据 URL 去匹配查找能处理的 Handler（也就是我们平常说的 Controller 控制器） ，并会将请求涉及到的拦截器和 Handler 一起封装。
+- DispatcherServlet 调用 HandlerAdapter适配器执行 Handler 。
+- Handler 完成对用户请求的处理后，会返回一个 ModelAndView 对象给DispatcherServlet，ModelAndView 顾名思义，包含了数据模型以及相应的视图的信息。Model 是返回的数据对象，View 是个逻辑上的 View。
+- ViewResolver 会根据逻辑 View 查找实际的 View。
+- DispaterServlet 把返回的 Model 传给 View（视图渲染）。
+- 把 View 返回给请求者（浏览器）
+
+### 统一异常处理怎么做？
+- 定义一个响应的实体类，用来封装异常信息
+- 定义一个异常处理类，使用`@RestControllerAdvice + @ExceptionHandler`注解，被@ExceptionHandler注解修饰的方法处理异常。
+```
+@RestControllerAdvice
+public class GlobalExceptionHandler {
+    @ExceptionHandler(Exception.class)
+    public Result handleException(Exception e){
+        e.printStackTrace();
+        return Result.error(StringUtils.hasLength(e.getMessage()) ? e.getMessage(): "操作失败" );
+    }
+}
+```
 ## springboot的依赖注入
 >依赖注入允许对象在需要使用其他对象时，不用自己去创建，而是由 Spring 框架负责提供这些对象（依赖）。这不仅提高了代码的可测试性，还简化了对象之间的依赖关系管理。
 
@@ -238,7 +375,9 @@ com.example.config.MyAutoConfiguration
 
 
 ## 自定义starter
-
+### 什么是springboot starter
+Spring Boot Starter 是 Spring Boot 提供的一系列依赖管理工具，旨在简化 Spring 应用程序的设置和配置。每个 Starter 都是一个预配置的依赖集合，包含了开发特定类型应用程序所需的所有依赖项和配置。
+### 如何创建自定义starter
 熟悉自动配置之后，自定义starter的步骤其实很简单，只有两步：
 - 首先，创建一个模块，提供自动配置功能，即该模块包含自动配置类(定义了自动配置类并在`META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports`中声明)
 - 创建另一个模块作为starter，在pom文件中引入上面的自定义自动配置类模块的坐标
