@@ -19,19 +19,19 @@
   <meta name="author" content="zql">
   <meta name="keywords" content="">
   
-    <meta name="description" content="web开发部分   web开发部分  SpringBoot的启动流程 Spring IOC  基础概念 IOC解决了什么问题？ IOC容器的初始化   Spring Bean  什么是Spring Bean？@Component 和 @Bean 的区别是什么？ Bean生命周期 Bean的循环依赖   SpringMVC  SpringMVC关键组件 SpringMVC执行流程 统一异常处理怎么">
+    <meta name="description" content="web开发部分   web开发部分  SpringBoot的启动流程 Spring IOC  基础概念 IOC解决了什么问题？ IOC容器的初始化   Spring Bean  什么是Spring Bean？@Component 和 @Bean 的区别是什么？ 将一个类声明为 Bean 的注解有哪些? Bean生命周期 Bean的循环依赖   SpringMVC  SpringMVC关键组件 S">
 <meta property="og:type" content="article">
 <meta property="og:title" content="web开发与微服务学习">
 <meta property="og:url" content="http://lqz2.github.io/2024/10/13/web%E5%BC%80%E5%8F%91%E4%B8%8E%E5%BE%AE%E6%9C%8D%E5%8A%A1%E5%AD%A6%E4%B9%A0/index.html">
 <meta property="og:site_name" content="my blogs">
-<meta property="og:description" content="web开发部分   web开发部分  SpringBoot的启动流程 Spring IOC  基础概念 IOC解决了什么问题？ IOC容器的初始化   Spring Bean  什么是Spring Bean？@Component 和 @Bean 的区别是什么？ Bean生命周期 Bean的循环依赖   SpringMVC  SpringMVC关键组件 SpringMVC执行流程 统一异常处理怎么">
+<meta property="og:description" content="web开发部分   web开发部分  SpringBoot的启动流程 Spring IOC  基础概念 IOC解决了什么问题？ IOC容器的初始化   Spring Bean  什么是Spring Bean？@Component 和 @Bean 的区别是什么？ 将一个类声明为 Bean 的注解有哪些? Bean生命周期 Bean的循环依赖   SpringMVC  SpringMVC关键组件 S">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://oss.javaguide.cn/github/javaguide/system-design/framework/spring/IoC&amp;Aop-ioc-illustration.png">
 <meta property="og:image" content="http://lqz2.github.io/img/gateway.png">
 <meta property="og:image" content="http://lqz2.github.io/img/seata1.png">
 <meta property="og:image" content="http://lqz2.github.io/img/seata2.png">
 <meta property="article:published_time" content="2024-10-13T07:03:53.000Z">
-<meta property="article:modified_time" content="2024-12-17T13:25:02.926Z">
+<meta property="article:modified_time" content="2024-12-18T02:44:36.040Z">
 <meta property="article:author" content="zql">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://oss.javaguide.cn/github/javaguide/system-design/framework/spring/IoC&amp;Aop-ioc-illustration.png">
@@ -238,7 +238,7 @@
         
         
         
-          266 分钟
+          268 分钟
         
       </span>
     
@@ -296,6 +296,7 @@
 <li><a href="#spring-bean">Spring Bean</a>
 <ul>
 <li><a href="#%E4%BB%80%E4%B9%88%E6%98%AFspring-beancomponent-%E5%92%8C-bean-%E7%9A%84%E5%8C%BA%E5%88%AB%E6%98%AF%E4%BB%80%E4%B9%88">什么是Spring Bean？@Component 和 @Bean 的区别是什么？</a></li>
+<li><a href="#%E5%B0%86%E4%B8%80%E4%B8%AA%E7%B1%BB%E5%A3%B0%E6%98%8E%E4%B8%BA-bean-%E7%9A%84%E6%B3%A8%E8%A7%A3%E6%9C%89%E5%93%AA%E4%BA%9B">将一个类声明为 Bean 的注解有哪些?</a></li>
 <li><a href="#bean%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F">Bean生命周期</a></li>
 <li><a href="#bean%E7%9A%84%E5%BE%AA%E7%8E%AF%E4%BE%9D%E8%B5%96">Bean的循环依赖</a></li>
 </ul>
@@ -556,7 +557,7 @@
 <ul>
 <li>准备BeanFactory，在这一块需要给BeanFactory设置很多属性，比如类加载器、Environment等</li>
 <li>执行BeanFactory后置处理器，这一阶段会扫描要放入到容器中的Bean信息，得到对应的BeanDefinition（注意，这里只扫描，不创建）</li>
-<li>是注册BeanPostProcessor，我们自定义的BeanPostProcessor就是在这一阶段被加载的，将来Bean对象实例化好后需要用到</li>
+<li>注册BeanPostProcessor，我们自定义的BeanPostProcessor就是在这一阶段被加载的，将来Bean对象实例化好后需要用到</li>
 <li>启动tomcat</li>
 <li>实例化容器中实例化非懒加载的单例Bean，这里需要说的是，多例Bean和懒加载的Bean不会在这个阶段实例化，将来用到的时候再创建</li>
 <li>当容器初始化完毕后，再做一些收尾工作，比如清除缓存等</li>
@@ -567,9 +568,16 @@
 <p>Bean 代指的就是那些被 IoC 容器所管理的对象。</p>
 <ul>
 <li>@Component 注解作用于类，而@Bean注解作用于方法。</li>
-<li>@Component通常是通过类路径扫描来自动侦测以及自动装配到 Spring 容器中（我们可以使用 @ComponentScan 注解定义要扫描的路径从中找出标识了需要装配的类自动装配到 Spring 的 bean 容器中）。</li>
+<li>@Component通常是通过类路径扫描来自动侦测以及自动装配到 Spring 容器中（SpringBoot默认只能扫描到启动类所在的包及其子包，我们可以使用 @ComponentScan 注解定义要扫描的路径从中找出标识了需要装配的类自动装配到 Spring 的 bean 容器中）。</li>
 <li>@Bean 注解通常是我们在标有该注解的方法中定义产生这个 bean, @Bean告诉了 Spring 这是某个类的实例，当我需要用它的时候还给我。</li>
 <li>@Bean 注解比 @Component 注解的自定义性更强，而且很多地方我们只能通过 @Bean 注解来注册 bean。比如当我们引用第三方库中的类需要装配到 Spring容器时，则只能通过 @Bean来实现。</li>
+</ul>
+<h3 id="将一个类声明为-bean-的注解有哪些"><a class="markdownIt-Anchor" href="#将一个类声明为-bean-的注解有哪些"></a> 将一个类声明为 Bean 的注解有哪些?</h3>
+<ul>
+<li>@Component：通用的注解，可标注任意类为 Spring 组件。如果一个 Bean 不知道属于哪个层，可以使用@Component 注解标注。</li>
+<li>@Repository : 对应持久层即 Dao 层，主要用于数据库相关操作。</li>
+<li>@Service : 对应服务层，主要涉及一些复杂的逻辑，需要用到 Dao 层。</li>
+<li>@Controller : 对应 Spring MVC 控制层，主要用于接受用户请求并调用 Service 层返回数据给前端页面。</li>
 </ul>
 <h3 id="bean生命周期"><a class="markdownIt-Anchor" href="#bean生命周期"></a> Bean生命周期</h3>
 <p>Bean的生命周期总的来说有4个阶段，分别有创建对象、初始化对象、使用对象以及销毁对象，而且这些工作大部分是交给Bean工厂的doCreateBean方法完成的。</p>
