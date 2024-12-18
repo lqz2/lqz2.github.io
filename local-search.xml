@@ -4,6 +4,19 @@
   
   
   <entry>
+    <title>和为k的子数组</title>
+    <link href="/2024/12/18/%E5%92%8C%E4%B8%BAk%E7%9A%84%E5%AD%90%E6%95%B0%E7%BB%84/"/>
+    <url>/2024/12/18/%E5%92%8C%E4%B8%BAk%E7%9A%84%E5%AD%90%E6%95%B0%E7%BB%84/</url>
+    
+    <content type="html"><![CDATA[<h2 id="和为k的子数组"><a class="markdownIt-Anchor" href="#和为k的子数组"></a> 和为k的子数组</h2><!-- TOC --><ul><li><a href="#%E5%92%8C%E4%B8%BAk%E7%9A%84%E5%AD%90%E6%95%B0%E7%BB%84">和为k的子数组</a><ul><li><a href="#%E9%A2%98%E7%9B%AE%E6%8F%8F%E8%BF%B0">题目描述</a></li><li><a href="#%E6%80%9D%E8%B7%AF">思路</a></li><li><a href="#%E4%BB%A3%E7%A0%81">代码</a></li></ul></li></ul><!-- /TOC --><p><a href="https://leetcode.cn/problems/subarray-sum-equals-k/description">原题</a></p><h3 id="题目描述"><a class="markdownIt-Anchor" href="#题目描述"></a> 题目描述</h3><p>给你一个整数数组 nums 和一个整数 k ，请你统计并返回 该数组中和为 k 的子数组的个数 。<br />子数组是数组中元素的连续非空序列。</p><figure class="highlight fix"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><code class="hljs fix"><span class="hljs-attr">示例 1：</span><br><span class="hljs-attr">输入：nums </span>=<span class="hljs-string"> [1,1,1], k = 2</span><br><span class="hljs-string">输出：2</span><br></code></pre></td></tr></table></figure><h3 id="思路"><a class="markdownIt-Anchor" href="#思路"></a> 思路</h3><p>自己只想到了<code>O(n^2)</code>的解法，但是使用前缀和可以将时间复杂度降低到<code>O(n)</code>。<br />假设前缀和数组为sum[]，那么当<code>sum[i] - sum[j] = k</code>时，说明从j到i的子数组满足条件，实际上就是求<code>sum[j] = sum[i] - k</code>的个数。<br />我们可以用一个变量sum记录累加到当前位置的所有元素之和，用一个哈希表记录sum出现的次数，此时前缀和为sum-k的个数就是满足条件的个数。</p><h3 id="代码"><a class="markdownIt-Anchor" href="#代码"></a> 代码</h3><figure class="highlight axapta"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs axapta"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span> &#123;<br><span class="hljs-keyword">public</span>:<br>    <span class="hljs-built_in">int</span> subarraySum(vector&lt;<span class="hljs-built_in">int</span>&gt;&amp; nums, <span class="hljs-built_in">int</span> k) &#123;<br>        <span class="hljs-built_in">int</span> n=nums.size();<br>        unordered_map&lt;<span class="hljs-built_in">int</span>,<span class="hljs-built_in">int</span>&gt; mp;<br>        mp[<span class="hljs-number">0</span>]=<span class="hljs-number">1</span>;<br>        <span class="hljs-built_in">int</span> <span class="hljs-keyword">sum</span>=<span class="hljs-number">0</span>;<br>        <span class="hljs-built_in">int</span> ans=<span class="hljs-number">0</span>;<br>        <span class="hljs-keyword">for</span>(<span class="hljs-built_in">int</span> i=<span class="hljs-number">0</span>;i&lt;n;++i)&#123;<br>            <span class="hljs-keyword">sum</span>+=nums[i];<br>            ans+=mp[<span class="hljs-keyword">sum</span>-k];<br>            ++mp[<span class="hljs-keyword">sum</span>];<br>        &#125;<br>        <span class="hljs-keyword">return</span> ans;<br>    &#125;<br>&#125;;<br></code></pre></td></tr></table></figure>]]></content>
+    
+    
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>数据流的中位数</title>
     <link href="/2024/12/15/%E6%95%B0%E6%8D%AE%E6%B5%81%E7%9A%84%E4%B8%AD%E4%BD%8D%E6%95%B0/"/>
     <url>/2024/12/15/%E6%95%B0%E6%8D%AE%E6%B5%81%E7%9A%84%E4%B8%AD%E4%BD%8D%E6%95%B0/</url>
