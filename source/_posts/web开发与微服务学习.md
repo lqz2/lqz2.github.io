@@ -16,6 +16,7 @@ tags:
         - [IOC容器的初始化](#ioc容器的初始化)
     - [Spring Bean](#spring-bean)
         - [什么是Spring Bean？@Component 和 @Bean 的区别是什么？](#什么是spring-beancomponent-和-bean-的区别是什么)
+        - [将一个类声明为 Bean 的注解有哪些?](#将一个类声明为-bean-的注解有哪些)
         - [Bean生命周期](#bean生命周期)
         - [Bean的循环依赖](#bean的循环依赖)
     - [SpringMVC](#springmvc)
@@ -182,7 +183,7 @@ IoC 的思想就是两方之间不互相依赖，由第三方容器来管理相�
 IOC容器初始化，核心步骤主要是在`AbstractApplicationContext`类中的`refresh`方法中完成的：
 - 准备BeanFactory，在这一块需要给BeanFactory设置很多属性，比如类加载器、Environment等
 - 执行BeanFactory后置处理器，这一阶段会扫描要放入到容器中的Bean信息，得到对应的BeanDefinition（注意，这里只扫描，不创建）
-- 是注册BeanPostProcessor，我们自定义的BeanPostProcessor就是在这一阶段被加载的，将来Bean对象实例化好后需要用到
+- 注册BeanPostProcessor，我们自定义的BeanPostProcessor就是在这一阶段被加载的，将来Bean对象实例化好后需要用到
 - 启动tomcat
 - 实例化容器中实例化非懒加载的单例Bean，这里需要说的是，多例Bean和懒加载的Bean不会在这个阶段实例化，将来用到的时候再创建
 - 当容器初始化完毕后，再做一些收尾工作，比如清除缓存等
@@ -194,9 +195,16 @@ IOC容器初始化，核心步骤主要是在`AbstractApplicationContext`类中�
 ### 什么是Spring Bean？@Component 和 @Bean 的区别是什么？
 Bean 代指的就是那些被 IoC 容器所管理的对象。
 - @Component 注解作用于类，而@Bean注解作用于方法。
-- @Component通常是通过类路径扫描来自动侦测以及自动装配到 Spring 容器中（我们可以使用 @ComponentScan 注解定义要扫描的路径从中找出标识了需要装配的类自动装配到 Spring 的 bean 容器中）。
+- @Component通常是通过类路径扫描来自动侦测以及自动装配到 Spring 容器中（SpringBoot默认只能扫描到启动类所在的包及其子包，我们可以使用 @ComponentScan 注解定义要扫描的路径从中找出标识了需要装配的类自动装配到 Spring 的 bean 容器中）。
 - @Bean 注解通常是我们在标有该注解的方法中定义产生这个 bean, @Bean告诉了 Spring 这是某个类的实例，当我需要用它的时候还给我。
 - @Bean 注解比 @Component 注解的自定义性更强，而且很多地方我们只能通过 @Bean 注解来注册 bean。比如当我们引用第三方库中的类需要装配到 Spring容器时，则只能通过 @Bean来实现。
+
+### 将一个类声明为 Bean 的注解有哪些?
+- @Component：通用的注解，可标注任意类为 Spring 组件。如果一个 Bean 不知道属于哪个层，可以使用@Component 注解标注。
+- @Repository : 对应持久层即 Dao 层，主要用于数据库相关操作。
+- @Service : 对应服务层，主要涉及一些复杂的逻辑，需要用到 Dao 层。
+- @Controller : 对应 Spring MVC 控制层，主要用于接受用户请求并调用 Service 层返回数据给前端页面。
+
 
 ### Bean生命周期
 Bean的生命周期总的来说有4个阶段，分别有创建对象、初始化对象、使用对象以及销毁对象，而且这些工作大部分是交给Bean工厂的doCreateBean方法完成的。
