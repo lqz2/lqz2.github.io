@@ -33,6 +33,12 @@ tags:
     - [自定义starter](#自定义starter)
         - [什么是springboot starter](#什么是springboot-starter)
         - [如何创建自定义starter](#如何创建自定义starter)
+    - [工厂模式和单例模式](#工厂模式和单例模式)
+        - [工厂模式](#工厂模式)
+        - [单例模式](#单例模式)
+    - [Redis](#redis)
+        - [什么是Redis?](#什么是redis)
+        - [Redis为什么快？](#redis为什么快)
     - [JWT令牌](#jwt令牌)
     - [ThreadLocal](#threadlocal)
         - [特点](#特点)
@@ -134,6 +140,7 @@ tags:
     - [Redis数据结构](#redis数据结构)
         - [SkipList](#skiplist)
         - [SortedSet](#sortedset)
+        - [Bitmap](#bitmap)
     - [Redis内存回收](#redis内存回收)
         - [内存过期策略](#内存过期策略)
         - [内存淘汰策略](#内存淘汰策略)
@@ -390,6 +397,28 @@ Spring Boot Starter 是 Spring Boot 提供的一系列依赖管理工具，旨�
 - 首先，创建一个模块，提供自动配置功能，即该模块包含自动配置类(定义了自动配置类并在`META-INF/spring/org.springframework.boot.autoconfigure.AutoConfiguration.imports`中声明)
 - 创建另一个模块作为starter，在pom文件中引入上面的自定义自动配置类模块的坐标
 
+
+## 工厂模式和单例模式
+### 工厂模式
+Spring 使用工厂模式可以通过 BeanFactory 或 ApplicationContext 创建 bean 对象。
+两者对比：
+- BeanFactory：延迟注入(使用到某个 bean 的时候才会注入),相比于ApplicationContext 来说会占用更少的内存，程序启动速度更快。
+- ApplicationContext：容器启动的时候，不管你用没用到，一次性创建所有 bean 。BeanFactory 仅提供了最基本的依赖注入支持，ApplicationContext 扩展了 BeanFactory ,除了有BeanFactory的功能还有额外更多功能，所以一般开发人员使用ApplicationContext会更多。
+### 单例模式
+有一些对象其实我们只需要一个，比如说：线程池、缓存、对话框、注册表、日志对象、充当打印机、显卡等设备驱动程序的对象。事实上，这一类对象只能有一个实例，如果制造出多个实例就可能会导致一些问题的产生，比如：程序的行为异常、资源使用过量、或者不一致性的结果。
+使用单例模式的好处 :
+- 对于频繁使用的对象，可以省略创建对象所花费的时间，这对于那些重量级对象而言，是非常可观的一笔系统开销；
+- 由于 new 操作的次数减少，因而对系统内存的使用频率也会降低，这将减轻 GC 压力，缩短 GC 停顿时间。
+
+## Redis
+### 什么是Redis?
+Redis （REmote DIctionary Server）是一个基于 C 语言开发的开源 NoSQL 数据库（BSD 许可）。与传统数据库不同的是，Redis 的数据是保存在内存中的（内存数据库，支持持久化），因此读写速度非常快，被广泛应用于分布式缓存方向。并且，Redis 存储的是 KV 键值对数据。
+### Redis为什么快？
+- Redis 内部做了非常多的性能优化，比较重要的有：
+- Redis 基于内存，内存的访问速度比磁盘快很多；
+- Redis 基于 Reactor 模式设计开发了一套高效的事件处理模型，主要是单线程事件循环和 IO 多路复用（Redis 线程模式后面会详细介绍到）；
+- Redis 内置了多种优化过后的数据类型/结构实现，性能非常高。
+- Redis 通信协议实现简单且解析高效。
 ## JWT令牌
 
 JWT全称为Json Web Token，定义了一种简洁的、自包含的格式，用于通信双方以json数据格式安全的传输信息。其形式是一个很长的字符串，中间用点`.`分隔成三个部分。这些字符串由JSON对象使用Base64URL算法转换得到。
@@ -3060,6 +3089,30 @@ Redis分片集群如何判断某个key应该在哪个实例？
 比如，某些元素含3个指针，每个指针跨度分别为4,5,6
 多级指针的查询方式就避免了传统链表的逐个遍历导致的查询效率下降问题。在对有序数据做随机查询和排序时效率非常高。
 
+跳表的结构：
+```
+typedef struct zskiplist {
+    // 头尾节点指针
+    struct zskiplistNode *header, *tail;
+    // 节点数量
+    unsigned long length;
+    // 最大的索引层级
+    int level;
+} zskiplist;
+```
+跳表节点的数据机构:
+```
+typedef struct zskiplistNode {
+    sds ele; // 节点存储的字符串
+    double score;// 节点分数，排序、查找用
+    struct zskiplistNode *backward; // 前一个节点指针
+    struct zskiplistLevel {
+        struct zskiplistNode *forward; // 下一个节点指针
+        unsigned long span; // 索引跨度
+    } level[]; // 多级索引数组
+} zskiplistNode;
+```
+
 ### SortedSet
 SortedSet 数据结构的特点是：
 - 每组数据都包含 score 和 member
@@ -3071,6 +3124,19 @@ SortedSet的底层数据结构是怎样的？
 - 其次SortedSet还需要能根据score排序，因此底层还维护了一个跳表。
 - 当需要根据member查询score时，就去哈希表中查询；
 - 当需要根据score排序查询时，则基于跳表查询
+
+因为SortedSet底层需要用到两种数据结构，对内存占用比较高。因此Redis底层会对SortedSet中的元素大小做判断，如果满足以下条件，则会采用ZipList(压缩列表)来代替：
+- SortSet 保存的键值对数量少于 128 个；
+- 每个元素的长度小于 64 字节。
+
+### Bitmap
+Bitmap 看作是一个存储二进制数字（0 和 1）的数组，数组中每个元素的下标叫做 offset（偏移量）。
+
+应用场景：
+需要保存状态信息（0/1 即可表示）的场景，如用户签到情况、活跃用户情况、用户行为统计（比如是否点赞过某个视频）。
+
+使用 Bitmap 统计活跃用户怎么做？
+- 想要使用 Bitmap 统计活跃用户的话，可以使用日期（精确到天）作为 key，然后用户 ID 为 offset，如果当日活跃过就设置为 1。
 
 ## Redis内存回收
 Redis之所以性能强，最主要的原因就是基于内存存储。然而单节点的Redis其内存大小不宜过大，会影响持久化或主从同步性能。
