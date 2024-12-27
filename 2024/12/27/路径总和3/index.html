@@ -19,21 +19,21 @@
   <meta name="author" content="zql">
   <meta name="keywords" content="">
   
-    <meta name="description" content="排序链表   排序链表  题目描述 思路 代码     原题  题目描述 给你链表的头结点 head ，请将其按 升序 排列并返回 排序后的链表 。  思路 这道题之前直接用Vector排序的😂，这次用归并排序实现。  先找到链表的中点 递归的对左右两部分进行归并排序，返回排序后左右两部分的头结点 合并两个有序链表   代码 1234567891011121314151617181920212">
+    <meta name="description" content="路径总和3   路径总和3  题目描述 思路 代码     原题  题目描述 给定一个二叉树的根节点 root ，和一个整数 targetSum ，求该二叉树里节点值之和等于 targetSum 的 路径 的数目。 路径 不需要从根节点开始，也不需要在叶子节点结束，但是路径方向必须是向下的（只能从父节点到子节点）。 12输入：root &#x3D; [5,4,8,11,null,13,4,7,2,null">
 <meta property="og:type" content="article">
-<meta property="og:title" content="排序链表">
-<meta property="og:url" content="http://lqz2.github.io/2024/12/25/%E6%8E%92%E5%BA%8F%E9%93%BE%E8%A1%A8/index.html">
+<meta property="og:title" content="路径总和3">
+<meta property="og:url" content="http://lqz2.github.io/2024/12/27/%E8%B7%AF%E5%BE%84%E6%80%BB%E5%92%8C3/index.html">
 <meta property="og:site_name" content="my blogs">
-<meta property="og:description" content="排序链表   排序链表  题目描述 思路 代码     原题  题目描述 给你链表的头结点 head ，请将其按 升序 排列并返回 排序后的链表 。  思路 这道题之前直接用Vector排序的😂，这次用归并排序实现。  先找到链表的中点 递归的对左右两部分进行归并排序，返回排序后左右两部分的头结点 合并两个有序链表   代码 1234567891011121314151617181920212">
+<meta property="og:description" content="路径总和3   路径总和3  题目描述 思路 代码     原题  题目描述 给定一个二叉树的根节点 root ，和一个整数 targetSum ，求该二叉树里节点值之和等于 targetSum 的 路径 的数目。 路径 不需要从根节点开始，也不需要在叶子节点结束，但是路径方向必须是向下的（只能从父节点到子节点）。 12输入：root &#x3D; [5,4,8,11,null,13,4,7,2,null">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2024-12-25T02:35:33.000Z">
-<meta property="article:modified_time" content="2024-12-25T02:42:04.168Z">
+<meta property="article:published_time" content="2024-12-27T02:20:19.000Z">
+<meta property="article:modified_time" content="2024-12-27T02:25:50.446Z">
 <meta property="article:author" content="zql">
 <meta name="twitter:card" content="summary_large_image">
   
   
   
-  <title>排序链表 - my blogs</title>
+  <title>路径总和3 - my blogs</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -199,7 +199,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="排序链表"></span>
+            <span id="subtitle" data-typed-text="路径总和3"></span>
           
         </div>
 
@@ -210,8 +210,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2024-12-25 10:35" pubdate>
-          2024年12月25日 上午
+        <time datetime="2024-12-27 10:20" pubdate>
+          2024年12月27日 上午
         </time>
       </span>
     
@@ -222,7 +222,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          270 字
+          280 字
         
       </span>
     
@@ -270,15 +270,15 @@
       <div class="container nopadding-x-md" id="board-ctn">
         <div id="board">
           <article class="post-content mx-auto">
-            <h1 id="seo-header">排序链表</h1>
+            <h1 id="seo-header">路径总和3</h1>
             
             
               <div class="markdown-body">
                 
-                <h2 id="排序链表"><a class="markdownIt-Anchor" href="#排序链表"></a> 排序链表</h2>
+                <h2 id="路径总和3"><a class="markdownIt-Anchor" href="#路径总和3"></a> 路径总和3</h2>
 <!-- TOC -->
 <ul>
-<li><a href="#%E6%8E%92%E5%BA%8F%E9%93%BE%E8%A1%A8">排序链表</a>
+<li><a href="#%E8%B7%AF%E5%BE%84%E6%80%BB%E5%92%8C3">路径总和3</a>
 <ul>
 <li><a href="#%E9%A2%98%E7%9B%AE%E6%8F%8F%E8%BF%B0">题目描述</a></li>
 <li><a href="#%E6%80%9D%E8%B7%AF">思路</a></li>
@@ -287,18 +287,16 @@
 </li>
 </ul>
 <!-- /TOC -->
-<p><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/sort-list/description">原题</a></p>
+<p><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/path-sum-iii/description">原题</a></p>
 <h3 id="题目描述"><a class="markdownIt-Anchor" href="#题目描述"></a> 题目描述</h3>
-<p>给你链表的头结点 head ，请将其按 升序 排列并返回 排序后的链表 。</p>
+<p>给定一个二叉树的根节点 root ，和一个整数 targetSum ，求该二叉树里节点值之和等于 targetSum 的 路径 的数目。</p>
+<p>路径 不需要从根节点开始，也不需要在叶子节点结束，但是路径方向必须是向下的（只能从父节点到子节点）。</p>
+<figure class="highlight nix"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs nix">输入：<span class="hljs-attr">root</span> = [<span class="hljs-number">5</span>,<span class="hljs-number">4</span>,<span class="hljs-number">8</span>,<span class="hljs-number">11</span>,<span class="hljs-literal">null</span>,<span class="hljs-number">13</span>,<span class="hljs-number">4</span>,<span class="hljs-number">7</span>,<span class="hljs-number">2</span>,<span class="hljs-literal">null</span>,<span class="hljs-literal">null</span>,<span class="hljs-number">5</span>,<span class="hljs-number">1</span>], <span class="hljs-attr">targetSum</span> = <span class="hljs-number">22</span><br>输出：<span class="hljs-number">3</span><br></code></pre></td></tr></table></figure>
 <h3 id="思路"><a class="markdownIt-Anchor" href="#思路"></a> 思路</h3>
-<p>这道题之前直接用Vector排序的😂，这次用归并排序实现。</p>
-<ul>
-<li>先找到链表的中点</li>
-<li>递归的对左右两部分进行归并排序，返回排序后左右两部分的头结点</li>
-<li>合并两个有序链表</li>
-</ul>
+<p>这道题实际是二叉树版的和为k的子数组，还是需要用前缀和和哈希表的思想解决，参考<a href="https://lqz2.github.io/2024/12/18/%E5%92%8C%E4%B8%BAk%E7%9A%84%E5%AD%90%E6%95%B0%E7%BB%84/">这里</a><br />
+要注意的是，由于题目规定只能向下，也就是说遍历右子树之前，要回退左子树的数据，也就是在最后加上<code>--mp[sum]</code></p>
 <h3 id="代码"><a class="markdownIt-Anchor" href="#代码"></a> 代码</h3>
-<figure class="highlight xl"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><code class="hljs xl">class Solution &#123;<br>public:<br>    ListNode* merge(ListNode* h1, ListNode* h2)&#123;<br>        ListNode* dummy=new ListNode(-<span class="hljs-number">1</span>);<br>        ListNode* l=dummy,*l1=h1,*l2=h2;<br>        <span class="hljs-keyword">while</span>(l1&amp;&amp;l2)&#123;<br>            <span class="hljs-function"><span class="hljs-title">if</span>(l1-&gt;</span><span class="hljs-function"><span class="hljs-title">val</span>&lt;=l2-&gt;</span>val)&#123;<br>                <span class="hljs-function"><span class="hljs-title">l</span>-&gt;</span>next=l1;<br>                <span class="hljs-function"><span class="hljs-title">l1</span>=l1-&gt;</span>next;<br>                <span class="hljs-function"><span class="hljs-title">l</span>=l-&gt;</span>next;<br>            &#125;<span class="hljs-keyword">else</span>&#123;<br>                <span class="hljs-function"><span class="hljs-title">l</span>-&gt;</span>next=l2;<br>                <span class="hljs-function"><span class="hljs-title">l2</span>=l2-&gt;</span>next;<br>                <span class="hljs-function"><span class="hljs-title">l</span>=l-&gt;</span>next;<br>            &#125;<br>        &#125;<br>        <span class="hljs-function"><span class="hljs-title">l</span>-&gt;</span>next=l1==nullptr? l2:l1;<br>        <span class="hljs-function"><span class="hljs-title">return</span> dummy-&gt;</span>next;<br>    &#125;<br>    ListNode* mergeSort(ListNode* head, ListNode* tail)&#123;<br>        <span class="hljs-keyword">if</span>(head==nullptr)<br>            return head;<br>        <span class="hljs-function"><span class="hljs-title">if</span>(head-&gt;</span>next==tail)&#123;<br>            <span class="hljs-function"><span class="hljs-title">head</span>-&gt;</span>next=nullptr;<br>            return head;<br>        &#125;<br>        ListNode *slow=head,*fast=head;<br>        <span class="hljs-function"><span class="hljs-title">while</span>(fast-&gt;</span><span class="hljs-function"><span class="hljs-title">next</span>!=tail&amp;&amp;fast-&gt;</span><span class="hljs-function"><span class="hljs-title">next</span>-&gt;</span>next!=tail)&#123;<br>            <span class="hljs-function"><span class="hljs-title">slow</span>=slow-&gt;</span>next;<br>            <span class="hljs-function"><span class="hljs-title">fast</span>=fast-&gt;</span><span class="hljs-function"><span class="hljs-title">next</span>-&gt;</span>next;<br>        &#125;<br>        L<span class="hljs-function"><span class="hljs-title">istNode</span> *mid=slow-&gt;</span>next;<br>        return merge(mergeSort(head,mid),mergeSort(mid,tail));        <br>    &#125;<br>    ListNode* sortList(ListNode* head) &#123;<br>        return mergeSort(head,nullptr);<br>    &#125;<br>&#125;;<br></code></pre></td></tr></table></figure>
+<figure class="highlight axapta"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><code class="hljs axapta"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span> &#123;<br><span class="hljs-keyword">public</span>:<br>    unordered_map&lt;<span class="hljs-built_in">long</span> <span class="hljs-built_in">long</span>,<span class="hljs-built_in">int</span>&gt; mp;<br>    <span class="hljs-keyword">void</span> dfs(TreeNode* t,<span class="hljs-built_in">long</span> <span class="hljs-built_in">long</span> <span class="hljs-keyword">sum</span>, <span class="hljs-built_in">int</span> k, <span class="hljs-built_in">int</span> &amp;ans)&#123;<br>        <span class="hljs-keyword">if</span>(t==nullptr)<br>            <span class="hljs-keyword">return</span> ;<br>        <span class="hljs-keyword">sum</span>+=t-&gt;val;<br>        ans+=mp[<span class="hljs-keyword">sum</span>-k];<br>        ++mp[<span class="hljs-keyword">sum</span>];<br>        dfs(t-&gt;left,<span class="hljs-keyword">sum</span>,k,ans);<br>        dfs(t-&gt;right,<span class="hljs-keyword">sum</span>,k,ans);<br>        --mp[<span class="hljs-keyword">sum</span>];<br>    &#125;<br>    <span class="hljs-built_in">int</span> pathSum(TreeNode* root, <span class="hljs-built_in">int</span> targetSum) &#123;<br>        <span class="hljs-built_in">int</span> ans=<span class="hljs-number">0</span>;<br>        mp[<span class="hljs-number">0</span>]=<span class="hljs-number">1</span>;<br>        dfs(root,<span class="hljs-number">0</span>,targetSum,ans);<br>        <span class="hljs-keyword">return</span> ans;<br>    &#125;<br>&#125;;<br></code></pre></td></tr></table></figure>
                 
               </div>
             
@@ -336,8 +334,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>排序链表</div>
-      <div>http://lqz2.github.io/2024/12/25/排序链表/</div>
+      <div>路径总和3</div>
+      <div>http://lqz2.github.io/2024/12/27/路径总和3/</div>
     </div>
     <div class="license-meta">
       
@@ -349,7 +347,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2024年12月25日</div>
+          <div>2024年12月27日</div>
         </div>
       
       
@@ -381,18 +379,12 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2024/12/27/%E8%B7%AF%E5%BE%84%E6%80%BB%E5%92%8C3/" title="路径总和3">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">路径总和3</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2024/12/24/k%E4%B8%AA%E4%B8%80%E7%BB%84%E7%BF%BB%E8%BD%AC%E9%93%BE%E8%A1%A8/" title="k个一组翻转链表">
-                        <span class="hidden-mobile">k个一组翻转链表</span>
+                      <a href="/2024/12/25/%E6%8E%92%E5%BA%8F%E9%93%BE%E8%A1%A8/" title="排序链表">
+                        <span class="hidden-mobile">排序链表</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
