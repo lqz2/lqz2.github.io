@@ -31,7 +31,7 @@
 <meta property="og:image" content="https://oss.javaguide.cn/github/javaguide/cs-basics/network/tcp-shakes-hands-three-times.png">
 <meta property="og:image" content="https://oss.javaguide.cn/github/javaguide/cs-basics/network/tcp-waves-four-times.png">
 <meta property="article:published_time" content="2022-08-26T13:10:10.000Z">
-<meta property="article:modified_time" content="2025-02-04T15:01:47.403Z">
+<meta property="article:modified_time" content="2025-02-05T12:48:56.825Z">
 <meta property="article:author" content="zql">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://oss.javaguide.cn/github/javaguide/java/basis/java-code-to-machine-code.png">
@@ -229,7 +229,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          13k 字
+          14k 字
         
       </span>
     
@@ -240,7 +240,7 @@
         
         
         
-          106 分钟
+          118 分钟
         
       </span>
     
@@ -324,6 +324,21 @@
 <li><a href="#java%E6%B7%B1%E6%8B%B7%E8%B4%9D%E7%9A%84%E6%96%B9%E5%BC%8F%E6%9C%89%E5%93%AA%E4%BA%9B">Java深拷贝的方式有哪些？</a></li>
 </ul>
 </li>
+<li><a href="#java%E4%B8%AD%E7%9A%84%E5%AF%B9%E8%B1%A1">Java中的对象</a>
+<ul>
+<li><a href="#java%E4%B8%AD%E5%88%9B%E5%BB%BA%E5%AF%B9%E8%B1%A1%E6%9C%89%E5%93%AA%E4%BA%9B%E6%96%B9%E5%BC%8F">Java中创建对象有哪些方式？</a></li>
+<li><a href="#new%E7%9A%84%E5%AF%B9%E8%B1%A1%E4%BB%80%E4%B9%88%E6%97%B6%E5%80%99%E5%9B%9E%E6%94%B6">new的对象什么时候回收？</a></li>
+</ul>
+</li>
+<li><a href="#%E5%8F%8D%E5%B0%84%E6%9C%BA%E5%88%B6">反射机制</a>
+<ul>
+<li><a href="#%E4%BB%80%E4%B9%88%E6%98%AF%E5%8F%8D%E5%B0%84%E6%9C%BA%E5%88%B6">什么是反射机制？</a></li>
+<li><a href="#%E5%8F%8D%E5%B0%84%E5%9C%A8%E4%BD%A0%E5%B9%B3%E6%97%B6%E5%86%99%E4%BB%A3%E7%A0%81%E6%88%96%E8%80%85%E6%A1%86%E6%9E%B6%E4%B8%AD%E7%9A%84%E5%BA%94%E7%94%A8%E5%9C%BA%E6%99%AF%E6%9C%89%E5%93%AA%E4%BA%9B">反射在你平时写代码或者框架中的应用场景有哪些?</a></li>
+</ul>
+</li>
+<li><a href="#java%E6%B3%A8%E8%A7%A3%E7%9A%84%E5%8E%9F%E7%90%86">Java注解的原理</a></li>
+<li><a href="#-%E4%B8%8E-equals-%E6%9C%89%E4%BB%80%E4%B9%88%E5%8C%BA%E5%88%AB">== 与 equals 有什么区别？</a></li>
+<li><a href="#stringbuffer%E5%92%8Cstringbuilder%E5%8C%BA%E5%88%AB%E6%98%AF%E4%BB%80%E4%B9%88">StringBuffer和StringBuilder区别是什么？</a></li>
 </ul>
 </li>
 <li><a href="#cs%E5%9F%BA%E7%A1%80">CS基础</a>
@@ -580,6 +595,81 @@ Java中大部分方法和类以及集合只能处理类型对象，比如ArrayLi
 <li>使用序列化和反序列化</li>
 <li>手动递归复制</li>
 </ul>
+<h2 id="java中的对象"><a class="markdownIt-Anchor" href="#java中的对象"></a> Java中的对象</h2>
+<h3 id="java中创建对象有哪些方式"><a class="markdownIt-Anchor" href="#java中创建对象有哪些方式"></a> Java中创建对象有哪些方式？</h3>
+<ul>
+<li>使用new关键字:通过new关键字直接调用类的构造方法来创建对象。</li>
+</ul>
+<figure class="highlight vbnet"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs vbnet"><span class="hljs-keyword">MyClass</span> obj = <span class="hljs-built_in">new</span> <span class="hljs-keyword">MyClass</span>();<br></code></pre></td></tr></table></figure>
+<ul>
+<li>使用Class类的newInstance()方法:通过反射机制调用newInstance()方法来创建对象。</li>
+</ul>
+<figure class="highlight vbnet"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs vbnet"><span class="hljs-keyword">MyClass</span> obj = (<span class="hljs-keyword">MyClass</span>) <span class="hljs-keyword">Class</span>.forName(<span class="hljs-string">&quot;com.example.MyClass&quot;</span>).newInstance();<br></code></pre></td></tr></table></figure>
+<ul>
+<li>使用Constructor类的newInstance()方法：同样通过反射机制调用Constructor类的newInstance()方法来创建对象。</li>
+</ul>
+<figure class="highlight delphi"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs delphi"><span class="hljs-function"><span class="hljs-keyword">Constructor</span>&lt;<span class="hljs-title">MyClass</span>&gt; <span class="hljs-title">constructor</span> = <span class="hljs-title">MyClass</span>.<span class="hljs-title">class</span>.<span class="hljs-title">getConstructor</span><span class="hljs-params">()</span>;</span><br>MyClass obj = <span class="hljs-keyword">constructor</span>.newInstance();<br></code></pre></td></tr></table></figure>
+<ul>
+<li>使用clone()方法：如果类实现了Cloneable接口，可以使用clone()方法复制对象。</li>
+</ul>
+<figure class="highlight vbnet"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs vbnet"><span class="hljs-keyword">MyClass</span> obj1 = <span class="hljs-built_in">new</span> <span class="hljs-keyword">MyClass</span>();<br><span class="hljs-keyword">MyClass</span> obj2 = (<span class="hljs-keyword">MyClass</span>) obj1.clone();<br></code></pre></td></tr></table></figure>
+<ul>
+<li>使用反序列化</li>
+</ul>
+<h3 id="new的对象什么时候回收"><a class="markdownIt-Anchor" href="#new的对象什么时候回收"></a> new的对象什么时候回收？</h3>
+<p>主要由GC回收，分为以下几种情况：</p>
+<ol>
+<li>引用计数法：某个对象的引用计数为0时，表示该对象不再被引用，可以被回收。</li>
+<li>可达性分析算法：从根对象（如方法区中的类静态属性、方法中的局部变量等）出发，通过对象之间的引用链进行遍历，如果存在一条引用链到达某个对象，则说明该对象是可达的，反之不可达，不可达的对象将被回收。</li>
+<li>终结器（Finalizer）：如果对象重写了finalize()方法，垃圾回收器会在回收该对象之前调用finalize()方法，对象可以在finalize()方法中进行一些清理操作。然而，终结器机制的使用不被推荐，因为它的执行时间是不确定的，可能会导致不可预测的性能问题。</li>
+</ol>
+<h2 id="反射机制"><a class="markdownIt-Anchor" href="#反射机制"></a> 反射机制</h2>
+<h3 id="什么是反射机制"><a class="markdownIt-Anchor" href="#什么是反射机制"></a> 什么是反射机制？</h3>
+<p>Java 反射机制是在运行状态中，对于任意一个类，都能够知道这个类中的所有属性和方法；<br />
+对于任意一个对象，都能够调用它的任意一个方法和属性；<br />
+这种<strong>动态获取的信息以及动态调用对象的方法</strong>的功能称为 Java 语言的反射机制。</p>
+<p>反射具有以下特性：</p>
+<ul>
+<li>运行时类信息访问：反射机制允许程序在运行时获取类的完整结构信息，包括类名、包名、父类、实现的接口、构造函数、方法和字段等。</li>
+<li>动态对象创建：可以使用反射 API 动态地创建对象实例，即使在编译时不知道具体的类名。这是通过 Class 类的 newInstance() 方法或 Constructor 对象的 newInstance() 方法实现的。</li>
+<li>动态方法调用：可以在运行时动态地调用对象的方法，包括私有方法。这通过 Method 类的 invoke() 方法实现，允许你传入对象实例和参数值来执行方法。</li>
+<li>访问和修改字段值：反射还允许程序在运行时访问和修改对象的字段值，即使是私有的。这是通过 Field 类的 get() 和 set() 方法完成的。</li>
+</ul>
+<h3 id="反射在你平时写代码或者框架中的应用场景有哪些"><a class="markdownIt-Anchor" href="#反射在你平时写代码或者框架中的应用场景有哪些"></a> 反射在你平时写代码或者框架中的应用场景有哪些?</h3>
+<ol>
+<li>加载数据库驱动</li>
+</ol>
+<figure class="highlight abnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><code class="hljs abnf">Class.forName(<span class="hljs-string">&quot;com.mysql.cj.jdbc.Driver&quot;</span>)<span class="hljs-comment">;</span><br></code></pre></td></tr></table></figure>
+<ol start="2">
+<li>配置文件加载<br />
+Spring 通过 XML 配置模式装载 Bean 的过程：</li>
+</ol>
+<ul>
+<li>将程序中所有 XML 或 properties 配置文件加载入内存</li>
+<li>Java 类里面解析 xml 或者 properties 里面的内容，得到对应实体类的字节码字符串以及相关的属性信息</li>
+<li>使用反射机制，根据这个字符串获得某个类的 Class 实例</li>
+<li>动态配置实例的属性</li>
+</ul>
+<h2 id="java注解的原理"><a class="markdownIt-Anchor" href="#java注解的原理"></a> Java注解的原理</h2>
+<p>注解本质是一个继承了Annotation的特殊接口，其具体实现类是Java运行时生成的动态代理类。</p>
+<p>我们通过反射获取注解时，返回的是Java运行时生成的动态代理对象。<br />
+通过代理对象调用自定义注解的方法，会最终调用AnnotationInvocationHandler的invoke方法。<br />
+该方法会从memberValues这个Map中索引出对应的值。而memberValues的来源是Java常量池。</p>
+<h2 id="与-equals-有什么区别"><a class="markdownIt-Anchor" href="#与-equals-有什么区别"></a> == 与 equals 有什么区别？</h2>
+<p>对于字符串变量来说，使用 == 和 equals 比较字符串时，其比较方法不同。== 比较两个变量本身的值，即两个对象在内存中的首地址；equals 比较字符串包含的内容是否相同。</p>
+<p>对于非字符串变量来说，如果没有对 equals() 进行重写的话，== 和 equals 方法的作用是相同的，都是用来比较对象在堆内存中的首地址，即用来比较两个引用变量是否指向同一个对象。</p>
+<p>==：比较的是两个字符串内存地址（堆内存）的数值是否相等，属于数值比较；<br />
+equals()：比较的是两个字符串的内容，属于内容比较。</p>
+<h2 id="stringbuffer和stringbuilder区别是什么"><a class="markdownIt-Anchor" href="#stringbuffer和stringbuilder区别是什么"></a> StringBuffer和StringBuilder区别是什么？</h2>
+<p>区别：</p>
+<ul>
+<li>String 是 Java 中基础且重要的类，被声明为 final class，是不可变字符串。因为它的不可变性，所以<strong>拼接字符串时会产生很多无用的中间对象，如果频繁地进行这样的操作对性能有所影响</strong>。</li>
+<li>StringBuffer 就是为了解决大量拼接字符串时产生很多中间对象问题而提供的一个类。它提供了 append 和 add 方法，可以将字符串添加到已有序列的末尾或指定位置，它的本质是一个<strong>线程安全</strong>的可修改的字符序列。在很多情况下我们的字符串拼接操作不需要线程安全，所以 StringBuilder 登场了。</li>
+<li>StringBuilder 是 JDK1.5 发布的，它和 StringBuffer 本质上没什么区别，就是<strong>去掉了保证线程安全</strong>的那部分，减少了开销。</li>
+</ul>
+<blockquote>
+<p>一般情况下，速度从快到慢为 StringBuilder &gt; StringBuffer &gt; String，当然这是相对的，不是绝对的。</p>
+</blockquote>
 <h1 id="cs基础"><a class="markdownIt-Anchor" href="#cs基础"></a> CS基础</h1>
 <h2 id="进程和线程的区别"><a class="markdownIt-Anchor" href="#进程和线程的区别"></a> 进程和线程的区别</h2>
 <blockquote>
