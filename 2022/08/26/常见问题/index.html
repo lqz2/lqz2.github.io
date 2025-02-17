@@ -31,7 +31,7 @@
 <meta property="og:image" content="https://oss.javaguide.cn/github/javaguide/cs-basics/network/tcp-shakes-hands-three-times.png">
 <meta property="og:image" content="https://oss.javaguide.cn/github/javaguide/cs-basics/network/tcp-waves-four-times.png">
 <meta property="article:published_time" content="2022-08-26T13:10:10.000Z">
-<meta property="article:modified_time" content="2025-02-17T03:09:51.820Z">
+<meta property="article:modified_time" content="2025-02-17T10:01:42.085Z">
 <meta property="article:author" content="zql">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://oss.javaguide.cn/github/javaguide/java/basis/java-code-to-machine-code.png">
@@ -240,7 +240,7 @@
         
         
         
-          168 分钟
+          171 分钟
         
       </span>
     
@@ -361,14 +361,6 @@
 <li><a href="#java%E6%B3%A8%E8%A7%A3%E7%9A%84%E5%8E%9F%E7%90%86">Java注解的原理</a></li>
 <li><a href="#-%E4%B8%8E-equals-%E6%9C%89%E4%BB%80%E4%B9%88%E5%8C%BA%E5%88%AB">== 与 equals 有什么区别？</a></li>
 <li><a href="#stringbuffer%E5%92%8Cstringbuilder%E5%8C%BA%E5%88%AB%E6%98%AF%E4%BB%80%E4%B9%88">StringBuffer和StringBuilder区别是什么？</a></li>
-<li><a href="#mysql%E7%9A%84%E6%9C%89%E5%93%AA%E5%87%A0%E7%A7%8D%E5%BC%95%E6%93%8E">MYSQL的有哪几种引擎？</a></li>
-<li><a href="#%E6%85%A2%E6%9F%A5%E8%AF%A2%E5%A6%82%E4%BD%95%E8%A7%A3%E5%86%B3">慢查询如何解决？</a></li>
-<li><a href="#mysql%E7%9A%84%E6%97%A5%E5%BF%97">MYSQL的日志？</a>
-<ul>
-<li><a href="#mysql%E4%BA%86%E8%A7%A3%E5%93%AA%E4%BA%9B%E6%97%A5%E5%BF%97">MYSQL了解哪些日志？</a></li>
-<li><a href="#%E4%BB%8B%E7%BB%8D%E4%B8%80%E4%B8%8Bbin-log">介绍一下bin log？</a></li>
-</ul>
-</li>
 <li><a href="#%E5%B9%B6%E5%8F%91">并发</a>
 <ul>
 <li><a href="#%E7%BA%BF%E7%A8%8B%E5%AE%89%E5%85%A8%E4%BD%93%E7%8E%B0%E5%9C%A8%E5%93%AA%E4%BA%9B%E6%96%B9%E9%9D%A2">线程安全体现在哪些方面？</a></li>
@@ -395,6 +387,23 @@
 <li><a href="#%E6%A0%B8%E5%BF%83%E7%BA%BF%E7%A8%8B%E6%95%B0%E5%A6%82%E4%BD%95%E8%AE%BE%E7%BD%AE">核心线程数如何设置？</a></li>
 <li><a href="#%E7%BA%BF%E7%A8%8B%E6%B1%A0%E7%A7%8D%E7%B1%BB%E6%9C%89%E5%93%AA%E4%BA%9B">线程池种类有哪些？</a></li>
 <li><a href="#%E5%A4%9A%E7%BA%BF%E7%A8%8B%E9%A1%BA%E5%BA%8F%E6%89%A7%E8%A1%8C%E7%9A%84%E5%87%A0%E7%A7%8D%E5%86%99%E6%B3%95">多线程顺序执行的几种写法?</a></li>
+<li><a href="#%E7%BA%BF%E7%A8%8B%E6%B1%A0%E4%B8%ADshutdown%E5%92%8Cshutdownnow%E7%9A%84%E5%8C%BA%E5%88%AB">线程池中shutdown和shutdownNow的区别？</a></li>
+<li><a href="#%E6%8F%90%E4%BA%A4%E7%BB%99%E7%BA%BF%E7%A8%8B%E6%B1%A0%E7%9A%84%E4%BB%BB%E5%8A%A1%E5%8F%AF%E4%BB%A5%E8%A2%AB%E6%92%A4%E5%9B%9E%E5%90%97">提交给线程池的任务可以被撤回吗？</a></li>
+</ul>
+</li>
+<li><a href="#mysql">MYSQL</a>
+<ul>
+<li><a href="#mysql%E7%9A%84%E4%BA%8B%E5%8A%A1%E9%9A%94%E7%A6%BB%E7%BA%A7%E5%88%AB">mysql的事务隔离级别</a>
+<ul>
+<li><a href="#%E4%BA%8B%E5%8A%A1%E7%9A%84%E5%9B%9B%E4%B8%AA%E7%89%B9%E6%80%A7">事务的四个特性</a></li>
+<li><a href="#%E4%BA%8B%E5%8A%A1%E9%9A%94%E7%A6%BB%E8%A7%A3%E5%86%B3%E7%9A%84%E9%97%AE%E9%A2%98">事务隔离解决的问题</a></li>
+<li><a href="#%E4%BA%8B%E5%8A%A1%E9%9A%94%E7%A6%BB%E7%BA%A7%E5%88%AB">事务隔离级别</a></li>
+</ul>
+</li>
+<li><a href="#mysql%E7%9A%84%E6%9C%89%E5%93%AA%E5%87%A0%E7%A7%8D%E5%BC%95%E6%93%8E">MYSQL的有哪几种引擎？</a></li>
+<li><a href="#%E6%85%A2%E6%9F%A5%E8%AF%A2%E5%A6%82%E4%BD%95%E8%A7%A3%E5%86%B3">慢查询如何解决？</a></li>
+<li><a href="#mysql%E4%BA%86%E8%A7%A3%E5%93%AA%E4%BA%9B%E6%97%A5%E5%BF%97">MYSQL了解哪些日志？</a></li>
+<li><a href="#%E4%BB%8B%E7%BB%8D%E4%B8%80%E4%B8%8Bbin-log">介绍一下bin log？</a></li>
 </ul>
 </li>
 </ul>
@@ -430,13 +439,6 @@
 <li><a href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E6%9C%8D%E5%8A%A1%E7%AB%AF%E4%B8%8D%E6%8A%8A-ack-%E5%92%8C-fin-%E4%B8%80%E8%B5%B7%E5%8F%91%E9%80%81%E5%8F%98%E6%88%90%E4%B8%89%E6%AC%A1%E6%8C%A5%E6%89%8B">为什么服务端不把 ACK 和 FIN 一起发送，变成三次挥手？</a></li>
 <li><a href="#%E7%AC%AC%E4%BA%8C%E6%AC%A1%E6%8C%A5%E6%89%8B%E6%9C%8D%E5%8A%A1%E7%AB%AF%E5%8F%91%E9%80%81ack%E6%B2%A1%E6%9C%89%E5%88%B0%E8%BE%BE%E4%BC%9A%E6%80%8E%E4%B9%88%E6%A0%B7">第二次挥手服务端发送ACK没有到达会怎么样？</a></li>
 <li><a href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E7%AC%AC%E5%9B%9B%E6%AC%A1%E6%8C%A5%E6%89%8B%E5%AE%A2%E6%88%B7%E7%AB%AF%E8%A6%81%E7%AD%89%E5%BE%85-2msl%E6%8A%A5%E6%96%87%E6%9C%80%E9%95%BF%E5%AD%98%E6%B4%BB%E6%97%B6%E9%97%B4%E6%89%8D%E8%BF%9B%E5%85%A5closed%E7%8A%B6%E6%80%81">为什么第四次挥手，客户端要等待 2MSL（报文最长存活时间）才进入CLOSED状态？</a></li>
-</ul>
-</li>
-<li><a href="#mysql%E7%9A%84%E4%BA%8B%E5%8A%A1%E9%9A%94%E7%A6%BB%E7%BA%A7%E5%88%AB">mysql的事务隔离级别</a>
-<ul>
-<li><a href="#%E4%BA%8B%E5%8A%A1%E7%9A%84%E5%9B%9B%E4%B8%AA%E7%89%B9%E6%80%A7">事务的四个特性</a></li>
-<li><a href="#%E4%BA%8B%E5%8A%A1%E9%9A%94%E7%A6%BB%E8%A7%A3%E5%86%B3%E7%9A%84%E9%97%AE%E9%A2%98">事务隔离解决的问题</a></li>
-<li><a href="#%E4%BA%8B%E5%8A%A1%E9%9A%94%E7%A6%BB%E7%BA%A7%E5%88%AB">事务隔离级别</a></li>
 </ul>
 </li>
 </ul>
@@ -846,38 +848,6 @@ equals()：比较的是两个字符串的内容，属于内容比较。</p>
 <blockquote>
 <p>一般情况下，速度从快到慢为 StringBuilder &gt; StringBuffer &gt; String，当然这是相对的，不是绝对的。</p>
 </blockquote>
-<h2 id="mysql的有哪几种引擎"><a class="markdownIt-Anchor" href="#mysql的有哪几种引擎"></a> MYSQL的有哪几种引擎？</h2>
-<ul>
-<li>InnoDB：InnoDB是MySQL的默认存储引擎，具有ACID事务支持、行级锁、外键约束等特性。它适用于高并发的读写操作，支持较好的数据完整性和并发控制。</li>
-<li>MyISAM：MyISAM是MySQL的另一种常见的存储引擎，具有较低的存储空间和内存消耗，适用于大量读操作的场景。然而，MyISAM不支持事务、行级锁和外键约束，因此在并发写入和数据完整性方面有一定的限制。</li>
-<li>Memory：Memory引擎将数据存储在内存中，适用于对性能要求较高的读操作，但是在服务器重启或崩溃时数据会丢失。它不支持事务、行级锁和外键约束。</li>
-</ul>
-<h2 id="慢查询如何解决"><a class="markdownIt-Anchor" href="#慢查询如何解决"></a> 慢查询如何解决？</h2>
-<ul>
-<li>通过 explain 执行结果，查看 sql 是否走索引，如果不走索引，考虑增加索引。</li>
-<li>可以通过建立联合索引，实现覆盖索引优化，减少回表，使用联合索引符合最左匹配原则，不然会索引失效</li>
-<li>避免索引失效，比如不要用左模糊匹配、函数计算、表达式计算等等。</li>
-<li>联表查询最好要以小表驱动大表，并且被驱动表的字段要有索引，当然最好通过冗余字段的设计，避免联表查询。</li>
-<li>针对 limit n,y 深分页的查询优化，可以把 Limit 查询转换成某个位置的查询：select * from tb_sku where id&gt;20000 limit 10，该方案适用于主键自增的表，</li>
-<li>将字段多的表分解成多个表，有些字段使用频率高，有些低，数据量大时，会由于使用频率低的存在而变慢，可以考虑分开</li>
-</ul>
-<h2 id="mysql的日志"><a class="markdownIt-Anchor" href="#mysql的日志"></a> MYSQL的日志？</h2>
-<h3 id="mysql了解哪些日志"><a class="markdownIt-Anchor" href="#mysql了解哪些日志"></a> MYSQL了解哪些日志？</h3>
-<ul>
-<li>redo log 重做日志，是 InnoDB 存储引擎层生成的日志，实现了事务中的持久性，主要用于掉电等故障恢复，是循环写；</li>
-<li>undo log 回滚日志，是 InnoDB 存储引擎层生成的日志，实现了事务中的原子性，主要用于事务回滚和 MVCC。</li>
-<li>bin log 二进制日志，是 Server 层生成的日志，主要用于数据备份和主从复制，是追加写；</li>
-<li>relay log 中继日志，用于主从复制场景下，slave 通过 io 线程拷贝 master 的 bin log 后本地生成的日志</li>
-<li>慢查询日志，用于记录执行时间过长的 SQL，需要设置阈值后手动开启</li>
-</ul>
-<h3 id="介绍一下bin-log"><a class="markdownIt-Anchor" href="#介绍一下bin-log"></a> 介绍一下bin log？</h3>
-<p>MySQL 在完成一条更新操作后，Server 层还会生成一条 binlog<br />
-binlog 有 3 种格式类型，分别是 STATEMENT（默认格式）、ROW、MIXED，区别如下：</p>
-<ul>
-<li>STATEMENT：每一条修改数据的 SQL 都会被记录到 binlog 中（相当于记录了逻辑操作，所以针对这种格式，binlog 可以称为逻辑日志），主从复制中 slave 端再根据 SQL 语句重现。但 STATEMENT 有动态函数的问题，比如你用了 uuid 或者 now 这些函数，你在主库上执行的结果并不是你在从库执行的结果，这种随时在变的函数会导致复制的数据不一致；</li>
-<li>ROW：记录行数据最终被修改成什么样了（这种格式的日志，就不能称为逻辑日志了），不会出现 STATEMENT 下动态函数的问题。但 ROW 的缺点是每行数据的变化结果都会被记录，比如执行批量 update 语句，更新多少行数据就会产生多少条记录，使 binlog 文件过大，而在 STATEMENT 格式下只会记录一个 update 语句而已；</li>
-<li>MIXED：包含了 STATEMENT 和 ROW 模式，它会根据不同的情况自动使用 ROW 模式和 STATEMENT 模式；</li>
-</ul>
 <h2 id="并发"><a class="markdownIt-Anchor" href="#并发"></a> 并发</h2>
 <h3 id="线程安全体现在哪些方面"><a class="markdownIt-Anchor" href="#线程安全体现在哪些方面"></a> 线程安全体现在哪些方面？</h3>
 <ul>
@@ -914,9 +884,10 @@ binlog 有 3 种格式类型，分别是 STATEMENT（默认格式）、ROW、MIX
 </ul>
 <h3 id="如何停止线程"><a class="markdownIt-Anchor" href="#如何停止线程"></a> 如何停止线程？</h3>
 <ul>
-<li>调用interupt()方法, 判断当前对象的interrupted()状态，如果是中断状态则抛出异常，达到中断线程的效果。</li>
-<li>先将线程sleep，然后调用interrupt标记中断状态，interrupt会将阻塞状态的线程中断。会抛出中断异常，达到停止线程的效果</li>
+<li>异常停止法：调用interupt方法, 在run方法中判断当前对象的中断状态，如果是中断状态则抛出异常，达到中断线程的效果。</li>
+<li>沉睡中停止：先将线程sleep，然后调用interrupt标记中断状态，interrupt会将阻塞状态的线程中断。会抛出中断异常，达到停止线程的效果</li>
 <li>stop()暴力停止</li>
+<li>使用return停止：调用interupt标记中断状态后，在run方法中判断中断状态，如果是中断状态则return。</li>
 </ul>
 <h3 id="线程的状态有哪些"><a class="markdownIt-Anchor" href="#线程的状态有哪些"></a> 线程的状态有哪些？</h3>
 <ul>
@@ -990,7 +961,7 @@ binlog 有 3 种格式类型，分别是 STATEMENT（默认格式）、ROW、MIX
 <p>答：AQS是Java中的一个抽象类，提供了一些基本的同步机制，AQS的核心思想是：</p>
 <ul>
 <li>如果被请求的资源空闲，就将当前请求资源的线程设置为有效的工作线程，并将共享资源设置为锁定状态；</li>
-<li>如果被请求的资源被占用，那么就需要一套线程阻塞等待以及被唤醒时锁分配的机制，这个机制AQS是通过内部的双向队列来实现的。</li>
+<li>如果被请求的资源被占用，那么就需要一套线程阻塞等待以及被唤醒时锁分配的机制，这个机制是通过内部的双向队列来实现的。</li>
 </ul>
 <h3 id="volatile关键字的作用"><a class="markdownIt-Anchor" href="#volatile关键字的作用"></a> volatile关键字的作用？</h3>
 <ul>
@@ -1017,6 +988,7 @@ binlog 有 3 种格式类型，分别是 STATEMENT（默认格式）、ROW、MIX
 <li>maximumPoolSize：最大线程数，线程池中最大的线程数量</li>
 <li>keepAliveTime：线程空闲时间，超过这个时间，多余的线程会被回收</li>
 <li>unit：时间单位</li>
+<li>workQueue：工作队列，存放等待执行的任务</li>
 </ul>
 <h3 id="线程池的拒绝策略有哪些"><a class="markdownIt-Anchor" href="#线程池的拒绝策略有哪些"></a> 线程池的拒绝策略有哪些？</h3>
 <ul>
@@ -1039,6 +1011,77 @@ binlog 有 3 种格式类型，分别是 STATEMENT（默认格式）、ROW、MIX
 <li>SingleThreadPool：只有一个核心线程，确保所有任务按照指定顺序执行</li>
 </ul>
 <h3 id="多线程顺序执行的几种写法"><a class="markdownIt-Anchor" href="#多线程顺序执行的几种写法"></a> 多线程顺序执行的几种写法?</h3>
+<ul>
+<li>使用join方法，join方法会阻塞当前线程，等待调用join方法的线程执行完毕，类似于让调用join方法的线程“插队”。</li>
+<li>使用线程池，将核心线程数和最大线程数都设置为1，然后按顺序提交任务。</li>
+<li>使用wait()和notify，创建两个lock，分别是lock1和lock2，线程1和线程2共用lock1,线程2和线程3共用lock2。实现如下：</li>
+</ul>
+<figure class="highlight typescript"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br></pre></td><td class="code"><pre><code class="hljs typescript"><span class="hljs-keyword">public</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">PrintOrder</span>&#123;<br>    <span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> <span class="hljs-title class_">Object</span> lock1=<span class="hljs-keyword">new</span> <span class="hljs-title class_">Object</span>();<br>    <span class="hljs-keyword">private</span> <span class="hljs-keyword">static</span> <span class="hljs-title class_">Object</span> lock2=<span class="hljs-keyword">new</span> <span class="hljs-title class_">Object</span>();<br><br>    <span class="hljs-keyword">static</span> <span class="hljs-keyword">class</span> <span class="hljs-title class_">MyThread</span> <span class="hljs-keyword">implements</span> <span class="hljs-title class_">Runnable</span>&#123;<br>        <span class="hljs-title class_">String</span> name;<br>        <span class="hljs-title class_">Object</span> preLock;<br>        <span class="hljs-title class_">Object</span> postLock;<br>        <span class="hljs-keyword">public</span> <span class="hljs-title class_">MyThread</span>(<span class="hljs-title class_">String</span> name,<span class="hljs-title class_">Object</span> preLock, <span class="hljs-title class_">Object</span> postLock)&#123;<br>            <span class="hljs-variable language_">this</span>.<span class="hljs-property">name</span>=name;<br>            <span class="hljs-variable language_">this</span>.<span class="hljs-property">preLock</span>=preLock;<br>            <span class="hljs-variable language_">this</span>.<span class="hljs-property">postLock</span>=postLock;<br>        &#125;<br>        <span class="hljs-keyword">public</span> <span class="hljs-title function_">run</span>(<span class="hljs-params"></span>)&#123;<br>            <span class="hljs-keyword">if</span>(preLock!=<span class="hljs-literal">null</span>)&#123;<br>                <span class="hljs-title function_">synchronized</span>(<span class="hljs-params">preLock</span>)&#123;<br>                    preLock.<span class="hljs-title function_">wait</span>();<br>                &#125;<br>            &#125;<br>            <span class="hljs-title class_">System</span>.<span class="hljs-property">out</span>.<span class="hljs-title function_">println</span>(name+<span class="hljs-string">&quot;执行&quot;</span>);<br>            <span class="hljs-title class_">Thread</span>.<span class="hljs-title function_">sleep</span>(<span class="hljs-number">1000</span>);<br>            <span class="hljs-keyword">if</span>(postLock!=<span class="hljs-literal">null</span>)&#123;<br>                <span class="hljs-title function_">synchronized</span>(<span class="hljs-params">postLock</span>)&#123;<br>                    postLock.<span class="hljs-title function_">notify</span>();<br>                &#125;<br>            &#125;<br>        &#125;<br>    &#125;<br><br>    <span class="hljs-keyword">public</span> <span class="hljs-keyword">static</span> <span class="hljs-built_in">void</span> <span class="hljs-title function_">main</span>(<span class="hljs-params"><span class="hljs-built_in">String</span>[] args</span>)&#123;<br>        <span class="hljs-title class_">Thread</span> t1=<span class="hljs-keyword">new</span> <span class="hljs-title class_">Thread</span>(<span class="hljs-keyword">new</span> <span class="hljs-title class_">MyThread</span>(<span class="hljs-string">&quot;线程1&quot;</span>,<span class="hljs-literal">null</span>,lock1));<br>        <span class="hljs-title class_">Thread</span> t2=<span class="hljs-keyword">new</span> <span class="hljs-title class_">Thread</span>(<span class="hljs-keyword">new</span> <span class="hljs-title class_">MyThread</span>(<span class="hljs-string">&quot;线程2&quot;</span>,lock1,lock2));<br>        <span class="hljs-title class_">Thread</span> t3=<span class="hljs-keyword">new</span> <span class="hljs-title class_">Thread</span>(<span class="hljs-keyword">new</span> <span class="hljs-title class_">MyThread</span>(<span class="hljs-string">&quot;线程3&quot;</span>,lock2,<span class="hljs-literal">null</span>));<br>        t2.<span class="hljs-title function_">start</span>();<br>        t1.<span class="hljs-title function_">start</span>();<br>        t3.<span class="hljs-title function_">start</span>();<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
+<ul>
+<li>使用countDownLatch，通过await()方法阻塞线程，通过countDown()方法将计数器减1。实现方式和wait()和notify()类似，把wait()换成了await()，把notify()换成了countdown()。</li>
+</ul>
+<h3 id="线程池中shutdown和shutdownnow的区别"><a class="markdownIt-Anchor" href="#线程池中shutdown和shutdownnow的区别"></a> 线程池中shutdown和shutdownNow的区别？</h3>
+<ul>
+<li>shutdown会将状态置为SHUTDOWN状态，正在执行的任务会继续执行，无法向线程池添加新任务。</li>
+<li>shutdownNow会将状态置为STOP状态，会尝试中断正在执行的任务。</li>
+</ul>
+<h3 id="提交给线程池的任务可以被撤回吗"><a class="markdownIt-Anchor" href="#提交给线程池的任务可以被撤回吗"></a> 提交给线程池的任务可以被撤回吗？</h3>
+<p>答：可以。向线程池提交任务后，会返回一个Future对象，通过Future对象的cancel()方法可以取消任务的执行。</p>
+<h2 id="mysql"><a class="markdownIt-Anchor" href="#mysql"></a> MYSQL</h2>
+<h3 id="mysql的事务隔离级别"><a class="markdownIt-Anchor" href="#mysql的事务隔离级别"></a> mysql的事务隔离级别</h3>
+<h4 id="事务的四个特性"><a class="markdownIt-Anchor" href="#事务的四个特性"></a> 事务的四个特性</h4>
+<ul>
+<li>原子性（Atomicity）：事务是一个不可分割的工作单位，事务中的操作要么都发生，要么都不发生。</li>
+<li>一致性（Consistency）：事务必须使数据库从一个一致性状态变换到另一个一致性状态。</li>
+<li>隔离性（Isolation）：一个事务的执行不能被其他事务干扰。</li>
+<li>持久性（Durability）：事务一旦提交，它对数据库的改变就应该是永久性的。</li>
+</ul>
+<h4 id="事务隔离解决的问题"><a class="markdownIt-Anchor" href="#事务隔离解决的问题"></a> 事务隔离解决的问题</h4>
+<ul>
+<li>脏读：一个事务读取到另一个事务未提交的数据，读到了最终可能不存在的数据</li>
+<li>可重复读：同一事务中多次读取同一数据时，结果是一致的，即使其他事务修改了该数据，当前事务仍然看到最初读取的值</li>
+<li>不可重复读：同一事务在不同的时刻读到的同一批数据可能是不一样的，比如其他事务改了这批数据并提交了（针对update）</li>
+<li>幻读：同一事务在不同的时刻读到的同一批数据可能是不一样的，比如其他事务插入了一些数据并提交了（针对insert）</li>
+</ul>
+<h4 id="事务隔离级别"><a class="markdownIt-Anchor" href="#事务隔离级别"></a> 事务隔离级别</h4>
+<p>mysql中有四种事务隔离级别，级别由低到高分别是：</p>
+<ul>
+<li>读未提交（Read Uncommitted）：允许脏读，一个事务还没提交时，另一个事务就可以看到它做的变更，存在脏读、不可重复读、幻读的问题</li>
+<li>读提交（Read Committed）：只能读取已经提交的数据，可以避免脏读，但是不可重复读和幻读仍然存在</li>
+<li>可重复读（Repeatable Read）：对同一字段的多次读取结果是一致的，除非数据被当前事务自己改变，可以避免脏读和不可重复读，但幻读仍然存在</li>
+<li>串行化（Serializable）：最高的隔离级别，所有事务依次执行，可以避免脏读、不可重复读、幻读</li>
+</ul>
+<h3 id="mysql的有哪几种引擎"><a class="markdownIt-Anchor" href="#mysql的有哪几种引擎"></a> MYSQL的有哪几种引擎？</h3>
+<ul>
+<li>InnoDB：InnoDB是MySQL的默认存储引擎，具有ACID事务支持、行级锁、外键约束等特性。它适用于高并发的读写操作，支持较好的数据完整性和并发控制。</li>
+<li>MyISAM：MyISAM是MySQL的另一种常见的存储引擎，具有较低的存储空间和内存消耗，适用于大量读操作的场景。然而，MyISAM不支持事务、行级锁和外键约束，因此在并发写入和数据完整性方面有一定的限制。</li>
+<li>Memory：Memory引擎将数据存储在内存中，适用于对性能要求较高的读操作，但是在服务器重启或崩溃时数据会丢失。它不支持事务、行级锁和外键约束。</li>
+</ul>
+<h3 id="慢查询如何解决"><a class="markdownIt-Anchor" href="#慢查询如何解决"></a> 慢查询如何解决？</h3>
+<ul>
+<li>通过 explain 执行结果，查看 sql 是否走索引，如果不走索引，考虑增加索引。</li>
+<li>可以通过建立联合索引，实现覆盖索引优化，减少回表，使用联合索引符合最左匹配原则，不然会索引失效</li>
+<li>避免索引失效，比如不要用左模糊匹配、函数计算、表达式计算等等。</li>
+<li>联表查询最好要以小表驱动大表，并且被驱动表的字段要有索引，当然最好通过冗余字段的设计，避免联表查询。</li>
+<li>针对 limit n,y 深分页的查询优化，可以把 Limit 查询转换成某个位置的查询：select * from tb_sku where id&gt;20000 limit 10，该方案适用于主键自增的表，</li>
+<li>将字段多的表分解成多个表，有些字段使用频率高，有些低，数据量大时，会由于使用频率低的存在而变慢，可以考虑分开</li>
+</ul>
+<h3 id="mysql了解哪些日志"><a class="markdownIt-Anchor" href="#mysql了解哪些日志"></a> MYSQL了解哪些日志？</h3>
+<ul>
+<li>redo log 重做日志，是 InnoDB 存储引擎层生成的日志，实现了事务中的持久性，主要用于掉电等故障恢复，是循环写；</li>
+<li>undo log 回滚日志，是 InnoDB 存储引擎层生成的日志，实现了事务中的原子性，主要用于事务回滚和 MVCC。</li>
+<li>bin log 二进制日志，是 Server 层生成的日志，主要用于数据备份和主从复制，是追加写；</li>
+<li>relay log 中继日志，用于主从复制场景下，slave 通过 io 线程拷贝 master 的 bin log 后本地生成的日志</li>
+<li>慢查询日志，用于记录执行时间过长的 SQL，需要设置阈值后手动开启</li>
+</ul>
+<h3 id="介绍一下bin-log"><a class="markdownIt-Anchor" href="#介绍一下bin-log"></a> 介绍一下bin log？</h3>
+<p>MySQL 在完成一条更新操作后，Server 层还会生成一条 binlog<br />
+binlog 有 3 种格式类型，分别是 STATEMENT（默认格式）、ROW、MIXED，区别如下：</p>
+<ul>
+<li>STATEMENT：每一条修改数据的 SQL 都会被记录到 binlog 中（相当于记录了逻辑操作，所以针对这种格式，binlog 可以称为逻辑日志），主从复制中 slave 端再根据 SQL 语句重现。但 STATEMENT 有动态函数的问题，比如你用了 uuid 或者 now 这些函数，你在主库上执行的结果并不是你在从库执行的结果，这种随时在变的函数会导致复制的数据不一致；</li>
+<li>ROW：记录行数据最终被修改成什么样了（这种格式的日志，就不能称为逻辑日志了），不会出现 STATEMENT 下动态函数的问题。但 ROW 的缺点是每行数据的变化结果都会被记录，比如执行批量 update 语句，更新多少行数据就会产生多少条记录，使 binlog 文件过大，而在 STATEMENT 格式下只会记录一个 update 语句而已；</li>
+<li>MIXED：包含了 STATEMENT 和 ROW 模式，它会根据不同的情况自动使用 ROW 模式和 STATEMENT 模式；</li>
+</ul>
 <h1 id="cs基础"><a class="markdownIt-Anchor" href="#cs基础"></a> CS基础</h1>
 <h2 id="进程和线程的区别"><a class="markdownIt-Anchor" href="#进程和线程的区别"></a> 进程和线程的区别</h2>
 <blockquote>
@@ -1130,29 +1173,6 @@ binlog 有 3 种格式类型，分别是 STATEMENT（默认格式）、ROW、MIX
 <ul>
 <li>如果服务端因为某些原因而没有收到 ACK 的话，服务端就会重发 FIN</li>
 <li>如果客户端在 2*MSL 的时间内收到了 FIN，就会重新发送 ACK 并再次等待 2MSL，防止 Server 没有收到 ACK 而不断重发 FIN。</li>
-</ul>
-<h2 id="mysql的事务隔离级别"><a class="markdownIt-Anchor" href="#mysql的事务隔离级别"></a> mysql的事务隔离级别</h2>
-<h3 id="事务的四个特性"><a class="markdownIt-Anchor" href="#事务的四个特性"></a> 事务的四个特性</h3>
-<ul>
-<li>原子性（Atomicity）：事务是一个不可分割的工作单位，事务中的操作要么都发生，要么都不发生。</li>
-<li>一致性（Consistency）：事务必须使数据库从一个一致性状态变换到另一个一致性状态。</li>
-<li>隔离性（Isolation）：一个事务的执行不能被其他事务干扰。</li>
-<li>持久性（Durability）：事务一旦提交，它对数据库的改变就应该是永久性的。</li>
-</ul>
-<h3 id="事务隔离解决的问题"><a class="markdownIt-Anchor" href="#事务隔离解决的问题"></a> 事务隔离解决的问题</h3>
-<ul>
-<li>脏读：一个事务读取到另一个事务未提交的数据，读到了最终可能不存在的数据</li>
-<li>可重复读：同一事务中多次读取同一数据时，结果是一致的，即使其他事务修改了该数据，当前事务仍然看到最初读取的值</li>
-<li>不可重复读：同一事务在不同的时刻读到的同一批数据可能是不一样的，比如其他事务改了这批数据并提交了（针对update）</li>
-<li>幻读：同一事务在不同的时刻读到的同一批数据可能是不一样的，比如其他事务插入了一些数据并提交了（针对insert）</li>
-</ul>
-<h3 id="事务隔离级别"><a class="markdownIt-Anchor" href="#事务隔离级别"></a> 事务隔离级别</h3>
-<p>mysql中有四种事务隔离级别，级别由低到高分别是：</p>
-<ul>
-<li>读未提交（Read Uncommitted）：允许脏读，一个事务还没提交时，另一个事务就可以看到它做的变更，存在脏读、不可重复读、幻读的问题</li>
-<li>读提交（Read Committed）：只能读取已经提交的数据，可以避免脏读，但是不可重复读和幻读仍然存在</li>
-<li>可重复读（Repeatable Read）：对同一字段的多次读取结果是一致的，除非数据被当前事务自己改变，可以避免脏读和不可重复读，但幻读仍然存在</li>
-<li>串行化（Serializable）：最高的隔离级别，所有事务依次执行，可以避免脏读、不可重复读、幻读</li>
 </ul>
 <h1 id="c"><a class="markdownIt-Anchor" href="#c"></a> C++</h1>
 <h2 id="c中的static关键字"><a class="markdownIt-Anchor" href="#c中的static关键字"></a> c++中的static关键字</h2>
