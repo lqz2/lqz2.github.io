@@ -31,7 +31,7 @@
 <meta property="og:image" content="https://oss.javaguide.cn/github/javaguide/cs-basics/network/tcp-shakes-hands-three-times.png">
 <meta property="og:image" content="https://oss.javaguide.cn/github/javaguide/cs-basics/network/tcp-waves-four-times.png">
 <meta property="article:published_time" content="2022-08-26T13:10:10.000Z">
-<meta property="article:modified_time" content="2025-02-18T11:28:19.527Z">
+<meta property="article:modified_time" content="2025-02-19T11:42:01.377Z">
 <meta property="article:author" content="zql">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://oss.javaguide.cn/github/javaguide/java/basis/java-code-to-machine-code.png">
@@ -229,7 +229,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          22k 字
+          23k 字
         
       </span>
     
@@ -240,7 +240,7 @@
         
         
         
-          180 分钟
+          189 分钟
         
       </span>
     
@@ -390,6 +390,8 @@
 <li><a href="#%E5%A4%9A%E7%BA%BF%E7%A8%8B%E9%A1%BA%E5%BA%8F%E6%89%A7%E8%A1%8C%E7%9A%84%E5%87%A0%E7%A7%8D%E5%86%99%E6%B3%95">多线程顺序执行的几种写法?</a></li>
 <li><a href="#%E7%BA%BF%E7%A8%8B%E6%B1%A0%E4%B8%ADshutdown%E5%92%8Cshutdownnow%E7%9A%84%E5%8C%BA%E5%88%AB">线程池中shutdown和shutdownNow的区别？</a></li>
 <li><a href="#%E6%8F%90%E4%BA%A4%E7%BB%99%E7%BA%BF%E7%A8%8B%E6%B1%A0%E7%9A%84%E4%BB%BB%E5%8A%A1%E5%8F%AF%E4%BB%A5%E8%A2%AB%E6%92%A4%E5%9B%9E%E5%90%97">提交给线程池的任务可以被撤回吗？</a></li>
+<li><a href="#threadlocal%E4%B8%BA%E4%BB%80%E4%B9%88%E4%BC%9A%E5%8F%91%E7%94%9F%E5%86%85%E5%AD%98%E6%B3%84%E6%BC%8F">ThreadLocal为什么会发生内存泄漏？</a></li>
+<li><a href="#threadlocal%E7%9A%84%E7%BB%A7%E6%89%BF%E6%80%A7%E9%97%AE%E9%A2%98%E4%BB%A5%E5%8F%8A%E8%A7%A3%E5%86%B3%E6%96%B9%E6%B3%95">ThreadLocal的继承性问题以及解决方法？</a></li>
 </ul>
 </li>
 <li><a href="#mysql">MYSQL</a>
@@ -402,7 +404,6 @@
 </ul>
 </li>
 <li><a href="#mysql%E7%9A%84%E6%9C%89%E5%93%AA%E5%87%A0%E7%A7%8D%E5%BC%95%E6%93%8E">MYSQL的有哪几种引擎？</a></li>
-<li><a href="#%E6%85%A2%E6%9F%A5%E8%AF%A2%E5%A6%82%E4%BD%95%E8%A7%A3%E5%86%B3">慢查询如何解决？</a></li>
 <li><a href="#mysql%E4%BA%86%E8%A7%A3%E5%93%AA%E4%BA%9B%E6%97%A5%E5%BF%97">MYSQL了解哪些日志？</a></li>
 <li><a href="#%E4%BB%8B%E7%BB%8D%E4%B8%80%E4%B8%8Bbin-log">介绍一下bin log？</a></li>
 <li><a href="#mysql%E6%80%8E%E4%B9%88%E8%BF%9E%E8%A1%A8%E6%9F%A5%E8%AF%A2">MYSQL怎么连表查询？</a></li>
@@ -414,6 +415,17 @@
 <li><a href="#%E7%B4%A2%E5%BC%95%E7%9A%84%E5%88%86%E7%B1%BB">索引的分类？</a></li>
 <li><a href="#%E8%81%9A%E7%B0%87%E7%B4%A2%E5%BC%95%E5%92%8C%E9%9D%9E%E8%81%9A%E7%B0%87%E7%B4%A2%E5%BC%95%E7%9A%84%E5%8C%BA%E5%88%AB">聚簇索引和非聚簇索引的区别？</a></li>
 <li><a href="#b%E6%A0%91%E7%9A%84%E7%89%B9%E6%80%A7">B+树的特性？</a></li>
+<li><a href="#b%E6%A0%91%E5%92%8Cb%E6%A0%91%E7%9A%84%E5%8C%BA%E5%88%AB">B+树和B树的区别？</a></li>
+<li><a href="#%E4%B8%BA%E4%BB%80%E4%B9%88mysql%E4%B8%8D%E7%94%A8%E8%B7%B3%E8%A1%A8">为什么MYSQL不用跳表？</a></li>
+<li><a href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E8%87%AA%E5%A2%9Eid%E5%BF%AB%E4%B8%80%E4%BA%9B%E4%B8%BA%E4%BB%80%E4%B9%88%E4%B8%8D%E7%94%A8uuid">为什么自增ID快一些？为什么不用UUID？</a></li>
+<li><a href="#%E4%BB%80%E4%B9%88%E6%98%AF%E8%A6%86%E7%9B%96%E7%B4%A2%E5%BC%95">什么是覆盖索引？</a></li>
+<li><a href="#%E5%88%9B%E5%BB%BA%E8%81%94%E5%90%88%E7%B4%A2%E5%BC%95%E8%A6%81%E6%B3%A8%E6%84%8F%E4%BB%80%E4%B9%88">创建联合索引要注意什么？</a></li>
+<li><a href="#%E7%B4%A2%E5%BC%95%E5%A4%B1%E6%95%88%E6%9C%89%E9%82%A3%E4%BA%9B%E6%83%85%E5%86%B5">索引失效有那些情况？</a></li>
+<li><a href="#%E6%85%A2%E6%9F%A5%E8%AF%A2%E5%A6%82%E4%BD%95%E8%A7%A3%E5%86%B3">慢查询如何解决？</a></li>
+<li><a href="#%E7%B4%A2%E5%BC%95%E7%9A%84%E7%BC%BA%E7%82%B9">索引的缺点</a></li>
+<li><a href="#%E4%BB%80%E4%B9%88%E6%97%B6%E5%80%99%E9%80%82%E5%90%88%E5%BB%BA%E7%AB%8B%E7%B4%A2%E5%BC%95">什么时候适合建立索引？</a></li>
+<li><a href="#%E4%BB%80%E4%B9%88%E6%97%B6%E5%80%99%E4%B8%8D%E9%9C%80%E8%A6%81%E7%B4%A2%E5%BC%95">什么时候不需要索引？</a></li>
+<li><a href="#%E5%A6%82%E4%BD%95%E5%AF%B9%E7%B4%A2%E5%BC%95%E8%BF%9B%E8%A1%8C%E4%BC%98%E5%8C%96">如何对索引进行优化？</a></li>
 </ul>
 </li>
 </ul>
@@ -1053,6 +1065,14 @@ Spring 通过 XML 配置模式装载 Bean 的过程：</li>
 </ul>
 <h3 id="提交给线程池的任务可以被撤回吗"><a class="markdownIt-Anchor" href="#提交给线程池的任务可以被撤回吗"></a> 提交给线程池的任务可以被撤回吗？</h3>
 <p>答：可以。向线程池提交任务后，会返回一个Future对象，通过Future对象的cancel()方法可以取消任务的执行。</p>
+<h3 id="threadlocal为什么会发生内存泄漏"><a class="markdownIt-Anchor" href="#threadlocal为什么会发生内存泄漏"></a> ThreadLocal为什么会发生内存泄漏？</h3>
+<p>ThreadLocalMap的键为ThreadLocal的弱引用，而值是强引用。如果ThreadLocal对象被回收，其对应的Entry键会变为null，如果此时不删除对应的Entry，则Value仍然被Thread上的ThreadLocalMap引用，而Value往往占用较大内存，这就会导致内存泄漏。</p>
+<p>为了解决这个问题，ThreadLocal在调用set、get、remove方法时，会清理掉ThreadLocalMap中所有键为null的Entry。但如果没有调用这些方法，那么清理工作就不会进行，从而可能导致内存泄漏。</p>
+<h3 id="threadlocal的继承性问题以及解决方法"><a class="markdownIt-Anchor" href="#threadlocal的继承性问题以及解决方法"></a> ThreadLocal的继承性问题以及解决方法？</h3>
+<ul>
+<li>同一个ThreadLocal变量在父线程中设置值，在子线程中获取不到值。</li>
+<li>解决方法：使用InheritableThreadLocal类，它是ThreadLocal的子类，可以在子线程中获取父线程中设置的值。</li>
+</ul>
 <h2 id="mysql"><a class="markdownIt-Anchor" href="#mysql"></a> MYSQL</h2>
 <h3 id="mysql的事务隔离级别"><a class="markdownIt-Anchor" href="#mysql的事务隔离级别"></a> mysql的事务隔离级别</h3>
 <h4 id="事务的四个特性"><a class="markdownIt-Anchor" href="#事务的四个特性"></a> 事务的四个特性</h4>
@@ -1082,15 +1102,6 @@ Spring 通过 XML 配置模式装载 Bean 的过程：</li>
 <li>InnoDB：InnoDB是MySQL的默认存储引擎，具有ACID事务支持、行级锁、外键约束等特性。它适用于高并发的读写操作，支持较好的数据完整性和并发控制。</li>
 <li>MyISAM：MyISAM是MySQL的另一种常见的存储引擎，具有较低的存储空间和内存消耗，适用于大量读操作的场景。然而，MyISAM不支持事务、行级锁和外键约束，因此在并发写入和数据完整性方面有一定的限制。</li>
 <li>Memory：Memory引擎将数据存储在内存中，适用于对性能要求较高的读操作，但是在服务器重启或崩溃时数据会丢失。它不支持事务、行级锁和外键约束。</li>
-</ul>
-<h3 id="慢查询如何解决"><a class="markdownIt-Anchor" href="#慢查询如何解决"></a> 慢查询如何解决？</h3>
-<ul>
-<li>通过 explain 执行结果，查看 sql 是否走索引，如果不走索引，考虑增加索引。</li>
-<li>可以通过建立联合索引，实现覆盖索引优化，减少回表，使用联合索引符合最左匹配原则，不然会索引失效</li>
-<li>避免索引失效，比如不要用左模糊匹配、函数计算、表达式计算等等。</li>
-<li>联表查询最好要以小表驱动大表，并且被驱动表的字段要有索引，当然最好通过冗余字段的设计，避免联表查询。</li>
-<li>针对 limit n,y 深分页的查询优化，可以把 Limit 查询转换成某个位置的查询：select * from tb_sku where id&gt;20000 limit 10，该方案适用于主键自增的表，</li>
-<li>将字段多的表分解成多个表，有些字段使用频率高，有些低，数据量大时，会由于使用频率低的存在而变慢，可以考虑分开</li>
 </ul>
 <h3 id="mysql了解哪些日志"><a class="markdownIt-Anchor" href="#mysql了解哪些日志"></a> MYSQL了解哪些日志？</h3>
 <ul>
@@ -1174,6 +1185,77 @@ binlog 有 3 种格式类型，分别是 STATEMENT（默认格式）、ROW、MIX
 <li>非叶子节点不存储数据，只存储主键和子节点的指针</li>
 <li>叶子节点储存实际的数据行</li>
 <li>在插入、删除、更新后会进行平衡操作，保证树的高度相对稳定，每个节点最少有<code>M/2</code>个子节点，最多有<code>M</code>个子节点，M是树的阶数</li>
+</ul>
+<h3 id="b树和b树的区别"><a class="markdownIt-Anchor" href="#b树和b树的区别"></a> B+树和B树的区别？</h3>
+<ul>
+<li>B+树的非叶子节点不存储数据，而B树的非叶子节点会存储部分数据</li>
+<li>B+树的叶子节点之间形成双向链表，便于范围查询和排序，B树叶子节点没有链表</li>
+<li>B+树每次都要查到叶子节点，B树可能会在非叶子节点找到数据</li>
+</ul>
+<h3 id="为什么mysql不用跳表"><a class="markdownIt-Anchor" href="#为什么mysql不用跳表"></a> 为什么MYSQL不用跳表？</h3>
+<p>B+树在3层时存储的数据可以达到千万级别，跳表要维护同样级别的数据需要的层数更多，导致性能下降。</p>
+<h3 id="为什么自增id快一些为什么不用uuid"><a class="markdownIt-Anchor" href="#为什么自增id快一些为什么不用uuid"></a> 为什么自增ID快一些？为什么不用UUID？</h3>
+<p>自增ID更快的原因：</p>
+<ul>
+<li>下一条记录会写入新的页中，提升了页面的利用率</li>
+<li>新插入的记录一定会在原有最大ID的后面，便于定位和寻址</li>
+<li>减少了页分裂</li>
+</ul>
+<p>不用UUID的原因：</p>
+<ul>
+<li>无序，每次插入数据可能插入到页面中间，导致页分裂</li>
+<li>占用空间大，UUID是的长度更长，每个页能存放的记录数更少，导致树的高度更高，影响性能</li>
+</ul>
+<h3 id="什么是覆盖索引"><a class="markdownIt-Anchor" href="#什么是覆盖索引"></a> 什么是覆盖索引？</h3>
+<p>覆盖索引是指<strong>索引包含了查询需要的所有字段，不需要回表查询</strong>，减少了IO操作，提升了查询性能。</p>
+<h3 id="创建联合索引要注意什么"><a class="markdownIt-Anchor" href="#创建联合索引要注意什么"></a> 创建联合索引要注意什么？</h3>
+<p><code>区分度=distinct(col)/count(*)</code></p>
+<ul>
+<li>建立联合索引时，要把区分度大(重复值少)的字段排在前面，这样可以过滤掉更多的数据，提升查询性能</li>
+<li>如果区分度很小，比如性别字段，无论搜索哪一个值都会返回大量数据</li>
+<li>MYSQL有一个查询优化器，如果某个值在表中的出现比例很高（超过30%），那么就会不走索引而是全表扫描</li>
+</ul>
+<h3 id="索引失效有那些情况"><a class="markdownIt-Anchor" href="#索引失效有那些情况"></a> 索引失效有那些情况？</h3>
+<ul>
+<li>使用左或者左右模糊匹配的时候</li>
+<li>在查询中对索引列使用函数时</li>
+<li>联合索引没有遵循最左匹配原则</li>
+<li>where子句中，OR前面是索引列，OR后面不是索引列</li>
+</ul>
+<h3 id="慢查询如何解决"><a class="markdownIt-Anchor" href="#慢查询如何解决"></a> 慢查询如何解决？</h3>
+<ul>
+<li>通过 explain 执行结果，查看 sql 是否走索引，如果不走索引，考虑增加索引。</li>
+<li>可以通过建立联合索引，实现覆盖索引优化，减少回表，使用联合索引符合最左匹配原则，不然会索引失效</li>
+<li>避免索引失效，比如不要用左模糊匹配、函数计算、表达式计算等等。</li>
+<li>联表查询最好要以小表驱动大表，并且被驱动表的字段要有索引，当然最好通过冗余字段的设计，避免联表查询。</li>
+<li>针对 limit n,y 深分页的查询优化，可以把 Limit 查询转换成某个位置的查询：select * from tb_sku where id&gt;20000 limit 10，该方案适用于主键自增的表，</li>
+<li>将字段多的表分解成多个表，有些字段使用频率高，有些低，数据量大时，会由于使用频率低的存在而变慢，可以考虑分开</li>
+</ul>
+<h3 id="索引的缺点"><a class="markdownIt-Anchor" href="#索引的缺点"></a> 索引的缺点</h3>
+<ul>
+<li>占用存储空间</li>
+<li>创建和维护索引需要时间</li>
+<li>索引会降低表的增删改的性能</li>
+</ul>
+<h3 id="什么时候适合建立索引"><a class="markdownIt-Anchor" href="#什么时候适合建立索引"></a> 什么时候适合建立索引？</h3>
+<ul>
+<li>字段有唯一性限制</li>
+<li>经常用于where查询条件的字段</li>
+<li>经常用order by、group by的字段</li>
+</ul>
+<h3 id="什么时候不需要索引"><a class="markdownIt-Anchor" href="#什么时候不需要索引"></a> 什么时候不需要索引？</h3>
+<ul>
+<li>where、group by、order by用不到的字段</li>
+<li>字段存在大量重复值，区分度低</li>
+<li>表数据很少，不需要创建索引</li>
+<li>经常进行更新的字段不用建立索引</li>
+</ul>
+<h3 id="如何对索引进行优化"><a class="markdownIt-Anchor" href="#如何对索引进行优化"></a> 如何对索引进行优化？</h3>
+<ul>
+<li>前缀索引优化，前缀索引通过减少索引字段的长度，从而使索引页包含的索引键增多，提高查询效率</li>
+<li>覆盖索引优化，减少回表操作</li>
+<li>最好采用自增主键，减少页分裂</li>
+<li>防止索引失效</li>
 </ul>
 <h1 id="cs基础"><a class="markdownIt-Anchor" href="#cs基础"></a> CS基础</h1>
 <h2 id="进程和线程的区别"><a class="markdownIt-Anchor" href="#进程和线程的区别"></a> 进程和线程的区别</h2>
