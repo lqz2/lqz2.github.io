@@ -31,7 +31,7 @@
 <meta property="og:image" content="https://oss.javaguide.cn/github/javaguide/cs-basics/network/tcp-shakes-hands-three-times.png">
 <meta property="og:image" content="https://oss.javaguide.cn/github/javaguide/cs-basics/network/tcp-waves-four-times.png">
 <meta property="article:published_time" content="2022-08-26T13:10:10.000Z">
-<meta property="article:modified_time" content="2025-02-22T03:04:38.042Z">
+<meta property="article:modified_time" content="2025-02-22T14:50:33.988Z">
 <meta property="article:author" content="zql">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://oss.javaguide.cn/github/javaguide/java/basis/java-code-to-machine-code.png">
@@ -229,7 +229,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          25k 字
+          27k 字
         
       </span>
     
@@ -240,7 +240,7 @@
         
         
         
-          211 分钟
+          224 分钟
         
       </span>
     
@@ -457,7 +457,19 @@
 <li><a href="#redis%E5%93%AA%E9%87%8C%E7%94%A8%E5%88%B0%E4%BA%86%E5%A4%9A%E7%BA%BF%E7%A8%8B">Redis哪里用到了多线程？</a></li>
 <li><a href="#io%E5%A4%9A%E8%B7%AF%E5%A4%8D%E7%94%A8%E6%80%8E%E4%B9%88%E5%AE%9E%E7%8E%B0">IO多路复用怎么实现？</a></li>
 <li><a href="#%E5%A6%82%E4%BD%95%E5%AE%9E%E7%8E%B0redis%E7%9A%84%E5%8E%9F%E5%AD%90%E6%80%A7">如何实现Redis的原子性？</a></li>
-<li><a href="#redis%E7%9A%84%E6%8C%81%E4%B9%85%E5%8C%96aof">Redis的持久化AOF？</a></li>
+<li><a href="#redis%E6%8C%81%E4%B9%85%E5%8C%96%E4%B9%8Baof">Redis持久化之AOF？</a></li>
+<li><a href="#redis%E6%8C%81%E4%B9%85%E5%8C%96%E4%B9%8Brdb">Redis持久化之RDB?</a></li>
+<li><a href="#bgsave%E6%97%B6%E6%95%B0%E6%8D%AE%E8%83%BD%E8%A2%AB%E4%BF%AE%E6%94%B9%E5%90%97">bgsave时，数据能被修改吗？</a></li>
+<li><a href="#aof%E5%92%8Crdb%E7%9A%84%E4%BC%98%E7%BC%BA%E7%82%B9">AOF和RDB的优缺点？</a></li>
+<li><a href="#%E8%AE%B2%E8%AE%B2redis%E7%9A%84%E5%86%85%E5%AD%98%E6%B7%98%E6%B1%B0%E7%AD%96%E7%95%A5">讲讲Redis的内存淘汰策略？</a></li>
+<li><a href="#redis%E7%9A%84%E8%BF%87%E6%9C%9F%E5%88%A0%E9%99%A4%E7%AD%96%E7%95%A5">Redis的过期删除策略？</a></li>
+<li><a href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E4%B8%8D%E7%AB%8B%E5%88%BB%E5%88%A0%E9%99%A4%E8%BF%87%E6%9C%9Fkey">为什么不立刻删除过期key？</a></li>
+<li><a href="#redis%E5%85%A8%E9%87%8F%E5%90%8C%E6%AD%A5">Redis全量同步？</a></li>
+<li><a href="#redis%E5%A2%9E%E9%87%8F%E5%90%8C%E6%AD%A5">Redis增量同步？</a></li>
+<li><a href="#%E4%BB%8B%E7%BB%8D%E4%B8%80%E4%B8%8Bredis%E5%93%A8%E5%85%B5%E6%9C%BA%E5%88%B6">介绍一下Redis哨兵机制？</a></li>
+<li><a href="#%E5%93%A8%E5%85%B5%E6%9C%BA%E5%88%B6%E5%A6%82%E4%BD%95%E7%9B%91%E6%8E%A7">哨兵机制如何监控？</a></li>
+<li><a href="#%E5%93%A8%E5%85%B5%E5%A6%82%E4%BD%95%E9%80%89%E6%8B%A9%E6%96%B0%E7%9A%84%E4%B8%BB%E6%9C%8D%E5%8A%A1%E5%99%A8">哨兵如何选择新的主服务器？</a></li>
+<li><a href="#%E4%BB%8B%E7%BB%8D%E4%B8%80%E4%B8%8B%E5%88%86%E7%89%87%E9%9B%86%E7%BE%A4">介绍一下分片集群？</a></li>
 </ul>
 </li>
 </ul>
@@ -1442,7 +1454,7 @@ binlog 有 3 种格式类型，分别是 STATEMENT（默认格式）、ROW、MIX
 <li>如果执行两个命令，可以通过lua脚本</li>
 <li>如果执行多个命令，可以通过事务，如果事务正常执行，通过multi和exec命令，可以保证多个命令的原子性，如果某一个操作执行失败，就无法保证原子性了</li>
 </ul>
-<h3 id="redis的持久化aof"><a class="markdownIt-Anchor" href="#redis的持久化aof"></a> Redis的持久化AOF？</h3>
+<h3 id="redis持久化之aof"><a class="markdownIt-Anchor" href="#redis持久化之aof"></a> Redis持久化之AOF？</h3>
 <p>每执行一条写操作，就会将命令以追加写的方式写入AOF文件，当Redis重启时，会逐一执行AOF文件中的命令，恢复数据<br />
 有三种写回策略</p>
 <ul>
@@ -1485,6 +1497,112 @@ binlog 有 3 种格式类型，分别是 STATEMENT（默认格式）、ROW、MIX
 <li>当AOF命令过大时，就会触发重写机制，用最新的写入命令重写AOF文件，减小AOF文件的大小</li>
 <li>一般重写机制在后台子进程执行，在大部分时候不会阻塞主进程</li>
 </ul>
+<h3 id="redis持久化之rdb"><a class="markdownIt-Anchor" href="#redis持久化之rdb"></a> Redis持久化之RDB?</h3>
+<p>将某一时刻的内存数据以二进制形式写入磁盘<br />
+Redis提供了save和bgsave两种方式生成RDB文件，他们的区别是是否在主进程中执行</p>
+<ul>
+<li>save会同步的执行保存操作，会阻塞主进程</li>
+<li>bgsave会在后台子进程执行，不会阻塞主进程(异步)</li>
+<li>RDB快照是全量快照，频繁执行会影响性能</li>
+</ul>
+<h3 id="bgsave时数据能被修改吗"><a class="markdownIt-Anchor" href="#bgsave时数据能被修改吗"></a> bgsave时，数据能被修改吗？</h3>
+<p>答：可以。bgsave时，Redis会fork一个子进程，子进程会复制父进程的页表，但是指向同一个物理内存。<br />
+但是当父进程数据要被修改时，会发生写时复制，数据所在的物理内存会被复制一份，然后主进程在数据的副本上修改，子进程仍然把旧的数据写入RDB。<br />
+所以如果修改的数据过多，就会导致bgsave过程中内存占用过多。</p>
+<h3 id="aof和rdb的优缺点"><a class="markdownIt-Anchor" href="#aof和rdb的优缺点"></a> AOF和RDB的优缺点？</h3>
+<p>AOF</p>
+<ul>
+<li>优点：可靠性高，每次写操作都会写入AOF文件，即使服务器宕机，也只会丢失最后一次写操作，还可以通过选择合适的写回策略来平衡性能和可靠性</li>
+<li>缺点：AOF文件体积更大，恢复速度慢，如果使用的是always策略，性能开销大</li>
+</ul>
+<p>RDB：</p>
+<ul>
+<li>优点：RDB文件体积小，恢复速度快</li>
+<li>缺点：RDB是全量快照，如果宕机时，会丢失最后一次快照之后的数据，如果发生写时复制，会导致内存占用过多</li>
+</ul>
+<h3 id="讲讲redis的内存淘汰策略"><a class="markdownIt-Anchor" href="#讲讲redis的内存淘汰策略"></a> 讲讲Redis的内存淘汰策略？</h3>
+<p>不进行数据淘汰的策略：</p>
+<ul>
+<li>noeviction，当内存不足时，不淘汰任何数据。有新的输入写入会报错通知禁止写入<br />
+进行数据淘汰的策略：</li>
+<li>针对设置了过期时间的数据：
+<ul>
+<li>volatile-random：随机淘汰设置了过期时间的数据</li>
+<li>volatile-ttl：优先淘汰快过期的数据</li>
+<li>volatile-lru：优先淘汰最久未使用的数据</li>
+<li>volatile-lfu：优先淘汰最少使用的数据</li>
+</ul>
+</li>
+<li>针对所有范围数据：
+<ul>
+<li>allkeys-random：随机淘汰任意数据</li>
+<li>allkeys-lru：优先淘汰最久未使用的数据</li>
+<li>allkeys-lfu：优先淘汰最少使用的数据</li>
+</ul>
+</li>
+</ul>
+<h3 id="redis的过期删除策略"><a class="markdownIt-Anchor" href="#redis的过期删除策略"></a> Redis的过期删除策略？</h3>
+<p>过期删除采用惰性删除和定期删除两种方式</p>
+<ul>
+<li>惰性删除：只有在使用key时，才会检查key是否过期，如果过期才删除</li>
+<li>定期删除：每隔一段时间（每秒10次，可以在redis.conf配置），会随机抽取一些key（一般为20个）检查是否过期，如果过期就删除</li>
+</ul>
+<h3 id="为什么不立刻删除过期key"><a class="markdownIt-Anchor" href="#为什么不立刻删除过期key"></a> 为什么不立刻删除过期key？</h3>
+<p>答：当过期的key很多时，立刻删除会占用一定CPU，影响性能</p>
+<h3 id="redis全量同步"><a class="markdownIt-Anchor" href="#redis全量同步"></a> Redis全量同步？</h3>
+<p>全量同步一般发生在下面的情况：</p>
+<ul>
+<li>第一次同步</li>
+<li>从服务器数据丢失</li>
+<li>主从数据差异太大</li>
+</ul>
+<p>全量同步的过程：</p>
+<ul>
+<li>从服务器发送同步请求</li>
+<li>主服务器生成RDB文件，发送给从服务器</li>
+<li>从服务器接收RDB文件，并载入数据</li>
+<li>主服务器生成和传输RDB期间，写操作会记录在replication backlog中</li>
+<li>从服务器载入完RDB后，主服务器将replication backlog发送给从服务器，从服务器执行这些命令，保证数据一致</li>
+</ul>
+<h3 id="redis增量同步"><a class="markdownIt-Anchor" href="#redis增量同步"></a> Redis增量同步？</h3>
+<p>增量同步主要通过replication backlog和两个offset实现：<br />
+replication backlog实际上是一个环形数组，其中master offset记录了主服务器写的位置，slave offset记录了从服务器读的位置<br />
+如果主服务器写的太快，从服务器读的太慢（网络原因），那么slave offset就会被覆盖，这时候就会发生全量同步</p>
+<h3 id="介绍一下redis哨兵机制"><a class="markdownIt-Anchor" href="#介绍一下redis哨兵机制"></a> 介绍一下Redis哨兵机制？</h3>
+<p>哨兵机制主要用于监控Redis集群的状态，主要作用是<code>监控、故障转移、通知</code></p>
+<ul>
+<li>监控：哨兵会定时检查主从集群的状态</li>
+<li>故障转移：当主服务器宕机时，哨兵会选举一个从服务器作为新的主服务器</li>
+<li>通知：当主从集群状态发生变化时，哨兵会通知客户端</li>
+</ul>
+<h3 id="哨兵机制如何监控"><a class="markdownIt-Anchor" href="#哨兵机制如何监控"></a> 哨兵机制如何监控？</h3>
+<p>首先哨兵会基于心跳检测来判断节点状态</p>
+<ul>
+<li>主观下线：如果某个哨兵发现某个节点长时间未响应，就会认为该节点主观下线</li>
+<li>客观下线：当超过一定数量的哨兵认为某个节点主观下线，就会认为该节点客观下线</li>
+</ul>
+<h3 id="哨兵如何选择新的主服务器"><a class="markdownIt-Anchor" href="#哨兵如何选择新的主服务器"></a> 哨兵如何选择新的主服务器？</h3>
+<ul>
+<li>首先哨兵需要选出一个leader，当一个哨兵认为主节点主观下线了，它会请求其他哨兵选自己为leader,被请求的哨兵如果没有投过票，则当前哨兵票数+1，一般票数超过半数，则选举成功</li>
+<li>leader会根据策略选出新的主节点
+<ul>
+<li>首先排除故障的节点</li>
+<li>选择优先级最大的节点</li>
+<li>如果优先级相同，选择复制偏移量最大的节点</li>
+<li>如果以上都相同，选择runid最小的节点</li>
+</ul>
+</li>
+</ul>
+<h3 id="介绍一下分片集群"><a class="markdownIt-Anchor" href="#介绍一下分片集群"></a> 介绍一下分片集群？</h3>
+<p>redis分片集群主要用于解决单机内存有限的问题，通过分片将数据分布到多个节点中，提高了内存的使用率，提高了读写性能</p>
+<p>分片集群一共有16384个槽，每个节点都包含若干个槽<br />
+当添加数据时，步骤如下：</p>
+<ul>
+<li>通过CRC16算法计算key的哈希值</li>
+<li>将哈希值对16384取模，得到槽号</li>
+</ul>
+<p>如何将同一类数据固定的保存在同一个Redis节点？<br />
+答：使用<code>&#123;&#125;</code>将key中的部分字符串包裹，如<code>&#123;user:101&#125;:name</code>，这样只根据<code>user:101</code>来计算哈希值，保证<code>user:101</code>的数据都保存在同一个节点</p>
 <h1 id="cs基础"><a class="markdownIt-Anchor" href="#cs基础"></a> CS基础</h1>
 <h2 id="进程和线程的区别"><a class="markdownIt-Anchor" href="#进程和线程的区别"></a> 进程和线程的区别</h2>
 <blockquote>
