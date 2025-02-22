@@ -31,7 +31,7 @@
 <meta property="og:image" content="https://oss.javaguide.cn/github/javaguide/cs-basics/network/tcp-shakes-hands-three-times.png">
 <meta property="og:image" content="https://oss.javaguide.cn/github/javaguide/cs-basics/network/tcp-waves-four-times.png">
 <meta property="article:published_time" content="2022-08-26T13:10:10.000Z">
-<meta property="article:modified_time" content="2025-02-21T14:07:28.615Z">
+<meta property="article:modified_time" content="2025-02-22T03:04:38.042Z">
 <meta property="article:author" content="zql">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://oss.javaguide.cn/github/javaguide/java/basis/java-code-to-machine-code.png">
@@ -240,7 +240,7 @@
         
         
         
-          206 分钟
+          211 分钟
         
       </span>
     
@@ -453,6 +453,11 @@
 <li><a href="#%E4%B8%BA%E4%BB%80%E4%B9%88redis%E7%94%A8%E8%B7%B3%E8%A1%A8%E8%80%8C%E4%B8%8D%E6%98%AFb%E6%A0%91">为什么Redis用跳表而不是B+树？</a></li>
 <li><a href="#%E8%B7%B3%E8%A1%A8%E7%9A%84%E5%B1%82%E6%95%B0%E6%98%AF%E6%80%8E%E4%B9%88%E8%AE%BE%E7%BD%AE%E7%9A%84">跳表的层数是怎么设置的？</a></li>
 <li><a href="#redis%E7%9A%84%E5%93%88%E5%B8%8C%E8%A1%A8%E6%98%AF%E6%80%8E%E4%B9%88%E6%89%A9%E5%AE%B9%E7%9A%84">Redis的哈希表是怎么扩容的？</a></li>
+<li><a href="#redis%E4%B8%BA%E4%BB%80%E4%B9%88%E5%BF%AB">Redis为什么快？</a></li>
+<li><a href="#redis%E5%93%AA%E9%87%8C%E7%94%A8%E5%88%B0%E4%BA%86%E5%A4%9A%E7%BA%BF%E7%A8%8B">Redis哪里用到了多线程？</a></li>
+<li><a href="#io%E5%A4%9A%E8%B7%AF%E5%A4%8D%E7%94%A8%E6%80%8E%E4%B9%88%E5%AE%9E%E7%8E%B0">IO多路复用怎么实现？</a></li>
+<li><a href="#%E5%A6%82%E4%BD%95%E5%AE%9E%E7%8E%B0redis%E7%9A%84%E5%8E%9F%E5%AD%90%E6%80%A7">如何实现Redis的原子性？</a></li>
+<li><a href="#redis%E7%9A%84%E6%8C%81%E4%B9%85%E5%8C%96aof">Redis的持久化AOF？</a></li>
 </ul>
 </li>
 </ul>
@@ -1416,6 +1421,69 @@ binlog 有 3 种格式类型，分别是 STATEMENT（默认格式）、ROW、MIX
 <li>创建新哈希表，大小为旧哈希表的2倍</li>
 <li>分多次迁移数据，期间如果有<strong>删改查</strong>请求，会先在旧哈希表操作，并将对应的数据迁移到新哈希表，如果数据已经迁移到新哈希表，就直接在新哈希表操作，<strong>增</strong>操作直接在新哈希表操作</li>
 <li>迁移完成后，释放旧哈希表，将新哈希表设置为当前哈希表</li>
+</ul>
+<h3 id="redis为什么快"><a class="markdownIt-Anchor" href="#redis为什么快"></a> Redis为什么快？</h3>
+<ul>
+<li>基于内存，内存访问速度快</li>
+<li>单线程，避免了多线程切换带来的开销</li>
+<li>IO多路复用，一个线程处理多个IO流</li>
+</ul>
+<h3 id="redis哪里用到了多线程"><a class="markdownIt-Anchor" href="#redis哪里用到了多线程"></a> Redis哪里用到了多线程？</h3>
+<p>Redis单线程一般指的是执行命令的线程是单线程，Redis6.0之后引入了多线程IO，主要用于网络IO，提升网络IO性能</p>
+<h3 id="io多路复用怎么实现"><a class="markdownIt-Anchor" href="#io多路复用怎么实现"></a> IO多路复用怎么实现？</h3>
+<ul>
+<li>多个客户端与redis服务端建立连接时，服务端会将每个客户端的socket对应的FD注册到一个事件监听器中</li>
+<li>事件监听器会监听所有的FD，当有FD有事件发生时，会通知事件处理器处理该事件</li>
+<li>避免了服务端一直等待某个客户端数据的问题</li>
+</ul>
+<h3 id="如何实现redis的原子性"><a class="markdownIt-Anchor" href="#如何实现redis的原子性"></a> 如何实现Redis的原子性？</h3>
+<ul>
+<li>如果执行一条命令，由于redis是单线程的，所以是原子性的</li>
+<li>如果执行两个命令，可以通过lua脚本</li>
+<li>如果执行多个命令，可以通过事务，如果事务正常执行，通过multi和exec命令，可以保证多个命令的原子性，如果某一个操作执行失败，就无法保证原子性了</li>
+</ul>
+<h3 id="redis的持久化aof"><a class="markdownIt-Anchor" href="#redis的持久化aof"></a> Redis的持久化AOF？</h3>
+<p>每执行一条写操作，就会将命令以追加写的方式写入AOF文件，当Redis重启时，会逐一执行AOF文件中的命令，恢复数据<br />
+有三种写回策略</p>
+<ul>
+<li>always：每次写操作都会同步写入AOF文件，保证数据的完整性</li>
+<li>everysec：每次写操作执行完后，先将命令写入内核缓冲区，然后每隔一秒将内核缓冲区的数据写入AOF文件</li>
+<li>no：每次写操作执行完后，将命令写入内核缓冲区，然后由操作系统决定何时将数据写入AOF文件</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th>写回策略</th>
+<th>写回时机</th>
+<th>优点</th>
+<th>缺点</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Always</td>
+<td>同步写回</td>
+<td>可靠性高、最大程度保证数据不丢失</td>
+<td>每个写命令都要写回硬盘，性能开销大</td>
+</tr>
+<tr>
+<td>Everysec</td>
+<td>每秒写回</td>
+<td>性能适中</td>
+<td>宕机时会丢失1秒内的数据</td>
+</tr>
+<tr>
+<td>No</td>
+<td>由操作系统控制写回</td>
+<td>性能好</td>
+<td>宕机时丢失的数据可能会很多</td>
+</tr>
+</tbody>
+</table>
+<p>AOF重写机制？</p>
+<ul>
+<li>当AOF命令过大时，就会触发重写机制，用最新的写入命令重写AOF文件，减小AOF文件的大小</li>
+<li>一般重写机制在后台子进程执行，在大部分时候不会阻塞主进程</li>
 </ul>
 <h1 id="cs基础"><a class="markdownIt-Anchor" href="#cs基础"></a> CS基础</h1>
 <h2 id="进程和线程的区别"><a class="markdownIt-Anchor" href="#进程和线程的区别"></a> 进程和线程的区别</h2>
