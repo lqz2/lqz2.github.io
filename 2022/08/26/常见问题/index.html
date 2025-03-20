@@ -31,7 +31,7 @@
 <meta property="og:image" content="https://oss.javaguide.cn/github/javaguide/cs-basics/network/tcp-shakes-hands-three-times.png">
 <meta property="og:image" content="https://oss.javaguide.cn/github/javaguide/cs-basics/network/tcp-waves-four-times.png">
 <meta property="article:published_time" content="2022-08-26T13:10:10.000Z">
-<meta property="article:modified_time" content="2025-03-19T13:41:29.706Z">
+<meta property="article:modified_time" content="2025-03-20T07:31:48.132Z">
 <meta property="article:author" content="zql">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://oss.javaguide.cn/github/javaguide/java/basis/java-code-to-machine-code.png">
@@ -240,7 +240,7 @@
         
         
         
-          249 分钟
+          250 分钟
         
       </span>
     
@@ -326,6 +326,7 @@
 <ul>
 <li><a href="#%E6%95%B0%E7%BB%84%E5%92%8C%E9%9B%86%E5%90%88%E7%9A%84%E5%8C%BA%E5%88%AB">数组和集合的区别？</a></li>
 <li><a href="#arraylist%E5%92%8Clinkedlist%E7%9A%84%E5%8C%BA%E5%88%AB">ArrayList和LinkedList的区别？</a></li>
+<li><a href="#list%E4%B8%AD%E9%81%8D%E5%8E%86%E5%88%A0%E9%99%A4%E5%85%83%E7%B4%A0%E4%BC%9A%E6%9C%89%E5%93%AA%E4%BA%9B%E9%97%AE%E9%A2%98">List中遍历删除元素会有哪些问题？</a></li>
 <li><a href="#arraylist%E7%9A%84%E6%89%A9%E5%AE%B9%E6%9C%BA%E5%88%B6%E6%98%AF%E4%BB%80%E4%B9%88">ArrayList的扩容机制是什么？</a></li>
 <li><a href="#copyonwritearraylist%E6%98%AF%E5%A6%82%E4%BD%95%E5%AE%9E%E7%8E%B0%E7%BA%BF%E7%A8%8B%E5%AE%89%E5%85%A8%E7%9A%84">CopyonWriteArraylist是如何实现线程安全的？</a></li>
 <li><a href="#hashmap%E5%AE%9E%E7%8E%B0%E5%8E%9F%E7%90%86%E4%BB%8B%E7%BB%8D%E4%B8%80%E4%B8%8B">HashMap实现原理介绍一下？</a></li>
@@ -779,6 +780,19 @@ Java中大部分方法和类以及集合只能处理类型对象，比如ArrayLi
 <li>插入删除、随机访问效率不同</li>
 <li>ArrayList创建时要分配一段连续空间，占用空间更大</li>
 <li>前者适合需要频繁随机访问的场景，后者适合需要频繁插入删除的场景。</li>
+</ul>
+<h3 id="list中遍历删除元素会有哪些问题"><a class="markdownIt-Anchor" href="#list中遍历删除元素会有哪些问题"></a> List中遍历删除元素会有哪些问题？</h3>
+<ul>
+<li>
+<p>使用for循环按照下标删除元素时，会导致后面的元素向前移动，导致元素漏删。</p>
+</li>
+<li>
+<p>如果使用iterator遍历删除元素，使用list的remove方法，会抛出ConcurrentModificationException异常。<br />
+这是因为，List自身会维护一个modCount计数器，使用<code>list.remove()</code>方法时，会修改modCount，而iterator在创建时会记录最开始的modCount，如果遍历过程中iterator检查到modCount不一致，就会抛出异常。</p>
+</li>
+<li>
+<p>正确的删除方法是使用iterator的remove方法，这样不会抛出异常。</p>
+</li>
 </ul>
 <h3 id="arraylist的扩容机制是什么"><a class="markdownIt-Anchor" href="#arraylist的扩容机制是什么"></a> ArrayList的扩容机制是什么？</h3>
 <p>如果当前元素数量达到内部数组容量上限，就会触发扩容机制。分以下几步骤：</p>
