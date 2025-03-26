@@ -31,7 +31,7 @@
 <meta property="og:image" content="https://oss.javaguide.cn/github/javaguide/cs-basics/network/tcp-shakes-hands-three-times.png">
 <meta property="og:image" content="https://oss.javaguide.cn/github/javaguide/cs-basics/network/tcp-waves-four-times.png">
 <meta property="article:published_time" content="2022-08-26T13:10:10.000Z">
-<meta property="article:modified_time" content="2025-03-26T01:42:38.218Z">
+<meta property="article:modified_time" content="2025-03-26T07:50:27.773Z">
 <meta property="article:author" content="zql">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://oss.javaguide.cn/github/javaguide/java/basis/java-code-to-machine-code.png">
@@ -229,7 +229,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          31k 字
+          32k 字
         
       </span>
     
@@ -240,7 +240,7 @@
         
         
         
-          261 分钟
+          264 分钟
         
       </span>
     
@@ -482,6 +482,8 @@
 <li><a href="#%E8%A7%A3%E9%94%81">解锁</a></li>
 </ul>
 </li>
+<li><a href="#redis%E5%AE%9E%E7%8E%B0%E7%9A%84%E5%88%86%E5%B8%83%E5%BC%8F%E9%94%81%E6%9C%89%E4%BB%80%E4%B9%88%E9%97%AE%E9%A2%98">redis实现的分布式锁有什么问题？</a></li>
+<li><a href="#%E5%9F%BA%E4%BA%8Eredis%E5%AE%9E%E7%8E%B0%E5%88%86%E5%B8%83%E5%BC%8F%E9%94%81%E5%A6%82%E4%BD%95%E8%87%AA%E5%8A%A8%E7%BB%AD%E6%9C%9F">基于redis实现分布式锁如何自动续期？</a></li>
 <li><a href="#%E4%BB%80%E4%B9%88%E6%98%AF%E5%A4%A7key%E9%97%AE%E9%A2%98">什么是大Key问题？</a></li>
 <li><a href="#%E5%A6%82%E4%BD%95%E8%A7%A3%E5%86%B3%E5%A4%A7key%E9%97%AE%E9%A2%98">如何解决大Key问题？</a></li>
 <li><a href="#%E5%A6%82%E4%BD%95%E8%A7%A3%E5%86%B3%E7%83%ADkey%E9%97%AE%E9%A2%98">如何解决热key问题？</a></li>
@@ -1728,6 +1730,19 @@ NX参数实现<strong>key不存在才插入</strong>，可以通过它实现分�
 <li>删除lock_key</li>
 </ul>
 <p>由于是两个操作，为了保证原子性，一般用lua脚本实现</p>
+<h3 id="redis实现的分布式锁有什么问题"><a class="markdownIt-Anchor" href="#redis实现的分布式锁有什么问题"></a> redis实现的分布式锁有什么问题？</h3>
+<ul>
+<li>锁的过期时间不好设置，过短可能任务没执行完就释放锁，过长可能影响性能</li>
+<li>持有锁的客户端宕机，锁无法释放</li>
+<li>时钟漂移，不同服务器的时钟可能不一致，导致锁的过期时间不准确</li>
+<li>主从模式下，主节点获得锁之后宕机，此时新的主节点仍然可以获取锁</li>
+</ul>
+<h3 id="基于redis实现分布式锁如何自动续期"><a class="markdownIt-Anchor" href="#基于redis实现分布式锁如何自动续期"></a> 基于redis实现分布式锁如何自动续期？</h3>
+<p>可以通过redisson实现，redisson提供了一个watch dog机制来监控和续期锁，watch dog的原理如下：</p>
+<ul>
+<li>加锁成功后，每隔10s，看门狗就会通过lua脚本进行续期，每次续期前先判断是否为持锁线程，是则将超时时间设置为30s</li>
+<li>使用redisson时，只需要调用lock.lock()方法，watch dog会自动续期，如果设置了过期时间，就不会用到watch dog自动续期</li>
+</ul>
 <h3 id="什么是大key问题"><a class="markdownIt-Anchor" href="#什么是大key问题"></a> 什么是大Key问题？</h3>
 <p>大Key问题指的是Redis中某个key的value过大，导致Redis处理这个key时，会占用大量的内存，影响Redis的性能</p>
 <ul>
