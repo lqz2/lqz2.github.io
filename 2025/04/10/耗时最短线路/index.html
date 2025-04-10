@@ -19,21 +19,21 @@
   <meta name="author" content="zql">
   <meta name="keywords" content="">
   
-    <meta name="description" content="实现哈希表   实现哈希表  题目描述 思路 代码     原题  题目描述 不使用任何内建的哈希表库设计一个哈希映射（HashMap）。 实现 MyHashMap 类： MyHashMap() 用空映射初始化对象 void put(int key, int value) 向 HashMap 插入一个键值对 (key, value) 。如果 key 已经存在于映射中，则更新其对应的值 value">
+    <meta name="description" content="耗时最短线路   耗时最短线路  题目描述 思路 代码     原题  题目描述 大湾区某城市地铁线路非常密集，乘客很难一眼看出选择哪条线路乘坐比较合适，为了解决这个问题，地铁公司希望你开发一个程序帮助乘客挑选合适的乘坐线路，使得乘坐时间最短，地铁公司可以提供的数据是各相邻站点之间的乘坐时间。 输入说明： 第一行:N，站点总数,3&lt;&#x3D;N&lt;&#x3D;20. 第二行:乘宫的出发和到达站点。 第三">
 <meta property="og:type" content="article">
-<meta property="og:title" content="实现哈希表">
-<meta property="og:url" content="http://lqz2.github.io/2025/04/09/%E5%AE%9E%E7%8E%B0%E5%93%88%E5%B8%8C%E8%A1%A8/index.html">
+<meta property="og:title" content="耗时最短线路">
+<meta property="og:url" content="http://lqz2.github.io/2025/04/10/%E8%80%97%E6%97%B6%E6%9C%80%E7%9F%AD%E7%BA%BF%E8%B7%AF/index.html">
 <meta property="og:site_name" content="my blogs">
-<meta property="og:description" content="实现哈希表   实现哈希表  题目描述 思路 代码     原题  题目描述 不使用任何内建的哈希表库设计一个哈希映射（HashMap）。 实现 MyHashMap 类： MyHashMap() 用空映射初始化对象 void put(int key, int value) 向 HashMap 插入一个键值对 (key, value) 。如果 key 已经存在于映射中，则更新其对应的值 value">
+<meta property="og:description" content="耗时最短线路   耗时最短线路  题目描述 思路 代码     原题  题目描述 大湾区某城市地铁线路非常密集，乘客很难一眼看出选择哪条线路乘坐比较合适，为了解决这个问题，地铁公司希望你开发一个程序帮助乘客挑选合适的乘坐线路，使得乘坐时间最短，地铁公司可以提供的数据是各相邻站点之间的乘坐时间。 输入说明： 第一行:N，站点总数,3&lt;&#x3D;N&lt;&#x3D;20. 第二行:乘宫的出发和到达站点。 第三">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2025-04-09T01:51:42.000Z">
-<meta property="article:modified_time" content="2025-04-09T01:55:35.265Z">
+<meta property="article:published_time" content="2025-04-10T01:45:46.000Z">
+<meta property="article:modified_time" content="2025-04-10T01:51:38.682Z">
 <meta property="article:author" content="zql">
 <meta name="twitter:card" content="summary_large_image">
   
   
   
-  <title>实现哈希表 - my blogs</title>
+  <title>耗时最短线路 - my blogs</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -199,7 +199,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="实现哈希表"></span>
+            <span id="subtitle" data-typed-text="耗时最短线路"></span>
           
         </div>
 
@@ -210,8 +210,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2025-04-09 09:51" pubdate>
-          2025年4月9日 上午
+        <time datetime="2025-04-10 09:45" pubdate>
+          2025年4月10日 上午
         </time>
       </span>
     
@@ -222,7 +222,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          410 字
+          541 字
         
       </span>
     
@@ -233,7 +233,7 @@
         
         
         
-          4 分钟
+          5 分钟
         
       </span>
     
@@ -270,15 +270,15 @@
       <div class="container nopadding-x-md" id="board-ctn">
         <div id="board">
           <article class="post-content mx-auto">
-            <h1 id="seo-header">实现哈希表</h1>
+            <h1 id="seo-header">耗时最短线路</h1>
             
             
               <div class="markdown-body">
                 
-                <h2 id="实现哈希表"><a class="markdownIt-Anchor" href="#实现哈希表"></a> 实现哈希表</h2>
+                <h2 id="耗时最短线路"><a class="markdownIt-Anchor" href="#耗时最短线路"></a> 耗时最短线路</h2>
 <!-- TOC -->
 <ul>
-<li><a href="#%E5%AE%9E%E7%8E%B0%E5%93%88%E5%B8%8C%E8%A1%A8">实现哈希表</a>
+<li><a href="#%E8%80%97%E6%97%B6%E6%9C%80%E7%9F%AD%E7%BA%BF%E8%B7%AF">耗时最短线路</a>
 <ul>
 <li><a href="#%E9%A2%98%E7%9B%AE%E6%8F%8F%E8%BF%B0">题目描述</a></li>
 <li><a href="#%E6%80%9D%E8%B7%AF">思路</a></li>
@@ -287,20 +287,21 @@
 </li>
 </ul>
 <!-- /TOC -->
-<p><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/design-hashmap/description/">原题</a></p>
+<p><a target="_blank" rel="noopener" href="https://oj.niumacode.com/training/63/problem/P1509">原题</a></p>
 <h3 id="题目描述"><a class="markdownIt-Anchor" href="#题目描述"></a> 题目描述</h3>
-<p>不使用任何内建的哈希表库设计一个哈希映射（HashMap）。</p>
-<p>实现 MyHashMap 类：</p>
-<p>MyHashMap() 用空映射初始化对象<br />
-void put(int key, int value) 向 HashMap 插入一个键值对 (key, value) 。如果 key 已经存在于映射中，则更新其对应的值 value 。<br />
-int get(int key) 返回特定的 key 所映射的 value ；如果映射中不包含 key 的映射，返回 -1 。<br />
-void remove(key) 如果映射中存在 key 的映射，则移除 key 和它所对应的 value 。</p>
-<figure class="highlight prolog"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs prolog">输入：<br>[<span class="hljs-string">&quot;MyHashMap&quot;</span>, <span class="hljs-string">&quot;put&quot;</span>, <span class="hljs-string">&quot;put&quot;</span>, <span class="hljs-string">&quot;get&quot;</span>, <span class="hljs-string">&quot;get&quot;</span>, <span class="hljs-string">&quot;put&quot;</span>, <span class="hljs-string">&quot;get&quot;</span>, <span class="hljs-string">&quot;remove&quot;</span>, <span class="hljs-string">&quot;get&quot;</span>]<br>[[], [<span class="hljs-number">1</span>, <span class="hljs-number">1</span>], [<span class="hljs-number">2</span>, <span class="hljs-number">2</span>], [<span class="hljs-number">1</span>], [<span class="hljs-number">3</span>], [<span class="hljs-number">2</span>, <span class="hljs-number">1</span>], [<span class="hljs-number">2</span>], [<span class="hljs-number">2</span>], [<span class="hljs-number">2</span>]]<br>输出：<br>[null, null, null, <span class="hljs-number">1</span>, <span class="hljs-number">-1</span>, null, <span class="hljs-number">1</span>, null, <span class="hljs-number">-1</span>]<br></code></pre></td></tr></table></figure>
+<p>大湾区某城市地铁线路非常密集，乘客很难一眼看出选择哪条线路乘坐比较合适，为了解决这个问题，地铁公司希望你开发一个程序帮助乘客挑选合适的乘坐线路，使得乘坐时间最短，地铁公司可以提供的数据是各相邻站点之间的乘坐时间。</p>
+<p>输入说明：<br />
+第一行:N，站点总数,3&lt;=N&lt;=20.<br />
+第二行:乘宫的出发和到达站点。<br />
+第三行起:相邻站点之间的乘坐时间，每对站点一行，站点名称是单个小写字母，站点名一定包括出发和到<br />
+达站点，输入保证只有一个唯一解;<br />
+结束行:0000</p>
+<p>输出说明：耗时最短的线路</p>
+<figure class="highlight css"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><code class="hljs css">输入：<br><span class="hljs-number">12</span><br><span class="hljs-selector-tag">a</span> e<br><span class="hljs-selector-tag">a</span> <span class="hljs-selector-tag">b</span> <span class="hljs-number">2</span><br><span class="hljs-selector-tag">b</span> c <span class="hljs-number">2</span><br>c d <span class="hljs-number">2</span><br>d e <span class="hljs-number">2</span><br>f <span class="hljs-selector-tag">b</span> <span class="hljs-number">3</span><br><span class="hljs-selector-tag">b</span> g <span class="hljs-number">3</span><br>g h <span class="hljs-number">2</span><br>h <span class="hljs-selector-tag">i</span> <span class="hljs-number">3</span><br>j h <span class="hljs-number">2</span><br>h e <span class="hljs-number">3</span><br>e k <span class="hljs-number">2</span><br>k <span class="hljs-selector-tag">i</span> <span class="hljs-number">4</span><br><span class="hljs-number">0000</span><br><br>输出：<br><span class="hljs-selector-tag">a</span> <span class="hljs-selector-tag">b</span> c d e<br></code></pre></td></tr></table></figure>
 <h3 id="思路"><a class="markdownIt-Anchor" href="#思路"></a> 思路</h3>
-<p>之前面试中让现场写，没准备过，手写的数组+链表，链表实现有些不完善的地方，这里重新做一遍，链表直接用的c++的list<br />
-总体思路就是无论什么操作，都是先获取哈希值，然后找到索引，遍历链表，找到对应的值</p>
+<p>常规堆优化的dijkstra，不过节点数目很少，所以二维数组存图即可，由于要输出路径，所以需要一个前驱数组来存储前驱节点，每次松弛成功后同步更新前驱节点即可</p>
 <h3 id="代码"><a class="markdownIt-Anchor" href="#代码"></a> 代码</h3>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">class</span> <span class="hljs-title class_">MyHashMap</span> &#123;<br><span class="hljs-keyword">public</span>:<br>    vector&lt;list&lt;pair&lt;<span class="hljs-type">int</span>,<span class="hljs-type">int</span>&gt;&gt;&gt; mp;<br>    <span class="hljs-type">static</span> <span class="hljs-type">const</span> <span class="hljs-type">int</span> sz=<span class="hljs-number">1e5</span>+<span class="hljs-number">7</span>;<br><br>    <span class="hljs-built_in">MyHashMap</span>():<span class="hljs-built_in">mp</span>(sz) &#123;&#125;<br><br>    <span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">hash</span><span class="hljs-params">(<span class="hljs-type">int</span> key)</span></span>&#123;<br>        <span class="hljs-keyword">return</span> key%sz;<br>    &#125;<br>    <br>    <span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">put</span><span class="hljs-params">(<span class="hljs-type">int</span> key, <span class="hljs-type">int</span> value)</span> </span>&#123;<br>        <span class="hljs-type">int</span> idx=<span class="hljs-built_in">hash</span>(key);<br>        <span class="hljs-keyword">for</span>(<span class="hljs-keyword">auto</span> it=mp[idx].<span class="hljs-built_in">begin</span>();it!=mp[idx].<span class="hljs-built_in">end</span>();++it)&#123;<br>            <span class="hljs-keyword">if</span>((*it).first==key)&#123;<br>                (*it).second=value;<br>                <span class="hljs-keyword">return</span>;<br>            &#125;<br>        &#125;<br>        mp[idx].<span class="hljs-built_in">push_back</span>(&#123;key,value&#125;);<br>    &#125;<br>    <br>    <span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">get</span><span class="hljs-params">(<span class="hljs-type">int</span> key)</span> </span>&#123;<br>        <span class="hljs-type">int</span> idx=<span class="hljs-built_in">hash</span>(key);<br>        <span class="hljs-keyword">for</span>(<span class="hljs-keyword">auto</span> it=mp[idx].<span class="hljs-built_in">begin</span>();it!=mp[idx].<span class="hljs-built_in">end</span>();++it)&#123;<br>            <span class="hljs-keyword">if</span>((*it).first==key)&#123;<br>                <span class="hljs-keyword">return</span> (*it).second;<br>            &#125;<br>        &#125;<br>        <span class="hljs-keyword">return</span> <span class="hljs-number">-1</span>;<br>    &#125;<br>    <br>    <span class="hljs-function"><span class="hljs-type">void</span> <span class="hljs-title">remove</span><span class="hljs-params">(<span class="hljs-type">int</span> key)</span> </span>&#123;<br>        <span class="hljs-type">int</span> idx=<span class="hljs-built_in">hash</span>(key);<br>        <span class="hljs-keyword">for</span>(<span class="hljs-keyword">auto</span> it=mp[idx].<span class="hljs-built_in">begin</span>();it!=mp[idx].<span class="hljs-built_in">end</span>();++it)&#123;<br>            <span class="hljs-keyword">if</span>((*it).first==key)&#123;<br>                mp[idx].<span class="hljs-built_in">erase</span>(it);<br>                <span class="hljs-keyword">return</span>;<br>            &#125;<br>        &#125;<br>    &#125;<br>&#125;;<br><br></code></pre></td></tr></table></figure>
+<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br><span class="line">44</span><br><span class="line">45</span><br><span class="line">46</span><br><span class="line">47</span><br><span class="line">48</span><br><span class="line">49</span><br><span class="line">50</span><br><span class="line">51</span><br><span class="line">52</span><br><span class="line">53</span><br><span class="line">54</span><br><span class="line">55</span><br><span class="line">56</span><br><span class="line">57</span><br><span class="line">58</span><br><span class="line">59</span><br><span class="line">60</span><br><span class="line">61</span><br><span class="line">62</span><br><span class="line">63</span><br><span class="line">64</span><br><span class="line">65</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-meta">#<span class="hljs-keyword">include</span><span class="hljs-string">&lt;bits/stdc++.h&gt;</span></span><br><span class="hljs-keyword">using</span> <span class="hljs-keyword">namespace</span> std;<br><br><span class="hljs-type">int</span> mp[<span class="hljs-number">26</span>][<span class="hljs-number">26</span>];<br><span class="hljs-type">int</span> dis[<span class="hljs-number">26</span>];<br><span class="hljs-type">bool</span> vis[<span class="hljs-number">26</span>];<br><span class="hljs-type">int</span> pre[<span class="hljs-number">26</span>];<br><span class="hljs-keyword">struct</span> <span class="hljs-title class_">node</span>&#123;<br>    <span class="hljs-type">int</span> n;<br>    <span class="hljs-type">int</span> w;<br>    <span class="hljs-built_in">node</span>(<span class="hljs-type">int</span> nn,<span class="hljs-type">int</span> ww):<span class="hljs-built_in">n</span>(nn),<span class="hljs-built_in">w</span>(ww)&#123;&#125;<br>    <span class="hljs-type">bool</span> <span class="hljs-keyword">operator</span> &lt; (<span class="hljs-type">const</span> node&amp; t) <span class="hljs-type">const</span>&#123;<br>        <span class="hljs-keyword">return</span> w&gt;t.w;<br>    &#125;<br>&#125;;<br><br>priority_queue&lt;node&gt; pq;<br><span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">main</span><span class="hljs-params">()</span></span>&#123;<br>    <span class="hljs-type">int</span> n;<br>    cin&gt;&gt;n;<br>    <span class="hljs-type">char</span> s, d;<br>    cin&gt;&gt;s&gt;&gt;d;<br>    <span class="hljs-built_in">memset</span>(dis,<span class="hljs-number">0x3f</span>,<span class="hljs-built_in">sizeof</span>(dis));<br>    <span class="hljs-built_in">memset</span>(mp,<span class="hljs-number">0x3f</span>,<span class="hljs-built_in">sizeof</span>(mp));<br>    <span class="hljs-built_in">memset</span>(pre,<span class="hljs-number">-1</span>,<span class="hljs-built_in">sizeof</span>(pre));<br>    dis[s-<span class="hljs-string">&#x27;a&#x27;</span>]=<span class="hljs-number">0</span>;<br>    <span class="hljs-keyword">while</span>(<span class="hljs-number">1</span>)&#123;<br>        string s1,s2;<br>        <span class="hljs-type">int</span> jl;<br>        cin&gt;&gt;s1;<br>        <span class="hljs-keyword">if</span>(s1==<span class="hljs-string">&quot;0000&quot;</span>)<br>            <span class="hljs-keyword">break</span>;<br>        cin&gt;&gt;s2&gt;&gt;jl;<br>        <br>        mp[s1[<span class="hljs-number">0</span>]-<span class="hljs-string">&#x27;a&#x27;</span>][s2[<span class="hljs-number">0</span>]-<span class="hljs-string">&#x27;a&#x27;</span>]=jl;<br>    &#125;<br>    <br>    pq.<span class="hljs-built_in">push</span>(<span class="hljs-built_in">node</span>(s-<span class="hljs-string">&#x27;a&#x27;</span>,<span class="hljs-number">0</span>));<br>    <span class="hljs-keyword">while</span>(!pq.<span class="hljs-built_in">empty</span>())&#123;<br>        node t=pq.<span class="hljs-built_in">top</span>();<br>        pq.<span class="hljs-built_in">pop</span>();<br>        <span class="hljs-type">int</span> u=t.n;<br>        <span class="hljs-keyword">if</span>(!vis[u])&#123;<br>            vis[u]=<span class="hljs-literal">true</span>;<br>            <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i=<span class="hljs-number">0</span>;i&lt;n;++i)&#123;<br>                <span class="hljs-keyword">if</span>(dis[u]+mp[u][i]&lt;dis[i])&#123;<br>                    dis[i]=dis[u]+mp[u][i];<br>                    pre[i]=u;<br>                    <span class="hljs-keyword">if</span>(!vis[i])<br>                        pq.<span class="hljs-built_in">push</span>(<span class="hljs-built_in">node</span>(i,dis[i]));<br>                &#125;<br>            &#125;<br>        &#125;<br>    &#125;<br>    <span class="hljs-type">int</span> ans=d-<span class="hljs-string">&#x27;a&#x27;</span>;<br>    vector&lt;<span class="hljs-type">int</span>&gt; v;<br>    v.<span class="hljs-built_in">push_back</span>(ans);<br>    <span class="hljs-keyword">while</span>(ans!=s-<span class="hljs-string">&#x27;a&#x27;</span>)&#123;<br>        ans=pre[ans];<br>        v.<span class="hljs-built_in">push_back</span>(ans);<br>    &#125;<br>    <span class="hljs-built_in">reverse</span>(v.<span class="hljs-built_in">begin</span>(),v.<span class="hljs-built_in">end</span>());<br>    <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> tt:v)<br>        cout&lt;&lt;<span class="hljs-built_in">char</span>(tt+<span class="hljs-string">&#x27;a&#x27;</span>)&lt;&lt;<span class="hljs-string">&#x27; &#x27;</span>;<br>&#125;<br></code></pre></td></tr></table></figure>
                 
               </div>
             
@@ -338,8 +339,8 @@ void remove(key) 如果映射中存在 key 的映射，则移除 key 和它所�
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>实现哈希表</div>
-      <div>http://lqz2.github.io/2025/04/09/实现哈希表/</div>
+      <div>耗时最短线路</div>
+      <div>http://lqz2.github.io/2025/04/10/耗时最短线路/</div>
     </div>
     <div class="license-meta">
       
@@ -351,7 +352,7 @@ void remove(key) 如果映射中存在 key 的映射，则移除 key 和它所�
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2025年4月9日</div>
+          <div>2025年4月10日</div>
         </div>
       
       
@@ -383,18 +384,12 @@ void remove(key) 如果映射中存在 key 的映射，则移除 key 和它所�
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2025/04/10/%E8%80%97%E6%97%B6%E6%9C%80%E7%9F%AD%E7%BA%BF%E8%B7%AF/" title="耗时最短线路">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">耗时最短线路</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2025/04/01/%E6%8B%BC%E5%9B%A2%E4%BA%A4%E6%98%93%E5%AD%A6%E4%B9%A0/" title="拼团交易学习">
-                        <span class="hidden-mobile">拼团交易学习</span>
+                      <a href="/2025/04/09/%E5%AE%9E%E7%8E%B0%E5%93%88%E5%B8%8C%E8%A1%A8/" title="实现哈希表">
+                        <span class="hidden-mobile">实现哈希表</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
