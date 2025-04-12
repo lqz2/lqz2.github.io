@@ -19,19 +19,19 @@
   <meta name="author" content="zql">
   <meta name="keywords" content="">
   
-    <meta name="description" content="Java  JDK、JRE和JVM是什么？  JDK JRE JVM   字节码 为什么说Java“编译与解释共存”？ AOT和JIT JVM内存区域  程序计数器 虚拟机栈 本地方法栈 堆 方法区 运行时常量池和字符串常量池 直接内存 为什么要将永久代替换为元空间？   JVM垃圾回收  内存分配和回收原则 死亡对象的判断方法 GC Roots包括哪些？ JVM类加载的过程 垃圾回收算法 垃">
+    <meta name="description" content="Java  JDK、JRE和JVM是什么？  JDK JRE JVM   字节码 为什么说Java“编译与解释共存”？ AOT和JIT JVM内存区域  程序计数器 虚拟机栈 本地方法栈 堆 方法区 运行时常量池和字符串常量池 直接内存 为什么要将永久代替换为元空间？   类加载  什么是类加载器，类加载器有哪些？ 什么是双亲委派机制？为什么要用双亲委派机制？ JVM类加载的过程   JVM垃">
 <meta property="og:type" content="article">
 <meta property="og:title" content="常见问题">
 <meta property="og:url" content="http://lqz2.github.io/2022/08/26/%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98/index.html">
 <meta property="og:site_name" content="my blogs">
-<meta property="og:description" content="Java  JDK、JRE和JVM是什么？  JDK JRE JVM   字节码 为什么说Java“编译与解释共存”？ AOT和JIT JVM内存区域  程序计数器 虚拟机栈 本地方法栈 堆 方法区 运行时常量池和字符串常量池 直接内存 为什么要将永久代替换为元空间？   JVM垃圾回收  内存分配和回收原则 死亡对象的判断方法 GC Roots包括哪些？ JVM类加载的过程 垃圾回收算法 垃">
+<meta property="og:description" content="Java  JDK、JRE和JVM是什么？  JDK JRE JVM   字节码 为什么说Java“编译与解释共存”？ AOT和JIT JVM内存区域  程序计数器 虚拟机栈 本地方法栈 堆 方法区 运行时常量池和字符串常量池 直接内存 为什么要将永久代替换为元空间？   类加载  什么是类加载器，类加载器有哪些？ 什么是双亲委派机制？为什么要用双亲委派机制？ JVM类加载的过程   JVM垃">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://oss.javaguide.cn/github/javaguide/java/basis/java-code-to-machine-code.png">
 <meta property="og:image" content="https://cdn.xiaolincoding.com//picgo/1715930589177-73932d2c-b0c0-4f58-a5c1-ab514b1a389c.png">
 <meta property="og:image" content="https://oss.javaguide.cn/github/javaguide/cs-basics/network/tcp-shakes-hands-three-times.png">
 <meta property="og:image" content="https://oss.javaguide.cn/github/javaguide/cs-basics/network/tcp-waves-four-times.png">
 <meta property="article:published_time" content="2022-08-26T13:10:10.000Z">
-<meta property="article:modified_time" content="2025-04-11T13:09:47.993Z">
+<meta property="article:modified_time" content="2025-04-12T09:20:22.477Z">
 <meta property="article:author" content="zql">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://oss.javaguide.cn/github/javaguide/java/basis/java-code-to-machine-code.png">
@@ -229,7 +229,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          33k 字
+          35k 字
         
       </span>
     
@@ -240,7 +240,7 @@
         
         
         
-          274 分钟
+          290 分钟
         
       </span>
     
@@ -308,18 +308,28 @@
 <li><a href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A6%81%E5%B0%86%E6%B0%B8%E4%B9%85%E4%BB%A3%E6%9B%BF%E6%8D%A2%E4%B8%BA%E5%85%83%E7%A9%BA%E9%97%B4">为什么要将永久代替换为元空间？</a></li>
 </ul>
 </li>
+<li><a href="#%E7%B1%BB%E5%8A%A0%E8%BD%BD">类加载</a>
+<ul>
+<li><a href="#%E4%BB%80%E4%B9%88%E6%98%AF%E7%B1%BB%E5%8A%A0%E8%BD%BD%E5%99%A8%E7%B1%BB%E5%8A%A0%E8%BD%BD%E5%99%A8%E6%9C%89%E5%93%AA%E4%BA%9B">什么是类加载器，类加载器有哪些？</a></li>
+<li><a href="#%E4%BB%80%E4%B9%88%E6%98%AF%E5%8F%8C%E4%BA%B2%E5%A7%94%E6%B4%BE%E6%9C%BA%E5%88%B6%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A6%81%E7%94%A8%E5%8F%8C%E4%BA%B2%E5%A7%94%E6%B4%BE%E6%9C%BA%E5%88%B6">什么是双亲委派机制？为什么要用双亲委派机制？</a></li>
+<li><a href="#jvm%E7%B1%BB%E5%8A%A0%E8%BD%BD%E7%9A%84%E8%BF%87%E7%A8%8B">JVM类加载的过程</a></li>
+</ul>
+</li>
 <li><a href="#jvm%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6">JVM垃圾回收</a>
 <ul>
 <li><a href="#%E5%86%85%E5%AD%98%E5%88%86%E9%85%8D%E5%92%8C%E5%9B%9E%E6%94%B6%E5%8E%9F%E5%88%99">内存分配和回收原则</a></li>
+<li><a href="#minorgcmixedgcfullgc%E7%9A%84%E5%8C%BA%E5%88%AB%E6%98%AF%E4%BB%80%E4%B9%88">MinorGC、MixedGC、FullGC的区别是什么？</a></li>
 <li><a href="#%E6%AD%BB%E4%BA%A1%E5%AF%B9%E8%B1%A1%E7%9A%84%E5%88%A4%E6%96%AD%E6%96%B9%E6%B3%95">死亡对象的判断方法</a></li>
 <li><a href="#gc-roots%E5%8C%85%E6%8B%AC%E5%93%AA%E4%BA%9B">GC Roots包括哪些？</a></li>
-<li><a href="#jvm%E7%B1%BB%E5%8A%A0%E8%BD%BD%E7%9A%84%E8%BF%87%E7%A8%8B">JVM类加载的过程</a></li>
 <li><a href="#%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6%E7%AE%97%E6%B3%95">垃圾回收算法</a></li>
 <li><a href="#%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6%E5%99%A8%E6%9C%89%E5%93%AA%E4%BA%9B">垃圾回收器有哪些？</a></li>
+<li><a href="#%E8%AF%A6%E7%BB%86%E4%BB%8B%E7%BB%8D%E4%B8%80%E4%B8%8Bg1%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6%E5%99%A8">详细介绍一下G1垃圾回收器</a></li>
 <li><a href="#%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6%E5%99%A8cms%E5%92%8Cg1%E7%9A%84%E5%8C%BA%E5%88%AB">垃圾回收器CMS和G1的区别?</a></li>
 <li><a href="#%E5%A6%82%E4%BD%95%E9%80%89%E6%8B%A9%E5%90%88%E9%80%82%E7%9A%84%E5%9E%83%E5%9C%BE%E5%9B%9E%E6%94%B6%E5%99%A8">如何选择合适的垃圾回收器？</a></li>
+<li><a href="#java%E5%86%85%E5%AD%98%E6%B3%84%E6%BC%8F%E7%9A%84%E6%8E%92%E6%9F%A5%E6%80%9D%E8%B7%AF">Java内存泄漏的排查思路？</a></li>
 </ul>
 </li>
+<li><a href="#cpu%E9%A3%99%E5%8D%87%E7%9A%84%E6%8E%92%E6%9F%A5%E6%80%9D%E8%B7%AF">CPU飙升的排查思路？</a></li>
 <li><a href="#%E5%9F%BA%E7%A1%80%E6%95%B0%E6%8D%AE%E7%B1%BB%E5%9E%8B">基础数据类型</a></li>
 <li><a href="#%E6%9C%89%E4%B8%80%E4%B8%AA%E5%AD%A6%E7%94%9F%E7%B1%BB%E6%83%B3%E6%8C%89%E7%85%A7%E5%88%86%E6%95%B0%E6%8E%92%E5%BA%8F%E5%86%8D%E6%8C%89%E5%AD%A6%E5%8F%B7%E6%8E%92%E5%BA%8F%E5%BA%94%E8%AF%A5%E6%80%8E%E4%B9%88%E5%81%9A">有一个学生类，想按照分数排序，再按学号排序，应该怎么做？</a></li>
 <li><a href="#java%E9%9B%86%E5%90%88">Java集合</a>
@@ -399,9 +409,15 @@
 <li><a href="#futuretask%E5%92%8Ccompletablefuture%E7%9A%84%E5%85%B7%E4%BD%93%E4%BD%BF%E7%94%A8%E5%9C%BA%E6%99%AF">FutureTask和CompletableFuture的具体使用场景？</a></li>
 </ul>
 </li>
-<li><a href="#mysql">MYSQL</a>
+<li><a href="#mybatis">MyBatis</a>
 <ul>
 <li><a href="#mybatis%E4%B8%AD%E5%92%8C%E7%9A%84%E5%8C%BA%E5%88%AB">MyBatis中#{}和${}的区别？</a></li>
+<li><a href="#mybatis%E7%9A%84%E5%BB%B6%E8%BF%9F%E5%8A%A0%E8%BD%BD%E5%8F%8A%E5%85%B6%E5%8E%9F%E7%90%86">MyBatis的延迟加载及其原理？</a></li>
+<li><a href="#mybatis%E7%9A%84%E4%B8%80%E7%BA%A7%E7%BC%93%E5%AD%98%E5%92%8C%E4%BA%8C%E7%BA%A7%E7%BC%93%E5%AD%98%E7%9A%84%E5%8C%BA%E5%88%AB">MyBatis的一级缓存和二级缓存的区别？</a></li>
+</ul>
+</li>
+<li><a href="#mysql">MYSQL</a>
+<ul>
 <li><a href="#sql%E6%B3%A8%E5%85%A5%E6%98%AF%E4%BB%80%E4%B9%88%E4%B8%BE%E4%B8%AA%E4%BE%8B%E5%AD%90">SQL注入是什么？举个例子？</a></li>
 <li><a href="#mysql%E7%9A%84%E4%BA%8B%E5%8A%A1%E9%9A%94%E7%A6%BB%E7%BA%A7%E5%88%AB">mysql的事务隔离级别</a>
 <ul>
@@ -539,6 +555,16 @@
 <li><a href="#%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97%E7%9A%84%E5%8F%AF%E9%9D%A0%E6%80%A7%E9%A1%BA%E5%BA%8F%E6%80%A7%E6%80%8E%E4%B9%88%E4%BF%9D%E8%AF%81">消息队列的可靠性、顺序性怎么保证？</a></li>
 </ul>
 </li>
+<li><a href="#spring">Spring</a>
+<ul>
+<li><a href="#spring%E7%9A%84%E5%8D%95%E4%BE%8Bbean%E6%98%AF%E7%BA%BF%E7%A8%8B%E5%AE%89%E5%85%A8%E7%9A%84%E5%90%97">Spring的单例Bean是线程安全的吗？</a></li>
+<li><a href="#spring%E4%B8%AD%E7%9A%84%E4%BA%8B%E5%8A%A1%E6%98%AF%E5%A6%82%E4%BD%95%E5%AE%9E%E7%8E%B0%E7%9A%84">Spring中的事务是如何实现的？</a></li>
+<li><a href="#bean%E7%9A%84%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F">Bean的生命周期？</a></li>
+<li><a href="#bean%E7%9A%84%E5%BE%AA%E7%8E%AF%E4%BE%9D%E8%B5%96%E6%80%8E%E4%B9%88%E8%A7%A3%E5%86%B3">Bean的循环依赖怎么解决？</a></li>
+</ul>
+</li>
+<li><a href="#%E4%BB%8B%E7%BB%8D%E4%B8%80%E4%B8%8Bcap%E5%92%8Cbase%E7%90%86%E8%AE%BA">介绍一下CAP和BASE理论</a></li>
+<li><a href="#%E4%BB%8B%E7%BB%8D%E4%B8%80%E4%B8%8Btcc%E6%A8%A1%E5%BC%8F">介绍一下TCC模式</a></li>
 </ul>
 </li>
 <li><a href="#cs%E5%9F%BA%E7%A1%80">CS基础</a>
@@ -696,13 +722,40 @@ Java 语言通过字节码的方式，在一定程度上解决了传统解释型
 <p>jdk7中，运行时常量池存放在方法区中，而字符串常量池存放在堆中。在jdk8中，运行时常量池存放在元空间中。</p>
 <h3 id="直接内存"><a class="markdownIt-Anchor" href="#直接内存"></a> 直接内存</h3>
 <ul>
-<li>直接内存并不是虚拟机运行时数据区的一部分，也不是 Java 虚拟机规范中定义的内存区域。</li>
-<li>直接内存是本地内存的一部分。</li>
+<li>直接内存并不是虚拟机运行时数据区的一部分，也不是JVM中定义的内存区域。</li>
+<li>直接内存是本地内存的一部分，本地内存包括直接内存和元空间</li>
 </ul>
 <h3 id="为什么要将永久代替换为元空间"><a class="markdownIt-Anchor" href="#为什么要将永久代替换为元空间"></a> 为什么要将永久代替换为元空间？</h3>
 <ul>
 <li>永久代有一个 JVM 本身设置的固定上限，无法进行调整，而元空间使用的是本地内存，受本机可用内存的限制，虽然元空间仍旧可能溢出，但是比原来出现的几率会更小。</li>
 <li>永久代会为 GC 带来不必要的复杂度，例如永久代的 GC 会因为频繁的类加载而导致 Full GC，而元空间的 GC 将会更简单高效。</li>
+</ul>
+<h2 id="类加载"><a class="markdownIt-Anchor" href="#类加载"></a> 类加载</h2>
+<h3 id="什么是类加载器类加载器有哪些"><a class="markdownIt-Anchor" href="#什么是类加载器类加载器有哪些"></a> 什么是类加载器，类加载器有哪些？</h3>
+<p>类加载器的作用是将字节码文件加载到JVM中，从而让Java程序启动起来<br />
+类加载器一共有四种：</p>
+<ul>
+<li>启动类加载类BootStrap ClassLoader：负责加载Java的核心类库，通常是<code>JAVA_HOME/jre/lib/</code>下的库</li>
+<li>扩展类加载器Extension ClassLoader：负责加载Java的扩展类库，通常是<code>JAVA_HOME/jre/lib/ext/</code>下的库</li>
+<li>应用类加载器Application ClassLoader：负责加载用户类路径下的类，通常是<code>CLASSPATH</code>下的库</li>
+<li>自定义类加载器：用户可以自定义类加载器</li>
+</ul>
+<h3 id="什么是双亲委派机制为什么要用双亲委派机制"><a class="markdownIt-Anchor" href="#什么是双亲委派机制为什么要用双亲委派机制"></a> 什么是双亲委派机制？为什么要用双亲委派机制？</h3>
+<p>加载某一个类时，会委托上一级的类加载器去加载，如果上级也有上级，则一直到上级去尝试加载，如果上级类加载器无法加载，才由当前类加载器去加载。</p>
+<p>JVM使用双亲委派的原因：</p>
+<ul>
+<li>避免类的重复加载，当父类已经加载后，子类就无需加载了</li>
+<li>为了安全，保证核心类库的API不会被修改</li>
+</ul>
+<h3 id="jvm类加载的过程"><a class="markdownIt-Anchor" href="#jvm类加载的过程"></a> JVM类加载的过程</h3>
+<ul>
+<li>加载，即加载字节码文件</li>
+<li>验证，确保字节码文件符合 JVM 规范</li>
+<li>准备，为变量分配内存并设置初始值</li>
+<li>解析，把类中的符号引用变为直接引用</li>
+<li>初始化，为静态变量和静态代码块进行初始化</li>
+<li>使用</li>
+<li>卸载</li>
 </ul>
 <h2 id="jvm垃圾回收"><a class="markdownIt-Anchor" href="#jvm垃圾回收"></a> JVM垃圾回收</h2>
 <p>在堆的新生代中，由Eden 区、两个 Survivor 区组成， 两个 Survivor 区中包括S0 和 S1。</p>
@@ -712,6 +765,12 @@ Java 语言通过字节码的方式，在一定程度上解决了传统解释型
 <li>大对象直接进入老年代，大对象是指需要大量连续内存空间的对象，比如一个很长的字符串或数组。</li>
 <li>长期存活的对象将进入老年代，虚拟机给每个对象定义了一个年龄计数器，对象在 Eden 区出生后，经过一次 Minor GC 仍然存活，并且能被 Survivor 容纳的话，将被移动到 Survivor 区，并且年龄设为 1，对象在 Survivor 区每熬过一次 Minor GC，年龄就增加 1 岁，当它的年龄增加到一定程度（默认为 15 岁），就会被晋升到老年代。</li>
 </ul>
+<h3 id="minorgc-mixedgc-fullgc的区别是什么"><a class="markdownIt-Anchor" href="#minorgc-mixedgc-fullgc的区别是什么"></a> MinorGC、MixedGC、FullGC的区别是什么？</h3>
+<ul>
+<li>MinorGC：发生在新生代的垃圾回收，回收停顿时间短。</li>
+<li>MixedGC：新生代+老年代部分区域的垃圾回收，G1回收器特有</li>
+<li>FullGC：新生代+老年代完整区域的垃圾回收，回收停顿时间长</li>
+</ul>
 <h3 id="死亡对象的判断方法"><a class="markdownIt-Anchor" href="#死亡对象的判断方法"></a> 死亡对象的判断方法</h3>
 <ul>
 <li>引用计数法：当对象被引用时，计数器加 1，当引用失效时，计数器减 1，当计数器为 0 时，说明对象不再被引用，可以被回收。但这种方法无法解决循环引用的问题。</li>
@@ -720,19 +779,9 @@ Java 语言通过字节码的方式，在一定程度上解决了传统解释型
 </ul>
 <h3 id="gc-roots包括哪些"><a class="markdownIt-Anchor" href="#gc-roots包括哪些"></a> GC Roots包括哪些？</h3>
 <ul>
-<li>全局性引用，如对方法区的静态对象、常量对象的引用</li>
-<li>执行上下文，如方法栈帧中的局部对象引用</li>
+<li>全局性引用，如对方法区的静态属性、常量引用的对象</li>
+<li>执行上下文，如本地方法栈中的引用的对象</li>
 <li>已经启动且未停止的线程</li>
-</ul>
-<h3 id="jvm类加载的过程"><a class="markdownIt-Anchor" href="#jvm类加载的过程"></a> JVM类加载的过程</h3>
-<ul>
-<li>加载，即加载字节码文件</li>
-<li>验证，确保字节码文件符合 JVM 规范</li>
-<li>准备，为静态变量分配内存并设置初始值</li>
-<li>解析，解析出常量池以及属性表的信息</li>
-<li>初始化，为标记常量值的字段赋值</li>
-<li>使用</li>
-<li>卸载</li>
 </ul>
 <h3 id="垃圾回收算法"><a class="markdownIt-Anchor" href="#垃圾回收算法"></a> 垃圾回收算法</h3>
 <ul>
@@ -752,13 +801,25 @@ Java 语言通过字节码的方式，在一定程度上解决了传统解释型
 <li>G1(Garbage First)收集器 (标记-整理算法): Java堆并行收集器，G1收集器是JDK1.7提供的一个新收集器，G1收集器基于“标记-整理”算法实现，也就是说不会产生内存碎片。此外，G1收集器不同于之前的收集器的一个重要特点是：G1回收的范围是整个Java堆(包括新生代，老年代)，而前六种收集器回收的范围仅限于新生代或老年代。</li>
 <li>ZGC: 低延迟垃圾收集器，回收停顿时间小于1ms，支持超大堆内存，适用于大规模服务</li>
 </ul>
+<h3 id="详细介绍一下g1垃圾回收器"><a class="markdownIt-Anchor" href="#详细介绍一下g1垃圾回收器"></a> 详细介绍一下G1垃圾回收器</h3>
+<p>G1垃圾回收器中，划分了多个区域，每个区域都可以充当eden区、survivor区和老年代</p>
+<p>主要分3个阶段：</p>
+<ul>
+<li>年轻代垃圾回收<br />
+当产生了一些对象，这些对象先被分配到eden区，当需要进行垃圾回收时，会进行minorGC，将存活的对象标记出来，复制到survivor区，标记和复制过程中，都会触发STW(stop the world)，但时间会很短，多次minorGC中还存活的对象会被放入老年代</li>
+<li>并发标记阶段<br />
+当老年代内存超过阈值后，会进行并发标记，标记存活的对象，并发标记不会触发STW</li>
+<li>混合收集阶段<br />
+混合收集阶段既进行年轻代的收集，又进行老年代的收集。因为G1回收器有一个<strong>预设的回收停顿时间</strong>，为了保证不超过这个时间，在进行老年代收集时，会优先收集回收价高的区域(存活对象少)。</li>
+<li>如果回收速度赶不上创建对象的速度，会触发Full GC，回收时间会比较长。</li>
+</ul>
 <h3 id="垃圾回收器cms和g1的区别"><a class="markdownIt-Anchor" href="#垃圾回收器cms和g1的区别"></a> 垃圾回收器CMS和G1的区别?</h3>
 <ol>
 <li>使用范围不同，CMS主要用于老年代收集，G1可以收集老年代和新生代</li>
 <li>CMS基于“标记-清除”算法实现，G1基于“标记-整理”算法实现</li>
-<li>CMS以最小停顿时间为目标，G1可设置垃圾回收的停顿时间</li>
+<li>CMS以最小停顿时间为目标，G1可设置垃圾回收的停顿时间<br />
+使用场景不同：</li>
 </ol>
-<p>使用场景不同：</p>
 <ul>
 <li>CMS适合低延迟、老年代收集、对内存碎片不敏感的场景</li>
 <li>G1适合大堆内存，对内存碎片敏感，需要平衡性能的场景</li>
@@ -770,6 +831,20 @@ Java 语言通过字节码的方式，在一定程度上解决了传统解释型
 <li>低延迟应用使用CMS</li>
 <li>大堆（大于10G）内存+综合场景使用G1</li>
 <li>超大堆（大于100G）+低延迟使用ZGC</li>
+</ul>
+<h3 id="java内存泄漏的排查思路"><a class="markdownIt-Anchor" href="#java内存泄漏的排查思路"></a> Java内存泄漏的排查思路？</h3>
+<p>内存泄漏通常指的是堆上的一些对象没有被回收<br />
+排查思路如下：</p>
+<ul>
+<li>通过jmap获取堆的内存快照dump</li>
+<li>通过VisualVM分析dump文件</li>
+<li>查看堆中信息，定位出问题的代码</li>
+</ul>
+<h2 id="cpu飙升的排查思路"><a class="markdownIt-Anchor" href="#cpu飙升的排查思路"></a> CPU飙升的排查思路？</h2>
+<ul>
+<li>先通过top查看那个进程占用cpu最高，获取他的进程id</li>
+<li>通过ps和grep查看进程中的线程信息，找到占用cpu最高的线程id</li>
+<li>通过jstack查看进程，定位出问题的代码</li>
 </ul>
 <h2 id="基础数据类型"><a class="markdownIt-Anchor" href="#基础数据类型"></a> 基础数据类型</h2>
 <p>java中八种基础数据类型如下图：<br />
@@ -1062,10 +1137,14 @@ Spring 通过 XML 配置模式装载 Bean 的过程：</li>
 </ul>
 <h3 id="如何停止线程"><a class="markdownIt-Anchor" href="#如何停止线程"></a> 如何停止线程？</h3>
 <ul>
-<li>异常停止法：调用interupt方法, 在run方法中判断当前对象的中断状态，如果是中断状态则抛出异常，达到中断线程的效果。</li>
-<li>沉睡中停止：先将线程sleep，然后调用interrupt标记中断状态，interrupt会将阻塞状态的线程中断。会抛出中断异常，达到停止线程的效果</li>
+<li>通过退出标志位，让线程正常退出</li>
 <li>stop()暴力停止</li>
-<li>使用return停止：调用interupt标记中断状态后，在run方法中判断中断状态，如果是中断状态则return。</li>
+<li>使用interrupt()方法中断线程
+<ul>
+<li>如果打断阻塞的线程(sleep,wait,join)，会抛出InterruptedException异常</li>
+<li>如果打断正常线程，会根据中断标记为判断是否退出</li>
+</ul>
+</li>
 </ul>
 <h3 id="sleep和wait的区别"><a class="markdownIt-Anchor" href="#sleep和wait的区别"></a> sleep和wait的区别？</h3>
 <ul>
@@ -1185,8 +1264,14 @@ Spring 通过 XML 配置模式装载 Bean 的过程：</li>
 </ul>
 <h3 id="核心线程数如何设置"><a class="markdownIt-Anchor" href="#核心线程数如何设置"></a> 核心线程数如何设置？</h3>
 <ul>
+<li>对于高并发，执行时间短的任务，核心线程数设置为CPU核心数+1</li>
+<li>对于并发不高，执行时间长的任务
+<ul>
 <li>CPU密集型任务：核心线程数设置为CPU核心数+1</li>
 <li>IO密集型任务：核心线程数设置为CPU核心数*2</li>
+</ul>
+</li>
+<li>对于高并发，执行时间长的任务，首先要看数据能不能做缓存，其次看能不能增加服务器</li>
 </ul>
 <h3 id="线程池种类有哪些"><a class="markdownIt-Anchor" href="#线程池种类有哪些"></a> 线程池种类有哪些？</h3>
 <ul>
@@ -1221,13 +1306,31 @@ Spring 通过 XML 配置模式装载 Bean 的过程：</li>
 <li>解决方法：使用InheritableThreadLocal类，它是ThreadLocal的子类，可以在子线程中获取父线程中设置的值。</li>
 </ul>
 <h3 id="futuretask和completablefuture的具体使用场景"><a class="markdownIt-Anchor" href="#futuretask和completablefuture的具体使用场景"></a> FutureTask和CompletableFuture的具体使用场景？</h3>
-<h2 id="mysql"><a class="markdownIt-Anchor" href="#mysql"></a> MYSQL</h2>
+<h2 id="mybatis"><a class="markdownIt-Anchor" href="#mybatis"></a> MyBatis</h2>
 <h3 id="mybatis中和的区别"><a class="markdownIt-Anchor" href="#mybatis中和的区别"></a> MyBatis中#{}和${}的区别？</h3>
 <ul>
 <li><code>#&#123;&#125;：预编译处理，会将#&#123;&#125;替换为?，然后使用PreparedStatement的set方法设置参数，可以防止SQL注入。</code></li>
 <li><code>$&#123;&#125;：字符串替换，会将$&#123;&#125;替换为实际的值，存在SQL注入的风险。</code></li>
 <li><code>#&#123;&#125;不用加单引号，$&#123;&#125;需要加单引号</code></li>
 </ul>
+<h3 id="mybatis的延迟加载及其原理"><a class="markdownIt-Anchor" href="#mybatis的延迟加载及其原理"></a> MyBatis的延迟加载及其原理？</h3>
+<p>延迟加载指的是查询数据时，需要用到数据时才加载，不需要用到数据时就不加载，可以在配置文件中配置</p>
+<p>原理：</p>
+<ul>
+<li>通过cglib动态代理实现</li>
+<li>调用目标方法时，实际上调用invoke方法，当发现目标值为null，就去执行sql查询</li>
+</ul>
+<h3 id="mybatis的一级缓存和二级缓存的区别"><a class="markdownIt-Anchor" href="#mybatis的一级缓存和二级缓存的区别"></a> MyBatis的一级缓存和二级缓存的区别？</h3>
+<p>MyBatis的一级二级缓存都是本地缓存，都是基于HashMap的</p>
+<ul>
+<li>一级缓存：SqlSession级别的缓存，默认开启，存储在SqlSession中，SqlSession关闭后缓存失效</li>
+<li>二级缓存：Mapper级别的缓存，默认关闭，存储在SqlSessionFactory中，SqlSession关闭后缓存不失效</li>
+</ul>
+<p>二级缓存什么时候清除缓存中的数据呢？</p>
+<ul>
+<li>当某个作用域进行了增删改操作时，清除该作用域的缓存</li>
+</ul>
+<h2 id="mysql"><a class="markdownIt-Anchor" href="#mysql"></a> MYSQL</h2>
 <h3 id="sql注入是什么举个例子"><a class="markdownIt-Anchor" href="#sql注入是什么举个例子"></a> SQL注入是什么？举个例子？</h3>
 <p>指的是攻击者通过恶意构造输入参数，使得正常SQL语句被修改</p>
 <p>例如<code>SELECT * FROM Users WHERE Username = '' AND Password = '' OR '' = ''</code><br />
@@ -2120,6 +2223,61 @@ NX参数实现<strong>key不存在才插入</strong>，可以通过它实现分�
 <li>有的消息队列本身就支持顺序性，如kafka按照消息的key将消息分区，每个分区内的消息按照写入顺序被消费</li>
 <li>此外，如果多个消费者消费同一个队列，或者多线程消费同一个分区，那么就无法保证顺序性了，可以使用单线程或者使用线程池对消息进行串行化处理</li>
 </ul>
+<h2 id="spring"><a class="markdownIt-Anchor" href="#spring"></a> Spring</h2>
+<h3 id="spring的单例bean是线程安全的吗"><a class="markdownIt-Anchor" href="#spring的单例bean是线程安全的吗"></a> Spring的单例Bean是线程安全的吗？</h3>
+<p>不是<br />
+Spring框架中有一个@Scope注解，默认就是单例的</p>
+<ul>
+<li>一般注入对象都是无状态（不可修改）的对象，没有线程安全问题</li>
+<li>但是如果在Bean中定义了可修改的成员变量，就有可能出现线程安全问题</li>
+</ul>
+<h3 id="spring中的事务是如何实现的"><a class="markdownIt-Anchor" href="#spring中的事务是如何实现的"></a> Spring中的事务是如何实现的？</h3>
+<p>Spring中提供两种事务实现方式，一种是编程式事务，一种是声明式事务</p>
+<ul>
+<li>编程式事务：通过TransactionTemplate实现，对业务代码有侵入性</li>
+<li>声明式事务：通过AOP实现，对方法前后进行拦截，将事务处理逻辑织入到业务代码中</li>
+</ul>
+<h3 id="bean的生命周期"><a class="markdownIt-Anchor" href="#bean的生命周期"></a> Bean的生命周期？</h3>
+<ul>
+<li>通过构造函数实例化Bean</li>
+<li>进行依赖注入</li>
+<li>处理Aware接口</li>
+<li>前置的BeanPostProcessor，用于处理Bean的初始化前的操作</li>
+<li>初始化Bean，自定义init-method方法</li>
+<li>后置的BeanPostProcessor，初始化后做一些增强</li>
+<li>销毁Bean</li>
+</ul>
+<h3 id="bean的循环依赖怎么解决"><a class="markdownIt-Anchor" href="#bean的循环依赖怎么解决"></a> Bean的循环依赖怎么解决？</h3>
+<p>循环依赖出现的原因是，如果A和B互相以来，当A到了依赖注入B的阶段，会去执行B的生命周期，此时B也要依赖注入A，这样就会造成循环依赖，这样导致双方都无法完成Bean的初始化。</p>
+<p>通过三级缓存解决</p>
+<ul>
+<li>一级缓存：sigleton objects，单例池，存放走完生命周期的Bean</li>
+<li>二级缓存：early singleton objects，存放半成品的Bean，生命周期还没走完</li>
+<li>三级缓存：singleton factories，存放Bean的工厂，用来创建对象</li>
+</ul>
+<p>在A实例化后，会创建一个ObjectFactory，放入三级缓存中，当B需要注入A对象时，用A的ObjectFactory创建对象，并放入二级缓存，同时B获得A的对象后完成注入，然后B完成生命周期，放入单例池中，然后A也完成生命周期，放入单例池中</p>
+<p>构造方法出现了循环依赖怎么办？<br />
+答：可以使用@Lazy注解，懒加载，等到需要使用的时候再去实例化对象，这样就不会出现循环依赖的问题了</p>
+<h2 id="介绍一下cap和base理论"><a class="markdownIt-Anchor" href="#介绍一下cap和base理论"></a> 介绍一下CAP和BASE理论</h2>
+<p>CAP分别对应了一致性、可用性和分区容错性</p>
+<ul>
+<li>一般分布式系统中都会涉及分区问题P</li>
+<li>当分区出现时，一致性C和可用性A就无法同时满足</li>
+</ul>
+<p>BASE理论是CAP的一种解决思路，包括三个主要思想：</p>
+<ul>
+<li>基本可用性：系统在出现故障时，仍然可以提供部分服务</li>
+<li>软状态：允许临时的不一致状态</li>
+<li>最终一致性：系统在经过一段时间后，最终会达到一致状态</li>
+</ul>
+<h2 id="介绍一下tcc模式"><a class="markdownIt-Anchor" href="#介绍一下tcc模式"></a> 介绍一下TCC模式</h2>
+<p>TCC是Try-Confirm-Cancel的缩写，是一种分布式事务解决方案</p>
+<ul>
+<li>Try：尝试执行，预留资源</li>
+<li>Confirm：完成资源操作业务，try成功confirm一定要成功</li>
+<li>Cancel：预留资源的释放，可理解为try反向操作</li>
+</ul>
+<p>与XA和AT模式不同的是，TCC模式每一步都需要代码手动实现</p>
 <h1 id="cs基础"><a class="markdownIt-Anchor" href="#cs基础"></a> CS基础</h1>
 <h2 id="进程和线程的区别"><a class="markdownIt-Anchor" href="#进程和线程的区别"></a> 进程和线程的区别</h2>
 <blockquote>
