@@ -31,7 +31,7 @@
 <meta property="og:image" content="https://oss.javaguide.cn/github/javaguide/cs-basics/network/tcp-shakes-hands-three-times.png">
 <meta property="og:image" content="https://oss.javaguide.cn/github/javaguide/cs-basics/network/tcp-waves-four-times.png">
 <meta property="article:published_time" content="2022-08-26T13:10:10.000Z">
-<meta property="article:modified_time" content="2025-04-13T09:42:41.461Z">
+<meta property="article:modified_time" content="2025-04-14T03:06:59.877Z">
 <meta property="article:author" content="zql">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://oss.javaguide.cn/github/javaguide/java/basis/java-code-to-machine-code.png">
@@ -430,6 +430,8 @@
 <li><a href="#mysql%E7%9A%84%E6%9C%89%E5%93%AA%E5%87%A0%E7%A7%8D%E5%BC%95%E6%93%8E">MYSQL的有哪几种引擎？</a></li>
 <li><a href="#mysql%E4%BA%86%E8%A7%A3%E5%93%AA%E4%BA%9B%E6%97%A5%E5%BF%97">MYSQL了解哪些日志？</a></li>
 <li><a href="#undolog%E5%92%8Credolog%E7%9A%84%E5%8C%BA%E5%88%AB">undolog和redolog的区别？</a></li>
+<li><a href="#%E4%BB%8B%E7%BB%8D%E4%B8%80%E4%B8%8Bredo-log">介绍一下redo log?</a></li>
+<li><a href="#redo-log%E5%88%B7%E7%9B%98%E7%9A%84%E6%97%B6%E6%9C%BA">redo log刷盘的时机</a></li>
 <li><a href="#%E4%BB%8B%E7%BB%8D%E4%B8%80%E4%B8%8Bbin-log">介绍一下bin log？</a></li>
 <li><a href="#mysql%E6%80%8E%E4%B9%88%E8%BF%9E%E8%A1%A8%E6%9F%A5%E8%AF%A2">MYSQL怎么连表查询？</a></li>
 <li><a href="#%E5%A6%82%E4%BD%95%E9%81%BF%E5%85%8D%E9%87%8D%E5%A4%8D%E6%8F%92%E5%85%A5%E6%95%B0%E6%8D%AE">如何避免重复插入数据？</a></li>
@@ -1395,13 +1397,28 @@ Spring 通过 XML 配置模式装载 Bean 的过程：</li>
 <li>redolog记录的是数据页的物理变化，发生故障时可用来同步数据</li>
 <li>undolog记录的是逻辑日志，用于事务回滚和mvcc,通过逆操作恢复数据</li>
 </ul>
+<h3 id="介绍一下redo-log"><a class="markdownIt-Anchor" href="#介绍一下redo-log"></a> 介绍一下redo log?</h3>
+<p>redo log用于mysql宕机时的恢复</p>
+<ul>
+<li>一般查询数据时，会把数据放到buffer pool中，后续查询可以在buffer pool中寻找</li>
+<li>更新数据时，如果在buffer pool中完成了更新，就会把修改内容记录到redo log buffer中</li>
+<li>最后清空redo log buffer，<strong>刷盘</strong>到redo log中</li>
+</ul>
+<p>如果没有redo log，每次直接把数据刷盘，这样性能会很差</p>
+<h3 id="redo-log刷盘的时机"><a class="markdownIt-Anchor" href="#redo-log刷盘的时机"></a> redo log刷盘的时机</h3>
+<p>一般以下几种情况会触发刷盘</p>
+<ul>
+<li>事务提交时</li>
+<li>redo log buffer 快满时</li>
+<li>后台线程周期性刷盘</li>
+</ul>
 <h3 id="介绍一下bin-log"><a class="markdownIt-Anchor" href="#介绍一下bin-log"></a> 介绍一下bin log？</h3>
-<p>MySQL 在完成一条更新操作后，Server 层还会生成一条 binlog<br />
+<p>MySQL 在完成一条更新操作后，会生成一条 binlog<br />
 binlog 有 3 种格式类型，分别是 STATEMENT（默认格式）、ROW、MIXED，区别如下：</p>
 <ul>
-<li>STATEMENT：每一条修改数据的 SQL 都会被记录到 binlog 中（相当于记录了逻辑操作，所以针对这种格式，binlog 可以称为逻辑日志），主从复制中 slave 端再根据 SQL 语句重现。但 STATEMENT 有动态函数的问题，比如你用了 uuid 或者 now 这些函数，你在主库上执行的结果并不是你在从库执行的结果，这种随时在变的函数会导致复制的数据不一致；</li>
-<li>ROW：记录行数据最终被修改成什么样了（这种格式的日志，就不能称为逻辑日志了），不会出现 STATEMENT 下动态函数的问题。但 ROW 的缺点是每行数据的变化结果都会被记录，比如执行批量 update 语句，更新多少行数据就会产生多少条记录，使 binlog 文件过大，而在 STATEMENT 格式下只会记录一个 update 语句而已；</li>
-<li>MIXED：包含了 STATEMENT 和 ROW 模式，它会根据不同的情况自动使用 ROW 模式和 STATEMENT 模式；</li>
+<li>STATEMENT：记录的内容是SQL语句原文，但是如果运用了<code>now()</code>这种函数，可能造成不一致</li>
+<li>ROW：除了记录SQL语句，还记录了所有字段的具体数据</li>
+<li>MIXED：是两种格式的混合，判断SQL语句是否可能引起数据不一致，如果是，就用row格式，否则就用statement格式。</li>
 </ul>
 <h3 id="mysql怎么连表查询"><a class="markdownIt-Anchor" href="#mysql怎么连表查询"></a> MYSQL怎么连表查询？</h3>
 <ul>
@@ -1571,7 +1588,7 @@ binlog 有 3 种格式类型，分别是 STATEMENT（默认格式）、ROW、MIX
 <ul>
 <li>隐藏字段：每个数据行都有隐藏字段，包括最近修改事务ID，回滚指针等</li>
 <li>undolog: 用来存储MVCC的版本链，每次修改数据时，都会通过头插法将新的版本插入到链表的头部</li>
-<li>readView：用于<strong>快照读</strong>提取数据，记录了活跃但未提交的事务ID</li>
+<li>readView：用于<strong>快照读</strong>提取数据时判断数据的可见性，找到对应的数据版本</li>
 </ul>
 <h3 id="当前读和快照读的区别"><a class="markdownIt-Anchor" href="#当前读和快照读的区别"></a> 当前读和快照读的区别？</h3>
 <ul>
