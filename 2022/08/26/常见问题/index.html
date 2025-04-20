@@ -31,7 +31,7 @@
 <meta property="og:image" content="https://oss.javaguide.cn/github/javaguide/cs-basics/network/tcp-shakes-hands-three-times.png">
 <meta property="og:image" content="https://oss.javaguide.cn/github/javaguide/cs-basics/network/tcp-waves-four-times.png">
 <meta property="article:published_time" content="2022-08-26T13:10:10.000Z">
-<meta property="article:modified_time" content="2025-04-17T09:36:15.218Z">
+<meta property="article:modified_time" content="2025-04-20T09:02:49.931Z">
 <meta property="article:author" content="zql">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://oss.javaguide.cn/github/javaguide/java/basis/java-code-to-machine-code.png">
@@ -240,7 +240,7 @@
         
         
         
-          299 分钟
+          301 分钟
         
       </span>
     
@@ -399,11 +399,12 @@
 <li><a href="#%E4%BB%8B%E7%BB%8D%E4%B8%80%E4%B8%8Baqs">介绍一下AQS?</a></li>
 <li><a href="#volatile%E5%85%B3%E9%94%AE%E5%AD%97%E7%9A%84%E4%BD%9C%E7%94%A8">volatile关键字的作用？</a></li>
 <li><a href="#%E6%AD%BB%E9%94%81%E4%BA%A7%E7%94%9F%E7%9A%84%E6%9D%A1%E4%BB%B6">死锁产生的条件？</a></li>
-<li><a href="#%E7%BA%BF%E7%A8%8B%E6%B1%A0%E7%9A%84%E5%8E%9F%E7%90%86">线程池的原理？</a></li>
+<li><a href="#%E7%BA%BF%E7%A8%8B%E6%B1%A0%E7%9A%84%E6%8F%90%E4%BA%A4%E4%BB%BB%E5%8A%A1%E6%B5%81%E7%A8%8B">线程池的提交任务流程？</a></li>
 <li><a href="#%E7%BA%BF%E7%A8%8B%E6%B1%A0%E7%9A%84%E5%8F%82%E6%95%B0%E6%9C%89%E5%93%AA%E4%BA%9B">线程池的参数有哪些？</a></li>
 <li><a href="#%E7%BA%BF%E7%A8%8B%E6%B1%A0%E7%9A%84%E6%8B%92%E7%BB%9D%E7%AD%96%E7%95%A5%E6%9C%89%E5%93%AA%E4%BA%9B">线程池的拒绝策略有哪些？</a></li>
 <li><a href="#%E6%A0%B8%E5%BF%83%E7%BA%BF%E7%A8%8B%E6%95%B0%E5%A6%82%E4%BD%95%E8%AE%BE%E7%BD%AE">核心线程数如何设置？</a></li>
 <li><a href="#%E7%BA%BF%E7%A8%8B%E6%B1%A0%E7%A7%8D%E7%B1%BB%E6%9C%89%E5%93%AA%E4%BA%9B">线程池种类有哪些？</a></li>
+<li><a href="#%E7%BA%BF%E7%A8%8B%E6%B1%A0%E7%9A%84%E9%98%BB%E5%A1%9E%E9%98%9F%E5%88%97%E6%9C%89%E5%93%AA%E4%BA%9B">线程池的阻塞队列有哪些？</a></li>
 <li><a href="#%E5%A4%9A%E7%BA%BF%E7%A8%8B%E9%A1%BA%E5%BA%8F%E6%89%A7%E8%A1%8C%E7%9A%84%E5%87%A0%E7%A7%8D%E5%86%99%E6%B3%95">多线程顺序执行的几种写法?</a></li>
 <li><a href="#%E7%BA%BF%E7%A8%8B%E6%B1%A0%E4%B8%ADshutdown%E5%92%8Cshutdownnow%E7%9A%84%E5%8C%BA%E5%88%AB">线程池中shutdown和shutdownNow的区别？</a></li>
 <li><a href="#%E6%8F%90%E4%BA%A4%E7%BB%99%E7%BA%BF%E7%A8%8B%E6%B1%A0%E7%9A%84%E4%BB%BB%E5%8A%A1%E5%8F%AF%E4%BB%A5%E8%A2%AB%E6%92%A4%E5%9B%9E%E5%90%97">提交给线程池的任务可以被撤回吗？</a></li>
@@ -571,6 +572,7 @@
 </li>
 <li><a href="#%E4%BB%8B%E7%BB%8D%E4%B8%80%E4%B8%8Bcap%E5%92%8Cbase%E7%90%86%E8%AE%BA">介绍一下CAP和BASE理论</a></li>
 <li><a href="#%E4%BB%8B%E7%BB%8D%E4%B8%80%E4%B8%8Btcc%E6%A8%A1%E5%BC%8F">介绍一下TCC模式</a></li>
+<li><a href="#%E5%AE%9A%E6%97%B6%E4%BB%BB%E5%8A%A1%E6%9C%89%E5%93%AA%E4%BA%9B%E5%AE%9E%E7%8E%B0%E6%96%B9%E5%BC%8F">定时任务有哪些实现方式？</a></li>
 </ul>
 </li>
 <li><a href="#cs%E5%9F%BA%E7%A1%80">CS基础</a>
@@ -1294,7 +1296,7 @@ AQS内部有一个state，被volatile修饰，0表示无锁，1表示有锁</p>
 <li>不可剥夺条件：线程持有的资源在使用完之前不能被其他线程抢占</li>
 <li>循环等待条件：多个线程形成循环等待资源的关系</li>
 </ul>
-<h3 id="线程池的原理"><a class="markdownIt-Anchor" href="#线程池的原理"></a> 线程池的原理？</h3>
+<h3 id="线程池的提交任务流程"><a class="markdownIt-Anchor" href="#线程池的提交任务流程"></a> 线程池的提交任务流程？</h3>
 <figure class="highlight clean"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs clean">提交任务 -&gt; 核心线程是否已满？<br><br>├── 未满 -&gt; 创建核心线程执行<br><br>└── 已满 -&gt; 任务入队<br><br>    ├── 队列未满 -&gt; 等待执行<br><br>    └── 队列已满 -&gt; 创建非核心线程<br><br>        ├── 未达最大线程数 -&gt; 执行任务<br><br>        └── 已达最大线程数 -&gt; 执行拒绝策略<br><br></code></pre></td></tr></table></figure>
 <h3 id="线程池的参数有哪些"><a class="markdownIt-Anchor" href="#线程池的参数有哪些"></a> 线程池的参数有哪些？</h3>
 <ul>
@@ -1329,6 +1331,13 @@ AQS内部有一个state，被volatile修饰，0表示无锁，1表示有锁</p>
 <li>FixedThreadPool：核心线程数和最大线程数相等，最大线程数满了后会进入队列等待</li>
 <li>CachedThreadPool：核心线程数为0，最大线程数为Integer.MAX_VALUE，适用于执行大量短期异步任务</li>
 <li>SingleThreadPool：只有一个核心线程，确保所有任务按照指定顺序执行</li>
+</ul>
+<h3 id="线程池的阻塞队列有哪些"><a class="markdownIt-Anchor" href="#线程池的阻塞队列有哪些"></a> 线程池的阻塞队列有哪些？</h3>
+<ul>
+<li>ArrayBlockingQueue，有界队列，容量固定</li>
+<li>LinkedBlockingQueue，无界队列，容量无上限，适用于FixedThreadPool和SingleThreadPool</li>
+<li>SynchronousQueue，同步队列，容量为0，CachedThreadPool使用的队列</li>
+<li>DelayedWorkQueue，延迟阻塞队列，按照延迟时间排序，ScheduledThreadPool使用的队列</li>
 </ul>
 <h3 id="多线程顺序执行的几种写法"><a class="markdownIt-Anchor" href="#多线程顺序执行的几种写法"></a> 多线程顺序执行的几种写法?</h3>
 <ul>
@@ -1698,9 +1707,11 @@ binlog 有 3 种格式类型，分别是 STATEMENT（默认格式）、ROW、MIX
 </ul>
 <h3 id="mysql主从复制过程"><a class="markdownIt-Anchor" href="#mysql主从复制过程"></a> MYSQL主从复制过程？</h3>
 <ul>
-<li>写入binlog，主库将数据写入binlog，更新本地数据存储</li>
-<li>同步binlog，主库将binlog复制到所有从库</li>
-<li>回放binlog，更新本地数据</li>
+<li>主库将数据写入binlog</li>
+<li>从库通过IO线程连接主库，向主库请求binlog</li>
+<li>主库创建一个线程将binlog发送给从库</li>
+<li>从库的IO线程将binlog写入relay log</li>
+<li>从库读取relay log，进行数据同步</li>
 </ul>
 <h3 id="主从延迟有哪些解决方法"><a class="markdownIt-Anchor" href="#主从延迟有哪些解决方法"></a> 主从延迟有哪些解决方法？</h3>
 <ul>
@@ -2386,6 +2397,31 @@ Spring框架中有一个@Scope注解，默认就是单例的</p>
 <li>Cancel：预留资源的释放，可理解为try反向操作</li>
 </ul>
 <p>与XA和AT模式不同的是，TCC模式每一步都需要代码手动实现</p>
+<h2 id="定时任务有哪些实现方式"><a class="markdownIt-Anchor" href="#定时任务有哪些实现方式"></a> 定时任务有哪些实现方式？</h2>
+<ul>
+<li>单机定时任务：
+<ul>
+<li>Timer</li>
+<li>ScheduledThreadPoolExecutor</li>
+<li>DelayQueue</li>
+<li>spring task，也就是用@Scheduled注解实现的定时任务，支持cron表达式</li>
+</ul>
+</li>
+<li>分布式定时任务：
+<ul>
+<li>redis过期事件监听</li>
+<li>redisson内置的延时队列</li>
+<li>MQ的延时消息</li>
+</ul>
+</li>
+<li>分布式任务调度框架
+<ul>
+<li>Quartz，比较早的定时任务框架，缺点是不支持可视化管理，使用</li>
+<li>xxl-job，使用广泛，开箱即用</li>
+<li>power job，使用广泛，开箱即用</li>
+</ul>
+</li>
+</ul>
 <h1 id="cs基础"><a class="markdownIt-Anchor" href="#cs基础"></a> CS基础</h1>
 <h2 id="进程和线程的区别"><a class="markdownIt-Anchor" href="#进程和线程的区别"></a> 进程和线程的区别</h2>
 <blockquote>
