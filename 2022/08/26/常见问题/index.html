@@ -31,7 +31,7 @@
 <meta property="og:image" content="https://oss.javaguide.cn/github/javaguide/cs-basics/network/tcp-shakes-hands-three-times.png">
 <meta property="og:image" content="https://oss.javaguide.cn/github/javaguide/cs-basics/network/tcp-waves-four-times.png">
 <meta property="article:published_time" content="2022-08-26T13:10:10.000Z">
-<meta property="article:modified_time" content="2025-04-22T00:24:37.714Z">
+<meta property="article:modified_time" content="2025-04-22T01:50:43.747Z">
 <meta property="article:author" content="zql">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://oss.javaguide.cn/github/javaguide/java/basis/java-code-to-machine-code.png">
@@ -240,7 +240,7 @@
         
         
         
-          305 分钟
+          306 分钟
         
       </span>
     
@@ -493,6 +493,7 @@
 <li><a href="#stream">Stream</a></li>
 </ul>
 </li>
+<li><a href="#redis%E7%9A%84string%E5%AE%9E%E7%8E%B0%E5%8E%9F%E7%90%86">redis的string实现原理</a></li>
 <li><a href="#%E4%B8%BA%E4%BB%80%E4%B9%88redis%E7%94%A8%E8%B7%B3%E8%A1%A8%E8%80%8C%E4%B8%8D%E6%98%AFb%E6%A0%91">为什么Redis用跳表而不是B+树？</a></li>
 <li><a href="#%E8%B7%B3%E8%A1%A8%E7%9A%84%E5%B1%82%E6%95%B0%E6%98%AF%E6%80%8E%E4%B9%88%E8%AE%BE%E7%BD%AE%E7%9A%84">跳表的层数是怎么设置的？</a></li>
 <li><a href="#redis%E7%9A%84%E5%93%88%E5%B8%8C%E8%A1%A8%E6%98%AF%E6%80%8E%E4%B9%88%E6%89%A9%E5%AE%B9%E7%9A%84">Redis的哈希表是怎么扩容的？</a></li>
@@ -1825,6 +1826,13 @@ binlog 有 3 种格式类型，分别是 STATEMENT（默认格式）、ROW、MIX
 <p>存储地理信息</p>
 <h4 id="stream"><a class="markdownIt-Anchor" href="#stream"></a> Stream</h4>
 <p>用于实现消息队列，支持消息持久化、全局唯一ID自动生成、消息确认机制、消费组等功能</p>
+<h3 id="redis的string实现原理"><a class="markdownIt-Anchor" href="#redis的string实现原理"></a> redis的string实现原理</h3>
+<p>String的底层数据结构主要是SDS（简单动态字符串），他有以下特点：</p>
+<ul>
+<li>不仅可以存储字符串，还可以存储二进制数据</li>
+<li>获取字符串长度的时间复杂度是O(1)，len属性记录了长度</li>
+<li>API更安全，拼接字符串不会发生缓冲区溢出</li>
+</ul>
 <h3 id="为什么redis用跳表而不是b树"><a class="markdownIt-Anchor" href="#为什么redis用跳表而不是b树"></a> 为什么Redis用跳表而不是B+树？</h3>
 <ul>
 <li>B+树目的是优化磁盘IO，通过降低树的高度来减少磁盘寻道次数，而Redis是基于内存的，更符合内存访问的局部性原理</li>
