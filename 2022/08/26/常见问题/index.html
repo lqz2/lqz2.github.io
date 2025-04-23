@@ -31,7 +31,7 @@
 <meta property="og:image" content="https://oss.javaguide.cn/github/javaguide/cs-basics/network/tcp-shakes-hands-three-times.png">
 <meta property="og:image" content="https://oss.javaguide.cn/github/javaguide/cs-basics/network/tcp-waves-four-times.png">
 <meta property="article:published_time" content="2022-08-26T13:10:10.000Z">
-<meta property="article:modified_time" content="2025-04-22T01:50:43.747Z">
+<meta property="article:modified_time" content="2025-04-23T00:49:06.976Z">
 <meta property="article:author" content="zql">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://oss.javaguide.cn/github/javaguide/java/basis/java-code-to-machine-code.png">
@@ -240,7 +240,7 @@
         
         
         
-          306 分钟
+          308 分钟
         
       </span>
     
@@ -415,6 +415,7 @@
 <li><a href="#%E5%A4%9A%E7%BA%BF%E7%A8%8B%E9%A1%BA%E5%BA%8F%E6%89%A7%E8%A1%8C%E7%9A%84%E5%87%A0%E7%A7%8D%E5%86%99%E6%B3%95">多线程顺序执行的几种写法?</a></li>
 <li><a href="#%E7%BA%BF%E7%A8%8B%E6%B1%A0%E4%B8%ADshutdown%E5%92%8Cshutdownnow%E7%9A%84%E5%8C%BA%E5%88%AB">线程池中shutdown和shutdownNow的区别？</a></li>
 <li><a href="#%E6%8F%90%E4%BA%A4%E7%BB%99%E7%BA%BF%E7%A8%8B%E6%B1%A0%E7%9A%84%E4%BB%BB%E5%8A%A1%E5%8F%AF%E4%BB%A5%E8%A2%AB%E6%92%A4%E5%9B%9E%E5%90%97">提交给线程池的任务可以被撤回吗？</a></li>
+<li><a href="#%E7%BA%BF%E7%A8%8B%E6%B1%A0%E7%94%A8%E5%88%B0%E4%BA%86%E5%93%AA%E4%BA%9B%E8%AE%BE%E8%AE%A1%E6%A8%A1%E5%BC%8F">线程池用到了哪些设计模式？</a></li>
 <li><a href="#threadlocal%E4%B8%BA%E4%BB%80%E4%B9%88%E4%BC%9A%E5%8F%91%E7%94%9F%E5%86%85%E5%AD%98%E6%B3%84%E6%BC%8F">ThreadLocal为什么会发生内存泄漏？</a></li>
 <li><a href="#threadlocal%E7%9A%84%E7%BB%A7%E6%89%BF%E6%80%A7%E9%97%AE%E9%A2%98%E4%BB%A5%E5%8F%8A%E8%A7%A3%E5%86%B3%E6%96%B9%E6%B3%95">ThreadLocal的继承性问题以及解决方法？</a></li>
 <li><a href="#completablefuture%E6%80%8E%E4%B9%88%E7%94%A8">CompletableFuture怎么用？</a></li>
@@ -502,6 +503,7 @@
 <li><a href="#io%E5%A4%9A%E8%B7%AF%E5%A4%8D%E7%94%A8%E6%80%8E%E4%B9%88%E5%AE%9E%E7%8E%B0">IO多路复用怎么实现？</a></li>
 <li><a href="#%E5%A6%82%E4%BD%95%E5%AE%9E%E7%8E%B0redis%E7%9A%84%E5%8E%9F%E5%AD%90%E6%80%A7">如何实现Redis的原子性？</a></li>
 <li><a href="#redis%E6%8C%81%E4%B9%85%E5%8C%96%E4%B9%8Baof">Redis持久化之AOF？</a></li>
+<li><a href="#aof%E9%87%8D%E5%86%99%E6%9C%BA%E5%88%B6">AOF重写机制？</a></li>
 <li><a href="#redis%E6%8C%81%E4%B9%85%E5%8C%96%E4%B9%8Brdb">Redis持久化之RDB?</a></li>
 <li><a href="#bgsave%E6%97%B6%E6%95%B0%E6%8D%AE%E8%83%BD%E8%A2%AB%E4%BF%AE%E6%94%B9%E5%90%97">bgsave时，数据能被修改吗？</a></li>
 <li><a href="#aof%E5%92%8Crdb%E7%9A%84%E4%BC%98%E7%BC%BA%E7%82%B9">AOF和RDB的优缺点？</a></li>
@@ -1386,6 +1388,13 @@ AQS内部有一个state，被volatile修饰，0表示无锁，1表示有锁</p>
 </ul>
 <h3 id="提交给线程池的任务可以被撤回吗"><a class="markdownIt-Anchor" href="#提交给线程池的任务可以被撤回吗"></a> 提交给线程池的任务可以被撤回吗？</h3>
 <p>答：可以。向线程池提交任务后，会返回一个Future对象，通过Future对象的cancel()方法可以取消任务的执行。</p>
+<h3 id="线程池用到了哪些设计模式"><a class="markdownIt-Anchor" href="#线程池用到了哪些设计模式"></a> 线程池用到了哪些设计模式？</h3>
+<ul>
+<li>工厂模式：创建线程会用到</li>
+<li>策略模式：包含多种拒绝策略</li>
+<li>单例模式：线程池一般是单例的</li>
+<li>模板方法模式：runWorker()方法定义了工作线程执行任务的核心逻辑骨架</li>
+</ul>
 <h3 id="threadlocal为什么会发生内存泄漏"><a class="markdownIt-Anchor" href="#threadlocal为什么会发生内存泄漏"></a> ThreadLocal为什么会发生内存泄漏？</h3>
 <p>ThreadLocalMap的键为ThreadLocal的弱引用，而值是强引用。如果ThreadLocal对象被回收，其对应的Entry键会变为null，如果此时不删除对应的Entry，则Value仍然被Thread上的ThreadLocalMap引用，而Value往往占用较大内存，这就会导致内存泄漏。</p>
 <p>为了解决这个问题，ThreadLocal在调用set、get、remove方法时，会清理掉ThreadLocalMap中所有键为null的Entry。但如果没有调用这些方法，那么清理工作就不会进行，从而可能导致内存泄漏。</p>
@@ -1913,10 +1922,21 @@ binlog 有 3 种格式类型，分别是 STATEMENT（默认格式）、ROW、MIX
 </tr>
 </tbody>
 </table>
-<p>AOF重写机制？</p>
+<h3 id="aof重写机制"><a class="markdownIt-Anchor" href="#aof重写机制"></a> AOF重写机制？</h3>
+<p>AOF文件会包含很多冗余或无效的命令，导致文件体积越来越大。AOF重写机制就是为了解决这个问题</p>
 <ul>
-<li>当AOF命令过大时，就会触发重写机制，用最新的写入命令重写AOF文件，减小AOF文件的大小</li>
-<li>一般重写机制在后台子进程执行，在大部分时候不会阻塞主进程</li>
+<li>
+<p>AOF重写不是基于旧的AOF文件进行修改，而是直接读取当前Redis数据库在内存中的状态，并为每个键值对生成最少的命令集合来恢复这个状态</p>
+</li>
+<li>
+<p>一般主进程会fork一个子进程执行AOF重写</p>
+</li>
+<li>
+<p>AOF重写期间，如果遇到有新的写操作，主进程会按照之前的策略写入到AOF中，同时将这些命令记录在AOF重写缓冲区中</p>
+</li>
+<li>
+<p>子进程完成AOF重写后，主进程会将AOF重写缓冲区中的所有命令追加到子进程生成的AOF文件的末尾</p>
+</li>
 </ul>
 <h3 id="redis持久化之rdb"><a class="markdownIt-Anchor" href="#redis持久化之rdb"></a> Redis持久化之RDB?</h3>
 <p>将某一时刻的内存数据以二进制形式写入磁盘<br />
