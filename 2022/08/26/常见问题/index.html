@@ -31,7 +31,7 @@
 <meta property="og:image" content="https://oss.javaguide.cn/github/javaguide/cs-basics/network/tcp-shakes-hands-three-times.png">
 <meta property="og:image" content="https://oss.javaguide.cn/github/javaguide/cs-basics/network/tcp-waves-four-times.png">
 <meta property="article:published_time" content="2022-08-26T13:10:10.000Z">
-<meta property="article:modified_time" content="2025-04-23T13:52:08.369Z">
+<meta property="article:modified_time" content="2025-04-24T09:02:55.625Z">
 <meta property="article:author" content="zql">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://oss.javaguide.cn/github/javaguide/java/basis/java-code-to-machine-code.png">
@@ -229,7 +229,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          37k 字
+          38k 字
         
       </span>
     
@@ -240,7 +240,7 @@
         
         
         
-          310 分钟
+          315 分钟
         
       </span>
     
@@ -589,6 +589,14 @@
 <li><a href="#%E8%AE%A4%E8%AF%81%E6%8E%88%E6%9D%83">认证授权</a>
 <ul>
 <li><a href="#%E4%BB%8B%E7%BB%8D%E4%B8%80%E4%B8%8Brbac%E6%A8%A1%E5%9E%8B">介绍一下RBAC模型？</a></li>
+</ul>
+</li>
+<li><a href="#%E8%B4%9F%E8%BD%BD%E5%9D%87%E8%A1%A1">负载均衡</a>
+<ul>
+<li><a href="#%E8%B4%9F%E8%BD%BD%E5%9D%87%E8%A1%A1%E6%80%8E%E4%B9%88%E5%88%86%E7%B1%BB">负载均衡怎么分类？</a></li>
+<li><a href="#%E5%9B%9B%E5%B1%82%E8%B4%9F%E8%BD%BD%E5%9D%87%E8%A1%A1%E5%92%8C%E4%B8%83%E5%B1%82%E8%B4%9F%E8%BD%BD%E5%9D%87%E8%A1%A1%E7%9A%84%E5%8C%BA%E5%88%AB">四层负载均衡和七层负载均衡的区别？</a></li>
+<li><a href="#%E8%B4%9F%E8%BD%BD%E5%9D%87%E8%A1%A1%E7%AE%97%E6%B3%95%E6%9C%89%E5%93%AA%E4%BA%9B">负载均衡算法有哪些？</a></li>
+<li><a href="#%E4%B8%83%E5%B1%82%E8%B4%9F%E8%BD%BD%E5%9D%87%E8%A1%A1%E5%8F%AF%E4%BB%A5%E6%80%8E%E4%B9%88%E5%81%9A">七层负载均衡可以怎么做？</a></li>
 </ul>
 </li>
 </ul>
@@ -2497,6 +2505,62 @@ Spring框架中有一个@Scope注解，默认就是单例的</p>
 <li>RBAC意思是基于角色的权限访问控制（Role-Based Access Control）</li>
 <li>在RBAC中，用户与角色、角色与权限之间，都构成了多对多的关系</li>
 <li>一般在数据库中，RBAC模型除了有用户表、角色表、权限表外，还有用户角色表和角色权限表两张中间表</li>
+</ul>
+<h2 id="负载均衡"><a class="markdownIt-Anchor" href="#负载均衡"></a> 负载均衡</h2>
+<h3 id="负载均衡怎么分类"><a class="markdownIt-Anchor" href="#负载均衡怎么分类"></a> 负载均衡怎么分类？</h3>
+<ul>
+<li>服务端负载均衡：应用在系统外部请求和网关层之间，最常见的是四层负载均衡和七层负载均衡</li>
+<li>客户端负载均衡：应用于系统内部的不同服务</li>
+</ul>
+<h3 id="四层负载均衡和七层负载均衡的区别"><a class="markdownIt-Anchor" href="#四层负载均衡和七层负载均衡的区别"></a> 四层负载均衡和七层负载均衡的区别？</h3>
+<p>OSI模型从下到上共分为：</p>
+<ul>
+<li>
+<p>物理层</p>
+</li>
+<li>
+<p>数据链路层</p>
+</li>
+<li>
+<p>网络层</p>
+</li>
+<li>
+<p>传输层</p>
+</li>
+<li>
+<p>会话层</p>
+</li>
+<li>
+<p>表示层</p>
+</li>
+<li>
+<p>应用层</p>
+</li>
+<li>
+<p>四层负载均衡主要工作在OSI模型的第四层，也就是传输层，这一层主要是TCP和UDP协议，四层负载均衡主要是根据IP和端口进行负载均衡，不涉及具体的报文内容</p>
+</li>
+<li>
+<p>七层负载均衡主要工作在OSI模型的第七层，也就是应用层，这一层主要是HTTP协议，七层负载均衡可以根据HTTP报文的内容进行负载均衡，执行七层负载均衡的设备被称为反向代理服务器</p>
+</li>
+<li>
+<p>一般用LVS做四层负载均衡，用nginx做七层负载均衡</p>
+</li>
+</ul>
+<h3 id="负载均衡算法有哪些"><a class="markdownIt-Anchor" href="#负载均衡算法有哪些"></a> 负载均衡算法有哪些？</h3>
+<ul>
+<li>随机，加权随机，两次随机</li>
+<li>轮询，加权轮询，平滑的加权轮询</li>
+<li>哈希，一致性哈希，普通哈希如果节点数量变化，会导致大部分节点哈希映射变化，一致性哈希将数据和节点都映射到一个环上，当增加或者删减节点的时候，请求会沿着环的顺时针方向找到第一个节点，也就是说，一致性哈希只会影响到相邻的后继节点，不会影响整个集群的哈希映射分布。
+<ul>
+<li>但一致性哈希的问题是，如果节点分布不均匀，某个节点可能请求过多，导致负载不均衡，解决方法是增加虚拟节点，使分布更加均匀</li>
+</ul>
+</li>
+<li>最少连接数、最少活跃连接数、最快响应等</li>
+</ul>
+<h3 id="七层负载均衡可以怎么做"><a class="markdownIt-Anchor" href="#七层负载均衡可以怎么做"></a> 七层负载均衡可以怎么做？</h3>
+<ul>
+<li>DNS解析：用户请求域名，DNS服务器解析成IP地址，返回给用户</li>
+<li>Nginx反向代理：用户将请求发送到nginx，nginx根据负载均衡算法将请求转发到后端服务器</li>
 </ul>
 <h1 id="cs基础"><a class="markdownIt-Anchor" href="#cs基础"></a> CS基础</h1>
 <h2 id="进程和线程的区别"><a class="markdownIt-Anchor" href="#进程和线程的区别"></a> 进程和线程的区别</h2>
