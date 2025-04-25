@@ -4,6 +4,25 @@
   
   
   <entry>
+    <title>数组中重复出现的数据</title>
+    <link href="/2025/04/25/%E6%95%B0%E7%BB%84%E4%B8%AD%E9%87%8D%E5%A4%8D%E5%87%BA%E7%8E%B0%E7%9A%84%E6%95%B0%E6%8D%AE/"/>
+    <url>/2025/04/25/%E6%95%B0%E7%BB%84%E4%B8%AD%E9%87%8D%E5%A4%8D%E5%87%BA%E7%8E%B0%E7%9A%84%E6%95%B0%E6%8D%AE/</url>
+    
+    <content type="html"><![CDATA[<h2 id="数组中重复出现的数据"><a class="markdownIt-Anchor" href="#数组中重复出现的数据"></a> 数组中重复出现的数据</h2><!-- TOC --><ul><li><a href="#%E6%95%B0%E7%BB%84%E4%B8%AD%E9%87%8D%E5%A4%8D%E5%87%BA%E7%8E%B0%E7%9A%84%E6%95%B0%E6%8D%AE">数组中重复出现的数据</a><ul><li><a href="#%E9%A2%98%E7%9B%AE%E6%8F%8F%E8%BF%B0">题目描述</a></li><li><a href="#%E6%80%9D%E8%B7%AF">思路</a></li><li><a href="#%E4%BB%A3%E7%A0%81">代码</a></li></ul></li></ul><!-- /TOC --><p><a href="https://leetcode.cn/problems/find-all-duplicates-in-an-array/description/">原题</a></p><h3 id="题目描述"><a class="markdownIt-Anchor" href="#题目描述"></a> 题目描述</h3><p>给你一个长度为 n 的整数数组 nums ，其中 nums 的所有整数都在范围 [1, n] 内，且每个整数出现 最多两次 。请你找出所有出现 两次 的整数，并以数组形式返回。</p><p>你必须设计并实现一个时间复杂度为 O(n) 且仅使用常量额外空间（不包括存储输出所需的空间）的算法解决此问题。</p><h3 id="思路"><a class="markdownIt-Anchor" href="#思路"></a> 思路</h3><p>某byte三面题，前两面手撕都做出来了，这道题卡住了💔💔💔</p><p>思路是遍历数组，把当前元素的值作为索引</p><ul><li>如果索引位置处是正数，将他去反</li><li>如果索引位置处是负数，说明这个索引已经使用过了，加入结果集</li></ul><p>感觉就属于做过的秒杀，没做过的坐牢💔</p><h3 id="代码"><a class="markdownIt-Anchor" href="#代码"></a> 代码</h3><figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span> &#123;<br><span class="hljs-keyword">public</span>:<br>    <span class="hljs-function">vector&lt;<span class="hljs-type">int</span>&gt; <span class="hljs-title">findDuplicates</span><span class="hljs-params">(vector&lt;<span class="hljs-type">int</span>&gt;&amp; nums)</span> </span>&#123;<br>        <span class="hljs-type">int</span> n=nums.<span class="hljs-built_in">size</span>();<br>        vector&lt;<span class="hljs-type">int</span>&gt; ans;<br>        <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i=<span class="hljs-number">0</span>;i&lt;n;++i)&#123;<br>            <span class="hljs-type">int</span> idx=<span class="hljs-built_in">abs</span>(nums[i]);<br>            <span class="hljs-keyword">if</span>(nums[idx<span class="hljs-number">-1</span>]&gt;<span class="hljs-number">0</span>)<br>                nums[idx<span class="hljs-number">-1</span>]=-nums[idx<span class="hljs-number">-1</span>];<br>            <span class="hljs-keyword">else</span><br>                ans.<span class="hljs-built_in">push_back</span>(idx);<br>        &#125;<br>        <span class="hljs-keyword">return</span> ans;<br>    &#125;<br>&#125;;<br><br></code></pre></td></tr></table></figure>]]></content>
+    
+    
+    <categories>
+      
+      <category>机试</category>
+      
+    </categories>
+    
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>数组中第k大的数</title>
     <link href="/2025/04/13/%E6%95%B0%E7%BB%84%E4%B8%AD%E7%AC%ACk%E5%A4%A7%E7%9A%84%E6%95%B0/"/>
     <url>/2025/04/13/%E6%95%B0%E7%BB%84%E4%B8%AD%E7%AC%ACk%E5%A4%A7%E7%9A%84%E6%95%B0/</url>
