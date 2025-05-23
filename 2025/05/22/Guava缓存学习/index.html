@@ -27,7 +27,7 @@
 <meta property="og:description" content="Guava缓存学习  Guava简介 Guava是Google封装的基础工具包，主要用于本地缓存，提供了以下能力：  封装了缓存与数据源的交互流程，使得开发更关注于业务操作 提供线程安全的存取操作，类比ConcurrentHashMap 提供了多种缓存过期策略，刷新策略 提供缓存命中率的监控   基础使用 下面是一个简单的示例： 123456789101112131415161718privat">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2025-05-22T08:52:05.000Z">
-<meta property="article:modified_time" content="2025-05-22T09:23:37.236Z">
+<meta property="article:modified_time" content="2025-05-23T06:47:13.486Z">
 <meta property="article:author" content="zql">
 <meta name="twitter:card" content="summary_large_image">
   
@@ -222,7 +222,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          382 字
+          1.1k 字
         
       </span>
     
@@ -233,7 +233,7 @@
         
         
         
-          4 分钟
+          10 分钟
         
       </span>
     
@@ -306,6 +306,47 @@
 <blockquote>
 <p>不要使用get方法来预加载数据，因为get方法会调用load方法，可能会导致性能问题。</p>
 </blockquote>
+<h2 id="缓存过期"><a class="markdownIt-Anchor" href="#缓存过期"></a> 缓存过期</h2>
+<h3 id="缓存固定数量的值"><a class="markdownIt-Anchor" href="#缓存固定数量的值"></a> 缓存固定数量的值</h3>
+<p>通过maximumSize方法设置缓存的最大值，当缓存超过最大值时，Guava会自动进行缓存淘汰。</p>
+<figure class="highlight lasso"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs lasso">@Test<br><span class="hljs-keyword">public</span> <span class="hljs-literal">void</span> maxSizeTest()&#123;<br>    <span class="hljs-keyword">Cache</span>&lt;<span class="hljs-built_in">String</span>, <span class="hljs-built_in">String</span>&gt; <span class="hljs-keyword">cache</span> = CacheBuilder.newBuilder()<br>            .maximumSize(<span class="hljs-number">2</span>)<br>            .build(<span class="hljs-literal">new</span> CacheLoader&lt;<span class="hljs-built_in">String</span>, <span class="hljs-built_in">String</span>&gt;() &#123;<br>                @Override<br>                <span class="hljs-keyword">public</span> <span class="hljs-built_in">String</span> load(<span class="hljs-built_in">String</span> key) throws Exception &#123;<br>                    <span class="hljs-keyword">return</span> convert(key);<br>                &#125;<br>            &#125;);<br>    <span class="hljs-keyword">cache</span>.put(<span class="hljs-string">&quot;key1&quot;</span>, <span class="hljs-string">&quot;value1&quot;</span>);<br>    <span class="hljs-keyword">cache</span>.put(<span class="hljs-string">&quot;key2&quot;</span>, <span class="hljs-string">&quot;value2&quot;</span>);<br>    assertEquals(<span class="hljs-number">2</span>, <span class="hljs-keyword">cache</span>.size());<br>    <span class="hljs-keyword">cache</span>.getIfPresent(<span class="hljs-string">&quot;key1&quot;</span>);<br>    <span class="hljs-keyword">cache</span>.put(<span class="hljs-string">&quot;key3&quot;</span>, <span class="hljs-string">&quot;value3&quot;</span>);<br>    assertEquals(<span class="hljs-number">2</span>, <span class="hljs-keyword">cache</span>.size());<br>&#125;<br></code></pre></td></tr></table></figure>
+<p>这里的<code>getIfPresent()</code>与<code>getUnchecked()</code>和<code>get()</code>的区别在于，当缓存未命中时，<code>getIfPresent()</code>不会调用load方法，而是返回null。</p>
+<h3 id="lru过期策略"><a class="markdownIt-Anchor" href="#lru过期策略"></a> LRU过期策略</h3>
+<p>Guava Cache 默认采用LRU（Least Recently Used）算法来淘汰缓存中的数据。LRU算法会优先淘汰最久未使用的数据。<br />
+上面的例子中，key2会被淘汰，因为key2是最久未使用的。</p>
+<h3 id="缓存固定时间"><a class="markdownIt-Anchor" href="#缓存固定时间"></a> 缓存固定时间</h3>
+<p>Guava Cache还可以给缓存设置过期时间，常见的有：</p>
+<ul>
+<li>expireAfterAccess：访问后多久过期</li>
+<li>expireAfterWrite：写入后多久过期</li>
+</ul>
+<h2 id="移除缓存"><a class="markdownIt-Anchor" href="#移除缓存"></a> 移除缓存</h2>
+<p>Guava Cache中移除缓存主要有两种方式：</p>
+<ul>
+<li>cache.invalidate(key)：移除单个缓存</li>
+<li>cache.invalidateAll()：移除所有缓存</li>
+</ul>
+<h2 id="缓存刷新"><a class="markdownIt-Anchor" href="#缓存刷新"></a> 缓存刷新</h2>
+<h3 id="手动刷新"><a class="markdownIt-Anchor" href="#手动刷新"></a> 手动刷新</h3>
+<p>通过refresh()方法手动刷新缓存，refresh()方法会调用load方法，重新加载数据到缓存中。</p>
+<p>需要注意的是：refresh()方法不会阻塞get方法，所以refresh期间，get方法会返回旧的缓存值。</p>
+<h3 id="定时刷新"><a class="markdownIt-Anchor" href="#定时刷新"></a> 定时刷新</h3>
+<p>通过refreshAfterWrite方法设置定时刷新时间，Guava会在指定时间后自动刷新缓存。</p>
+<h2 id="缓存命中统计"><a class="markdownIt-Anchor" href="#缓存命中统计"></a> 缓存命中统计</h2>
+<p>Guava Cache提供了缓存命中率的统计功能，可以通过recordStats()方法来记录缓存命中率。</p>
+<figure class="highlight lasso"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><code class="hljs lasso">@Test<br><span class="hljs-keyword">public</span> <span class="hljs-literal">void</span> testCacheStats() &#123;<br>    <span class="hljs-keyword">Cache</span>&lt;<span class="hljs-built_in">String</span>, <span class="hljs-built_in">String</span>&gt; <span class="hljs-keyword">cache</span> = CacheBuilder.newBuilder()<br>            .maximumSize(<span class="hljs-number">2</span>)<br>            .recordStats()<br>            .build(<span class="hljs-literal">new</span> CacheLoader&lt;<span class="hljs-built_in">String</span>, <span class="hljs-built_in">String</span>&gt;() &#123;<br>                @Override<br>                <span class="hljs-keyword">public</span> <span class="hljs-built_in">String</span> load(<span class="hljs-built_in">String</span> key) throws Exception &#123;<br>                    <span class="hljs-keyword">return</span> convert(key);<br>                &#125;<br>            &#125;);<br>    <span class="hljs-keyword">cache</span>.put(<span class="hljs-string">&quot;key1&quot;</span>, <span class="hljs-string">&quot;value1&quot;</span>);<br>    <span class="hljs-keyword">cache</span>.put(<span class="hljs-string">&quot;key2&quot;</span>, <span class="hljs-string">&quot;value2&quot;</span>);<br>    CacheStats stats = <span class="hljs-keyword">cache</span>.stats();<br>    System.out.println(<span class="hljs-string">&quot;Cache Stats: &quot;</span> + stats);<br>&#125;<br></code></pre></td></tr></table></figure>
+<h2 id="缓存移除通知"><a class="markdownIt-Anchor" href="#缓存移除通知"></a> 缓存移除通知</h2>
+<p>如果希望在缓存失效或者被移除时进行一些回调处理，可以使用removalListener方法来添加移除通知。</p>
+<figure class="highlight lasso"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs lasso">@Test<br><span class="hljs-keyword">public</span> <span class="hljs-literal">void</span> testCacheRemovalListener() &#123;<br>    <span class="hljs-keyword">Cache</span>&lt;<span class="hljs-built_in">String</span>, <span class="hljs-built_in">String</span>&gt; <span class="hljs-keyword">cache</span> = CacheBuilder.newBuilder()<br>            .maximumSize(<span class="hljs-number">2</span>)<br>            .removalListener(cacheItem -&gt; &#123;<br>                System.out.println(cacheItem+<span class="hljs-string">&quot; was removed&quot;</span>+<span class="hljs-string">&quot;caused by &quot;</span>+cacheItem.getCause());<br>            &#125;)<br>            .build(<span class="hljs-literal">new</span> CacheLoader&lt;<span class="hljs-built_in">String</span>, <span class="hljs-built_in">String</span>&gt;() &#123;<br>                @Override<br>                <span class="hljs-keyword">public</span> <span class="hljs-built_in">String</span> load(<span class="hljs-built_in">String</span> key) throws Exception &#123;<br>                    <span class="hljs-keyword">return</span> convert(key);<br>                &#125;<br>            &#125;);<br>    <span class="hljs-keyword">cache</span>.put(<span class="hljs-string">&quot;key1&quot;</span>, <span class="hljs-string">&quot;value1&quot;</span>);<br>    <span class="hljs-keyword">cache</span>.put(<span class="hljs-string">&quot;key2&quot;</span>, <span class="hljs-string">&quot;value2&quot;</span>);<br>    <span class="hljs-keyword">cache</span>.invalidate(<span class="hljs-string">&quot;key1&quot;</span>);<br>&#125;<br></code></pre></td></tr></table></figure>
+<h2 id="常见问题"><a class="markdownIt-Anchor" href="#常见问题"></a> 常见问题</h2>
+<h3 id="为什么不用redis"><a class="markdownIt-Anchor" href="#为什么不用redis"></a> 为什么不用redis？</h3>
+<p>如果本地缓存能解决，没必要引入一个中间件</p>
+<h3 id="如何保证缓存和数据源一致性"><a class="markdownIt-Anchor" href="#如何保证缓存和数据源一致性"></a> 如何保证缓存和数据源一致性？</h3>
+<ul>
+<li>一般在数据敏感度不高的场景，短暂的不一致可以接受</li>
+<li>另外的情况，可以设置定期刷新缓存或者手动刷新缓存的机制，比如给页面添加一个刷新按钮，当数据源更新后刷新缓存，或者定期刷新缓存</li>
+<li>通过配置中心协调和同步</li>
+</ul>
 
                 
               </div>
