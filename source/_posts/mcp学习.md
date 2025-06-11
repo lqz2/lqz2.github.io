@@ -367,37 +367,39 @@ public class McpClientApplication {
 
 ## agent使用mcp的工作流程
 ```mermaid
-graph TD
-    A[AI Agent 启动] --> B(MCP Host - AI驱动的应用);
-    B --> C{需要执行任务?};
-    C -- 是 --> D(MCP Client);
-    D --> E(通过标准化MCP协议发送结构化请求);
-    E --> F{MCP Server};
-    F -- 工具发现/识别能力 --> G(将AI请求转换为工具/服务命令);
-    G --> H[本地/远程服务/数据源];
-    H -- 执行命令 --> I(获取结果);
-    I --> J(将结果格式化为AI可理解的格式);
-    J --> F;
-    F --> E;
-    E --> D;
-    D --> B;
-    B --> K(AI Agent处理结果);
-    K --> L{任务完成?};
-    L -- 是 --> M[输出/行动];
-    L -- 否 --> C;
-    C -- 否 --> N[待机/等待新任务];
+sequenceDiagram
+    participant User
+    participant AI_Agent as AI Agent (MCP Host)
+    participant MCP_Client as MCP Client
+    participant MCP_Server as MCP Server
+    participant External_Tool_or_DataSource as External Tool/Data Source
 
-    subgraph MCP 核心组件
-        F -- 告知AI能力 --> D;
-        F -- 解释并运行命令 --> G;
-        F -- 格式化结果 --> J;
-        F -- 处理错误并提供反馈 --> J;
-    end
-
-    style B fill:#f9f,stroke:#333,stroke-width:2px
-    style K fill:#bbf,stroke:#333,stroke-width:2px
-    style M fill:#afa,stroke:#333,stroke-width:2px
-    style N fill:#ccc,stroke:#333,stroke-width:2px
+    User->>AI_Agent: 发送任务请求 (例如：查询数据库，执行操作)
+    AI_Agent->>MCP_Client: 接收用户请求并决定需要外部工具或数据 
+    AI_Agent->>MCP_Server: 请求可用的工具和数据端点 
+    MCP_Server-->>AI_Agent: 返回可用的工具、资源和提示信息 
+    AI_Agent->>AI_Agent: 基于请求选择合适的工具或资源 
+    AI_Agent->>MCP_Client: 通过MCP协议向MCP客户端发送结构化请求
+    MCP_Client->>MCP_Server: 将请求转发给对应的MCP服务器 
+    MCP_Server->>External_Tool_or_DataSource: 将AI请求翻译成外部工具/数据源能理解的命令 (使用其原生API) 
+    External_Tool_or_DataSource-->>MCP_Server: 执行操作并返回结果 
+    MCP_Server-->>MCP_Client: 将结果格式化为AI可理解的格式，并通过MCP协议返回 
+    MCP_Client-->>AI_Agent: 接收处理后的结果 
+    AI_Agent->>AI_Agent: 处理 retrieved data 并应用上下文推理 (例如：进行总结，生成回复)
+    AI_Agent-->>User: 提供响应或执行后续操作
 ```
+工作流程解释：
+
+- **用户发起请求**: 用户向AI Agent发送一个任务请求，这可能是一个需要访问外部信息或执行特定操作的查询。
+- **AI Agent决策**: AI Agent (作为MCP Host) 接收到用户请求后，会通过其内部逻辑判断是否需要与外部工具或数据源交互来完成任务。
+- **工具发现**: AI Agent向连接的MCP服务器请求其可提供的工具、资源和预定义提示的列表。MCP服务器会告知AI Agent它所能提供的功能（例如，列出文件、查询数据库等）。
+- **选择工具**: AI Agent根据用户请求和MCP服务器提供的能力，决定调用哪个合适的工具或资源。
+- **发送结构化请求**: AI Agent通过MCP客户端，遵循MCP协议，向选定的MCP服务器发送一个结构化请求，其中包含所需操作的参数。
+- **MCP服务器执行**: MCP服务器接收到请求后，将其翻译成外部工具或数据源能够理解的原生API调用或命令。
+- **外部系统响应**: 外部工具或数据源执行相应的操作（例如，查询数据库、创建工单、读取文件等）并返回结果给MCP服务器。
+- **结果格式化与返回**: MCP服务器将从外部系统获得的结果格式化为AI Agent可以理解的统一格式，然后通过MCP客户端返回给AI Agent。
+- **AI Agent处理**: AI Agent接收到结果后，会对其进行处理，应用其上下文推理能力，例如对数据进行总结，或根据结果生成最终响应。
+- **用户收到响应**: AI Agent将最终的响应或执行的操作结果反馈给用户。
+
 
 
