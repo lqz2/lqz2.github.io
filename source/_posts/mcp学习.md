@@ -17,6 +17,7 @@ tags:
     - [使用Spring AI创建mcp client](#使用spring-ai创建mcp-client)
         - [基于stdio的mcp client实现](#基于stdio的mcp-client实现)
         - [基于SSE的mcp client实现](#基于sse的mcp-client实现)
+    - [agent使用mcp的工作流程](#agent使用mcp的工作流程)
 
 <!-- /TOC -->
 # mcp学习
@@ -38,14 +39,14 @@ Spring AI MCP包括以下组件：
 ### 基于stdio的mcp服务端实现
 
 1. 添加依赖
-```
+```xml
 <dependency>
     <groupId>org.springframework.ai</groupId>
     <artifactId>spring-ai-mcp-server-spring-boot-starter</artifactId>
 </dependency>
 ```
 2. 在`application.yml`中配置mcp服务端
-```
+```yaml
 spring:
     main:
         web-application-type: none # 禁用web应用程序类型
@@ -58,7 +59,7 @@ spring:
                 version: 0.0.1
 ```
 3. 实现mcp工具，通过`@Tool`注解标记工具方法，其中`decription`可以添加对工具的描述，`@ToolParameter`可以标明工具具体的接收参数。
-```
+```java
 @Service
 
 public class WeatherTool {
@@ -116,7 +117,7 @@ public class WeatherTool {
 }
 ```
 4. 注册mcp工具，主要是返回`ToolCallbackProvider`的bean
-```
+```java
 @Bean
 public ToolCallbackProvider weatherTools(WeatherTool weatherTool) {
     return MethodToolCallbackProvider.builder()
@@ -131,7 +132,7 @@ public ToolCallbackProvider weatherTools(WeatherTool weatherTool) {
 基于SSE的mcp服务端通过http协议进行通信，适合远程服务访问，具体流程与stdio非常类似
 
 1. 添加依赖
-```
+```xml
 <dependency>
     <groupId>org.springframework.ai</groupId>
     <artifactId>spring-ai-mcp-server-webflux-spring-boot-starter</artifactId>
@@ -139,7 +140,7 @@ public ToolCallbackProvider weatherTools(WeatherTool weatherTool) {
 
 ```
 2. 在`application.yml`中配置mcp服务端
-```
+```yaml
 server:
     port: 8080 # 设置端口号
 spring:
@@ -150,7 +151,7 @@ spring:
                 version: 0.0.1
 ```
 3. 实现mcp工具，通过`@Tool`注解标记工具方法，其中`decription`可以添加对工具的描述，`@ToolParameter`可以标明工具具体的接收参数。
-```
+```java
 @Service
 
 public class WeatherTool {
@@ -208,7 +209,7 @@ public class WeatherTool {
 }
 ```
 4. 注册mcp工具，主要是返回`ToolCallbackProvider`的bean
-```
+```java
 @Bean
 public ToolCallbackProvider weatherTools(WeatherTool weatherTool) {
     return MethodToolCallbackProvider.builder()
@@ -223,14 +224,14 @@ public ToolCallbackProvider weatherTools(WeatherTool weatherTool) {
 客户端同样通过stdio或SSE两种方式进行通信，具体流程与服务端类似。
 ### 基于stdio的mcp client实现
 1. 添加依赖
-```
+```xml
 <dependency>
     <groupId>org.springframework.ai</groupId>
     <artifactId>spring-ai-mcp-client-spring-boot-starter</artifactId>
 </dependency>
 ```
 2. 在`application.yml`中配置mcp服务器
-```
+```yaml
 spring:
     ai:
         dashscope:
@@ -242,7 +243,7 @@ spring:
 ```
 
 3. 创建MCP服务器配置文件`mcp-servers-config.json`，内容如下：
-```
+```json
 {
   "mcpServers":{
     //定义名为"weather"的MCP服务器
@@ -263,7 +264,7 @@ spring:
 }
 ```
 4. 编写启动类进行测试
-```
+```java
 @SpringBootApplication
 public class McpClientApplication {
 
@@ -303,7 +304,7 @@ public class McpClientApplication {
 
 ### 基于SSE的mcp client实现
 1. 添加依赖
-```
+```xml
 <dependency>
     <groupId>org.springframework.ai</groupId>
     <artifactId>spring-ai-mcp-client-webflux-spring-boot-starter</artifactId>
@@ -311,7 +312,7 @@ public class McpClientApplication {
 ```
 
 2. 在`application.yml`中配置mcp服务器
-```
+```yaml
 spring:
     ai:
         dashscope:
@@ -326,7 +327,7 @@ spring:
 ```
 
 3. 编写启动类进行测试
-```
+```java
 @SpringBootApplication
 public class McpClientApplication {
 
@@ -364,5 +365,39 @@ public class McpClientApplication {
 }
 ```
 
+## agent使用mcp的工作流程
+```mermaid
+graph TD
+    A[AI Agent 启动] --> B(MCP Host - AI驱动的应用);
+    B --> C{需要执行任务?};
+    C -- 是 --> D(MCP Client);
+    D --> E(通过标准化MCP协议发送结构化请求);
+    E --> F{MCP Server};
+    F -- 工具发现/识别能力 --> G(将AI请求转换为工具/服务命令);
+    G --> H[本地/远程服务/数据源];
+    H -- 执行命令 --> I(获取结果);
+    I --> J(将结果格式化为AI可理解的格式);
+    J --> F;
+    F --> E;
+    E --> D;
+    D --> B;
+    B --> K(AI Agent处理结果);
+    K --> L{任务完成?};
+    L -- 是 --> M[输出/行动];
+    L -- 否 --> C;
+    C -- 否 --> N[待机/等待新任务];
+
+    subgraph MCP 核心组件
+        F -- 告知AI能力 --> D;
+        F -- 解释并运行命令 --> G;
+        F -- 格式化结果 --> J;
+        F -- 处理错误并提供反馈 --> J;
+    end
+
+    style B fill:#f9f,stroke:#333,stroke-width:2px
+    style K fill:#bbf,stroke:#333,stroke-width:2px
+    style M fill:#afa,stroke:#333,stroke-width:2px
+    style N fill:#ccc,stroke:#333,stroke-width:2px
+```
 
 
