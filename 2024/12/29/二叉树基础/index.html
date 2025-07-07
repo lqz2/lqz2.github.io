@@ -27,7 +27,7 @@
 <meta property="og:description" content="二叉树最大深度  题目描述 思路 代码   相同的树  题目描述 思路 代码   对称二叉树  题目描述 思路 代码   平衡二叉树  题目描述 思路 代码   二叉树右视图  题目描述 思路 代码   有序数组转为二叉搜索树  题目描述 思路 代码   验证二叉搜索树  题目描述 思路 代码   翻转二叉树  题目描述 思路 代码   二叉树的直径  题目描述 思路 代码   二叉树最大路径">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2024-12-29T10:58:35.000Z">
-<meta property="article:modified_time" content="2024-12-29T11:46:43.731Z">
+<meta property="article:modified_time" content="2025-07-07T08:12:18.775Z">
 <meta property="article:author" content="zql">
 <meta name="twitter:card" content="summary_large_image">
   
@@ -224,7 +224,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          1.8k 字
+          2.1k 字
         
       </span>
     
@@ -235,7 +235,7 @@
         
         
         
-          15 分钟
+          18 分钟
         
       </span>
     
@@ -349,6 +349,13 @@
 <li><a href="#%E4%BB%A3%E7%A0%81-9">代码</a></li>
 </ul>
 </li>
+<li><a href="#%E4%B8%8D%E5%90%8C%E7%9A%84%E4%BA%8C%E5%8F%89%E6%90%9C%E7%B4%A2%E6%A0%91%E7%9A%84%E4%B8%AA%E6%95%B0">不同的二叉搜索树的个数</a>
+<ul>
+<li><a href="#%E9%A2%98%E7%9B%AE%E6%8F%8F%E8%BF%B0-10">题目描述</a></li>
+<li><a href="#%E6%80%9D%E8%B7%AF-10">思路</a></li>
+<li><a href="#%E4%BB%A3%E7%A0%81-10">代码</a></li>
+</ul>
+</li>
 </ul>
 <!-- /TOC -->
 <h2 id="二叉树最大深度"><a class="markdownIt-Anchor" href="#二叉树最大深度"></a> 二叉树最大深度</h2>
@@ -444,7 +451,24 @@
 同时更新最大路径和，即<code>max(l+r+root-&gt;val,ans)</code></p>
 <h3 id="代码-10"><a class="markdownIt-Anchor" href="#代码-10"></a> 代码</h3>
 <figure class="highlight excel"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br></pre></td><td class="code"><pre><code class="hljs excel">class Solution &#123;<br>publ<span class="hljs-symbol">ic:</span><br>    <span class="hljs-built_in">int</span> ans;<br>    <span class="hljs-built_in">int</span> dfs(TreeNode* <span class="hljs-built_in">t</span>)&#123;<br>        <span class="hljs-built_in">if</span>(<span class="hljs-built_in">t</span>==nullptr)<br>            return <span class="hljs-number">0</span>;<br>        <span class="hljs-built_in">int</span> l=dfs(<span class="hljs-built_in">t</span>-&gt;<span class="hljs-built_in">left</span>);<br>        <span class="hljs-built_in">int</span> r=dfs(<span class="hljs-built_in">t</span>-&gt;<span class="hljs-built_in">right</span>);<br>        ans=<span class="hljs-built_in">max</span>(ans,l+r+<span class="hljs-built_in">t</span>-&gt;val);<br>        return <span class="hljs-built_in">max</span>(<span class="hljs-built_in">max</span>(l,r)+<span class="hljs-built_in">t</span>-&gt;val,<span class="hljs-number">0</span>);<br>    &#125;<br>    <span class="hljs-built_in">int</span> maxPathSum(TreeNode* root) &#123;<br>        ans=INT_MIN;<br>        dfs(root);<br>        return ans;<br>    &#125;<br>&#125;;<br></code></pre></td></tr></table></figure>
-
+<h2 id="不同的二叉搜索树的个数"><a class="markdownIt-Anchor" href="#不同的二叉搜索树的个数"></a> 不同的二叉搜索树的个数</h2>
+<p><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/unique-binary-search-trees/">原题</a></p>
+<h3 id="题目描述-11"><a class="markdownIt-Anchor" href="#题目描述-11"></a> 题目描述</h3>
+<p>给你一个整数 n ，求恰由 n 个节点组成且节点值从 1 到 n 互不相同的 二叉搜索树 有多少种？返回满足题意的二叉搜索树的种数。</p>
+<h3 id="思路-11"><a class="markdownIt-Anchor" href="#思路-11"></a> 思路</h3>
+<p>对于从1～n的节点来说，每个节点i都可以作为根节点，左子树为1～i-1的节点，右子树为i+1～n的节点<br />
+所以，以i为根节点，长度为n的二叉搜索树的个数为左子树的个数乘以右子树的个数<br />
+即<code>dp[i] =dp[i-1]*dp[n-i]</code><br />
+将这些情况累加起来即为长度为n的二叉搜索树的个数</p>
+<p>实际上卡特兰数的计算方式也是这种方式<br />
+卡特兰数即解决：若一个序列的入栈序列为1,2,3,…,n，则有多少不同的出栈序列<br />
+公式为：</p>
+<p class='katex-block katex-error' title='ParseError: KaTeX parse error: Can&#039;t use function &#039;$&#039; in math mode at position 30: … the image is:
+$̲C_0 = 1, \quad …'>The formula in the image is:
+$C_0 = 1, \quad C_{n+1} = \frac{2(2n + 1)}{n + 2} C_n$
+</p>
+<h3 id="代码-11"><a class="markdownIt-Anchor" href="#代码-11"></a> 代码</h3>
+<figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span> &#123;<br><span class="hljs-keyword">public</span>:<br>    <span class="hljs-function"><span class="hljs-type">int</span> <span class="hljs-title">numTrees</span><span class="hljs-params">(<span class="hljs-type">int</span> n)</span> </span>&#123;<br><span class="hljs-comment">//        vector&lt;int&gt; dp(n + 1);</span><br><span class="hljs-comment">//        dp[0] = 1;</span><br><span class="hljs-comment">//        dp[1] = 1;</span><br><span class="hljs-comment">//        for(int i=2;i&lt;=n;++i)&#123;</span><br><span class="hljs-comment">//            for(int j=1;j&lt;=i;++j)&#123;</span><br><span class="hljs-comment">//                dp[i] += dp[j-1] * dp[i-j];</span><br><span class="hljs-comment">//            &#125;</span><br><span class="hljs-comment">//        &#125;</span><br><span class="hljs-comment">//        return dp[n];</span><br>         <span class="hljs-type">long</span> ans=<span class="hljs-number">1</span>;<br>         <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i=<span class="hljs-number">0</span>;i&lt;n;++i)&#123;<br>             ans=ans*<span class="hljs-number">2</span>*(<span class="hljs-number">2</span>*i+<span class="hljs-number">1</span>)/(i+<span class="hljs-number">2</span>);<br>         &#125;<br>         <span class="hljs-keyword">return</span> ans;<br>    &#125;<br>&#125;;<br></code></pre></td></tr></table></figure>
                 
               </div>
             
