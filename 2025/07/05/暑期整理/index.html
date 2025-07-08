@@ -19,15 +19,15 @@
   <meta name="author" content="zql">
   <meta name="keywords" content="">
   
-    <meta name="description" content="分布式模型评测平台  简介 主要功能 主要技术点      分布式模型评测平台  简介 该平台主要用于将业务数据批量上传给大模型，通过大模型的能力完成判断是否存在违规行为、责任划分等业务内容，同时还可以根据大模型的返回结果，制定相应的评测规则，对大模型的判断结果进行打分，评价大模型的业务能力，平台的主要功能包括数据导入、任务创建、模型评测、工作流评测、自定义评测规则、结果导出等，可服务于企业内">
+    <meta name="description" content="分布式模型评测平台  简介 关键模块  调度方式  旧版调度方式 新版调度方式          分布式模型评测平台  简介 该平台主要用于将业务数据批量上传给大模型，通过大模型的能力完成判断是否存在违规行为、责任划分等业务内容，同时还可以根据大模型的返回结果，制定相应的评测规则，对大模型的判断结果进行打分，评价大模型的业务能力，平台的主要功能包括数据导入、任务创建、模型评测、工作流评测、自定">
 <meta property="og:type" content="article">
 <meta property="og:title" content="暑期整理">
 <meta property="og:url" content="http://lqz2.github.io/2025/07/05/%E6%9A%91%E6%9C%9F%E6%95%B4%E7%90%86/index.html">
 <meta property="og:site_name" content="my blogs">
-<meta property="og:description" content="分布式模型评测平台  简介 主要功能 主要技术点      分布式模型评测平台  简介 该平台主要用于将业务数据批量上传给大模型，通过大模型的能力完成判断是否存在违规行为、责任划分等业务内容，同时还可以根据大模型的返回结果，制定相应的评测规则，对大模型的判断结果进行打分，评价大模型的业务能力，平台的主要功能包括数据导入、任务创建、模型评测、工作流评测、自定义评测规则、结果导出等，可服务于企业内">
+<meta property="og:description" content="分布式模型评测平台  简介 关键模块  调度方式  旧版调度方式 新版调度方式          分布式模型评测平台  简介 该平台主要用于将业务数据批量上传给大模型，通过大模型的能力完成判断是否存在违规行为、责任划分等业务内容，同时还可以根据大模型的返回结果，制定相应的评测规则，对大模型的判断结果进行打分，评价大模型的业务能力，平台的主要功能包括数据导入、任务创建、模型评测、工作流评测、自定">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2025-07-05T12:02:46.000Z">
-<meta property="article:modified_time" content="2025-07-07T12:39:24.511Z">
+<meta property="article:modified_time" content="2025-07-08T09:25:43.040Z">
 <meta property="article:author" content="zql">
 <meta name="twitter:card" content="summary_large_image">
   
@@ -224,7 +224,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          188 字
+          718 字
         
       </span>
     
@@ -235,7 +235,7 @@
         
         
         
-          2 分钟
+          6 分钟
         
       </span>
     
@@ -282,8 +282,16 @@
 <li><a href="#%E5%88%86%E5%B8%83%E5%BC%8F%E6%A8%A1%E5%9E%8B%E8%AF%84%E6%B5%8B%E5%B9%B3%E5%8F%B0">分布式模型评测平台</a>
 <ul>
 <li><a href="#%E7%AE%80%E4%BB%8B">简介</a></li>
-<li><a href="#%E4%B8%BB%E8%A6%81%E5%8A%9F%E8%83%BD">主要功能</a></li>
-<li><a href="#%E4%B8%BB%E8%A6%81%E6%8A%80%E6%9C%AF%E7%82%B9">主要技术点</a></li>
+<li><a href="#%E5%85%B3%E9%94%AE%E6%A8%A1%E5%9D%97">关键模块</a>
+<ul>
+<li><a href="#%E8%B0%83%E5%BA%A6%E6%96%B9%E5%BC%8F">调度方式</a>
+<ul>
+<li><a href="#%E6%97%A7%E7%89%88%E8%B0%83%E5%BA%A6%E6%96%B9%E5%BC%8F">旧版调度方式</a></li>
+<li><a href="#%E6%96%B0%E7%89%88%E8%B0%83%E5%BA%A6%E6%96%B9%E5%BC%8F">新版调度方式</a></li>
+</ul>
+</li>
+</ul>
+</li>
 </ul>
 </li>
 </ul>
@@ -291,8 +299,22 @@
 <h1 id="分布式模型评测平台"><a class="markdownIt-Anchor" href="#分布式模型评测平台"></a> 分布式模型评测平台</h1>
 <h2 id="简介"><a class="markdownIt-Anchor" href="#简介"></a> 简介</h2>
 <p>该平台主要用于将业务数据批量上传给大模型，通过大模型的能力完成判断是否存在违规行为、责任划分等业务内容，同时还可以根据大模型的返回结果，制定相应的评测规则，对大模型的判断结果进行打分，评价大模型的业务能力，平台的主要功能包括数据导入、任务创建、模型评测、工作流评测、自定义评测规则、结果导出等，可服务于企业内部多种业务需求。</p>
-<h2 id="主要功能"><a class="markdownIt-Anchor" href="#主要功能"></a> 主要功能</h2>
-<h2 id="主要技术点"><a class="markdownIt-Anchor" href="#主要技术点"></a> 主要技术点</h2>
+<h2 id="关键模块"><a class="markdownIt-Anchor" href="#关键模块"></a> 关键模块</h2>
+<h3 id="调度方式"><a class="markdownIt-Anchor" href="#调度方式"></a> 调度方式</h3>
+<h4 id="旧版调度方式"><a class="markdownIt-Anchor" href="#旧版调度方式"></a> 旧版调度方式</h4>
+<p>旧版调度模式下，主要的工作流程如下：</p>
+<ol>
+<li>新建评测任务</li>
+<li>定时任务扫描到新建的任务，然后开始处理</li>
+<li>处理每个任务时，首先可以从在线数据源中或者本地上传的评测集中获取数据，通过获取的数据构建众多tasks,然后将这些task写入到数据库中</li>
+<li>接下来，从模型的维度将task的id通过lpush添加到redis队列，其中redis的key是通过<code>modelName+index</code>设置的，index是模型对应的队列</li>
+<li>在应用启动时，会给模型评测的Diamond配置增加一个监听器，监听对应配置变更，当配置变化时，会给配置里的每个模型启动2个工作线程，提交到线程池，具体来说，实际上是一个模型对应2个redis队列，然后通过2个工作线程，分别从对应redis队列取出task来处理，也就是一个线程处理一个redis队列的tasks</li>
+<li>工作线程取出task后，先尝试获取锁，这里获取锁是主要通过一个lua脚本限流，因为大模型的api通常是有调用频率限制的，这里评测的数据可能很多，调用时需要限流。获取到锁之后，向对应模型发送请求，并获取请求结果，如果请求失败则进行3～5次的重试，请求成功后，将task结果更新到数据库中。</li>
+</ol>
+<p><strong>存在的问题</strong>：<br />
+旧版的调度方式下，一个模型默认分配两个队列，并且由两个工作线程处理，如果多个用户同时创建任务，可能会导致某个模型的队列排队的task过多，导致一些用户的任务长时间得不到处理。</p>
+<h4 id="新版调度方式"><a class="markdownIt-Anchor" href="#新版调度方式"></a> 新版调度方式</h4>
+<p>新版调度方式与旧版调度方式相比，主要的区别在于，新版的调度方式中，redis队列的key是<code>modelName+AK</code>，并且通过zookeeper对资源节点进行监听，每个</p>
 
                 
               </div>

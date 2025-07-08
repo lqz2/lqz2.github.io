@@ -31,7 +31,7 @@
 <meta property="og:image" content="https://oss.javaguide.cn/github/javaguide/cs-basics/network/tcp-shakes-hands-three-times.png">
 <meta property="og:image" content="https://oss.javaguide.cn/github/javaguide/cs-basics/network/tcp-waves-four-times.png">
 <meta property="article:published_time" content="2022-08-26T13:10:10.000Z">
-<meta property="article:modified_time" content="2025-06-03T03:08:26.996Z">
+<meta property="article:modified_time" content="2025-07-08T11:32:02.574Z">
 <meta property="article:author" content="zql">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://oss.javaguide.cn/github/javaguide/java/basis/java-code-to-machine-code.png">
@@ -240,7 +240,7 @@
         
         
         
-          324 分钟
+          325 分钟
         
       </span>
     
@@ -1372,6 +1372,7 @@ AQS内部有一个state，被volatile修饰，0表示无锁，1表示有锁</p>
 </ul>
 <h3 id="线程池的提交任务流程"><a class="markdownIt-Anchor" href="#线程池的提交任务流程"></a> 线程池的提交任务流程？</h3>
 <figure class="highlight clean"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs clean">提交任务 -&gt; 核心线程是否已满？<br><br>├── 未满 -&gt; 创建核心线程执行<br><br>└── 已满 -&gt; 任务入队<br><br>    ├── 队列未满 -&gt; 等待执行<br><br>    └── 队列已满 -&gt; 创建非核心线程<br><br>        ├── 未达最大线程数 -&gt; 执行任务<br><br>        └── 已达最大线程数 -&gt; 执行拒绝策略<br><br></code></pre></td></tr></table></figure>
+<p><strong>注意</strong>：核心线程并不是在线程池创建的时候直接创建等于核心线程数量的线程，而是采用懒加载的模式，在线程池提交任务时逐步创建，如果新任务提交时，线程数未达到核心线程数，那么即使其他线程空闲，也会创建新的核心线程来执行任务。</p>
 <h3 id="线程池的参数有哪些"><a class="markdownIt-Anchor" href="#线程池的参数有哪些"></a> 线程池的参数有哪些？</h3>
 <ul>
 <li>corePoolSize：核心线程数，线程池中一直存活的线程数量</li>
