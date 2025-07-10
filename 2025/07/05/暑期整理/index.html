@@ -19,15 +19,15 @@
   <meta name="author" content="zql">
   <meta name="keywords" content="">
   
-    <meta name="description" content="分布式模型评测平台  简介 关键模块  调度方式  旧版调度方式 新版调度方式          分布式模型评测平台  简介 该平台主要用于将业务数据批量上传给大模型，通过大模型的能力完成判断是否存在违规行为、责任划分等业务内容，同时还可以根据大模型的返回结果，制定相应的评测规则，对大模型的判断结果进行打分，评价大模型的业务能力，平台的主要功能包括数据导入、任务创建、模型评测、工作流评测、自定">
+    <meta name="description" content="分布式模型评测平台  简介 主要功能 关键模块  调度方式  旧版调度方式 新版调度方式   zookeeper的使用  基本信息 工作流程          分布式模型评测平台  简介 该平台主要用于将业务数据批量上传给大模型，通过大模型的能力完成判断是否存在违规行为、责任划分等业务内容，同时还可以根据大模型的返回结果，制定相应的评测规则，对大模型的判断结果进行打分，评价大模型的业务能力，平">
 <meta property="og:type" content="article">
 <meta property="og:title" content="暑期整理">
 <meta property="og:url" content="http://lqz2.github.io/2025/07/05/%E6%9A%91%E6%9C%9F%E6%95%B4%E7%90%86/index.html">
 <meta property="og:site_name" content="my blogs">
-<meta property="og:description" content="分布式模型评测平台  简介 关键模块  调度方式  旧版调度方式 新版调度方式          分布式模型评测平台  简介 该平台主要用于将业务数据批量上传给大模型，通过大模型的能力完成判断是否存在违规行为、责任划分等业务内容，同时还可以根据大模型的返回结果，制定相应的评测规则，对大模型的判断结果进行打分，评价大模型的业务能力，平台的主要功能包括数据导入、任务创建、模型评测、工作流评测、自定">
+<meta property="og:description" content="分布式模型评测平台  简介 主要功能 关键模块  调度方式  旧版调度方式 新版调度方式   zookeeper的使用  基本信息 工作流程          分布式模型评测平台  简介 该平台主要用于将业务数据批量上传给大模型，通过大模型的能力完成判断是否存在违规行为、责任划分等业务内容，同时还可以根据大模型的返回结果，制定相应的评测规则，对大模型的判断结果进行打分，评价大模型的业务能力，平">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2025-07-05T12:02:46.000Z">
-<meta property="article:modified_time" content="2025-07-08T09:25:43.040Z">
+<meta property="article:modified_time" content="2025-07-10T10:35:17.470Z">
 <meta property="article:author" content="zql">
 <meta name="twitter:card" content="summary_large_image">
   
@@ -224,7 +224,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          718 字
+          1.9k 字
         
       </span>
     
@@ -235,7 +235,7 @@
         
         
         
-          6 分钟
+          17 分钟
         
       </span>
     
@@ -282,12 +282,19 @@
 <li><a href="#%E5%88%86%E5%B8%83%E5%BC%8F%E6%A8%A1%E5%9E%8B%E8%AF%84%E6%B5%8B%E5%B9%B3%E5%8F%B0">分布式模型评测平台</a>
 <ul>
 <li><a href="#%E7%AE%80%E4%BB%8B">简介</a></li>
+<li><a href="#%E4%B8%BB%E8%A6%81%E5%8A%9F%E8%83%BD">主要功能</a></li>
 <li><a href="#%E5%85%B3%E9%94%AE%E6%A8%A1%E5%9D%97">关键模块</a>
 <ul>
 <li><a href="#%E8%B0%83%E5%BA%A6%E6%96%B9%E5%BC%8F">调度方式</a>
 <ul>
 <li><a href="#%E6%97%A7%E7%89%88%E8%B0%83%E5%BA%A6%E6%96%B9%E5%BC%8F">旧版调度方式</a></li>
 <li><a href="#%E6%96%B0%E7%89%88%E8%B0%83%E5%BA%A6%E6%96%B9%E5%BC%8F">新版调度方式</a></li>
+</ul>
+</li>
+<li><a href="#zookeeper%E7%9A%84%E4%BD%BF%E7%94%A8">zookeeper的使用</a>
+<ul>
+<li><a href="#%E5%9F%BA%E6%9C%AC%E4%BF%A1%E6%81%AF">基本信息</a></li>
+<li><a href="#%E5%B7%A5%E4%BD%9C%E6%B5%81%E7%A8%8B">工作流程</a></li>
 </ul>
 </li>
 </ul>
@@ -299,6 +306,8 @@
 <h1 id="分布式模型评测平台"><a class="markdownIt-Anchor" href="#分布式模型评测平台"></a> 分布式模型评测平台</h1>
 <h2 id="简介"><a class="markdownIt-Anchor" href="#简介"></a> 简介</h2>
 <p>该平台主要用于将业务数据批量上传给大模型，通过大模型的能力完成判断是否存在违规行为、责任划分等业务内容，同时还可以根据大模型的返回结果，制定相应的评测规则，对大模型的判断结果进行打分，评价大模型的业务能力，平台的主要功能包括数据导入、任务创建、模型评测、工作流评测、自定义评测规则、结果导出等，可服务于企业内部多种业务需求。</p>
+<h2 id="主要功能"><a class="markdownIt-Anchor" href="#主要功能"></a> 主要功能</h2>
+<p>TODO:</p>
 <h2 id="关键模块"><a class="markdownIt-Anchor" href="#关键模块"></a> 关键模块</h2>
 <h3 id="调度方式"><a class="markdownIt-Anchor" href="#调度方式"></a> 调度方式</h3>
 <h4 id="旧版调度方式"><a class="markdownIt-Anchor" href="#旧版调度方式"></a> 旧版调度方式</h4>
@@ -314,7 +323,65 @@
 <p><strong>存在的问题</strong>：<br />
 旧版的调度方式下，一个模型默认分配两个队列，并且由两个工作线程处理，如果多个用户同时创建任务，可能会导致某个模型的队列排队的task过多，导致一些用户的任务长时间得不到处理。</p>
 <h4 id="新版调度方式"><a class="markdownIt-Anchor" href="#新版调度方式"></a> 新版调度方式</h4>
-<p>新版调度方式与旧版调度方式相比，主要的区别在于，新版的调度方式中，redis队列的key是<code>modelName+AK</code>，并且通过zookeeper对资源节点进行监听，每个</p>
+<p>新版调度方式与旧版调度方式相比，主要的区别在于：</p>
+<ul>
+<li>新版的调度方式中，redis队列的key是<code>modelName+AK</code>，并且通过zookeeper对资源节点进行监听</li>
+<li>每个<code>modelName+AK</code>都会对应一个zk资源节点，也对应一个存放task的redis队列，zk会根据资源节点创建对应的线程并提交，默认一个资源节点对应2个线程。</li>
+<li>运行时，通过一个定时任务来判断redis队列是否为空，如果一段时间内redis队列为空，则删除对应的zk资源节点，释放资源，同时zk监听到资源节点被删除后，会自动关闭对应的线程。</li>
+</ul>
+<h3 id="zookeeper的使用"><a class="markdownIt-Anchor" href="#zookeeper的使用"></a> zookeeper的使用</h3>
+<p>在新的调度方式中，zookeeper主要用于管理模型的资源节点并实时创建和释放工作线程。实际使用中，主要通过使用CuratorFramework实现一些zk客户端的操作，包括创建节点、删除节点、监听节点变化等。</p>
+<h4 id="基本信息"><a class="markdownIt-Anchor" href="#基本信息"></a> 基本信息</h4>
+<p>主要角色包括：master和slave</p>
+<p><strong>master的职责：</strong></p>
+<ul>
+<li>初始化leader信息：即在<code>leader_info/&#123;master_host&#125;</code>路径下创建一个临时节点，将leader的更新时间等信息写入到这个节点</li>
+<li>设置分片信息：在<code>sharding_info_path</code>路径下创建一个临时节点，设置当前分片信息，实际上一个机器就是一个分片id，并对应当前机器的host</li>
+<li>设置执行节点信息：这是实现资源动态调度的关键之一，这里拉取<code>node_info_path</code>下所有子节点的名称，然后拉取<code>election_assets</code>下所有子节点的名称（所有申请的<code>model+ak</code>资源），然后为每个节点的执行节点写入所有assets信息，执行节点路径为<code>node_executor_info_path/&#123;node_host&#125;</code>。</li>
+<li>更新zk的选举状态：更新<code>election_status_path</code>节点的选举状态</li>
+<li>更新自身选举状态：finish or not</li>
+<li>关闭slave的监听器：因为master可能是由slave转过来的，所以需要关闭之前slave的监听器，如果有的话</li>
+<li>更新集群稳定信息：在<code>leader_info/&#123;host&#125;</code>路径下更新集群稳定的时间</li>
+<li>通过守护线程，同步集群节点信息、同步集群心跳检测信息、同步集群执行节点信息、监测集群稳定状态等</li>
+</ul>
+<p><strong>salve职责：</strong></p>
+<ul>
+<li>监听切片信息：添加一个监听器，主要从<code>sharding_info_path</code>路径下获取切片信息，获取到切片信息后，更新自身的切片信息，切片信息是一个ConcurrentSkipListMap，保证并发安全、有序性和<code>logn</code>的查询性能，key是切片id，value是切片对应的host</li>
+</ul>
+<blockquote>
+<p>监听步骤：</p>
+<ol>
+<li>创建客户端的NodeCache对象cache，指定客户端和监听的路径</li>
+<li>创建NodeCacheListener对象listener，重写其<code>nodeChanged</code>方法，定义监听到节点变化时的处理逻辑</li>
+<li><code>cache.getListenable().addListener(listener)</code>将监听器添加</li>
+<li><code>cache.start()</code>启动监听器</li>
+</ol>
+</blockquote>
+<ul>
+<li>监听选举状态：添加一个监听器，主要从<code>election_status_path</code>路径下获取选举状态，获取到选举状态后，更新自身的选举状态</li>
+</ul>
+<h4 id="工作流程"><a class="markdownIt-Anchor" href="#工作流程"></a> 工作流程</h4>
+<p>SpringBoot应用启动时，主要通过client服务执行每个节点的一系列流程：</p>
+<ol>
+<li>创建CuratorFramework客户端</li>
+<li>当前节点信息写入：在<code>node_info_path/&#123;node_host&#125;</code>路径下创建一个临时节点</li>
+<li>写入执行节点信息：在<code>node_executor_info_path/&#123;node_host&#125;</code>路径下创建一个执行节点，并启动监听器，这是动态调度的关键。该监听器监听到节点变化时，会执行以下操作：
+<ul>
+<li>拉取当前执行节点<code>node_executor_info_path/&#123;node_host&#125;</code>下的所有资源名称，然后和旧的资源名称进行对比，找出新增的资源和删除的资源</li>
+<li>对于新增的资源，每个资源创建两个线程，提交到线程池</li>
+<li>对于删除的资源，关闭对应的线程，并从map中移除资源</li>
+</ul>
+</li>
+<li>leader选举：通过LeaderLatch的start启动自动选主，并监听当前客户端的选主状态，如果当前客户端是leader,则执行一系列操作，包括关闭之前的slave监听器、更新选举状态、设置分片信息、设置leader信息、启动守护线程任务等，如果已经不再是leader了，则更新选举状态并关闭守护线程任务，并执行作为slave的监听器。</li>
+<li>启动心跳检测：当前客户端每30s更新一下心跳信息，并打印日志</li>
+<li>监听node_info_path路径下的节点变化：添加一个监听器，监听子节点发生增删改时，执行以下操作：
+<ul>
+<li>如过当前节点是leader, 执行更新分片信息、更新选举状态、更新执行节点信息等操作</li>
+<li>如果发生了重连，leader和slave都重新写入节点信息</li>
+</ul>
+</li>
+<li>监听election_assets路径下的节点变化：添加一个监听器，监听子节点资源发生增删的情况，由master节点重新写入执行节点信息</li>
+</ol>
 
                 
               </div>
