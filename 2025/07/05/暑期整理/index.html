@@ -19,15 +19,15 @@
   <meta name="author" content="zql">
   <meta name="keywords" content="">
   
-    <meta name="description" content="分布式模型评测平台  简介 主要功能 关键模块  调度方式  旧版调度方式 新版调度方式   zookeeper的使用  基本信息 工作流程          分布式模型评测平台  简介 该平台主要用于将业务数据批量上传给大模型，通过大模型的能力完成判断是否存在违规行为、责任划分等业务内容，同时还可以根据大模型的返回结果，制定相应的评测规则，对大模型的判断结果进行打分，评价大模型的业务能力，平">
+    <meta name="description" content="分布式模型评测平台  简介 主要功能 关键模块  调度方式  旧版调度方式 新版调度方式   zookeeper的使用  基本信息 工作流程   任务状态流转 redis的使用        分布式模型评测平台  简介 该平台主要用于将业务数据批量上传给大模型，通过大模型的能力完成判断是否存在违规行为、责任划分等业务内容，同时还可以根据大模型的返回结果，制定相应的评测规则，对大模型的判断结果进">
 <meta property="og:type" content="article">
 <meta property="og:title" content="暑期整理">
 <meta property="og:url" content="http://lqz2.github.io/2025/07/05/%E6%9A%91%E6%9C%9F%E6%95%B4%E7%90%86/index.html">
 <meta property="og:site_name" content="my blogs">
-<meta property="og:description" content="分布式模型评测平台  简介 主要功能 关键模块  调度方式  旧版调度方式 新版调度方式   zookeeper的使用  基本信息 工作流程          分布式模型评测平台  简介 该平台主要用于将业务数据批量上传给大模型，通过大模型的能力完成判断是否存在违规行为、责任划分等业务内容，同时还可以根据大模型的返回结果，制定相应的评测规则，对大模型的判断结果进行打分，评价大模型的业务能力，平">
+<meta property="og:description" content="分布式模型评测平台  简介 主要功能 关键模块  调度方式  旧版调度方式 新版调度方式   zookeeper的使用  基本信息 工作流程   任务状态流转 redis的使用        分布式模型评测平台  简介 该平台主要用于将业务数据批量上传给大模型，通过大模型的能力完成判断是否存在违规行为、责任划分等业务内容，同时还可以根据大模型的返回结果，制定相应的评测规则，对大模型的判断结果进">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2025-07-05T12:02:46.000Z">
-<meta property="article:modified_time" content="2025-07-10T10:35:17.470Z">
+<meta property="article:modified_time" content="2025-07-12T14:30:51.344Z">
 <meta property="article:author" content="zql">
 <meta name="twitter:card" content="summary_large_image">
   
@@ -224,7 +224,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          1.9k 字
+          3k 字
         
       </span>
     
@@ -235,7 +235,7 @@
         
         
         
-          17 分钟
+          25 分钟
         
       </span>
     
@@ -297,6 +297,8 @@
 <li><a href="#%E5%B7%A5%E4%BD%9C%E6%B5%81%E7%A8%8B">工作流程</a></li>
 </ul>
 </li>
+<li><a href="#%E4%BB%BB%E5%8A%A1%E7%8A%B6%E6%80%81%E6%B5%81%E8%BD%AC">任务状态流转</a></li>
+<li><a href="#redis%E7%9A%84%E4%BD%BF%E7%94%A8">redis的使用</a></li>
 </ul>
 </li>
 </ul>
@@ -382,6 +384,26 @@
 </li>
 <li>监听election_assets路径下的节点变化：添加一个监听器，监听子节点资源发生增删的情况，由master节点重新写入执行节点信息</li>
 </ol>
+<h3 id="任务状态流转"><a class="markdownIt-Anchor" href="#任务状态流转"></a> 任务状态流转</h3>
+<p>评测任务的状态流传主要是通过不同的定时任务实现的，不同的定时任务实现schedulerx的JavaProcessor接口，并重写process方法，来执行对应的处理逻辑，整体状态的流转如下：</p>
+<ul>
+<li>评测任务创建，状态转为waiting,待执行状态</li>
+<li>定时任务扫描待执行状态的评测任务，取最早的一个评测任务开始执行，执行时将评测任务对应的数据转为task导入到数据库，然后插入redis队列，完成后状态转为执行中，此时对应worker开始从redis队列取task并执行，如果有上游依赖任务，则将评测任务状态改为待重试。</li>
+<li>定时任务扫描所有待重试状态的评测任务，执行时先查询该任务的上游依赖任务是否已经完成，如果完成可以执行导入数据库和redis队列的逻辑，如果上游任务未完成，且已经超过8小时都未完成，则将评测任务状态改为失败，否则继续等待上游任务完成。</li>
+<li>当所有task都执行完成时，将评测任务状态改为待评分</li>
+<li>定时任务扫描待评分状态的评测任务，取最早的一个评测任务开始执行，执行时将评测任务的每个task结果进行打分，打分规则由用户定义的js脚本决定，当所有task完成评分后，将评测任务状态改为待计算指标</li>
+<li>定时任务扫描待计算指标的评测任务，取最早的一个评测任务开始执行，执行时统计所有task的准确率、完成率等指标，完成后将评测任务状态改为已完成</li>
+<li>定时任务扫描所有已完成的任务，将所有task的结果导出到指定数据源中，将状态更改为导出完成</li>
+</ul>
+<h3 id="redis的使用"><a class="markdownIt-Anchor" href="#redis的使用"></a> redis的使用</h3>
+<p>在此项目中，redis主要有下面的用途：</p>
+<ul>
+<li>**存放模型评测任务的所有task：**用一个redis队列存放评测任务的task，队列的key是<code>modelName+AK</code>，通过lpush将task放入redis队列，每个机器会创建worker并通过rpop来从对应队列中取出task并消费</li>
+<li>**定时任务分布式锁：**因为有多个机器都要执行定时任务，为了确保同一时间只有一个机器在执行定时任务，所以使用redis的setnx命令来实现分布式锁，超时时间为10分钟，执行完定时任务后删除分布式锁。</li>
+<li>**作为评测任务查询的缓存：**因为每个task执行时，需要通过id查询评测任务信息，所以每次查询时，先从redis缓存中获取评测任务信息，如果没有则从数据库中查询，然后放入redis缓存中，设置过期时间为1小时，在更新时，先更新数据库，再删除redis缓存，降低数据不一致的风险。</li>
+<li>**更新任务执行进度：**因为每个评测任务对应很多task，为了及时更新task的执行进度，用redis的hash结构存储评测任务的进度信息，比如当前完成数量，成功数量，失败数量等等，key是评测任务的id, field是进度的名称，value是进度的值，使用hIncrement命令更新进度信息，当所有task都执行完后，通过hgetAll命令获取所有进度信息，更新评测任务的状态。</li>
+<li>**模型并发限流：**因为大模型的api通常有调用频率限制，所以在worker获取task时，通过lua脚本尝试获取锁，lua脚本中，主要将模型将当前worker线程的UUID和时间戳存在zset中，UUID作为member，时间戳作为score，每次获取锁时，先删除过期的member，然后判断当前member数量是否超过限制，如果超过限制则返回失败，否则添加当前member并返回成功，并发限制数可以通过diamond动态配置。</li>
+</ul>
 
                 
               </div>
