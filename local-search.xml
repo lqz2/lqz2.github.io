@@ -4,6 +4,25 @@
   
   
   <entry>
+    <title>交错字符串</title>
+    <link href="/2025/07/15/%E4%BA%A4%E9%94%99%E5%AD%97%E7%AC%A6%E4%B8%B2/"/>
+    <url>/2025/07/15/%E4%BA%A4%E9%94%99%E5%AD%97%E7%AC%A6%E4%B8%B2/</url>
+    
+    <content type="html"><![CDATA[<h2 id="交错字符串"><a class="markdownIt-Anchor" href="#交错字符串"></a> 交错字符串</h2><!-- TOC --><ul><li><a href="#%E4%BA%A4%E9%94%99%E5%AD%97%E7%AC%A6%E4%B8%B2">交错字符串</a><ul><li><a href="#%E9%A2%98%E7%9B%AE%E6%8F%8F%E8%BF%B0">题目描述</a></li><li><a href="#%E6%80%9D%E8%B7%AF">思路</a></li><li><a href="#%E4%BB%A3%E7%A0%81">代码</a></li></ul></li></ul><!-- /TOC --><p><a href="https://leetcode.cn/problems/interleaving-string/description/">原题</a></p><h3 id="题目描述"><a class="markdownIt-Anchor" href="#题目描述"></a> 题目描述</h3><p>给定三个字符串 s1、s2、s3，请你帮忙验证 s3 是否是由 s1 和 s2 交错 组成的。</p><p>示例：</p><figure class="highlight armasm"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><code class="hljs armasm">输入：<span class="hljs-built_in">s1</span> = <span class="hljs-string">&quot;aabcc&quot;</span>, <span class="hljs-built_in">s2</span> = <span class="hljs-string">&quot;dbbca&quot;</span>, <span class="hljs-built_in">s3</span> = <span class="hljs-string">&quot;aadbbcbcac&quot;</span><br>输出：true<br></code></pre></td></tr></table></figure><h3 id="思路"><a class="markdownIt-Anchor" href="#思路"></a> 思路</h3><p>用<code>dp[i][j]</code>表示s1的前i个字符和s2的前j个字符能否交错组成s3的前i+j个字符。</p><ul><li>初始化<code>dp[0][0] = true</code></li><li>对于每个<code>dp[i][j]</code>，如果s1的第i个字符等于s3的第i+j-1个字符，且<code>dp[i-1][j]</code>为true，则<code>dp[i][j]</code>为true。</li><li>如果s2的第j个字符等于s3的第i+j-1个字符，且<code>dp[i][j-1]</code>为true，则<code>dp[i][j]</code>为true。</li></ul><h3 id="代码"><a class="markdownIt-Anchor" href="#代码"></a> 代码</h3><figure class="highlight c++"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br></pre></td><td class="code"><pre><code class="hljs c++"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span> &#123;<br><span class="hljs-keyword">public</span>:<br>    <span class="hljs-function"><span class="hljs-type">bool</span> <span class="hljs-title">isInterleave</span><span class="hljs-params">(string s1, string s2, string s3)</span> </span>&#123;<br>        <span class="hljs-type">int</span> n=s1.<span class="hljs-built_in">size</span>();<br>        <span class="hljs-type">int</span> m=s2.<span class="hljs-built_in">size</span>();<br>        <span class="hljs-keyword">if</span> (n+m!=s3.<span class="hljs-built_in">size</span>()) &#123;<br>            <span class="hljs-keyword">return</span> <span class="hljs-literal">false</span>;<br>        &#125;<br>        vector&lt;vector&lt;<span class="hljs-type">int</span>&gt;&gt; <span class="hljs-built_in">dp</span>(n+<span class="hljs-number">1</span>,<span class="hljs-built_in">vector</span>&lt;<span class="hljs-type">int</span>&gt;(m+<span class="hljs-number">1</span>));<br>        dp[<span class="hljs-number">0</span>][<span class="hljs-number">0</span>]=<span class="hljs-number">1</span>;<br>        <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> i=<span class="hljs-number">0</span>;i&lt;=n;i++)&#123;<br>            <span class="hljs-keyword">for</span>(<span class="hljs-type">int</span> j=<span class="hljs-number">0</span>;j&lt;=m;j++)&#123;<br>                <span class="hljs-keyword">if</span>(i&gt;<span class="hljs-number">0</span>)<br>                    dp[i][j] |=(s1[i<span class="hljs-number">-1</span>]==s3[i+j<span class="hljs-number">-1</span>]&amp;&amp;dp[i<span class="hljs-number">-1</span>][j]);<br>                <span class="hljs-keyword">if</span>(j&gt;<span class="hljs-number">0</span>)<br>                    dp[i][j] |=(s2[j<span class="hljs-number">-1</span>]==s3[i+j<span class="hljs-number">-1</span>]&amp;&amp;dp[i][j<span class="hljs-number">-1</span>]);<br>            &#125;<br>        &#125;<br>        <span class="hljs-keyword">return</span> dp[n][m];<br>    &#125;<br>&#125;;<br></code></pre></td></tr></table></figure>]]></content>
+    
+    
+    <categories>
+      
+      <category>机试</category>
+      
+    </categories>
+    
+    
+  </entry>
+  
+  
+  
+  <entry>
     <title>删除多余括号</title>
     <link href="/2025/07/07/%E5%88%A0%E9%99%A4%E5%A4%9A%E4%BD%99%E6%8B%AC%E5%8F%B7/"/>
     <url>/2025/07/07/%E5%88%A0%E9%99%A4%E5%A4%9A%E4%BD%99%E6%8B%AC%E5%8F%B7/</url>
