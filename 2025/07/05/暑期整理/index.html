@@ -27,7 +27,7 @@
 <meta property="og:description" content="分布式模型评测平台  简介 主要功能 关键模块  调度方式  旧版调度方式 新版调度方式   zookeeper的使用  基本信息 工作流程   任务状态流转 redis的使用        分布式模型评测平台  简介 该平台主要用于将业务数据批量上传给大模型，通过大模型的能力完成判断是否存在违规行为、责任划分等业务内容，同时还可以根据大模型的返回结果，制定相应的评测规则，对大模型的判断结果进">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2025-07-05T12:02:46.000Z">
-<meta property="article:modified_time" content="2025-07-12T14:30:51.344Z">
+<meta property="article:modified_time" content="2025-07-15T09:05:24.379Z">
 <meta property="article:author" content="zql">
 <meta name="twitter:card" content="summary_large_image">
   
@@ -224,7 +224,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          3k 字
+          3.3k 字
         
       </span>
     
@@ -235,7 +235,7 @@
         
         
         
-          25 分钟
+          28 分钟
         
       </span>
     
@@ -362,6 +362,12 @@
 <ul>
 <li>监听选举状态：添加一个监听器，主要从<code>election_status_path</code>路径下获取选举状态，获取到选举状态后，更新自身的选举状态</li>
 </ul>
+<p><strong>守护线程基础知识：</strong><br />
+守护线程（Daemon Thread），也叫后台线程，是Java中的一种特殊线程。它在后台为其他非守护线程（即用户线程）提供通用服务，但它本身不属于程序中不可或缺的部分</p>
+<p>守护线程与普通线程的核心区别是：当JVM中不存在任何一个正在运行的<strong>非守护线程</strong>时，JVM进程就会退出。<br />
+也就是说，只要还有任何一个非守护线程在运行，程序就不会终止。而当所有非守护线程都执行完毕后，JVM会强制终止所有仍在运行的守护线程，然后退出。守护线程拥有自动结束自己生命周期的特性，而非守护线程不具备。</p>
+<p>一个非常典型的例子就是JVM的垃圾回收（GC）线程。GC线程就是一个守护线程，它在后台默默回收内存。如果GC线程是普通线程，那么即使我们的主业务逻辑（main线程等）已经全部执行完毕，只要GC线程还在运行，JVM就永远无法退出，这显然是不合理的。</p>
+<p>总结一下就是：非守护线程结束后，jvm就会退出，jvm退出时，会终止所有守护线程</p>
 <h4 id="工作流程"><a class="markdownIt-Anchor" href="#工作流程"></a> 工作流程</h4>
 <p>SpringBoot应用启动时，主要通过client服务执行每个节点的一系列流程：</p>
 <ol>
