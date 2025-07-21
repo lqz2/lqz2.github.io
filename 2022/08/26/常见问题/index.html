@@ -31,7 +31,7 @@
 <meta property="og:image" content="https://oss.javaguide.cn/github/javaguide/cs-basics/network/tcp-shakes-hands-three-times.png">
 <meta property="og:image" content="https://oss.javaguide.cn/github/javaguide/cs-basics/network/tcp-waves-four-times.png">
 <meta property="article:published_time" content="2022-08-26T13:10:10.000Z">
-<meta property="article:modified_time" content="2025-07-08T11:32:02.574Z">
+<meta property="article:modified_time" content="2025-07-21T11:18:43.406Z">
 <meta property="article:author" content="zql">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://oss.javaguide.cn/github/javaguide/java/basis/java-code-to-machine-code.png">
@@ -240,7 +240,7 @@
         
         
         
-          325 分钟
+          329 分钟
         
       </span>
     
@@ -1412,8 +1412,63 @@ AQS内部有一个state，被volatile修饰，0表示无锁，1表示有锁</p>
 <li>ArrayBlockingQueue，有界队列，容量固定</li>
 <li>LinkedBlockingQueue，无界队列，容量无上限，适用于FixedThreadPool和SingleThreadPool</li>
 <li>SynchronousQueue，同步队列，容量为0，CachedThreadPool使用的队列</li>
-<li>DelayedWorkQueue，延迟阻塞队列，按照延迟时间排序，ScheduledThreadPool使用的队列</li>
+<li>PriorityBlockingQueue，支持优先级的无界阻塞队列。队列中的元素会根据其自然顺序或在构造时提供的 Comparator 进行排序，优先级高的元素会先被执行</li>
 </ul>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">特性</th>
+<th style="text-align:left">SynchronousQueue (直接提交队列)</th>
+<th style="text-align:left">LinkedBlockingQueue (链表阻塞队列)</th>
+<th style="text-align:left">ArrayBlockingQueue (数组阻塞队列)</th>
+<th style="text-align:left">PriorityBlockingQueue (优先级队列)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left"><strong>数据结构</strong></td>
+<td style="text-align:left">-</td>
+<td style="text-align:left">链表</td>
+<td style="text-align:left">数组</td>
+<td style="text-align:left">堆 (Heap)</td>
+</tr>
+<tr>
+<td style="text-align:left"><strong>容量</strong></td>
+<td style="text-align:left"><strong>0 (零容量)</strong>，不存储任何元素。</td>
+<td style="text-align:left"><strong>无界 (默认)</strong> 或 <strong>有界</strong>。默认容量为 <code>Integer.MAX_VALUE</code>。</td>
+<td style="text-align:left"><strong>有界</strong>，必须在创建时指定容量。</td>
+<td style="text-align:left"><strong>无界</strong>，容量理论上为 <code>Integer.MAX_VALUE</code>。</td>
+</tr>
+<tr>
+<td style="text-align:left"><strong>排序方式</strong></td>
+<td style="text-align:left">直接提交，无排序。</td>
+<td style="text-align:left"><strong>FIFO</strong> (先进先出)。</td>
+<td style="text-align:left"><strong>FIFO</strong> (先进先出)。</td>
+<td style="text-align:left"><strong>按优先级</strong>，由任务的自然顺序或 <code>Comparator</code> 决定。</td>
+</tr>
+<tr>
+<td style="text-align:left"><strong>工作机制</strong></td>
+<td style="text-align:left">任务直接交给空闲线程。若无空闲线程，则尝试创建新线程（直到<code>maximumPoolSize</code>），否则任务被拒绝。</td>
+<td style="text-align:left"><strong>[无界时]</strong> 核心线程满后，任务会无限加入队列，<code>maximumPoolSize</code> 参数失效。</td>
+<td style="text-align:left">核心线程满后，任务进入队列。队列满后，创建新线程（直到<code>maximumPoolSize</code>），否则任务被拒绝。</td>
+<td style="text-align:left">核心线程满后，任务按优先级加入队列，<code>maximumPoolSize</code> 参数失效。</td>
+</tr>
+<tr>
+<td style="text-align:left"><strong>适用场景</strong></td>
+<td style="text-align:left">吞吐量高，处理大量<strong>短时</strong>任务的场景。要求系统响应快，能快速处理任务。</td>
+<td style="text-align:left">任务量不确定，不希望任务被拒绝的场景。适用于<strong>任务突发</strong>的情况。</td>
+<td style="text-align:left">需要精确控制资源（线程数、任务数），防止系统过载的场景。</td>
+<td style="text-align:left">任务具有不同优先级，需要优先执行<strong>重要任务</strong>的场景。</td>
+</tr>
+<tr>
+<td style="text-align:left"><strong>风险/注意事项</strong></td>
+<td style="text-align:left"><code>maximumPoolSize</code> 需设置得很大（如 <code>Integer.MAX_VALUE</code>），否则任务极易被拒绝。</td>
+<td style="text-align:left"><strong>[无界时]</strong> 任务可能大量堆积，导致<strong>内存溢出 (OOM)</strong>。</td>
+<td style="text-align:left">队列容量和 <code>maximumPoolSize</code> 的设置需仔细权衡，不合理会降低吞吐量或频繁拒绝任务。</td>
+<td style="text-align:left">同样存在<strong>内存溢出 (OOM)</strong> 的风险。任务优先级设置不当可能导致低优先级任务<strong>饥饿</strong>。</td>
+</tr>
+</tbody>
+</table>
 <h3 id="多线程顺序执行的几种写法"><a class="markdownIt-Anchor" href="#多线程顺序执行的几种写法"></a> 多线程顺序执行的几种写法?</h3>
 <ul>
 <li>使用join方法，join方法会阻塞当前线程，等待调用join方法的线程执行完毕，类似于让调用join方法的线程“插队”。</li>

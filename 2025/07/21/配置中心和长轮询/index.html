@@ -19,21 +19,21 @@
   <meta name="author" content="zql">
   <meta name="keywords" content="">
   
-    <meta name="description" content="比特位计数   比特位计数  题目描述 思路 代码     原题  题目描述 给你一个整数 n ，对于 0 &lt;&#x3D; i &lt;&#x3D; n 中的每个 i ，计算其二进制表示中 1 的个数 ，返回一个长度为 n + 1 的数组 ans 作为答案。 123456输入：n &#x3D; 2输出：[0,1,1]解释：0 --&gt; 01 --&gt; 12 --&gt; 10  思路 对于每个数字 i，其二进制">
+    <meta name="description" content="配置中心和长轮询  为什么要用配置中心？ 数据交互模式  推模式 拉模式   长轮询和轮询 长轮询的基本原理 挂起的三种方式  while循环 通过wait和notify，配合future.get(timeout)实现： schedule+AsyncContext实现：   为什么用长轮询不用长连接？      配置中心和长轮询  为什么要用配置中心？ 传统的静态配置方式想要修改某个配置时，必">
 <meta property="og:type" content="article">
-<meta property="og:title" content="比特位计数">
-<meta property="og:url" content="http://lqz2.github.io/2025/07/19/%E6%AF%94%E7%89%B9%E4%BD%8D%E8%AE%A1%E6%95%B0/index.html">
+<meta property="og:title" content="配置中心和长轮询">
+<meta property="og:url" content="http://lqz2.github.io/2025/07/21/%E9%85%8D%E7%BD%AE%E4%B8%AD%E5%BF%83%E5%92%8C%E9%95%BF%E8%BD%AE%E8%AF%A2/index.html">
 <meta property="og:site_name" content="my blogs">
-<meta property="og:description" content="比特位计数   比特位计数  题目描述 思路 代码     原题  题目描述 给你一个整数 n ，对于 0 &lt;&#x3D; i &lt;&#x3D; n 中的每个 i ，计算其二进制表示中 1 的个数 ，返回一个长度为 n + 1 的数组 ans 作为答案。 123456输入：n &#x3D; 2输出：[0,1,1]解释：0 --&gt; 01 --&gt; 12 --&gt; 10  思路 对于每个数字 i，其二进制">
+<meta property="og:description" content="配置中心和长轮询  为什么要用配置中心？ 数据交互模式  推模式 拉模式   长轮询和轮询 长轮询的基本原理 挂起的三种方式  while循环 通过wait和notify，配合future.get(timeout)实现： schedule+AsyncContext实现：   为什么用长轮询不用长连接？      配置中心和长轮询  为什么要用配置中心？ 传统的静态配置方式想要修改某个配置时，必">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2025-07-19T10:14:33.000Z">
-<meta property="article:modified_time" content="2025-07-19T11:14:18.193Z">
+<meta property="article:published_time" content="2025-07-21T06:54:01.000Z">
+<meta property="article:modified_time" content="2025-07-21T11:11:52.957Z">
 <meta property="article:author" content="zql">
 <meta name="twitter:card" content="summary_large_image">
   
   
   
-  <title>比特位计数 - my blogs</title>
+  <title>配置中心和长轮询 - my blogs</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -201,7 +201,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="比特位计数"></span>
+            <span id="subtitle" data-typed-text="配置中心和长轮询"></span>
           
         </div>
 
@@ -212,8 +212,8 @@
     
       <span class="post-meta">
         <i class="iconfont icon-date-fill" aria-hidden="true"></i>
-        <time datetime="2025-07-19 18:14" pubdate>
-          2025年7月19日 晚上
+        <time datetime="2025-07-21 14:54" pubdate>
+          2025年7月21日 下午
         </time>
       </span>
     
@@ -224,7 +224,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          257 字
+          1.7k 字
         
       </span>
     
@@ -235,7 +235,7 @@
         
         
         
-          3 分钟
+          15 分钟
         
       </span>
     
@@ -272,35 +272,137 @@
       <div class="container nopadding-x-md" id="board-ctn">
         <div id="board">
           <article class="post-content mx-auto">
-            <h1 id="seo-header">比特位计数</h1>
+            <h1 id="seo-header">配置中心和长轮询</h1>
             
             
               <div class="markdown-body">
                 
-                <h2 id="比特位计数"><a class="markdownIt-Anchor" href="#比特位计数"></a> 比特位计数</h2>
-<!-- TOC -->
+                <!-- TOC -->
 <ul>
-<li><a href="#%E6%AF%94%E7%89%B9%E4%BD%8D%E8%AE%A1%E6%95%B0">比特位计数</a>
+<li><a href="#%E9%85%8D%E7%BD%AE%E4%B8%AD%E5%BF%83%E5%92%8C%E9%95%BF%E8%BD%AE%E8%AF%A2">配置中心和长轮询</a>
 <ul>
-<li><a href="#%E9%A2%98%E7%9B%AE%E6%8F%8F%E8%BF%B0">题目描述</a></li>
-<li><a href="#%E6%80%9D%E8%B7%AF">思路</a></li>
-<li><a href="#%E4%BB%A3%E7%A0%81">代码</a></li>
+<li><a href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A6%81%E7%94%A8%E9%85%8D%E7%BD%AE%E4%B8%AD%E5%BF%83">为什么要用配置中心？</a></li>
+<li><a href="#%E6%95%B0%E6%8D%AE%E4%BA%A4%E4%BA%92%E6%A8%A1%E5%BC%8F">数据交互模式</a>
+<ul>
+<li><a href="#%E6%8E%A8%E6%A8%A1%E5%BC%8F">推模式</a></li>
+<li><a href="#%E6%8B%89%E6%A8%A1%E5%BC%8F">拉模式</a></li>
+</ul>
+</li>
+<li><a href="#%E9%95%BF%E8%BD%AE%E8%AF%A2%E5%92%8C%E8%BD%AE%E8%AF%A2">长轮询和轮询</a></li>
+<li><a href="#%E9%95%BF%E8%BD%AE%E8%AF%A2%E7%9A%84%E5%9F%BA%E6%9C%AC%E5%8E%9F%E7%90%86">长轮询的基本原理</a></li>
+<li><a href="#%E6%8C%82%E8%B5%B7%E7%9A%84%E4%B8%89%E7%A7%8D%E6%96%B9%E5%BC%8F">挂起的三种方式</a>
+<ul>
+<li><a href="#while%E5%BE%AA%E7%8E%AF">while循环</a></li>
+<li><a href="#%E9%80%9A%E8%BF%87wait%E5%92%8Cnotify%E9%85%8D%E5%90%88futuregettimeout%E5%AE%9E%E7%8E%B0">通过wait和notify，配合<code>future.get(timeout)</code>实现：</a></li>
+<li><a href="#scheduleasynccontext%E5%AE%9E%E7%8E%B0">schedule+AsyncContext实现：</a></li>
+</ul>
+</li>
+<li><a href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E7%94%A8%E9%95%BF%E8%BD%AE%E8%AF%A2%E4%B8%8D%E7%94%A8%E9%95%BF%E8%BF%9E%E6%8E%A5">为什么用长轮询不用长连接？</a></li>
 </ul>
 </li>
 </ul>
 <!-- /TOC -->
-<p><a target="_blank" rel="noopener" href="https://leetcode.cn/problems/counting-bits/description/">原题</a></p>
-<h3 id="题目描述"><a class="markdownIt-Anchor" href="#题目描述"></a> 题目描述</h3>
-<p>给你一个整数 n ，对于 0 &lt;= i &lt;= n 中的每个 i ，计算其二进制表示中 1 的个数 ，返回一个长度为 n + 1 的数组 ans 作为答案。</p>
-<figure class="highlight ada"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><code class="hljs ada">输入：n = <span class="hljs-number">2</span><br>输出：[<span class="hljs-number">0</span>,<span class="hljs-number">1</span>,<span class="hljs-number">1</span>]<br>解释：<br><span class="hljs-number">0</span> <span class="hljs-comment">--&gt; 0</span><br><span class="hljs-number">1</span> <span class="hljs-comment">--&gt; 1</span><br><span class="hljs-number">2</span> <span class="hljs-comment">--&gt; 10</span><br></code></pre></td></tr></table></figure>
-<h3 id="思路"><a class="markdownIt-Anchor" href="#思路"></a> 思路</h3>
-<p>对于每个数字 <code>i</code>，其二进制表示中 1 的个数可以通过 <code>i &amp; (i - 1)</code> 来计算。这个操作会将 <code>i</code> 的最低位的 1 变为 0，因此可以通过动态规划来计算每个数字的比特位计数。<br />
-动态方程可以表示为<code>dp[i]=dp[i&amp;(i-1)]+1</code>，其中 <code>dp[i]</code> 表示数字 <code>i</code> 的比特位计数。</p>
+<h1 id="配置中心和长轮询"><a class="markdownIt-Anchor" href="#配置中心和长轮询"></a> 配置中心和长轮询</h1>
+<h2 id="为什么要用配置中心"><a class="markdownIt-Anchor" href="#为什么要用配置中心"></a> 为什么要用配置中心？</h2>
+<p>传统的静态配置方式想要修改某个配置时，必须修改后重新启动上线，这样某些配置如果频繁改动，就会影响到线上业务的运行效率，配置中心就可以很好的解决这个问题。</p>
+<p>配置中心最主要的能力就是配置的动态推送，可能很多人一位配置中心是通过长连接实现的，实际上主流的配置中心主要是通过长轮询的方式来实现配置的动态推送。</p>
+<p>长连接和长轮询的主要区别是：</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">特性</th>
+<th style="text-align:left">长连接 (Long Connection)</th>
+<th style="text-align:left">长轮询 (Long Polling)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left"><strong>本质</strong></td>
+<td style="text-align:left">TCP 连接的复用，多个HTTP请求可以复用一个TCP长连接</td>
+<td style="text-align:left">应用层的请求响应模式</td>
+</tr>
+<tr>
+<td style="text-align:left"><strong>服务端行为</strong></td>
+<td style="text-align:left">快速响应请求，但保持 TCP 连接不关闭</td>
+<td style="text-align:left">挂起请求，直到有数据更新或超时再响应</td>
+</tr>
+<tr>
+<td style="text-align:left"><strong>实现方式</strong></td>
+<td style="text-align:left">双方通过 HTTP 协议头 <code>Connection: keep-alive</code> 控制</td>
+<td style="text-align:left">服务端通过编程逻辑实现请求挂起，与客户端无关</td>
+</tr>
+<tr>
+<td style="text-align:left"><strong>目的</strong></td>
+<td style="text-align:left">减少 TCP 连接建立和断开的开销</td>
+<td style="text-align:left">降低轮询频率，模拟实时数据推送</td>
+</tr>
+</tbody>
+</table>
+<h2 id="数据交互模式"><a class="markdownIt-Anchor" href="#数据交互模式"></a> 数据交互模式</h2>
+<h3 id="推模式"><a class="markdownIt-Anchor" href="#推模式"></a> 推模式</h3>
+<p>推模式指的是服务端主动向客户端推送数据更新，客户端无需频繁请求服务器。推模式通常使用 WebSocket 或 Server-Sent Events (SSE) 实现。缺点是客户端的消费能力有限时，可能会导致数据积压。</p>
+<h3 id="拉模式"><a class="markdownIt-Anchor" href="#拉模式"></a> 拉模式</h3>
+<p>拉模式指的是客户端主动向服务端发出请求，拉取数据，优点是不存在数据积压的问题，缺点是可能不够及时，拉取数据的频率不好确定。</p>
+<h2 id="长轮询和轮询"><a class="markdownIt-Anchor" href="#长轮询和轮询"></a> 长轮询和轮询</h2>
+<p>普通的轮询是每隔一定时间拉取一次数据，存在以下问题：</p>
+<ul>
+<li><strong>延迟性</strong>：数据更新后需要等待下一个轮询周期才能获取到最新数据。</li>
+<li><strong>资源浪费</strong>：即使没有数据更新，仍然会发送请求，浪费带宽和服务器资源。</li>
+<li><strong>轮询间隔</strong>：需要合理设置轮询间隔，过短会增加服务器负担，过长会导致数据延迟。</li>
+</ul>
+<p>而长轮询的方式是，如果服务端数据没有变更，服务端会挂起请求，直到数据变更或超时后再响应。这样可以有效减少请求次数和延迟。</p>
+<h2 id="长轮询的基本原理"><a class="markdownIt-Anchor" href="#长轮询的基本原理"></a> 长轮询的基本原理</h2>
+<p>一般长轮询各个部分的工作流程如下：</p>
+<ul>
+<li>客户端发起长轮询：
+<ul>
+<li>客户端发送 HTTP 请求到服务端，请求包含配置中心的地址和监听的dataId</li>
+</ul>
+</li>
+<li>服务端监听数据变化：
+<ul>
+<li>服务端维护dataId和长轮询的映射关系，如果dataId对应的配置发生变化，则会为响应写入更新后的配置内容</li>
+<li>如果直到超时还没有数据变化，服务端会返回一个304响应，304代表“未改变”，并不代表错误</li>
+</ul>
+</li>
+<li>客户端处理响应：根据响应码做出相应处理，之后再次发起长轮询请求。</li>
+</ul>
+<h2 id="挂起的三种方式"><a class="markdownIt-Anchor" href="#挂起的三种方式"></a> 挂起的三种方式</h2>
+<h3 id="while循环"><a class="markdownIt-Anchor" href="#while循环"></a> while循环</h3>
+<p>这是最朴素的实现方式，通过while循环不断检查数据是否变化，直到超时或数据变化为止。缺点是会浪费CPU资源。</p>
+<h3 id="通过wait和notify配合futuregettimeout实现"><a class="markdownIt-Anchor" href="#通过wait和notify配合futuregettimeout实现"></a> 通过wait和notify，配合<code>future.get(timeout)</code>实现：</h3>
+<ul>
+<li>当数据没有变更时，通过obj.wait()方法挂起当前线程，让出cpu资源，等待数据变更时通过obj.notifyAll()唤醒线程。</li>
+<li>仅使用wait和notify的话，如果没有数据变更，线程会一直wait，为了达到超时效果，可以使用<code>future.get(timeout)</code>方法来设置超时时间。当抛出<code>TimeoutException</code>时，说明超时了，此时可以返回304响应。</li>
+</ul>
 <blockquote>
-<p>cpp中可以使用 <code>__builtin_popcount</code> 函数来直接计算整数的二进制表示中 1 的个数。</p>
+<p>这种方式的缺点是，如果数据长时间没有变化，可能会不断的抛出异常，处理效率很低。</p>
 </blockquote>
-<h3 id="代码"><a class="markdownIt-Anchor" href="#代码"></a> 代码</h3>
-<figure class="highlight cpp"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><code class="hljs cpp"><span class="hljs-keyword">class</span> <span class="hljs-title class_">Solution</span> &#123;<br><span class="hljs-keyword">public</span>:<br>    <span class="hljs-function">vector&lt;<span class="hljs-type">int</span>&gt; <span class="hljs-title">countBits</span><span class="hljs-params">(<span class="hljs-type">int</span> n)</span> </span>&#123;<br>        <span class="hljs-function">vector&lt;<span class="hljs-type">int</span>&gt; <span class="hljs-title">dp</span><span class="hljs-params">(n+<span class="hljs-number">1</span>, <span class="hljs-number">0</span>)</span></span>;<br>        <span class="hljs-keyword">for</span> (<span class="hljs-type">int</span> i=<span class="hljs-number">1</span>; i&lt;=n; i++) &#123;<br>            dp[i] = dp[i&amp;(i<span class="hljs-number">-1</span>)] + <span class="hljs-number">1</span>;<br>            <span class="hljs-comment">// dp[i]=__builtin_popcount(i);</span><br>        &#125;<br>        <span class="hljs-keyword">return</span> dp;<br>    &#125;<br>&#125;;<br></code></pre></td></tr></table></figure>
+<h3 id="scheduleasynccontext实现"><a class="markdownIt-Anchor" href="#scheduleasynccontext实现"></a> schedule+AsyncContext实现：</h3>
+<p>Diamond中，采用这种更优雅的方式实现长轮询。</p>
+<p>首先需要介绍一下AsyncContext：<br />
+AsyncContext是Servlet 3.0中引入的异步处理支持类。其主要作用是释放Servlet容器的线程，使其不必因等待耗时业务（如数据库操作、跨网络调用等）而一直处于阻塞状态。</p>
+<p>具体来说，它的作用体现在以下几点：</p>
+<ul>
+<li><strong>线程解耦与资源释放</strong>：允许Servlet线程将耗时的业务逻辑委派给一个独立的异步线程处理，而Servlet线程本身可以立即返回到容器中，去处理其他新的请求。这样可以先释放容器分配给请求的线程和相关资源，减轻系统负担。</li>
+<li><strong>提升并发能力</strong>：通过避免Servlet线程长时间被占用，服务器可以用有限的线程处理更多的并发请求，从而显著提高应用的并发处理速度和整体性能，尤其是在高并发场景下非常有用 123。</li>
+<li><strong>延迟响应</strong>：请求的响应将被延后，直到异步线程中的业务处理完成。异步线程可以直接生成响应数据，或者将请求转发给其他Servlet。</li>
+</ul>
+<p>所以，为了不让长轮训一直占用servlet容器的线程，一般通过AsyncContext将请求交给异步线程处理，处理完成后通过asyncContext的<code>complete()</code>方法来结束请求。</p>
+<p>整体流程如下：</p>
+<ul>
+<li>首先，通过维护一个<code>ScheduledThreadPool</code>来执行不同任务。</li>
+<li>当订阅者携带一个dataId来拉取数据时，先通过<code>startAsync()</code>创建一个AsyncContext对象，表示将请求转换为异步方式，然后会根据这个dataId创建一个worker，并将AsyncContext对象传给新建的worker，这个worker的run方法中，会通过schedule方法在一定时间后执行<code>sendResponse(null)</code>方法，发送超时响应，send之前需要先从队列中remove掉这个worker。</li>
+<li>如果发生了数据变更，会创建一个执行数据变更的worker，这个worker中会根据dataId从队列中找出对应的woker，然后调用这个worker的<code>sendResponse(data)</code>方法，发送数据变更响应，同样，send之前需要先从队列中remove掉这个worker。</li>
+<li><code>sendResponse</code>方法中，会向AsyncContext对象中写入数据，并调用<code>complete()</code>方法结束请求。</li>
+</ul>
+<h2 id="为什么用长轮询不用长连接"><a class="markdownIt-Anchor" href="#为什么用长轮询不用长连接"></a> 为什么用长轮询不用长连接？</h2>
+<ul>
+<li>长轮询实现更简单，通过HTTP协议即可实现，而HTTP使用十分广泛</li>
+<li>大多数语言都支持HTTP的客户端</li>
+<li>一些配置中心计划未来会改造为长连接，比如nacos</li>
+</ul>
+
                 
               </div>
             
@@ -318,7 +420,7 @@
     
       <span class="category-chain">
         
-  <a href="/categories/%E6%9C%BA%E8%AF%95/" class="category-chain-item">机试</a>
+  <a href="/categories/%E5%AD%A6%E4%B9%A0/" class="category-chain-item">学习</a>
   
   
 
@@ -338,8 +440,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>比特位计数</div>
-      <div>http://lqz2.github.io/2025/07/19/比特位计数/</div>
+      <div>配置中心和长轮询</div>
+      <div>http://lqz2.github.io/2025/07/21/配置中心和长轮询/</div>
     </div>
     <div class="license-meta">
       
@@ -351,7 +453,7 @@
       
         <div class="license-meta-item license-meta-date">
           <div>发布于</div>
-          <div>2025年7月19日</div>
+          <div>2025年7月21日</div>
         </div>
       
       
@@ -383,18 +485,12 @@
                   <article class="post-prev col-6">
                     
                     
-                      <a href="/2025/07/21/%E9%85%8D%E7%BD%AE%E4%B8%AD%E5%BF%83%E5%92%8C%E9%95%BF%E8%BD%AE%E8%AF%A2/" title="配置中心和长轮询">
-                        <i class="iconfont icon-arrowleft"></i>
-                        <span class="hidden-mobile">配置中心和长轮询</span>
-                        <span class="visible-mobile">上一篇</span>
-                      </a>
-                    
                   </article>
                   <article class="post-next col-6">
                     
                     
-                      <a href="/2025/07/15/%E4%BA%A4%E9%94%99%E5%AD%97%E7%AC%A6%E4%B8%B2/" title="交错字符串">
-                        <span class="hidden-mobile">交错字符串</span>
+                      <a href="/2025/07/19/%E6%AF%94%E7%89%B9%E4%BD%8D%E8%AE%A1%E6%95%B0/" title="比特位计数">
+                        <span class="hidden-mobile">比特位计数</span>
                         <span class="visible-mobile">下一篇</span>
                         <i class="iconfont icon-arrowright"></i>
                       </a>
