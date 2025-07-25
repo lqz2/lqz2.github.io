@@ -1,7 +1,7 @@
 ---
 title: mcp学习
 date: 2025-06-10 10:25:58
-categories: 机试
+categories: 学习
 math:
 tags:
 ---
@@ -18,6 +18,9 @@ tags:
         - [基于stdio的mcp client实现](#基于stdio的mcp-client实现)
         - [基于SSE的mcp client实现](#基于sse的mcp-client实现)
     - [agent使用mcp的工作流程](#agent使用mcp的工作流程)
+    - [SSE和Streamable HTTP的对比](#sse和streamable-http的对比)
+        - [SSE（Server-Sent Events）的问题](#sseserver-sent-events的问题)
+        - [Streamable HTTP的优势](#streamable-http的优势)
 
 <!-- /TOC -->
 # mcp学习
@@ -401,5 +404,28 @@ sequenceDiagram
 - **AI Agent处理**: AI Agent接收到结果后，会对其进行处理，应用其上下文推理能力，例如对数据进行总结，或根据结果生成最终响应。
 - **用户收到响应**: AI Agent将最终的响应或执行的操作结果反馈给用户。
 
+## SSE和Streamable HTTP的对比
 
+### SSE（Server-Sent Events）的问题
+
+- **不支持断线重连/恢复**
+当 SSE 连接断开时，所有会话状态丢失，客户端必须重新建立连接并初始化整个会话。例如，正在执行的大型文档分析任务会因 WiFi 不稳定而完全中断，迫使用户重新开始整个过程。
+
+- **服务器需维护长连接**
+服务器必须为每个客户端维护一个长时间的 SSE 连接，大量并发用户会导致资源消耗剧增。当服务器需要重启或扩容时，所有连接都会中断，影响用户体验和系统可靠性。
+
+- **服务器消息只能通过 SSE 传递**
+即使是简单的请求-响应交互，服务器也必须通过 SSE 通道返回信息，造成不必要的复杂性和开销。对于某些环境（如云函数）不适合长时间保持 SSE 连接。
+
+- **基础设施兼容性限制**
+许多现有的 Web 基础设施如 CDN、负载均衡器、API 网关等可能不能正确处理长时间的 SSE 连接，企业防火墙可能会强制关闭超时连接，导致服务不可靠。
+
+### Streamable HTTP的优势
+
+相比原有 HTTP+SSE 机制，Streamable HTTP 引入了几项关键改进：
+
+- 统一 Endpoint：移除专门的 `/sse` 端点，所有通信通过单一端点（当前官方 sdk 实现为 `/mcp`）进行
+- 按需流式传输：服务器可灵活选择是返回普通 HTTP 响应还是升级为 SSE 流
+- 会话标识：引入会话 ID 机制，支持状态管理和恢复
+- 灵活初始化：客户端可通过空 GET 请求主动初始化 SSE 流
 
