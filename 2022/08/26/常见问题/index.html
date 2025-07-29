@@ -19,19 +19,19 @@
   <meta name="author" content="zql">
   <meta name="keywords" content="">
   
-    <meta name="description" content="Java  JDK、JRE和JVM是什么？  JDK JRE JVM   字节码 为什么说Java“编译与解释共存”？ AOT和JIT JVM内存区域  程序计数器 虚拟机栈 本地方法栈 堆 方法区 运行时常量池和字符串常量池 直接内存 为什么要将永久代替换为元空间？ String s &#x3D; new String(“abc”) 执行过程中分别对应哪些内存区域？ 四种引用类型？   类加载  什么">
+    <meta name="description" content="Java  JDK、JRE和JVM是什么？  JDK JRE JVM   字节码 为什么说Java“编译与解释共存”？ AOT和JIT 受检异常和非受检异常的区别 JVM内存区域  程序计数器 虚拟机栈 本地方法栈 堆 方法区 运行时常量池和字符串常量池 直接内存 为什么要将永久代替换为元空间？ String s &#x3D; new String(“abc”) 执行过程中分别对应哪些内存区域？ 四种引">
 <meta property="og:type" content="article">
 <meta property="og:title" content="常见问题">
 <meta property="og:url" content="http://lqz2.github.io/2022/08/26/%E5%B8%B8%E8%A7%81%E9%97%AE%E9%A2%98/index.html">
 <meta property="og:site_name" content="my blogs">
-<meta property="og:description" content="Java  JDK、JRE和JVM是什么？  JDK JRE JVM   字节码 为什么说Java“编译与解释共存”？ AOT和JIT JVM内存区域  程序计数器 虚拟机栈 本地方法栈 堆 方法区 运行时常量池和字符串常量池 直接内存 为什么要将永久代替换为元空间？ String s &#x3D; new String(“abc”) 执行过程中分别对应哪些内存区域？ 四种引用类型？   类加载  什么">
+<meta property="og:description" content="Java  JDK、JRE和JVM是什么？  JDK JRE JVM   字节码 为什么说Java“编译与解释共存”？ AOT和JIT 受检异常和非受检异常的区别 JVM内存区域  程序计数器 虚拟机栈 本地方法栈 堆 方法区 运行时常量池和字符串常量池 直接内存 为什么要将永久代替换为元空间？ String s &#x3D; new String(“abc”) 执行过程中分别对应哪些内存区域？ 四种引">
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://oss.javaguide.cn/github/javaguide/java/basis/java-code-to-machine-code.png">
 <meta property="og:image" content="https://cdn.xiaolincoding.com//picgo/1715930589177-73932d2c-b0c0-4f58-a5c1-ab514b1a389c.png">
 <meta property="og:image" content="https://oss.javaguide.cn/github/javaguide/cs-basics/network/tcp-shakes-hands-three-times.png">
 <meta property="og:image" content="https://oss.javaguide.cn/github/javaguide/cs-basics/network/tcp-waves-four-times.png">
 <meta property="article:published_time" content="2022-08-26T13:10:10.000Z">
-<meta property="article:modified_time" content="2025-07-21T11:18:43.406Z">
+<meta property="article:modified_time" content="2025-07-29T03:43:36.740Z">
 <meta property="article:author" content="zql">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://oss.javaguide.cn/github/javaguide/java/basis/java-code-to-machine-code.png">
@@ -229,7 +229,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          39k 字
+          40k 字
         
       </span>
     
@@ -240,7 +240,7 @@
         
         
         
-          329 分钟
+          332 分钟
         
       </span>
     
@@ -296,6 +296,7 @@
 <li><a href="#%E5%AD%97%E8%8A%82%E7%A0%81">字节码</a></li>
 <li><a href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E8%AF%B4java%E7%BC%96%E8%AF%91%E4%B8%8E%E8%A7%A3%E9%87%8A%E5%85%B1%E5%AD%98">为什么说Java“编译与解释共存”？</a></li>
 <li><a href="#aot%E5%92%8Cjit">AOT和JIT</a></li>
+<li><a href="#%E5%8F%97%E6%A3%80%E5%BC%82%E5%B8%B8%E5%92%8C%E9%9D%9E%E5%8F%97%E6%A3%80%E5%BC%82%E5%B8%B8%E7%9A%84%E5%8C%BA%E5%88%AB">受检异常和非受检异常的区别</a></li>
 <li><a href="#jvm%E5%86%85%E5%AD%98%E5%8C%BA%E5%9F%9F">JVM内存区域</a>
 <ul>
 <li><a href="#%E7%A8%8B%E5%BA%8F%E8%AE%A1%E6%95%B0%E5%99%A8">程序计数器</a></li>
@@ -721,6 +722,38 @@ Java 语言通过字节码的方式，在一定程度上解决了传统解释型
 <ul>
 <li>AOT 更适合当下的云原生场景，对微服务架构的支持也比较友好。但是，AOT 编译无法支持 Java 的一些动态特性，如反射、动态代理、动态加载等，很多框架和库都用到了这些特性。只使用 AOT 编译，那就没办法使用这些框架和库了，或者说需要针对性地去做适配和优化。</li>
 </ul>
+<h2 id="受检异常和非受检异常的区别"><a class="markdownIt-Anchor" href="#受检异常和非受检异常的区别"></a> 受检异常和非受检异常的区别</h2>
+<table>
+<thead>
+<tr>
+<th style="text-align:left">特性</th>
+<th style="text-align:left">受检异常 (Checked Exceptions)</th>
+<th style="text-align:left">非受检异常 (Unchecked Exceptions)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:left"><strong>处理方式</strong></td>
+<td style="text-align:left"><strong>必须处理</strong> 。Java编译器强制要求程序员必须捕获（使用 <code>try-catch</code>）或者在方法签名中通过 <code>throws</code> 关键字声明抛出。</td>
+<td style="text-align:left"><strong>无需强制处理</strong> 。程序员可以选择捕获处理，也可以不处理，编译器不作强制要求。</td>
+</tr>
+<tr>
+<td style="text-align:left"><strong>检查时机</strong></td>
+<td style="text-align:left"><strong>编译时检查</strong> 。编译器会在编译代码时检查受检异常是否被妥善处理，有助于及早发现潜在错误 。</td>
+<td style="text-align:left"><strong>运行时检查</strong> 。这类异常通常在程序运行时才会被发现，与程序的逻辑错误相关。</td>
+</tr>
+<tr>
+<td style="text-align:left"><strong>继承关系</strong></td>
+<td style="text-align:left">继承自 <code>Exception</code>类，但不是 <code>RuntimeException</code> 或其子类。</td>
+<td style="text-align:left">继承自 <code>java.lang.RuntimeException</code> 或 <code>java.lang.Error</code>。</td>
+</tr>
+<tr>
+<td style="text-align:left"><strong>使用场景</strong></td>
+<td style="text-align:left">用于表示程序外部的可控、可预见的错误情况，调用者可以从这些异常中进行合理的恢复。例如：<br>- <code>IOException</code> (IO异常)<br>- <code>SQLException</code> (数据库操作异常) <br>- <code>FileNotFoundException</code> (文件未找到异常) <br>- <code>ClassNotFoundException</code> (类未找到异常)</td>
+<td style="text-align:left">用于表示程序内部的逻辑错误或运行时错误，这些错误通常是程序员应该避免的。例如：<br>- <code>NullPointerException</code> (空指针异常)<br>- <code>ArrayIndexOutOfBoundsException</code> (数组越界异常)<br>- <code>ClassCastException</code> (类型转换异常)<br>- <code>IllegalArgumentException</code> (非法参数异常)</td>
+</tr>
+</tbody>
+</table>
 <h2 id="jvm内存区域"><a class="markdownIt-Anchor" href="#jvm内存区域"></a> JVM内存区域</h2>
 <p>JVM 在执行 Java 程序的过程中会把它管理的内存划分成若干个不同的数据区域，主要包括以下几个区域：</p>
 <ul>
