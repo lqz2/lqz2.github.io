@@ -31,7 +31,7 @@
 <meta property="og:image" content="https://oss.javaguide.cn/github/javaguide/cs-basics/network/tcp-shakes-hands-three-times.png">
 <meta property="og:image" content="https://oss.javaguide.cn/github/javaguide/cs-basics/network/tcp-waves-four-times.png">
 <meta property="article:published_time" content="2022-08-26T13:10:10.000Z">
-<meta property="article:modified_time" content="2025-07-29T03:43:36.740Z">
+<meta property="article:modified_time" content="2025-07-30T07:49:33.153Z">
 <meta property="article:author" content="zql">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://oss.javaguide.cn/github/javaguide/java/basis/java-code-to-machine-code.png">
@@ -818,7 +818,7 @@ Java 语言通过字节码的方式，在一定程度上解决了传统解释型
 <h3 id="四种引用类型"><a class="markdownIt-Anchor" href="#四种引用类型"></a> 四种引用类型？</h3>
 <p>Java 中有四种引用类型，分别是：</p>
 <ul>
-<li>强引用：常见的引用类型，如<code>A a = new A()</code>，强引用的对象不会被GC回收。</li>
+<li>强引用：常见的引用类型，如<code>A a = new A()</code>，强引用的对象不会被GC回收。（不是不会被回收，而是只要有一个强引用，GC就不会回收，如果没有，还是会回收的）</li>
 <li>软引用：在内存不足时，垃圾回收器会回收被软引用的对象。可以使用<code>SoftReference</code>类来创建软引用。</li>
 <li>弱引用：弱引用的对象在<strong>下一次垃圾回收时就会被回收</strong>。可以使用<code>WeakReference</code>类来创建弱引用。</li>
 <li>虚引用：最弱的引用类型，必须和引用队列（<code>ReferenceQueue</code>）一起使用。可用来管理堆外内存。</li>
