@@ -27,7 +27,7 @@
 <meta property="og:description" content="分布式模型评测平台  简介 主要功能 关键模块  调度方式  旧版调度方式 新版调度方式   zookeeper的使用  基本信息 工作流程   任务状态流转 redis的使用        分布式模型评测平台  简介 该平台主要用于将业务数据批量上传给大模型，通过大模型的能力完成判断是否存在违规行为、责任划分等业务内容，同时还可以根据大模型的返回结果，制定相应的评测规则，对大模型的判断结果进">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2025-07-05T12:02:46.000Z">
-<meta property="article:modified_time" content="2025-08-20T13:52:21.232Z">
+<meta property="article:modified_time" content="2025-08-26T14:53:57.235Z">
 <meta property="article:author" content="zql">
 <meta name="twitter:card" content="summary_large_image">
   
@@ -373,7 +373,7 @@
 <ol>
 <li>创建CuratorFramework客户端</li>
 <li>当前节点信息写入：在<code>node_info_path/&#123;node_host&#125;</code>路径下创建一个临时节点</li>
-<li>写入执行节点信息：在<code>node_executor_info_path/&#123;node_host&#125;</code>路径下创建一个执行节点，并启动监听器，这是动态调度的关键。该监听器监听到节点变化时，会执行以下操作：
+<li>创建执行节点：在<code>node_executor_info_path/&#123;node_host&#125;</code>路径下创建一个执行节点，并启动监听器，这是动态调度的关键。该监听器监听到节点变化时，会执行以下操作：
 <ul>
 <li>拉取当前执行节点<code>node_executor_info_path/&#123;node_host&#125;</code>下的所有资源名称，然后和旧的资源名称进行对比，找出新增的资源和删除的资源</li>
 <li>对于新增的资源，每个资源创建两个线程，提交到线程池</li>
