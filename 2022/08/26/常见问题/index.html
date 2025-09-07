@@ -31,7 +31,7 @@
 <meta property="og:image" content="https://oss.javaguide.cn/github/javaguide/cs-basics/network/tcp-shakes-hands-three-times.png">
 <meta property="og:image" content="https://oss.javaguide.cn/github/javaguide/cs-basics/network/tcp-waves-four-times.png">
 <meta property="article:published_time" content="2022-08-26T13:10:10.000Z">
-<meta property="article:modified_time" content="2025-09-06T09:54:03.141Z">
+<meta property="article:modified_time" content="2025-09-07T01:03:42.898Z">
 <meta property="article:author" content="zql">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://oss.javaguide.cn/github/javaguide/java/basis/java-code-to-machine-code.png">
@@ -240,7 +240,7 @@
         
         
         
-          340 分钟
+          343 分钟
         
       </span>
     
@@ -599,6 +599,7 @@
 <li><a href="#%E5%88%86%E5%B8%83%E5%BC%8F%E4%BA%8B%E5%8A%A1%E6%9C%89%E5%93%AA%E4%BA%9B%E8%A7%A3%E5%86%B3%E6%96%B9%E6%A1%88">分布式事务有哪些解决方案？</a></li>
 <li><a href="#%E4%BB%8B%E7%BB%8D%E4%B8%80%E4%B8%8Btcc%E6%A8%A1%E5%BC%8F">介绍一下TCC模式</a></li>
 <li><a href="#%E6%80%8E%E4%B9%88%E9%80%89%E6%8B%A9%E5%88%86%E5%B8%83%E5%BC%8F%E4%BA%8B%E5%8A%A1%E6%96%B9%E6%A1%88">怎么选择分布式事务方案？</a></li>
+<li><a href="#%E7%A9%BA%E5%9B%9E%E6%BB%9A%E5%92%8C%E9%98%B2%E6%82%AC%E6%8C%82%E9%97%AE%E9%A2%98%E6%80%8E%E4%B9%88%E8%A7%A3%E5%86%B3">空回滚和防悬挂问题怎么解决？</a></li>
 </ul>
 </li>
 <li><a href="#%E5%AE%9A%E6%97%B6%E4%BB%BB%E5%8A%A1%E6%9C%89%E5%93%AA%E4%BA%9B%E5%AE%9E%E7%8E%B0%E6%96%B9%E5%BC%8F">定时任务有哪些实现方式？</a></li>
@@ -651,6 +652,7 @@
 <li><a href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E7%AC%AC%E5%9B%9B%E6%AC%A1%E6%8C%A5%E6%89%8B%E5%AE%A2%E6%88%B7%E7%AB%AF%E8%A6%81%E7%AD%89%E5%BE%85-2msl%E6%8A%A5%E6%96%87%E6%9C%80%E9%95%BF%E5%AD%98%E6%B4%BB%E6%97%B6%E9%97%B4%E6%89%8D%E8%BF%9B%E5%85%A5closed%E7%8A%B6%E6%80%81">为什么第四次挥手，客户端要等待 2MSL（报文最长存活时间）才进入CLOSED状态？</a></li>
 </ul>
 </li>
+<li><a href="#tcp%E5%92%8Cudp%E7%9A%84%E5%8C%BA%E5%88%AB">TCP和UDP的区别</a></li>
 </ul>
 </li>
 <li><a href="#c">C++</a>
@@ -2641,11 +2643,11 @@ Spring框架中有一个@Scope注解，默认就是单例的</p>
 <h2 id="分布式事务"><a class="markdownIt-Anchor" href="#分布式事务"></a> 分布式事务</h2>
 <h3 id="分布式事务有哪些解决方案"><a class="markdownIt-Anchor" href="#分布式事务有哪些解决方案"></a> 分布式事务有哪些解决方案？</h3>
 <ul>
-<li>2PC，两阶段提交协议，分为准备阶段和提交阶段，准备阶段由协调者通知参与者执行事务但不提交，提交阶段由协调者统计所有参与者的执行状态，如果都成功则通知所有参与者提交，否则通知所有参与者回滚，常见的2PC有Seata的XA和AT模式</li>
-<li>3PC, 引入了预提交阶段，引入超时机制，性能仍然不高，整体执行时间长</li>
-<li>TCC，Try-Confirm-Cancel模式，每一步都需要代码手动实现，补偿事务</li>
-<li>本地事务表+消息队列，将分布式事务拆分为本地事务进行处理，通过消息中间件保证最终一致性。具体来说，每个本地事务执行成功后，可以记录在本地消息表中，然后由定时任务定期扫描待发送的消息，发送给消息队列，消费者再执行相应的业务逻辑</li>
-<li>SAGA, 补偿事务，将长事务拆分为多个短事务（本地事务）。依次执行各参与者的正向操作。如果所有正向操作均成功，事务提交。如果任何一个正向操作失败，会以相反的顺序执行前面已提交参与者的逆向回滚操作（补偿操作），使分布式事务回到初始状态。</li>
+<li>2PC，两阶段提交协议，分为准备阶段和提交阶段，准备阶段由协调者通知参与者执行事务但不提交，提交阶段由协调者统计所有参与者的执行状态，如果都成功则通知所有参与者提交，否则通知所有参与者回滚，常见的2PC有Seata的XA和AT模式。缺点有阻塞问题、单点故障、性能较低等</li>
+<li>3PC, 引入了预提交阶段，引入超时机制，性能仍然不高，整体执行时间长。</li>
+<li>TCC，Try-Confirm-Cancel模式，每一步都需要代码手动实现，补偿事务。缺点是有代码侵入，实现复杂，要处理空回滚、防悬挂和幂等性问题。</li>
+<li>本地事务表+消息队列，将分布式事务拆分为本地事务进行处理，通过消息中间件保证最终一致性。具体来说，每个本地事务执行成功后，可以记录在本地消息表中，然后由定时任务定期扫描待发送的消息，发送给消息队列，消费者再执行相应的业务逻辑。缺点是最终一致性而非强一致。</li>
+<li>SAGA, 补偿事务，将长事务拆分为多个短事务（本地事务）。依次执行各参与者的正向操作。如果所有正向操作均成功，事务提交。如果任何一个正向操作失败，会以相反的顺序执行前面已提交参与者的逆向回滚操作（补偿操作），使分布式事务回到初始状态。缺点和TCC一样，要处理空回滚、防悬挂等问题。</li>
 </ul>
 <h3 id="介绍一下tcc模式"><a class="markdownIt-Anchor" href="#介绍一下tcc模式"></a> 介绍一下TCC模式</h3>
 <p>TCC是Try-Confirm-Cancel的缩写，是一种分布式事务解决方案</p>
@@ -2660,6 +2662,15 @@ Spring框架中有一个@Scope注解，默认就是单例的</p>
 <li>2PC和3PC：适用于强一致性要求的场景，如金融、支付场景</li>
 <li>吞吐量高，最终一致性场景：本地事务表+消息队列</li>
 <li>TCC、SAGA：业务复杂，需提供灵活的补偿机制的场景</li>
+</ul>
+<h3 id="空回滚和防悬挂问题怎么解决"><a class="markdownIt-Anchor" href="#空回滚和防悬挂问题怎么解决"></a> 空回滚和防悬挂问题怎么解决？</h3>
+<ul>
+<li>
+<p>空回滚指的是即使try没有成功，也执行cancel操作。解决方法是，在try阶段后将事务ID和预留的资源或状态绑定，在cancel阶段检查预留的资源或状态，如果没有预留资源或状态，则cancel直接返回，不执行回滚逻辑</p>
+</li>
+<li>
+<p>防悬挂是cancel比try先执行，原因一般是网络延迟或并发导致的。解决方法也是维护一个事务状态表，在try之前检查是否执行过cancel操作，如果已经执行过cancel操作，则try直接返回失败。</p>
+</li>
 </ul>
 <h2 id="定时任务有哪些实现方式"><a class="markdownIt-Anchor" href="#定时任务有哪些实现方式"></a> 定时任务有哪些实现方式？</h2>
 <ul>
@@ -2845,6 +2856,14 @@ Spring框架中有一个@Scope注解，默认就是单例的</p>
 <ul>
 <li>如果服务端因为某些原因而没有收到 ACK 的话，服务端就会重发 FIN</li>
 <li>如果客户端在 2*MSL 的时间内收到了 FIN，就会重新发送 ACK 并再次等待 2MSL，防止 Server 没有收到 ACK 而不断重发 FIN。</li>
+</ul>
+<h2 id="tcp和udp的区别"><a class="markdownIt-Anchor" href="#tcp和udp的区别"></a> TCP和UDP的区别</h2>
+<ul>
+<li>TCP是面向连接的，UDP是无连接的</li>
+<li>TCP是可靠的，提供流量控制、拥塞控制、数据校验等机制，UDP是不可靠的，只是尽最大努力传递数据</li>
+<li>TCP是面向字节流的，UDP是面向报文的</li>
+<li>TCP的传输速度相对较慢，UDP传输速度快</li>
+<li>TCP适用于对数据传输要求高的场景，如文件传输、电子邮件等，UDP适用于对实时性要求高的场景，如视频会议、在线游戏</li>
 </ul>
 <h1 id="c"><a class="markdownIt-Anchor" href="#c"></a> C++</h1>
 <h2 id="c中的static关键字"><a class="markdownIt-Anchor" href="#c中的static关键字"></a> c++中的static关键字</h2>
