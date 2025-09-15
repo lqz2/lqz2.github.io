@@ -31,7 +31,7 @@
 <meta property="og:image" content="https://oss.javaguide.cn/github/javaguide/cs-basics/network/tcp-shakes-hands-three-times.png">
 <meta property="og:image" content="https://oss.javaguide.cn/github/javaguide/cs-basics/network/tcp-waves-four-times.png">
 <meta property="article:published_time" content="2022-08-26T13:10:10.000Z">
-<meta property="article:modified_time" content="2025-09-14T03:10:18.421Z">
+<meta property="article:modified_time" content="2025-09-15T14:03:18.707Z">
 <meta property="article:author" content="zql">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://oss.javaguide.cn/github/javaguide/java/basis/java-code-to-machine-code.png">
@@ -229,7 +229,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          42k 字
+          43k 字
         
       </span>
     
@@ -240,7 +240,7 @@
         
         
         
-          351 分钟
+          357 分钟
         
       </span>
     
@@ -489,6 +489,9 @@
 <li><a href="#%E5%88%86%E5%BA%93%E5%92%8C%E5%88%86%E8%A1%A8%E7%9A%84%E5%8C%BA%E5%88%AB">分库和分表的区别？</a></li>
 <li><a href="#mysql%E5%AD%98%E5%82%A8%E7%BB%86%E8%8A%82">MYSQL存储细节</a></li>
 <li><a href="#dynamic%E5%92%8Ccompact%E8%A1%8C%E6%A0%BC%E5%BC%8F%E7%9A%84%E5%8C%BA%E5%88%AB">DYNAMIC和COMPACT行格式的区别？</a></li>
+<li><a href="#explain%E7%9A%84%E7%BB%93%E6%9E%9C%E5%A6%82%E4%BD%95%E5%88%86%E6%9E%90">EXPLAIN的结果如何分析？</a></li>
+<li><a href="#%E4%BB%80%E4%B9%88%E6%98%AF%E7%B4%A2%E5%BC%95%E4%B8%8B%E6%8E%A8">什么是索引下推？</a></li>
+<li><a href="#%E5%87%BA%E7%8E%B0filesort%E7%9A%84%E5%8E%9F%E5%9B%A0">出现filesort的原因？</a></li>
 </ul>
 </li>
 <li><a href="#redis">Redis</a>
@@ -1966,6 +1969,53 @@ binlog 有 3 种格式类型，分别是 STATEMENT（默认格式）、ROW、MIX
 <ul>
 <li>COMPACT 会在行内存储大字段的前 768 字节，其余部分溢出到独立页。</li>
 <li>DYNAMIC 则会将整个大字段的数据完全存储在页外，行内只保留一个指向这些外部页的 20 字节指针。</li>
+</ul>
+<h3 id="explain的结果如何分析"><a class="markdownIt-Anchor" href="#explain的结果如何分析"></a> EXPLAIN的结果如何分析？</h3>
+<p>主要看type, key, extra三个字段</p>
+<ul>
+<li>
+<p>type：表示查询执行的类型，从好到坏依次是</p>
+<ul>
+<li>const: 可以将查询优化为只读取一行数据，并且该行被视为常量。</li>
+<li>eq_ref: 当使用 JOIN 连接时，对于前一个表的组合，当前表只有一行与之匹配。</li>
+<li>ref: 当连接条件使用索引的非唯一键或者索引的非最左前缀时，会返回与某个参照值匹配的多行。</li>
+<li>fulltext: 当查询包含全文搜索并且存在全文索引时，使用此访问方法。</li>
+<li>ref_or_null: 类似于 ref，但 MySQL 还会额外查找包含 NULL 值的行。</li>
+<li>index_merge: 表示使用了多个索引的组合来检索行，并将结果合并。</li>
+<li>unique_subquery: 用于 IN 子查询中，子查询会完全转换为 WHERE 子句中的 eq_ref。</li>
+<li>index_subquery: 类似于 unique_subquery，但用于非唯一索引。</li>
+<li><strong>range</strong>: 对索引列使用范围查询</li>
+<li><strong>index</strong>: 全索引扫描</li>
+<li><strong>ALL</strong>: 全表扫描，性能最差</li>
+</ul>
+</li>
+<li>
+<p>key：表示查询使用的索引，如果为NULL，表示没有使用索引</p>
+</li>
+<li>
+<p>extra：表示查询的额外信息，常见的有：</p>
+<ul>
+<li><strong>Using filesort</strong>：在排序时使用了外部的索引排序，没有用到表内索引进行排序。</li>
+<li><strong>Using temporary</strong>：需要创建临时表来存储查询的结果，常见于 ORDER BY 和 GROUP BY。</li>
+<li><strong>Using index</strong>：表明查询使用了覆盖索引，不用回表，查询效率非常高。</li>
+<li><strong>Using index condition</strong>：表示查询优化器选择使用了<strong>索引条件下推</strong>这个特性。</li>
+<li>Using where：表明查询使用了 WHERE 子句进行条件过滤。一般在没有使用到索引的时候会出现。</li>
+<li>Using join buffer (Block Nested Loop)：连表查询的方式，表示当被驱动表的没有使用索引的时候，MySQL 会先将驱动表读出来放到 join buffer 中，再遍历被驱动表与驱动表进行查询。</li>
+</ul>
+</li>
+</ul>
+<h3 id="什么是索引下推"><a class="markdownIt-Anchor" href="#什么是索引下推"></a> 什么是索引下推？</h3>
+<p>索引下推是指在查询时，<strong>MySQL会将部分查询条件下推到存储引擎层，直接过滤不符合条件的数据，减少回表次数</strong>，适用于联合索引只有部分生效的场景，可以减少回表的次数，提升查询性能</p>
+<ul>
+<li>没有索引下推时，先根据有效的索引列查找数据，然后回表检查其他条件字段是否符合</li>
+<li>有索引下推时，先根据有效的索引列查找数据，然后先不回表，而是在存储引擎层检查其他条件字段是否符合，符合的才回表，减少了回表的次数</li>
+</ul>
+<h3 id="出现filesort的原因"><a class="markdownIt-Anchor" href="#出现filesort的原因"></a> 出现filesort的原因？</h3>
+<ul>
+<li>order by的字段没有索引</li>
+<li>order by的字段不符合最左匹配原则</li>
+<li>order by部分字段没有索引</li>
+<li>order by和where使用的索引列不一致</li>
 </ul>
 <h2 id="redis"><a class="markdownIt-Anchor" href="#redis"></a> Redis</h2>
 <h3 id="redis的数据结构以及应用场景"><a class="markdownIt-Anchor" href="#redis的数据结构以及应用场景"></a> Redis的数据结构以及应用场景？</h3>
