@@ -31,7 +31,7 @@
 <meta property="og:image" content="https://oss.javaguide.cn/github/javaguide/cs-basics/network/tcp-shakes-hands-three-times.png">
 <meta property="og:image" content="https://oss.javaguide.cn/github/javaguide/cs-basics/network/tcp-waves-four-times.png">
 <meta property="article:published_time" content="2022-08-26T13:10:10.000Z">
-<meta property="article:modified_time" content="2025-09-15T14:05:47.774Z">
+<meta property="article:modified_time" content="2025-09-16T07:59:50.396Z">
 <meta property="article:author" content="zql">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://oss.javaguide.cn/github/javaguide/java/basis/java-code-to-machine-code.png">
@@ -588,6 +588,7 @@
 <li><a href="#%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97%E7%9A%84%E5%BA%94%E7%94%A8%E5%9C%BA%E6%99%AF%E6%9C%89%E5%93%AA%E4%BA%9B">消息队列的应用场景有哪些？</a></li>
 <li><a href="#%E6%B6%88%E6%81%AF%E4%B8%A2%E5%A4%B1%E6%80%8E%E4%B9%88%E8%A7%A3%E5%86%B3">消息丢失怎么解决？</a></li>
 <li><a href="#%E6%B6%88%E6%81%AF%E9%98%9F%E5%88%97%E7%9A%84%E5%8F%AF%E9%9D%A0%E6%80%A7%E9%A1%BA%E5%BA%8F%E6%80%A7%E6%80%8E%E4%B9%88%E4%BF%9D%E8%AF%81">消息队列的可靠性、顺序性怎么保证？</a></li>
+<li><a href="#%E9%82%A3%E4%BA%9B%E6%B6%88%E6%81%AF%E4%BC%9A%E8%BF%9B%E5%85%A5%E6%AD%BB%E4%BF%A1%E9%98%9F%E5%88%97">那些消息会进入死信队列？</a></li>
 </ul>
 </li>
 <li><a href="#spring">Spring</a>
@@ -2658,6 +2659,12 @@ NX参数实现<strong>key不存在才插入</strong>，可以通过它实现分�
 <li>首先明确需要哪些业务需要保证顺序性，比如转账操作的顺序性</li>
 <li>有的消息队列本身就支持顺序性，如kafka按照消息的key将消息分区，每个分区内的消息按照写入顺序被消费</li>
 <li>此外，如果多个消费者消费同一个队列，或者多线程消费同一个分区，那么就无法保证顺序性了，可以使用单线程或者使用线程池对消息进行串行化处理</li>
+</ul>
+<h3 id="那些消息会进入死信队列"><a class="markdownIt-Anchor" href="#那些消息会进入死信队列"></a> 那些消息会进入死信队列？</h3>
+<ul>
+<li>消息长时间没有被消费</li>
+<li>消费者显式拒绝消息，并且不重新入队列</li>
+<li>重试多次后仍然消费失败</li>
 </ul>
 <h2 id="spring"><a class="markdownIt-Anchor" href="#spring"></a> Spring</h2>
 <h3 id="spring的单例bean是线程安全的吗"><a class="markdownIt-Anchor" href="#spring的单例bean是线程安全的吗"></a> Spring的单例Bean是线程安全的吗？</h3>
