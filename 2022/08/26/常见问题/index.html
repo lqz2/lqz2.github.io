@@ -31,7 +31,7 @@
 <meta property="og:image" content="https://oss.javaguide.cn/github/javaguide/cs-basics/network/tcp-shakes-hands-three-times.png">
 <meta property="og:image" content="https://oss.javaguide.cn/github/javaguide/cs-basics/network/tcp-waves-four-times.png">
 <meta property="article:published_time" content="2022-08-26T13:10:10.000Z">
-<meta property="article:modified_time" content="2025-09-19T12:50:12.628Z">
+<meta property="article:modified_time" content="2025-09-21T02:36:26.286Z">
 <meta property="article:author" content="zql">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://oss.javaguide.cn/github/javaguide/java/basis/java-code-to-machine-code.png">
@@ -229,7 +229,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          44k 字
+          45k 字
         
       </span>
     
@@ -240,7 +240,7 @@
         
         
         
-          367 分钟
+          372 分钟
         
       </span>
     
@@ -414,6 +414,9 @@
 <li><a href="#java%E4%B8%AD%E6%9C%89%E5%93%AA%E4%BA%9B%E5%B8%B8%E7%94%A8%E7%9A%84%E9%94%81%E4%BD%BF%E7%94%A8%E5%9C%BA%E6%99%AF%E6%98%AF%E4%BB%80%E4%B9%88">java中有哪些常用的锁？使用场景是什么？</a></li>
 <li><a href="#%E4%BB%80%E4%B9%88%E6%98%AF%E5%85%AC%E5%B9%B3%E9%94%81%E5%92%8C%E9%9D%9E%E5%85%AC%E5%B9%B3%E9%94%81">什么是公平锁和非公平锁？</a></li>
 <li><a href="#%E8%AE%B2%E8%AE%B2reentrantlock">讲讲ReentrantLock？</a></li>
+<li><a href="#synchronized%E7%9A%84%E5%BA%95%E5%B1%82%E5%AE%9E%E7%8E%B0%E5%8E%9F%E7%90%86">synchronized的底层实现原理？</a></li>
+<li><a href="#synchronized%E9%94%81%E5%8D%87%E7%BA%A7%E7%9A%84%E8%BF%87%E7%A8%8B">synchronized锁升级的过程？</a></li>
+<li><a href="#jvm%E5%AF%B9synchronized%E7%9A%84%E4%BC%98%E5%8C%96">JVM对synchronized的优化？</a></li>
 <li><a href="#synchronized%E5%92%8Creentrantlock%E7%9A%84%E7%9A%84%E5%BA%94%E7%94%A8%E5%9C%BA%E6%99%AF%E6%9C%89%E4%BB%80%E4%B9%88%E4%B8%8D%E5%90%8C">synchronized和ReentrantLock的的应用场景有什么不同？</a></li>
 <li><a href="#synchronized%E5%92%8Creentrantlock%E7%9A%84%E5%8C%BA%E5%88%AB">synchronized和ReentrantLock的区别？</a></li>
 <li><a href="#%E4%BB%8B%E7%BB%8D%E4%B8%80%E4%B8%8Baqs">介绍一下AQS?</a></li>
@@ -1411,6 +1414,7 @@ Spring 通过 XML 配置模式装载 Bean 的过程：</li>
 <li>公平锁：按照线程请求的顺序来获取锁，先到先得，整体执行速度慢，吞吐量小，因为涉及线程从休眠到运行状态的转换。</li>
 <li>非公平锁：多个线程争抢锁，整体执行速度快，吞吐量大。</li>
 </ul>
+<p>因为线程的阻塞和唤醒状态的切换涉及用户态和内核态的切换，开销较大，而非公平锁可以减少不必要的上下文切换，所以非公平锁的性能通常优于公平锁。</p>
 <h3 id="讲讲reentrantlock"><a class="markdownIt-Anchor" href="#讲讲reentrantlock"></a> 讲讲ReentrantLock？</h3>
 <p>ReentrantLock底层主要依赖AQS抽象类，AQS提供了一些基本的同步机制如队列、状态等。ReentrantLock具有以下特性：</p>
 <ul>
@@ -1422,6 +1426,31 @@ Spring 通过 XML 配置模式装载 Bean 的过程：</li>
 <figure class="highlight abnf"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><code class="hljs abnf">ReentrantLock lock<span class="hljs-operator">=</span>new ReentrantLock()<span class="hljs-comment">;</span><br>Condition condition<span class="hljs-operator">=</span>lock.newCondition()<span class="hljs-comment">;</span><br>//等待与唤醒<br>condition.await()<span class="hljs-comment">;</span><br>condition.signal()<span class="hljs-comment">;</span><br></code></pre></td></tr></table></figure>
 <ul>
 <li>支持可重入性，同一个线程可以多次获取同一把锁，不会造成死锁。每次获取锁时，holdCount递增，释放锁时递减，当holdCount为0时，其他线程才能获取锁。</li>
+</ul>
+<h3 id="synchronized的底层实现原理"><a class="markdownIt-Anchor" href="#synchronized的底层实现原理"></a> synchronized的底层实现原理？</h3>
+<p>synchronized本质上是通过获取监视器锁实现的</p>
+<ul>
+<li>synchronized用于代码块时，通过monitorenter和monitorexit指令来获取和释放锁，monitorenter可以让计数器加1，monitorexit让计数器减1，当计数器为0时，其他线程才能获取锁。</li>
+<li>synchronized用于方法时，编译器会在方法的字节码中添加ACC标识，表示该方法是同步方法，JVM在调用该方法时会自动获取和释放锁。</li>
+</ul>
+<p>具体来说，monitor中包括entryList和waitSet两个重要的队列：</p>
+<ul>
+<li>entryList：当多个线程竞争监视器锁时，没获取到的线程会被放入entryList队列中，当监视器锁释放时，entryList中的线程会重新竞争锁。</li>
+<li>waitSet：当线程调用wait()方法时，线程会释放监视器锁，然后放入waitSet队列中，当通过notify()或notifyAll()方法唤醒时，线程会从waitSet中移除，然后放入entryList中重新竞争锁。</li>
+</ul>
+<h3 id="synchronized锁升级的过程"><a class="markdownIt-Anchor" href="#synchronized锁升级的过程"></a> synchronized锁升级的过程？</h3>
+<ul>
+<li>无锁状态：没有任何线程请求锁</li>
+<li>偏向锁：当一个线程请求锁时，如果没有其他线程竞争，JVM会将锁标记为偏向锁，表示该线程可以多次获取锁而不需要竞争。</li>
+<li>轻量级锁：当有多个线程竞争锁时，锁升级为轻量级锁，通过CAS来获取锁，如果获取失败，线程会进入自旋状态，尝试重新获取锁。</li>
+<li>重量级锁：当竞争非常激烈或持有锁时间过长时，会升级为重量级锁，获取锁失败的线程会被阻塞，因为阻塞和唤醒涉及用户态和内核态的切换，开销较大。</li>
+</ul>
+<h3 id="jvm对synchronized的优化"><a class="markdownIt-Anchor" href="#jvm对synchronized的优化"></a> JVM对synchronized的优化？</h3>
+<ul>
+<li>锁膨胀：jdk1.6之前，一直是重量级锁，jdk1.6之后有了锁升级的过程，减少了不必要的阻塞和唤醒</li>
+<li>锁消除：JVM如果发现某段加锁的代码没有被多线程竞争访问的可能性，就会将锁消除，提升性能</li>
+<li>锁粗化：将多次加锁和释放锁的操作合并，减少加锁和释放锁的次数，提升性能</li>
+<li>自旋锁：当线程获取锁失败时，不会立即阻塞，而是通过自旋的方式尝试获取锁，减少阻塞和唤醒的开销</li>
 </ul>
 <h3 id="synchronized和reentrantlock的的应用场景有什么不同"><a class="markdownIt-Anchor" href="#synchronized和reentrantlock的的应用场景有什么不同"></a> synchronized和ReentrantLock的的应用场景有什么不同？</h3>
 <ul>
