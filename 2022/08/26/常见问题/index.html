@@ -31,7 +31,7 @@
 <meta property="og:image" content="https://oss.javaguide.cn/github/javaguide/cs-basics/network/tcp-shakes-hands-three-times.png">
 <meta property="og:image" content="https://oss.javaguide.cn/github/javaguide/cs-basics/network/tcp-waves-four-times.png">
 <meta property="article:published_time" content="2022-08-26T13:10:10.000Z">
-<meta property="article:modified_time" content="2025-09-21T02:36:26.286Z">
+<meta property="article:modified_time" content="2025-09-21T06:43:51.271Z">
 <meta property="article:author" content="zql">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://oss.javaguide.cn/github/javaguide/java/basis/java-code-to-machine-code.png">
@@ -240,7 +240,7 @@
         
         
         
-          372 分钟
+          373 分钟
         
       </span>
     
@@ -1101,7 +1101,10 @@ Java中大部分方法和类以及集合只能处理类型对象，比如ArrayLi
 <li>JDK1.8之后，HashMap引入了红黑树，当链表长度超过8时，链表会转换为红黑树，提高查询效率（查询复杂度<code>log n</code>）,数量少于6会转回链表。</li>
 </ul>
 <h3 id="hashmap为什么线程不安全"><a class="markdownIt-Anchor" href="#hashmap为什么线程不安全"></a> HashMap为什么线程不安全？</h3>
-<p>HashMap线程不安全主要是由于多个线程对HashMap的put操作引起的，有下面两种情况：</p>
+<p>HashMap线程不安全主要是由于可能产生死循环以及数据覆盖问题。<br />
+死循环是因为jdk 1.7之前的HashMap在扩容时，使用头插法进行迁移，在多线程环境下可能会形成环形链表，导致死循环。jdk 1.8<br />
+采用尾插法，避免了死循环问题，但仍然存在数据覆盖问题。</p>
+<p>数据覆盖由多个线程对HashMap的put操作引起，有下面两种情况：</p>
 <ul>
 <li>一种是两个线程同时put，假如线程1先完成了哈希冲突判断后，时间片耗尽挂起，线程2进行哈希冲突判断然后put，如果发生了哈希冲突，线程1是感知不到的，它轮到时间片后会继续put,这样导致了数据覆盖。</li>
 <li>一种是两个线程同时put,同时读到当前size为10，这样线程1读完size后时间片耗尽挂起，线程2完成put,size变为11，线程1继续执行put，size还是改成11，这样导致增加了两个元素，但size只增加了1。</li>
