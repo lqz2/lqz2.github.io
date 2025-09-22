@@ -27,7 +27,7 @@
 <meta property="og:description" content="小型支付商城  介绍一下这个项目   拼团交易学习  介绍一下这个项目 整体流程 讲讲DDD和六边形架构？ 贫血模型和充血模型的区别？ 项目中的领域模型是如何划分的？各个领域之间如何协作？ 规则树设计模型怎么使用的？ 试算逻辑怎么实现的？ 人群标签过滤怎么实现？ 动态配置(DCC)怎么实现的？ 交易规则过滤怎么用责任链模式实现的？ 交易结算过滤怎么实现的？ 结算触达的回调是怎么做的？ 项目里锁">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2025-04-01T13:16:11.000Z">
-<meta property="article:modified_time" content="2025-06-03T07:40:20.050Z">
+<meta property="article:modified_time" content="2025-09-22T14:36:42.477Z">
 <meta property="article:author" content="zql">
 <meta name="twitter:card" content="summary_large_image">
   
@@ -235,7 +235,7 @@
         
         
         
-          30 分钟
+          31 分钟
         
       </span>
     
@@ -402,7 +402,7 @@ DDD 的建模过程，是以一个用户为起点，通过行为命令，发起�
 </ul>
 <figure class="highlight scala"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><code class="hljs scala"><span class="hljs-meta">@Slf</span>4j<br><span class="hljs-meta">@Service</span>(<span class="hljs-string">&quot;N&quot;</span>)<br>public <span class="hljs-class"><span class="hljs-keyword">class</span> <span class="hljs-title">NCalculateService</span> <span class="hljs-keyword">extends</span> <span class="hljs-title">AbstractDiscountCalculateService</span> </span>&#123;<br><br>    <span class="hljs-meta">@Override</span><br>    public <span class="hljs-type">BigDecimal</span> doCalculate(<span class="hljs-type">BigDecimal</span> originalPrice, <span class="hljs-type">GroupBuyActivityDiscountVO</span>.<span class="hljs-type">GroupBuyDiscount</span> groupBuyDiscount) &#123;<br>        log.info(<span class="hljs-string">&quot;优惠策略折扣计算:&#123;&#125;&quot;</span>, groupBuyDiscount.getDiscountType().getCode());<br><br>        <span class="hljs-comment">// 折扣表达式 - 直接为优惠后的金额</span><br>        <span class="hljs-type">String</span> marketExpr = groupBuyDiscount.getMarketExpr();<br>        <span class="hljs-comment">// n元购</span><br>        <span class="hljs-keyword">return</span> <span class="hljs-keyword">new</span> <span class="hljs-type">BigDecimal</span>(marketExpr);<br>    &#125;<br>&#125;<br></code></pre></td></tr></table></figure>
 <ul>
-<li>在MarketNode节点中，通过Map的方式注入，并调用calculate方法完成试算</li>
+<li>在MarketNode节点中，通过Map的方式注入，并调用calculate方法完成试算。Map注入时，IOC容器会自动扫描出所有实现了IDiscountCalculateService接口的类，并根据@Service注解的名称作为key，类实例作为value，组装成一个Map。</li>
 </ul>
 <figure class="highlight haxe"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><code class="hljs haxe"><span class="hljs-meta">@Resource</span><br><span class="hljs-keyword">private</span> Map&lt;<span class="hljs-keyword">String</span>, IDiscountCalculateService&gt; discountCalculateServiceMap;<br><span class="hljs-comment">// 优惠试算</span><br>IDiscountCalculateService discountCalculateService = discountCalculateServiceMap.<span class="hljs-keyword">get</span>(groupBuyDiscount.getMarketPlan());<br><span class="hljs-keyword">if</span> (<span class="hljs-literal">null</span> == discountCalculateService) &#123;<br>    log.info(<span class="hljs-string">&quot;不存在&#123;&#125;类型的折扣计算服务，支持类型为:&#123;&#125;&quot;</span>, groupBuyDiscount.getMarketPlan(), JSON.toJSONString(discountCalculateServiceMap.keySet()));<br>    <span class="hljs-keyword">throw</span> <span class="hljs-keyword">new</span> <span class="hljs-type">AppException</span>(ResponseCode.E0001.getCode(), ResponseCode.E0001.getInfo());<br>&#125;<br></code></pre></td></tr></table></figure>
 <h2 id="人群标签过滤怎么实现"><a class="markdownIt-Anchor" href="#人群标签过滤怎么实现"></a> 人群标签过滤怎么实现？</h2>
