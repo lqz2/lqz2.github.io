@@ -31,7 +31,7 @@
 <meta property="og:image" content="https://oss.javaguide.cn/github/javaguide/cs-basics/network/tcp-shakes-hands-three-times.png">
 <meta property="og:image" content="https://oss.javaguide.cn/github/javaguide/cs-basics/network/tcp-waves-four-times.png">
 <meta property="article:published_time" content="2022-08-26T13:10:10.000Z">
-<meta property="article:modified_time" content="2025-09-25T11:02:26.130Z">
+<meta property="article:modified_time" content="2025-09-27T08:19:48.575Z">
 <meta property="article:author" content="zql">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://oss.javaguide.cn/github/javaguide/java/basis/java-code-to-machine-code.png">
@@ -240,7 +240,7 @@
         
         
         
-          375 分钟
+          379 分钟
         
       </span>
     
@@ -620,6 +620,7 @@
 <li><a href="#bean%E7%9A%84%E7%94%9F%E5%91%BD%E5%91%A8%E6%9C%9F">Bean的生命周期？</a></li>
 <li><a href="#bean%E7%9A%84%E5%BE%AA%E7%8E%AF%E4%BE%9D%E8%B5%96%E6%80%8E%E4%B9%88%E8%A7%A3%E5%86%B3">Bean的循环依赖怎么解决？</a></li>
 <li><a href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E6%98%AF%E4%B8%89%E7%BA%A7%E7%BC%93%E5%AD%98%E8%80%8C%E4%B8%8D%E6%98%AF%E4%BA%8C%E7%BA%A7%E7%BC%93%E5%AD%98">为什么是三级缓存而不是二级缓存？</a></li>
+<li><a href="#spring%E4%B8%BA%E4%BB%80%E4%B9%88%E4%B8%8D%E6%8E%A8%E8%8D%90%E4%BD%BF%E7%94%A8autowired%E6%B3%A8%E8%A7%A3">Spring为什么不推荐使用@Autowired注解？</a></li>
 </ul>
 </li>
 <li><a href="#%E4%BB%8B%E7%BB%8D%E4%B8%80%E4%B8%8Bcap%E5%92%8Cbase%E7%90%86%E8%AE%BA">介绍一下CAP和BASE理论</a></li>
@@ -646,6 +647,8 @@
 <li><a href="#%E6%AD%A3%E5%90%91%E4%BB%A3%E7%90%86%E5%92%8C%E5%8F%8D%E5%90%91%E4%BB%A3%E7%90%86%E7%9A%84%E5%8C%BA%E5%88%AB">正向代理和反向代理的区别？</a></li>
 </ul>
 </li>
+<li><a href="#%E4%BB%8B%E7%BB%8D%E4%B8%8Bspi%E6%9C%BA%E5%88%B6">介绍下SPI机制？</a></li>
+<li><a href="#%E4%BB%80%E4%B9%88%E6%98%AF%E5%BA%8F%E5%88%97%E5%8C%96%E5%92%8C%E5%8F%8D%E5%BA%8F%E5%88%97%E5%8C%96">什么是序列化和反序列化？</a></li>
 </ul>
 </li>
 <li><a href="#cs%E5%9F%BA%E7%A1%80">CS基础</a>
@@ -683,6 +686,7 @@
 </li>
 <li><a href="#tcp%E5%92%8Cudp%E7%9A%84%E5%8C%BA%E5%88%AB">TCP和UDP的区别</a></li>
 <li><a href="#http%E7%8A%B6%E6%80%81%E7%A0%81%E7%9A%84%E5%88%86%E7%B1%BB">HTTP状态码的分类</a></li>
+<li><a href="#get%E5%92%8Cpost%E7%9A%84%E5%8C%BA%E5%88%AB">GET和POST的区别</a></li>
 </ul>
 </li>
 <li><a href="#c">C++</a>
@@ -2450,8 +2454,8 @@ NX参数实现<strong>key不存在才插入</strong>，可以通过它实现分�
 <p>热key指某个key的访问频率过高</p>
 <p>解决方法：</p>
 <ul>
-<li>将热key复制并迁移到多个数据分片</li>
-<li>使用读写分离架构，将热key读请求分发到多个从节点</li>
+<li>不要设置过期时间，手动删除</li>
+<li>访问热key时，如果缓存不存在，通过double check加锁的方式访问热key，先查缓存，如果没有命中，再加锁，然后再查缓存，如果还是没有命中，再访问数据库，双重检查的机制可以保证临界区内只有一个线程访问数据库</li>
 </ul>
 <h3 id="缓存雪崩如何解决"><a class="markdownIt-Anchor" href="#缓存雪崩如何解决"></a> 缓存雪崩如何解决？</h3>
 <p>缓存雪崩指的是大量key在同一时间失效，导致请求全部落到数据库上，引起数据库压力过大，甚至宕机</p>
@@ -2841,6 +2845,13 @@ Spring框架中有一个@Scope注解，默认就是单例的</p>
 <h3 id="为什么是三级缓存而不是二级缓存"><a class="markdownIt-Anchor" href="#为什么是三级缓存而不是二级缓存"></a> 为什么是三级缓存而不是二级缓存？</h3>
 <p>三级缓存中的ObjectFactory可以用来创建代理对象，他的核心作用是<strong>将Bean的实例化和Bean的代理对象创建这两个操作解耦</strong>。它推迟了代理对象的创建时机，只有在真正发生循环依赖并需要注入时，才创建代理对象。</p>
 <p>如果仅使用二级缓存，就无法解决AOP代理的循环依赖问题，因为<strong>代理对象在Bean初始化后才生成</strong>，而发生循环依赖时，如果B提前要A的代理对象，那A只能提前生成代理对象，这样就违背了Spring的设计原则。</p>
+<h3 id="spring为什么不推荐使用autowired注解"><a class="markdownIt-Anchor" href="#spring为什么不推荐使用autowired注解"></a> Spring为什么不推荐使用@Autowired注解？</h3>
+<ul>
+<li>空指针问题，对象生命周期中，构造方法优先于依赖注入，如果在构造方法中使用@Autowired注入的对象，就会出现空指针问题</li>
+<li>与IOC容器强耦合，不利于单元测试</li>
+<li>构造器注入如果发生循环依赖，启动时会报错，而@Autowired不会报错，可能会掩盖问题</li>
+</ul>
+<p>最佳实践是使用构造器注入，推荐使用<code>@RequiredArgsConstructor</code>注解，结合<code>final</code>关键字，强制要求必须通过构造器注入</p>
 <h2 id="介绍一下cap和base理论"><a class="markdownIt-Anchor" href="#介绍一下cap和base理论"></a> 介绍一下CAP和BASE理论</h2>
 <p>CAP分别对应了一致性、可用性和分区容错性</p>
 <ul>
@@ -2978,6 +2989,26 @@ Spring框架中有一个@Scope注解，默认就是单例的</p>
 <li>正向代理代理的是客户端，帮助客户端访问其无法直接访问的服务器资源；</li>
 <li>反向代理代理的是服务器端，为服务器收发请求，客户端感知不到反向代理后面的真实服务器。</li>
 </ul>
+<h2 id="介绍下spi机制"><a class="markdownIt-Anchor" href="#介绍下spi机制"></a> 介绍下SPI机制？</h2>
+<p>SPI是一种插件机制，用于在运行时动态加载某些功能的实现。他的主要作用是：</p>
+<ul>
+<li>解耦：通过接口和配置文件的方式，将接口和它的实现相分离</li>
+<li>易扩展：添加或者替换实现类，无需修改现有代码</li>
+</ul>
+<p>实现步骤：</p>
+<ul>
+<li>定义接口</li>
+<li>提供接口的多个实现类</li>
+<li>在META-INF/services目录下创建一个以接口全限定名命名的文件，文件内容是实现类的全限定名</li>
+<li>通过ServiceLoader.load方法加载接口的实现类</li>
+</ul>
+<h2 id="什么是序列化和反序列化"><a class="markdownIt-Anchor" href="#什么是序列化和反序列化"></a> 什么是序列化和反序列化？</h2>
+<ul>
+<li>序列化就是将对象转为字节流的过程，便于网络传输和存储</li>
+<li>只要类实现了Serializable接口，它的对象就可以被序列化</li>
+<li>实现Serializable的接口需要定义一个serialVersionUID，反序列化时用来核对版本</li>
+<li>类中不需要序列化的字段可以用transient关键字修饰</li>
+</ul>
 <h1 id="cs基础"><a class="markdownIt-Anchor" href="#cs基础"></a> CS基础</h1>
 <h2 id="进程和线程的区别"><a class="markdownIt-Anchor" href="#进程和线程的区别"></a> 进程和线程的区别</h2>
 <blockquote>
@@ -3085,6 +3116,12 @@ Spring框架中有一个@Scope注解，默认就是单例的</p>
 <li>3xx: 发生了重定向，需要进一步操作</li>
 <li>4xx: 客户端发起的请求有误或资源未找到</li>
 <li>5xx：服务端内部错误</li>
+</ul>
+<h2 id="get和post的区别"><a class="markdownIt-Anchor" href="#get和post的区别"></a> GET和POST的区别</h2>
+<ul>
+<li>GET请求用来获取资源，POST请求用来提交数据</li>
+<li>GET幂等，POST请求不是幂等的</li>
+<li>一般GET请求的URL有长度限制，POST请求理论上没有长度限制，但一般服务器端会有限制</li>
 </ul>
 <h1 id="c"><a class="markdownIt-Anchor" href="#c"></a> C++</h1>
 <h2 id="c中的static关键字"><a class="markdownIt-Anchor" href="#c中的static关键字"></a> c++中的static关键字</h2>
