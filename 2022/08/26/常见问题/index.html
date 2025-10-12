@@ -31,7 +31,7 @@
 <meta property="og:image" content="https://oss.javaguide.cn/github/javaguide/cs-basics/network/tcp-shakes-hands-three-times.png">
 <meta property="og:image" content="https://oss.javaguide.cn/github/javaguide/cs-basics/network/tcp-waves-four-times.png">
 <meta property="article:published_time" content="2022-08-26T13:10:10.000Z">
-<meta property="article:modified_time" content="2025-10-09T02:56:54.382Z">
+<meta property="article:modified_time" content="2025-10-12T06:49:47.276Z">
 <meta property="article:author" content="zql">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://oss.javaguide.cn/github/javaguide/java/basis/java-code-to-machine-code.png">
@@ -2805,11 +2805,16 @@ NX参数实现<strong>key不存在才插入</strong>，可以通过它实现分�
 <li>消费者确认机制</li>
 <li>消费者失败重试机制</li>
 </ul>
-<p>顺序性：</p>
+<p>顺序性：<br />
+一般消息队列本身就是有序的，会出现乱序的情况主要有以下几种：</p>
 <ul>
-<li>首先明确需要哪些业务需要保证顺序性，比如转账操作的顺序性</li>
-<li>有的消息队列本身就支持顺序性，如kafka按照消息的key将消息分区，每个分区内的消息按照写入顺序被消费</li>
-<li>此外，如果多个消费者消费同一个队列，或者多线程消费同一个分区，那么就无法保证顺序性了，可以使用单线程或者使用线程池对消息进行串行化处理</li>
+<li>一个消息队列对应多个消费者，由于消费速度不同可能导致乱序</li>
+<li>默认情况下，一个Topic可能对应多个队列，同一个业务的消息可能会被分入不同的队列，这样也会乱序</li>
+</ul>
+<p>解决方法：</p>
+<ul>
+<li>生产端：保证同一个业务的消息被放入同一个分区或队列，比如可以用业务代码的哈希值对队列数量取模，得到队列索引，这样同一个业务就会放入相同的队列了</li>
+<li>消费端：确保一个分区或队列对应一个消费者</li>
 </ul>
 <h3 id="那些消息会进入死信队列"><a class="markdownIt-Anchor" href="#那些消息会进入死信队列"></a> 那些消息会进入死信队列？</h3>
 <ul>
