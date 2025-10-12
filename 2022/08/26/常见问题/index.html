@@ -31,7 +31,7 @@
 <meta property="og:image" content="https://oss.javaguide.cn/github/javaguide/cs-basics/network/tcp-shakes-hands-three-times.png">
 <meta property="og:image" content="https://oss.javaguide.cn/github/javaguide/cs-basics/network/tcp-waves-four-times.png">
 <meta property="article:published_time" content="2022-08-26T13:10:10.000Z">
-<meta property="article:modified_time" content="2025-10-12T06:49:47.276Z">
+<meta property="article:modified_time" content="2025-10-12T09:53:36.452Z">
 <meta property="article:author" content="zql">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://oss.javaguide.cn/github/javaguide/java/basis/java-code-to-machine-code.png">
@@ -240,7 +240,7 @@
         
         
         
-          383 分钟
+          387 分钟
         
       </span>
     
@@ -719,6 +719,14 @@
 <li><a href="#tensorflow%E5%92%8Cpytorch%E7%9A%84%E5%8C%BA%E5%88%AB">tensorflow和pytorch的区别</a></li>
 <li><a href="#transformer%E4%B8%AD%E7%9A%84%E4%BD%8D%E7%BD%AE%E7%BC%96%E7%A0%81">transformer中的位置编码</a></li>
 <li><a href="#%E8%87%AA%E6%B3%A8%E6%84%8F%E5%8A%9B%E5%92%8C%E6%B3%A8%E6%84%8F%E5%8A%9B%E7%9A%84%E5%8C%BA%E5%88%AB">自注意力和注意力的区别</a></li>
+</ul>
+</li>
+<li><a href="#llm">LLM</a>
+<ul>
+<li><a href="#spring-ai-mcp">Spring AI MCP?</a></li>
+<li><a href="#spring-ai-mcp%E7%9A%84%E6%9C%8D%E5%8A%A1%E7%AB%AF%E6%80%8E%E4%B9%88%E5%AE%9E%E7%8E%B0">Spring AI MCP的服务端怎么实现？</a></li>
+<li><a href="#sse%E6%9C%89%E5%93%AA%E4%BA%9B%E9%97%AE%E9%A2%98">SSE有哪些问题？</a></li>
+<li><a href="#streamable-http%E7%9B%B8%E6%AF%94sse%E6%9C%89%E5%93%AA%E4%BA%9B%E4%BC%98%E5%8A%BF">Streamable HTTP相比SSE有哪些优势？</a></li>
 </ul>
 </li>
 </ul>
@@ -3543,6 +3551,31 @@ M834 80h400000v40h-400000z'/></svg></span></span></span><span class="vlist-s">�
 </blockquote>
 <p>query是每张图设置的预测的proposals的数量，例如一张图的gt有20个bbox，然后query为100，那么网络会产生100个proposals，然后用匈牙利算法求得100个query和20个bbox的最优匹配</p>
 <p>对于decoder的多头注意力，我理解的是kv来自encoder是因为encoder中将图像的特征进行了编码，然后由于需要产生100个proposals，所以就用外部的q来计算encoder产生的k的权重信息，比如qk^T-&gt;[16,100,32]*[16,32,576]=[16,100,576]，这里[100,576]代表了100个query在576个特征上的权重或者相似度信息，然后乘v[16,576,32]，输出是[16,100,32]，reshape为[100,2,256]，encoder的输出[576,2,256]经过decoder后映射为[100,2,256]，因此加入的query可能是为了学习encoder的输出中的特征信息，然后将特征的维度降到100，然后从这100个proposals中取匹配最佳的gt。</p>
+<h1 id="llm"><a class="markdownIt-Anchor" href="#llm"></a> LLM</h1>
+<h2 id="spring-ai-mcp"><a class="markdownIt-Anchor" href="#spring-ai-mcp"></a> Spring AI MCP?</h2>
+<p>MCP协议指的是模型上下文协议，它可以看作是大模型和外部资源交互的桥梁，大模型可以通过这个协议调用部署在本地或者远程的tools，从而使得大模型的答案更加准确。</p>
+<p>MCP和Agent的区别是，Agent可以看作一个独立的个体，它可以理解任务、规划步骤、调用工具、反思迭代，具备行为能力，能够处理更复杂的任务。</p>
+<p>Spring AI MCP提供了stdio和SSE两种通信方式，用于mcp 客户端和mcp 服务端的通信。</p>
+<h2 id="spring-ai-mcp的服务端怎么实现"><a class="markdownIt-Anchor" href="#spring-ai-mcp的服务端怎么实现"></a> Spring AI MCP的服务端怎么实现？</h2>
+<ul>
+<li>首先添加依赖，然后在yml文件进行配置，<strong>对于stdio方式，要禁用web应用类型</strong></li>
+<li>定义一个工具类，通过 @Tool 注解声明工具方法，通过 @ToolParameter声明工具方法的参数</li>
+<li>注册工具,返回 ToolCallbackProvider 类型的Bean</li>
+</ul>
+<h2 id="sse有哪些问题"><a class="markdownIt-Anchor" href="#sse有哪些问题"></a> SSE有哪些问题？</h2>
+<ul>
+<li>基于长连接和状态保持，不利于扩展</li>
+<li>中断后虽然有重连机制，但是无法恢复中间状态</li>
+<li>除了一个sse端点维持长连接外，还需要额外的端点发送消息</li>
+<li>消息格式固定，不够灵活</li>
+</ul>
+<h2 id="streamable-http相比sse有哪些优势"><a class="markdownIt-Anchor" href="#streamable-http相比sse有哪些优势"></a> Streamable HTTP相比SSE有哪些优势？</h2>
+<ul>
+<li>仅需一个端点即可完成请求和响应</li>
+<li>纯http实现，天然契合无状态设计，便于水平扩展</li>
+<li>可灵活选择是返回普通 HTTP 响应还是升级为 SSE 流</li>
+<li>引入会话ID机制，支持状态恢复</li>
+</ul>
 
                 
               </div>
