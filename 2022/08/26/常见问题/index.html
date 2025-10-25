@@ -31,7 +31,7 @@
 <meta property="og:image" content="https://oss.javaguide.cn/github/javaguide/cs-basics/network/tcp-shakes-hands-three-times.png">
 <meta property="og:image" content="https://oss.javaguide.cn/github/javaguide/cs-basics/network/tcp-waves-four-times.png">
 <meta property="article:published_time" content="2022-08-26T13:10:10.000Z">
-<meta property="article:modified_time" content="2025-10-18T01:02:42.843Z">
+<meta property="article:modified_time" content="2025-10-25T01:45:24.724Z">
 <meta property="article:author" content="zql">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://oss.javaguide.cn/github/javaguide/java/basis/java-code-to-machine-code.png">
@@ -240,7 +240,7 @@
         
         
         
-          393 分钟
+          394 分钟
         
       </span>
     
@@ -964,7 +964,7 @@ Java 语言通过字节码的方式，在一定程度上解决了传统解释型
 <p>G1垃圾回收器中，划分了多个区域，每个区域都可以充当eden区、survivor区和老年代，主要分4个阶段</p>
 <ul>
 <li>初始标记：触发STW，标记从 GC Roots 直接可达的对象</li>
-<li>并发标记：不触发STW，与应用并发运行，标记所有可达对象。可能持续较长时间，取决于堆的大小和对象 的数量</li>
+<li>并发标记：不触发STW，与应用并发运行，标记所有可达对象。可能持续较长时间，取决于堆的大小和对象的数量</li>
 <li>最终标记：，触发STW，处理并发标记后残留的未处理的引用变更。</li>
 <li>混合收集：混合收集阶段既进行年轻代的收集，又进行老年代的收集。因为G1回收器有一个<strong>预设的回收停顿时间</strong>，为了保证不超过这个时间，在进行老年代收集时，会优先收集回收价高的区域(存活对象少)。</li>
 <li>如果回收速度赶不上创建对象的速度，会触发Full GC，回收时间会比较长。</li>
@@ -1539,9 +1539,14 @@ AQS内部有一个state，被volatile修饰，0表示无锁，1表示有锁</p>
 <li>volatile修饰的变量<strong>在进行写操作时，会多出lock前缀的指令</strong>，它能保证每次对变量进行写操作，都能立刻写回到主内存中。这个过程会加<strong>高速缓存锁</strong>，其他线程无法进行读写。</li>
 <li>为了保持一致性，其他线程会探测总线上的数据变更，当探测到同一个变量被修改后，会把自己本地内存（缓存）中的设置为无效状态，当处理器发现缓存失效后，会重新从主内存中读取最新的值。</li>
 </ul>
-<p>有序性：</p>
+<p>有序性：<br />
+通过插入<strong>特定类型的内存屏障</strong>，来禁止编译器和处理器进行指令重排序。内存屏障本身也是一种CPU指令。</p>
+<p>内存屏障有以下几种类型：</p>
 <ul>
-<li>通过插入<strong>特定类型的内存屏障</strong>，来禁止编译器和处理器进行指令重排序。内存屏障本身也是一种CPU指令。</li>
+<li>LoadLoad 屏障：禁止读操作的重排序</li>
+<li>StoreStore 屏障：禁止写操作的重排序</li>
+<li>LoadStore 屏障：禁止读操作和写操作之间的重排序</li>
+<li>StoreLoad 屏障：禁止写操作和读操作之间的重排序</li>
 </ul>
 <h3 id="死锁产生的条件"><a class="markdownIt-Anchor" href="#死锁产生的条件"></a> 死锁产生的条件？</h3>
 <ul>
