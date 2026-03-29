@@ -8,7 +8,7 @@ tags:
 
 <!-- TOC -->
 
-- [mcp学习](#mcp学习)
+- [LLM应用相关](#llm应用相关)
     - [介绍](#介绍)
     - [使用Spring AI创建mcp server](#使用spring-ai创建mcp-server)
         - [基本概念](#基本概念)
@@ -23,7 +23,7 @@ tags:
         - [Streamable HTTP的优势](#streamable-http的优势)
 
 <!-- /TOC -->
-# mcp学习
+# LLM应用相关
 
 ## 介绍
 模型上下文协议（model context protocol）是由Anthropic提出的一种协议，它给LLM和各类工具提供了一种标准化的桥梁，让LLM可以使用各种工具和API。
