@@ -21,19 +21,19 @@
   
     <meta name="description" content="LLM应用相关  介绍 使用Spring AI创建mcp server  基本概念 基于stdio的mcp服务端实现 基于SSE的mcp服务端实现   使用Spring AI创建mcp client  基于stdio的mcp client实现 基于SSE的mcp client实现   agent使用mcp的工作流程 SSE和Streamable HTTP的对比  SSE（Server-Sent">
 <meta property="og:type" content="article">
-<meta property="og:title" content="mcp学习">
-<meta property="og:url" content="http://lqz2.github.io/2025/06/10/mcp%E5%AD%A6%E4%B9%A0/index.html">
+<meta property="og:title" content="LLM应用相关">
+<meta property="og:url" content="http://lqz2.github.io/2025/06/10/LLM%E5%BA%94%E7%94%A8%E7%9B%B8%E5%85%B3/index.html">
 <meta property="og:site_name" content="my blogs">
 <meta property="og:description" content="LLM应用相关  介绍 使用Spring AI创建mcp server  基本概念 基于stdio的mcp服务端实现 基于SSE的mcp服务端实现   使用Spring AI创建mcp client  基于stdio的mcp client实现 基于SSE的mcp client实现   agent使用mcp的工作流程 SSE和Streamable HTTP的对比  SSE（Server-Sent">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2025-06-10T02:25:58.000Z">
-<meta property="article:modified_time" content="2026-03-29T12:45:17.151Z">
+<meta property="article:modified_time" content="2026-03-29T12:54:39.289Z">
 <meta property="article:author" content="zql">
 <meta name="twitter:card" content="summary_large_image">
   
   
   
-  <title>mcp学习 - my blogs</title>
+  <title>LLM应用相关 - my blogs</title>
 
   <link  rel="stylesheet" href="https://lib.baomitu.com/twitter-bootstrap/4.6.1/css/bootstrap.min.css" />
 
@@ -201,7 +201,7 @@
       <div class="banner-text text-center fade-in-up">
         <div class="h2">
           
-            <span id="subtitle" data-typed-text="mcp学习"></span>
+            <span id="subtitle" data-typed-text="LLM应用相关"></span>
           
         </div>
 
@@ -224,7 +224,7 @@
       <span class="post-meta mr-2">
         <i class="iconfont icon-chart"></i>
         
-          2.7k 字
+          2.5k 字
         
       </span>
     
@@ -235,7 +235,7 @@
         
         
         
-          23 分钟
+          21 分钟
         
       </span>
     
@@ -272,7 +272,7 @@
       <div class="container nopadding-x-md" id="board-ctn">
         <div id="board">
           <article class="post-content mx-auto">
-            <h1 id="seo-header">mcp学习</h1>
+            <h1 id="seo-header">LLM应用相关</h1>
             
             
               <div class="markdown-body">
@@ -432,30 +432,15 @@
 <h2 id="sse和streamable-http的对比"><a class="markdownIt-Anchor" href="#sse和streamable-http的对比"></a> SSE和Streamable HTTP的对比</h2>
 <h3 id="sseserver-sent-events的问题"><a class="markdownIt-Anchor" href="#sseserver-sent-events的问题"></a> SSE（Server-Sent Events）的问题</h3>
 <ul>
-<li>
-<p><strong>不支持断线重连/恢复</strong><br />
-当 SSE 连接断开时，所有会话状态丢失，客户端必须重新建立连接并初始化整个会话。例如，正在执行的大型文档分析任务会因 WiFi 不稳定而完全中断，迫使用户重新开始整个过程。</p>
-</li>
-<li>
-<p><strong>服务器需维护长连接</strong><br />
-服务器必须为每个客户端维护一个长时间的 SSE 连接，大量并发用户会导致资源消耗剧增。当服务器需要重启或扩容时，所有连接都会中断，影响用户体验和系统可靠性。</p>
-</li>
-<li>
-<p><strong>服务器消息只能通过 SSE 传递</strong><br />
-即使是简单的请求-响应交互，服务器也必须通过 SSE 通道返回信息，造成不必要的复杂性和开销。对于某些环境（如云函数）不适合长时间保持 SSE 连接。</p>
-</li>
-<li>
-<p><strong>基础设施兼容性限制</strong><br />
-许多现有的 Web 基础设施如 CDN、负载均衡器、API 网关等可能不能正确处理长时间的 SSE 连接，企业防火墙可能会强制关闭超时连接，导致服务不可靠。</p>
-</li>
+<li>单向性：SSE 只能服务器推给客户端。这导致 MCP 必须用两个连接：一个 HTTP POST 用来发请求，一个 SSE 用来收回复。</li>
+<li>代理不友好：很多现代的反向代理（如某些云端负载均衡）对保持长期的 SSE 连接支持不佳。</li>
+<li>开销：SSE 的 data: …\n\n 格式在传输高频、复杂的 JSON-RPC 消息时显得有些啰嗦。</li>
 </ul>
 <h3 id="streamable-http的优势"><a class="markdownIt-Anchor" href="#streamable-http的优势"></a> Streamable HTTP的优势</h3>
-<p>相比原有 HTTP+SSE 机制，Streamable HTTP 引入了几项关键改进：</p>
 <ul>
-<li>统一 Endpoint：移除专门的 <code>/sse</code> 端点，所有通信通过单一端点（当前官方 sdk 实现为 <code>/mcp</code>）进行</li>
-<li>按需流式传输：服务器可灵活选择是返回普通 HTTP 响应还是升级为 SSE 流</li>
-<li>会话标识：引入会话 ID 机制，支持状态管理和恢复</li>
-<li>灵活初始化：客户端可通过空 GET 请求主动初始化 SSE 流</li>
+<li>全双工：不再需要分两个通道，请求和响应可以在同一个 HTTP 连接流中交替进行。</li>
+<li>原始数据传输：它不再强制要求 text/event-stream 格式，而是直接传输 JSON 块，减少了协议头的解析负担。</li>
+<li>更好的基础设施兼容性：它更符合现代 gRPC 或 REST 流的标准，能够更容易穿透复杂的企业防火墙和 CDN。</li>
 </ul>
 
                 
@@ -495,8 +480,8 @@
 
   <div class="license-box my-3">
     <div class="license-title">
-      <div>mcp学习</div>
-      <div>http://lqz2.github.io/2025/06/10/mcp学习/</div>
+      <div>LLM应用相关</div>
+      <div>http://lqz2.github.io/2025/06/10/LLM应用相关/</div>
     </div>
     <div class="license-meta">
       
