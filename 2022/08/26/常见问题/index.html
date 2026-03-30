@@ -31,7 +31,7 @@
 <meta property="og:image" content="https://oss.javaguide.cn/github/javaguide/cs-basics/network/tcp-shakes-hands-three-times.png">
 <meta property="og:image" content="https://oss.javaguide.cn/github/javaguide/cs-basics/network/tcp-waves-four-times.png">
 <meta property="article:published_time" content="2022-08-26T13:10:10.000Z">
-<meta property="article:modified_time" content="2025-10-29T06:36:32.076Z">
+<meta property="article:modified_time" content="2026-03-30T14:44:59.066Z">
 <meta property="article:author" content="zql">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="https://oss.javaguide.cn/github/javaguide/java/basis/java-code-to-machine-code.png">
@@ -240,7 +240,7 @@
         
         
         
-          399 分钟
+          402 分钟
         
       </span>
     
@@ -663,6 +663,8 @@
 <li><a href="#cs%E5%9F%BA%E7%A1%80">CS基础</a>
 <ul>
 <li><a href="#%E8%BF%9B%E7%A8%8B%E5%92%8C%E7%BA%BF%E7%A8%8B%E7%9A%84%E5%8C%BA%E5%88%AB">进程和线程的区别</a></li>
+<li><a href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E5%88%87%E6%8D%A2%E8%BF%9B%E7%A8%8B%E7%9A%84%E5%BC%80%E9%94%80%E6%AF%94%E5%88%87%E6%8D%A2%E7%BA%BF%E7%A8%8B%E5%A4%A7">为什么切换进程的开销比切换线程大？</a></li>
+<li><a href="#%E7%BA%BF%E7%A8%8B%E5%92%8C%E5%8D%8F%E7%A8%8B%E7%9A%84%E5%8C%BA%E5%88%AB">线程和协程的区别？</a></li>
 <li><a href="#%E7%A1%AC%E9%93%BE%E6%8E%A5%E5%92%8C%E8%BD%AF%E9%93%BE%E6%8E%A5%E7%9A%84%E5%8C%BA%E5%88%AB">硬链接和软链接的区别</a>
 <ul>
 <li><a href="#%E7%A1%AC%E9%93%BE%E6%8E%A5">硬链接</a></li>
@@ -3142,6 +3144,16 @@ Spring框架中有一个@Scope注解，默认就是单例的</p>
 <li>多个线程共享地址空间/资源，而进程之间的地址空间/资源是独立的</li>
 <li>一个线程只能属于一个进程，一个进程可以有多个线程</li>
 <li>创建/撤销线程的系统开销明显小于进程</li>
+</ul>
+<h2 id="为什么切换进程的开销比切换线程大"><a class="markdownIt-Anchor" href="#为什么切换进程的开销比切换线程大"></a> 为什么切换进程的开销比切换线程大？</h2>
+<p>linux内核中，进程和线程其实都是task_struct结构体的实例，区别在与创建线程的task_struct中有一个标志位，表示共享内存空间</p>
+<p>线程切换之所以比进程切换开销小，主要是因为线程切换不需要切换内存空间，而进程切换需要切换内存空间，这涉及到页表的切换和TLB的刷新等操作，开销较大</p>
+<h2 id="线程和协程的区别"><a class="markdownIt-Anchor" href="#线程和协程的区别"></a> 线程和协程的区别？</h2>
+<ul>
+<li>线程是操作系统调度的基本单位，协程是用户态调度的基本单位</li>
+<li>传统线程模型最大的问题是，线程在等 IO 的时候是闲着的，不适合IO密集型任务</li>
+<li>协程在等待IO的时候可以切换到其他协程继续执行，等IO到达时再找一个线程来继续跑</li>
+<li>协程切换的开销更小，因为不涉及内核态和用户态的切换</li>
 </ul>
 <h2 id="硬链接和软链接的区别"><a class="markdownIt-Anchor" href="#硬链接和软链接的区别"></a> 硬链接和软链接的区别</h2>
 <h3 id="硬链接"><a class="markdownIt-Anchor" href="#硬链接"></a> 硬链接</h3>
